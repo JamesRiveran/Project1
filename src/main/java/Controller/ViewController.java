@@ -34,14 +34,43 @@ public class ViewController implements ActionListener{
         view.setLocationRelativeTo(null);
         view.setVisible(true);
     }
-    
+
+    private void showMessage(String errorMessage) {
+        JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource().equals(view.getBtnSave())){
-            saveInstrument();
+        if (e.getSource().equals(view.getBtnSave())) {
+            try {
+                if (view.getTxtCode().getText().trim().isEmpty()) {
+                    showMessage("Debe ingresar el código del instrumento");
+                } else if (view.getTxtName().getText().trim().isEmpty()) {
+                    showMessage("Debe ingresar el nombre del instrumento");
+                } else if (view.getTxtUnit().getText().trim().isEmpty()) {
+                    showMessage("Debe ingresar la unidad de medida del instrumento");
+                } else {
+                    saveInstrument(); // Ejecutar el método si todas las validaciones son exitosas
+                }
+            } catch (NullPointerException ex) {
+                showMessage("Error: Se produjo una referencia nula");
+            } catch (Exception ex) {
+                showMessage("Error: Ocurrió una excepción no esperada");
+            }
         }
         if(e.getSource().equals(view.getBtnSearch())){
-            displayInstrumentList();
+            try {
+                if (view.getTxtNameForSearch().getText().trim().isEmpty()) {
+                    showMessage("Debe ingresar el nombre del instrumento que desea buscar");
+                } 
+                else {
+                    displayInstrumentList();
+                }
+            } catch (NullPointerException ex) {
+                showMessage("Error: Se produjo una referencia nula");
+            } catch (Exception ex) {
+                showMessage("Error: Ocurrió una excepción no esperada");
+            }
         }
     }
     
