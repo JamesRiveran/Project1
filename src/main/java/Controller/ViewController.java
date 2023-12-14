@@ -4,13 +4,16 @@
  */
 package Controller;
 
+import Model.GeneratorPDF;
 import Model.InstrumentType;
 import Model.InstrumentsList;
 import Model.XMLLoader;
 import View.Modulo;
+import com.itextpdf.text.DocumentException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -112,6 +115,19 @@ public class ViewController implements ActionListener {
             try {
                 XMLLoader.deleteFromXML(filePath, instrumentToDelete);
             } catch (JDOMException | IOException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if(e.getSource().equals(view.getBtnPDF())){
+            try {
+                ArrayList<InstrumentType> instrumentList = XMLLoader.loadFromXML(filePath);
+                String pdfFilePath = "Reporte.pdf";
+                GeneratorPDF.generatePDFReport(instrumentList, pdfFilePath);
+            } catch (IOException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JDOMException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DocumentException ex) {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

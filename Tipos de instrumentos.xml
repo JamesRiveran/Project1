@@ -5,4 +5,14 @@
     <Nombre>PSI</Nombre>
     <Unidad>Termometro</Unidad>
   </Tipo_de_instrumento>
+  <Tipo_de_instrumento>
+    <Codigo>BAR</Codigo>
+    <Nombre>PSI</Nombre>
+    <Unidad>Barometro</Unidad>
+  </Tipo_de_instrumento>
+  <Tipo_de_instrumento>
+    <Codigo>BRU</Codigo>
+    <Nombre>Aire</Nombre>
+    <Unidad>Brujula</Unidad>
+  </Tipo_de_instrumento>
 </Instrumentos>
