@@ -38,19 +38,30 @@ public class ViewController implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().equals(view.getBtnSave())){
-            InstrumentType newInstrument = new InstrumentType(
-                    view.getTxtCode().getText(),
-                    view.getTxtUnit().getText(),
-                    view.getTxtName().getText()
-            );
-            listInstrument.getList().add(newInstrument);
-            JOptionPane.showMessageDialog(view, "Datos registrados\n"+newInstrument.toString());
+            saveInstrument();
         }
         if(e.getSource().equals(view.getBtnSearch())){
-            DefaultTableModel template =(DefaultTableModel) view.getTblListInstruments().getModel();
-            for (InstrumentType instruments : listInstrument.getList()) {
-                template.addRow(new Object[]{instruments.getCode(), instruments.getName(),instruments.getUnit()});
-            }
+            displayInstrumentList();
         }
     }
+    
+    private void saveInstrument() {
+        InstrumentType newInstrument = new InstrumentType(
+                view.getTxtCode().getText(),
+                view.getTxtUnit().getText(),
+                view.getTxtName().getText()
+        );
+        listInstrument.getList().add(newInstrument);
+        JOptionPane.showMessageDialog(view, "Datos registrados\n" + newInstrument.toString());
+    }
+    
+    private void displayInstrumentList() {
+        DefaultTableModel template = (DefaultTableModel) view.getTblListInstruments().getModel();
+        // Limpiar la tabla antes de agregar nuevos datos
+        template.setRowCount(0);
+        for (InstrumentType instrument : listInstrument.getList()) {
+            template.addRow(new Object[]{instrument.getCode(), instrument.getName(), instrument.getUnit()});
+        }
+    }
+    
 }
