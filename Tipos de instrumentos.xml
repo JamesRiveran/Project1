@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Instrumentos>
   <Tipo_de_instrumento>
-    <Codigo>s</Codigo>
-    <Nombre>a</Nombre>
-    <Unidad>x</Unidad>
-  </Tipo_de_instrumento>
-  <Tipo_de_instrumento>
     <Codigo>TER</Codigo>
     <Nombre>SPI</Nombre>
     <Unidad>Termometro</Unidad>

@@ -91,6 +91,12 @@ public class ViewController implements ActionListener {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        if(e.getSource().equals(view.getBtnClean())){
+            view.getBtnDelete().setEnabled(false);
+            view.getTxtCode().setText("");
+            view.getTxtName().setText("");
+            view.getTxtUnit().setText("");
+        }
     }
 
     public void saveInstrument() {
