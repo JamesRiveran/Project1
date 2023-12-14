@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jdom2.Document;
@@ -63,8 +65,10 @@ public class ViewController implements ActionListener {
                     showMessage("Debe ingresar la unidad de medida del instrumento");
                 } else {
                     try {
-                        saveInstrument();
-                        XMLLoader.saveToXML(filePath, listInstrument.getList());
+                        InstrumentType newInstrumentForSave = new InstrumentType(
+                                view.getTxtCode().getText(), view.getTxtName().getText(), view.getTxtUnit().getText());
+                        listInstrument.getList().add(newInstrumentForSave);
+                        XMLLoader.saveToXML(filePath,listInstrument.getList());
                     } catch (Exception ex) {
                         showMessage("Error al guardar en el archivo XML: " + ex.getMessage());
                     }
@@ -77,16 +81,14 @@ public class ViewController implements ActionListener {
             }
         }
         if (e.getSource().equals(view.getBtnSearch())) {
+
+            String letterSearch = view.getTxtNameForSearch().getText();
             try {
-                if (view.getTxtNameForSearch().getText().trim().isEmpty()) {
-                    showMessage("Debe ingresar el nombre del instrumento que desea buscar");
-                } else {
-                    displayInstrumentList();
-                }
-            } catch (NullPointerException ex) {
-                showMessage(ex.getMessage());
-            } catch (Exception ex) {
-                showMessage(ex.getMessage());
+                filterByName(letterSearch);
+            } catch (JDOMException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -110,21 +112,25 @@ public class ViewController implements ActionListener {
         }
     }
 
-    private void displayInstrumentList() {
+    private void filterByName(String letterSearch) throws JDOMException, IOException {
         try {
             ArrayList<InstrumentType> loadedList = XMLLoader.loadFromXML(filePath);
-
             DefaultTableModel template = (DefaultTableModel) view.getTblListInstruments().getModel();
-            template.setRowCount(0); // Limpia la tabla
-
-            // Agregar los nuevos datos a la tabla
-            for (InstrumentType instrument : loadedList) {
-                template.addRow(new Object[]{instrument.getCode(), instrument.getName(), instrument.getUnit()});
+            template.setRowCount(0);
+            if (letterSearch.isEmpty()) {
+                for (InstrumentType instrument : loadedList) {
+                    template.addRow(new Object[]{instrument.getCode(), instrument.getName(), instrument.getUnit()});
+                }
+            } else {
+                for (InstrumentType instrument : loadedList) {
+                    String nameInstrumentForSearch = instrument.getName().toLowerCase();
+                    if (nameInstrumentForSearch.contains(letterSearch.toLowerCase())) {
+                        template.addRow(new Object[]{instrument.getCode(), instrument.getName(), instrument.getUnit()});
+                    }
+                }
             }
         } catch (IOException | JDOMException ex) {
-            ex.printStackTrace(); // Imprime detalles de la excepción
-            // Otro manejo de errores según sea necesario
-            showMessage("Error al cargar datos desde el archivo XML: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

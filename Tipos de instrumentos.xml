@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Instrumentos>
   <Tipo_de_instrumento>
-    <Codigo>james</Codigo>
-    <Nombre>james</Nombre>
-    <Unidad>james</Unidad>
+    <Codigo>s</Codigo>
+    <Nombre>a</Nombre>
+    <Unidad>x</Unidad>
   </Tipo_de_instrumento>
   <Tipo_de_instrumento>
-    <Codigo>james</Codigo>
-    <Nombre>james</Nombre>
-    <Unidad>james</Unidad>
-  </Tipo_de_instrumento>
-  <Tipo_de_instrumento>
-    <Codigo>chus</Codigo>
-    <Nombre>chus</Nombre>
-    <Unidad>chus</Unidad>
-  </Tipo_de_instrumento>
-  <Tipo_de_instrumento>
-    <Codigo>chus</Codigo>
-    <Nombre>chus</Nombre>
-    <Unidad>chus</Unidad>
+    <Codigo>TER</Codigo>
+    <Nombre>SPI</Nombre>
+    <Unidad>Termometro</Unidad>
   </Tipo_de_instrumento>
 </Instrumentos>

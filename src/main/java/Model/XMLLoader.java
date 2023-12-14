@@ -53,39 +53,69 @@ public class XMLLoader {
         }
 
         try {
-            Element instruments = new Element("Instrumentos");
-            Document doc = new Document(instruments);
+            Document doc;
 
+            // Verificar si el archivo ya existe
+            File file = new File(filePath);
+            if (file.exists()) {
+                // Si el archivo existe, cargar el contenido existente
+                SAXBuilder saxBuilder = new SAXBuilder();
+                doc = saxBuilder.build(file);
+            } else {
+                // Si el archivo no existe, crear uno nuevo
+                doc = new Document(new Element("Instrumentos"));
+            }
+
+            Element instruments = doc.getRootElement();
+
+            // Agregar los nuevos instrumentos
             for (InstrumentType instrument : instrumentList) {
-                Element typeInstrument = new Element("Tipo_de_instrumento");
+                // Verificar si el tipo de instrumento ya existe en el archivo
+                Element existingInstrument = findInstrumentByCode(instruments, instrument.getCode());
 
-                Element code = new Element("Codigo");
-                code.setText(instrument.getCode());
-                Element name = new Element("Nombre");
-                name.setText(instrument.getName());
-                Element unit = new Element("Unidad");
-                unit.setText(instrument.getUnit());
+                if (existingInstrument == null) {
+                    // Si no existe, crear uno nuevo y agregarlo al elemento raíz
+                    Element typeInstrument = new Element("Tipo_de_instrumento");
 
-                typeInstrument.addContent(code);
-                typeInstrument.addContent(name);
-                typeInstrument.addContent(unit);
+                    Element code = new Element("Codigo");
+                    code.setText(instrument.getCode());
+                    Element name = new Element("Nombre");
+                    name.setText(instrument.getName());
+                    Element unit = new Element("Unidad");
+                    unit.setText(instrument.getUnit());
 
-                instruments.addContent(typeInstrument);
+                    typeInstrument.addContent(code);
+                    typeInstrument.addContent(name);
+                    typeInstrument.addContent(unit);
+
+                    instruments.addContent(typeInstrument);
+                } else {
+                    // Si ya existe, actualizar sus datos según sea necesario
+                    existingInstrument.getChild("Nombre").setText(instrument.getName());
+                    existingInstrument.getChild("Unidad").setText(instrument.getUnit());
+                }
             }
 
             XMLOutputter xml = new XMLOutputter();
             xml.setFormat(Format.getPrettyFormat());
 
-            // Utilizar try-with-resources para asegurar el cierre adecuado del recurso
             try (FileWriter writer = new FileWriter(filePath)) {
                 xml.output(doc, writer);
             }
-        } catch (IOException ex) {
-            // Manejar la excepción específica y loguear el error
+        } catch (IOException | JDOMException ex) {
             ex.printStackTrace();
         }
     }
+
+    //Validacion para comprobar si el tipo de instrumento ya existe, se actualizarán sus datos en lugar de crear uno nuevo.
+    private static Element findInstrumentByCode(Element instruments, String code) {
+        // Buscar un elemento por su código dentro del elemento raíz
+        for (Element typeInstrument : instruments.getChildren("Tipo_de_instrumento")) {
+            if (typeInstrument.getChildText("Codigo").equals(code)) {
+                return typeInstrument;
+            }
+        }
+        return null;
+    }
+
 }
-
-
-
