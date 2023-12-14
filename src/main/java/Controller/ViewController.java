@@ -56,7 +56,8 @@ public class ViewController implements ActionListener{
                 } else if (view.getTxtUnit().getText().trim().isEmpty()) {
                     showMessage("Debe ingresar la unidad de medida del instrumento");
                 } else {
-                    saveInstrument(); // Ejecutar el método si todas las validaciones son exitosas
+                    saveInstrument();
+                    saveInstrumentXML();
                 }
             } catch (NullPointerException ex) {
                 showMessage(ex.getMessage());
@@ -80,17 +81,21 @@ public class ViewController implements ActionListener{
         }
     }
     
-    /*private void saveInstrument() {
-        InstrumentType newInstrument = new InstrumentType(
-                view.getTxtCode().getText(),
-                view.getTxtUnit().getText(),
-                view.getTxtName().getText()
-        );
-        listInstrument.getList().add(newInstrument);
-        JOptionPane.showMessageDialog(view, "Datos registrados\n" + newInstrument.toString());
-    }*/
+    public void saveInstrument() {
+        try{
+            String codeText=view.getTxtCode().getText();
+            String nameText=view.getTxtName().getText();
+            String unitText=view.getTxtUnit().getText();
+            InstrumentType newInstrument = new InstrumentType(codeText,unitText,nameText);
+            listInstrument.getList().add(newInstrument);
+            JOptionPane.showMessageDialog(view, "Datos registrados\n" + newInstrument.toString());
+        }catch(Exception ex){
+            showMessage(ex.getMessage());
+        }
+        
+    }
     
-        public void saveInstrument() {
+        public void saveInstrumentXML() {
         try {
             Element instruments = new Element("Instrumentos");
             Document doc = new Document(instruments);
