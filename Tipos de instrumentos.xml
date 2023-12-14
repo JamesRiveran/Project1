@@ -2,7 +2,7 @@
 <Instrumentos>
   <Tipo_de_instrumento>
     <Codigo>TER</Codigo>
-    <Nombre>SPI</Nombre>
+    <Nombre>PSI</Nombre>
     <Unidad>Termometro</Unidad>
   </Tipo_de_instrumento>
 </Instrumentos>

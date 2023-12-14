@@ -10,6 +10,7 @@ import Model.XMLLoader;
 import View.Modulo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -91,30 +92,45 @@ public class ViewController implements ActionListener {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        //Selección de un instrumento de la tabla 
+        view.getTblListInstruments().addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editRegister(evt);
+            }
+        });
+        
         if(e.getSource().equals(view.getBtnClean())){
             view.getBtnDelete().setEnabled(false);
+            view.getTxtCode().setEnabled(true);
             view.getTxtCode().setText("");
             view.getTxtName().setText("");
             view.getTxtUnit().setText("");
         }
-    }
-
-    public void saveInstrument() {
-        try {
-            String codeText = view.getTxtCode().getText();
-            String nameText = view.getTxtName().getText();
-            String unitText = view.getTxtUnit().getText();
-            InstrumentType newInstrument = new InstrumentType(codeText, unitText, nameText);
-            // Verificar si el instrumento ya existe en la lista
-            if (!listInstrument.getList().contains(newInstrument)) {
-                listInstrument.getList().add(newInstrument);
-                JOptionPane.showMessageDialog(view, "Datos registrados\n" + newInstrument.toString());
-            } else {
-                // Manejar el caso de instrumento duplicado si es necesario
-                showMessage("El instrumento ya existe en la lista.");
+        if (e.getSource().equals(view.getBtnDelete())) {
+            InstrumentType instrumentToDelete = new InstrumentType(
+                    view.getTxtCode().getText(), view.getTxtName().getText(), view.getTxtUnit().getText());
+            try {
+                XMLLoader.deleteFromXML(filePath, instrumentToDelete);
+            } catch (JDOMException | IOException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (Exception ex) {
-            showMessage(ex.getMessage());
+        }
+    }
+    
+    public void editRegister(MouseEvent evt){
+        int rowSelected = view.getTblListInstruments().getSelectedRow();
+        
+        if(rowSelected !=-1){
+            String codeName = view.getTblListInstruments().getValueAt(rowSelected, 0).toString();
+            String instrumentName =view.getTblListInstruments().getValueAt(rowSelected, 1).toString();
+            String unitName =view.getTblListInstruments().getValueAt(rowSelected, 2).toString();
+            
+            view.getTxtCode().setText(codeName);
+            view.getTxtName().setText(instrumentName);
+            view.getTxtUnit().setText(unitName);
+            
+            view.getTxtCode().setEnabled(false);
+            view.getBtnDelete().setEnabled(true);
         }
     }
 

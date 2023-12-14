@@ -106,6 +106,38 @@ public class XMLLoader {
             ex.printStackTrace();
         }
     }
+ 
+    public static void deleteFromXML(String filePath, InstrumentType instrumentToDelete) throws IOException, JDOMException {
+        SAXBuilder saxBuilder = new SAXBuilder();
+        Document document = saxBuilder.build(new File(filePath));
+
+        Element rootElement = document.getRootElement();
+        List<Element> instrumentElements = rootElement.getChildren("Tipo_de_instrumento");
+
+        for (Element instrumentElement : instrumentElements) {
+            String code = instrumentElement.getChildText("Codigo");
+
+            // Verifica si el código coincide con el que se quiere eliminar
+            if (code.equals(instrumentToDelete.getCode())) {
+                // Elimina el elemento del XML
+                instrumentElement.getParentElement().removeContent(instrumentElement);
+                break;  // Puedes salir del bucle si se eliminó el elemento
+            }
+        }
+        // Guarda los cambios en el archivo XML
+        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+        try {
+            xmlOutputter.output(document, new FileWriter(filePath));
+        } finally {
+            // Cierra el XMLOutputter fuera del bloque try
+            try {
+                xmlOutputter.output(document, new FileWriter(filePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 
     //Validacion para comprobar si el tipo de instrumento ya existe, se actualizarán sus datos en lugar de crear uno nuevo.
     private static Element findInstrumentByCode(Element instruments, String code) {
