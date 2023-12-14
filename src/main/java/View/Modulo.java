@@ -323,7 +323,9 @@ public class Modulo extends javax.swing.JFrame {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         viewController.actionPerformed(evt);
     }//GEN-LAST:event_btnSearchActionPerformed
-
+    public void setViewController(ViewController viewController) {
+        this.viewController = viewController;
+    }
     public JTable getTblListInstruments() {
         return tblListInstruments;
     }
