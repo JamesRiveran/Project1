@@ -9,8 +9,14 @@ import Model.InstrumentsList;
 import View.Modulo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 /**
  *
@@ -53,9 +59,9 @@ public class ViewController implements ActionListener{
                     saveInstrument(); // Ejecutar el método si todas las validaciones son exitosas
                 }
             } catch (NullPointerException ex) {
-                showMessage("Error: Se produjo una referencia nula");
+                showMessage(ex.getMessage());
             } catch (Exception ex) {
-                showMessage("Error: Ocurrió una excepción no esperada");
+                showMessage(ex.getMessage());
             }
         }
         if(e.getSource().equals(view.getBtnSearch())){
@@ -67,14 +73,14 @@ public class ViewController implements ActionListener{
                     displayInstrumentList();
                 }
             } catch (NullPointerException ex) {
-                showMessage("Error: Se produjo una referencia nula");
+                showMessage(ex.getMessage());
             } catch (Exception ex) {
-                showMessage("Error: Ocurrió una excepción no esperada");
+                showMessage(ex.getMessage());
             }
         }
     }
     
-    private void saveInstrument() {
+    /*private void saveInstrument() {
         InstrumentType newInstrument = new InstrumentType(
                 view.getTxtCode().getText(),
                 view.getTxtUnit().getText(),
@@ -82,6 +88,38 @@ public class ViewController implements ActionListener{
         );
         listInstrument.getList().add(newInstrument);
         JOptionPane.showMessageDialog(view, "Datos registrados\n" + newInstrument.toString());
+    }*/
+    
+        public void saveInstrument() {
+        try {
+            Element instruments = new Element("Instrumentos");
+            Document doc = new Document(instruments);
+
+            Element typeInstrument = new Element("Tipo_de_instrumento");
+
+            Element code = new Element("Codigo");
+            code.setText(view.getTxtCode().getText());
+            Element name = new Element("Nombre");
+            name.setText(view.getTxtName().getText());
+            Element unit = new Element("Unidad");
+            unit.setText(view.getTxtUnit().getText());
+
+            typeInstrument.addContent(code);
+            typeInstrument.addContent(name);
+            typeInstrument.addContent(unit);
+
+            instruments.addContent(typeInstrument);
+
+            XMLOutputter xml = new XMLOutputter();
+            xml.setFormat(Format.getPrettyFormat());
+            xml.output(doc, new FileWriter("Tipos de instrumentos.xml"));
+
+            JOptionPane.showMessageDialog(view, "Datos guardados","Guardar datos",JOptionPane.INFORMATION_MESSAGE);
+            
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(view, ex.getMessage(), "Validación", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
     
     private void displayInstrumentList() {

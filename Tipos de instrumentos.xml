@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Instrumentos>
+  <Tipo_de_instrumento>
+    <Codigo>TER</Codigo>
+    <Nombre>Termometro</Nombre>
+    <Unidad>PSI</Unidad>
+  </Tipo_de_instrumento>
+</Instrumentos>
