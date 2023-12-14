@@ -5,6 +5,7 @@
 package View;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -53,7 +54,31 @@ public class Modulo extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         tblListInstruments = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
+        pInstrumento = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        txtSerie = new javax.swing.JTextField();
+        txtMini = new javax.swing.JTextField();
+        txtTole = new javax.swing.JTextField();
+        txtMaxi = new javax.swing.JTextField();
+        txtDescri = new javax.swing.JTextField();
+        cmbType = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        btnSaveInstru = new javax.swing.JButton();
+        btnCleanInstru = new javax.swing.JButton();
+        btnDeleteInstru = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        txtSearchInstru = new javax.swing.JTextField();
+        btnSearchInstru = new javax.swing.JButton();
+        btnReport = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbInstru = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
 
@@ -247,18 +272,231 @@ public class Modulo extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Tipo de instrumento", jPanel1);
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Instrumento"));
+
+        jLabel8.setText("Serie");
+
+        jLabel9.setText("Minimo");
+
+        jLabel10.setText("Tolerancia");
+
+        jLabel12.setText("Tipo");
+
+        jLabel13.setText("Maximo");
+
+        txtSerie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSerieActionPerformed(evt);
+            }
+        });
+
+        txtMini.setText("0");
+        txtMini.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMiniActionPerformed(evt);
+            }
+        });
+
+        txtTole.setText("0");
+
+        cmbType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel14.setText("Descripcion");
+
+        btnSaveInstru.setText("Guardar");
+        btnSaveInstru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveInstruActionPerformed(evt);
+            }
+        });
+
+        btnCleanInstru.setText("Limpiar");
+
+        btnDeleteInstru.setText("Borrar");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 809, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel10))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMini, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTole, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel13))
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel14)
+                        .addGap(18, 18, 18)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtDescri, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                    .addComponent(txtMaxi, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                    .addComponent(cmbType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(86, 86, 86)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnSaveInstru)
+                    .addComponent(btnDeleteInstru))
+                .addGap(30, 30, 30)
+                .addComponent(btnCleanInstru)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 406, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDescri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14)
+                    .addComponent(btnCleanInstru)
+                    .addComponent(btnSaveInstru))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMini, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMaxi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeleteInstru))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
         );
 
-        jTabbedPane1.addTab("Instrumento", jPanel2);
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Busqueda"));
+
+        jLabel11.setText("Descripcion");
+
+        btnSearchInstru.setText("Buscar");
+
+        btnReport.setText("Reporte");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel11)
+                .addGap(18, 18, 18)
+                .addComponent(txtSearchInstru, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                .addGap(366, 366, 366)
+                .addComponent(btnSearchInstru)
+                .addGap(39, 39, 39)
+                .addComponent(btnReport)
+                .addGap(40, 40, 40))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSearchInstru, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchInstru)
+                    .addComponent(btnReport))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado"));
+
+        tbInstru.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "No. Serie", "Descripcion", "Minimo", "Maximo", "Tolerancia"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbInstru.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbInstruMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbInstru);
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(316, 316, 316))
+        );
+
+        javax.swing.GroupLayout pInstrumentoLayout = new javax.swing.GroupLayout(pInstrumento);
+        pInstrumento.setLayout(pInstrumentoLayout);
+        pInstrumentoLayout.setHorizontalGroup(
+            pInstrumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pInstrumentoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pInstrumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pInstrumentoLayout.createSequentialGroup()
+                        .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        pInstrumentoLayout.setVerticalGroup(
+            pInstrumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pInstrumentoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Instrumento", pInstrumento);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -268,7 +506,7 @@ public class Modulo extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 406, Short.MAX_VALUE)
+            .addGap(0, 416, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Calibraciones", jPanel3);
@@ -281,7 +519,7 @@ public class Modulo extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 406, Short.MAX_VALUE)
+            .addGap(0, 416, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Acerca de", jPanel4);
@@ -312,6 +550,22 @@ public class Modulo extends javax.swing.JFrame {
     private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPDFActionPerformed
+
+    private void txtSerieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSerieActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSerieActionPerformed
+
+    private void txtMiniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMiniActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMiniActionPerformed
+
+    private void btnSaveInstruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveInstruActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSaveInstruActionPerformed
+
+    private void tbInstruMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbInstruMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbInstruMouseClicked
 
     public JTable getTblListInstruments() {
         return tblListInstruments;
@@ -393,22 +647,142 @@ public class Modulo extends javax.swing.JFrame {
     public void setTxtUnit(JTextField txtUnit) {
         this.txtUnit = txtUnit;
     }
+    
+    
+/*Aqui estan los gets y sets del segundo modulo*/
 
+    public void setTbInstru(JTable tbInstru) {
+        this.tbInstru = tbInstru;
+    }
+
+    public void setTxtDescri(JTextField txtDescri) {
+        this.txtDescri = txtDescri;
+    }
+
+    public void setTxtMaxi(JTextField txtMaxi) {
+        this.txtMaxi = txtMaxi;
+    }
+
+    public void setTxtMini(JTextField txtMini) {
+        this.txtMini = txtMini;
+    }
+
+    public void setTxtSearchInstru(JTextField txtSearchInstru) {
+        this.txtSearchInstru = txtSearchInstru;
+    }
+
+    public void setTxtSerie(JTextField txtSerie) {
+        this.txtSerie = txtSerie;
+    }
+
+    public void setTxtTole(JTextField txtTole) {
+        this.txtTole = txtTole;
+    }
+
+    public void setCmbType(JComboBox<String> cmbType) {
+        this.cmbType = cmbType;
+    }
+
+    public void setBtnCleanInstru(JButton btnCleanInstru) {
+        this.btnCleanInstru = btnCleanInstru;
+    }
+
+    public void setBtnDeleteInstru(JButton btnDeleteInstru) {
+        this.btnDeleteInstru = btnDeleteInstru;
+    }
+
+    public void setBtnReport(JButton btnReport) {
+        this.btnReport = btnReport;
+    }
+
+    public void setBtnSaveInstru(JButton btnSaveInstru) {
+        this.btnSaveInstru = btnSaveInstru;
+    }
+
+    public void setBtnSearchInstru(JButton btnSearchInstru) {
+        this.btnSearchInstru = btnSearchInstru;
+    }
+
+    public JButton getBtnCleanInstru() {
+        return btnCleanInstru;
+    }
+
+    public JButton getBtnDeleteInstru() {
+        return btnDeleteInstru;
+    }
+
+    public JButton getBtnReport() {
+        return btnReport;
+    }
+
+    public JButton getBtnSaveInstru() {
+        return btnSaveInstru;
+    }
+
+    public JButton getBtnSearchInstru() {
+        return btnSearchInstru;
+    }
+
+    public JComboBox<String> getCmbType() {
+        return cmbType;
+    }
+
+    public JTable getTbInstru() {
+        return tbInstru;
+    }
+
+    public JTextField getTxtDescri() {
+        return txtDescri;
+    }
+
+    public JTextField getTxtMaxi() {
+        return txtMaxi;
+    }
+
+    public JTextField getTxtMini() {
+        return txtMini;
+    }
+
+    public JTextField getTxtSearchInstru() {
+        return txtSearchInstru;
+    }
+
+    public JTextField getTxtSerie() {
+        return txtSerie;
+    }
+
+    public JTextField getTxtTole() {
+        return txtTole;
+    }
    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClean;
+    private javax.swing.JButton btnCleanInstru;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDeleteInstru;
     private javax.swing.JButton btnPDF;
+    private javax.swing.JButton btnReport;
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSaveInstru;
     private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnSearchInstru;
+    private javax.swing.JComboBox<String> cmbType;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -416,12 +790,23 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel pInstrumento;
+    private javax.swing.JTable tbInstru;
     private javax.swing.JTable tblListInstruments;
     private javax.swing.JTextField txtCode;
+    private javax.swing.JTextField txtDescri;
+    private javax.swing.JTextField txtMaxi;
+    private javax.swing.JTextField txtMini;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtNameForSearch;
+    private javax.swing.JTextField txtSearchInstru;
+    private javax.swing.JTextField txtSerie;
+    private javax.swing.JTextField txtTole;
     private javax.swing.JTextField txtUnit;
     // End of variables declaration//GEN-END:variables
 }
