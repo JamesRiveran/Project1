@@ -28,7 +28,7 @@ public class CalibrationController implements ActionListener {
         view.getCalibrationBtnClean().addActionListener(this);
         view.getCalibrationBtnDelete().addActionListener(this);
         view.getCalibrationBtnSave().addActionListener(this);
-        view.getBtnDateCalibraton().addActionListener(this);
+       // view.getBtnDateCalibraton().addActionListener(this);
         view.getBtnPDFCalibration().addActionListener(this);
         view.getBtnSearchCalibration().addActionListener(this);
         view.setLocationRelativeTo(null);
