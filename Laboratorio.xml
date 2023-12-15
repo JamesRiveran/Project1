@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Instrumentos>
+  <Instrumento>
+    <Serie>1</Serie>
+    <Minimo>0</Minimo>
+    <Tolerancia>0</Tolerancia>
+    <Descripcion>12</Descripcion>
+    <Maximo>2</Maximo>
+    <Tipo>Item 1</Tipo>
+  </Instrumento>
+  <Instrumento>
+    <Serie>2</Serie>
+    <Minimo>0</Minimo>
+    <Tolerancia>0</Tolerancia>
+    <Descripcion>d</Descripcion>
+    <Maximo>3</Maximo>
+    <Tipo>Item 1</Tipo>
+  </Instrumento>
+</Instrumentos>

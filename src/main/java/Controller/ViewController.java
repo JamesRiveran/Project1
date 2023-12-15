@@ -4,21 +4,28 @@
  */
 package Controller;
 
+import Model.GeneratorPDF;
 import Model.InstrumentModulo2;
 import Model.InstrumentType;
 import Model.InstrumentsList;
 import Model.IntrumentListModulo2;
 import Model.XMLLoader;
 import View.Modulo;
+import com.itextpdf.text.DocumentException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import org.jdom2.JDOMException;
 
 /**
  *
@@ -29,7 +36,7 @@ public class ViewController implements ActionListener {
     InstrumentsList listInstrument;
     IntrumentListModulo2 listModulo2;
     ArrayList<String> listName;
-    String filePath = "Projecto.xml";
+    String filePath = "Laboratorio.xml";
 
     Modulo view;
 
@@ -59,8 +66,13 @@ public class ViewController implements ActionListener {
 
     }
 
-    private void showMessage(String errorMessage) {
-        JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
+    private void showMessage(String errorMessage, String info) {
+        if (info == "error") {
+            JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
+        } else if (info == "success") {
+            JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.INFORMATION_MESSAGE);
+
+        }
     }
 
     @Override
@@ -95,9 +107,9 @@ public class ViewController implements ActionListener {
 
                 // Verifica si el número de serie ya existe en la lista
                 if (view.getTxtSerie().getText().isEmpty() || view.getTxtDescri().getText().isEmpty() || view.getTxtMaxi().getText().isEmpty()) {
-                    showMessage("Debe llenar todos los campos");
+                    showMessage("Debe llenar todos los campos","error");
                 } else if (serieExists(serie)) {
-                    showMessage("Ya ese numero de serie existe");
+                    showMessage("Ya ese numero de serie existe","error");
                 } else {
                     InstrumentModulo2 newInstrument = new InstrumentModulo2(
                             view.getTxtSerie().getText(),
@@ -132,6 +144,54 @@ public class ViewController implements ActionListener {
                 tbInstruMouseClicked(evt);
             }
         });
+
+        //Limpiar
+        if (e.getSource().equals(view.getBtnCleanInstru())) {
+            clean();
+        }
+
+        //Reporte
+        if (e.getSource().equals(view.getBtnReport())) {
+            try {
+                ArrayList<InstrumentModulo2> instrumentListModulo2 = XMLLoader.loadFromXMLS(filePath);
+                String pdfFilePath = "Reporte.pdf";
+                GeneratorPDF.generatePDFReport(instrumentListModulo2, pdfFilePath, "modulo_2");
+            } catch (IOException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JDOMException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DocumentException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if (e.getSource().equals(view.getBtnDeleteInstru())) {
+            InstrumentModulo2 instrumentToDelete = new InstrumentModulo2(
+                    view.getTxtSerie().getText(),
+                    view.getTxtMini().getText(),
+                    view.getTxtTole().getText(),
+                    view.getTxtDescri().getText(),
+                    view.getTxtMaxi().getText(),
+                    view.getCmbType().getItemAt(0));
+            try {
+                XMLLoader.deleteInstrumentsFromXML(filePath, instrumentToDelete);
+                showMessage("Se borro exitosamente","succes");
+                clean();
+
+            } catch (JDOMException | IOException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void clean() {
+        view.getBtnDelete().setEnabled(false);
+        view.getTxtSerie().setEnabled(true);
+        view.getTxtSerie().setText("");
+        view.getTxtMini().setText("0");
+        view.getTxtTole().setText("0");
+        view.getTxtMaxi().setText("");
+        view.getTxtDescri().setText("");
     }
 
     public void tbInstruMouseClicked(MouseEvent evt) {

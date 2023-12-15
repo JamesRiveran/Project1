@@ -4,11 +4,17 @@
  */
 package Model;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import org.jdom2.Document;
@@ -107,7 +113,6 @@ public class XMLLoader {
         }
     }
 
-    //Validacion para comprobar si el tipo de instrumento ya existe, se actualizarán sus datos en lugar de crear uno nuevo.
     private static Element findInstrumentByCode(Element instruments, String code) {
         // Buscar un elemento por su código dentro del elemento raíz
         for (Element typeInstrument : instruments.getChildren("Tipo_de_instrumento")) {
@@ -123,59 +128,114 @@ public class XMLLoader {
         if (instrumentList == null || instrumentList.isEmpty()) {
             throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacía");
         }
-        try {
-            Document document;
-            Element instruments;
 
-            // Intenta cargar el documento existente si el archivo ya existe
-            try (FileReader reader = new FileReader(filePath)) {
+        try {
+            Document doc;
+
+            // Verificar si el archivo ya existe
+            File file = new File(filePath);
+            if (file.exists()) {
+                // Si el archivo existe, cargar el contenido existente
                 SAXBuilder saxBuilder = new SAXBuilder();
-                document = saxBuilder.build(reader);
-                instruments = document.getRootElement();
-            } catch (FileNotFoundException e) {
-                // Si el archivo no existe, crea un nuevo documento
-                instruments = new Element("Instrumentos");
-                document = new Document(instruments);
+                doc = saxBuilder.build(file);
+            } else {
+                // Si el archivo no existe, crear uno nuevo
+                doc = new Document(new Element("Instrumentos"));
             }
 
-            // Agrega los nuevos datos al documento
+            Element instruments = doc.getRootElement();
+
+            // Agregar los nuevos instrumentos
             for (InstrumentModulo2 instrument : instrumentList) {
-                Element typeInstrument = new Element("Instrumentos");
+                // Verificar si el tipo de instrumento ya existe en el archivo
+                Element existingInstrument = findInstrumentBySerie(instruments, instrument.getSerie());
 
-                Element serie = new Element("Serie");
-                serie.setText(instrument.getSerie());
-                Element min = new Element("Minimo");
-                min.setText(instrument.getMini());
-                Element tole = new Element("Tolerancia");
-                tole.setText(instrument.getTole());
-                Element descrip = new Element("Descripcion");
-                descrip.setText(instrument.getDescri());
-                Element max = new Element("Maximo");
-                max.setText(instrument.getMaxi());
-                Element type = new Element("Tipo");
-                type.setText(instrument.getType().toString());
+                if (existingInstrument == null) {
+                    // Si no existe, crear uno nuevo y agregarlo al elemento raíz
+                    Element typeInstrument = new Element("Instrumento");
+                    Element serie = new Element("Serie");
+                    serie.setText(instrument.getSerie());
+                    Element min = new Element("Minimo");
+                    min.setText(instrument.getMini());
+                    Element tole = new Element("Tolerancia");
+                    tole.setText(instrument.getTole());
+                    Element descrip = new Element("Descripcion");
+                    descrip.setText(instrument.getDescri());
+                    Element max = new Element("Maximo");
+                    max.setText(instrument.getMaxi());
+                    Element type = new Element("Tipo");
+                    type.setText(instrument.getType().toString());
 
-                typeInstrument.addContent(serie);
-                typeInstrument.addContent(min);
-                typeInstrument.addContent(tole);
-                typeInstrument.addContent(descrip);
-                typeInstrument.addContent(max);
-                typeInstrument.addContent(type);
+                    typeInstrument.addContent(serie);
+                    typeInstrument.addContent(min);
+                    typeInstrument.addContent(tole);
+                    typeInstrument.addContent(descrip);
+                    typeInstrument.addContent(max);
+                    typeInstrument.addContent(type);
+                    instruments.addContent(typeInstrument);
+                } else {
+                    // Si ya existe, actualizar sus datos según sea necesario
+                    existingInstrument.getChild("Serie").setText(instrument.getSerie());
+                    existingInstrument.getChild("Minimo").setText(instrument.getMini());
+                    existingInstrument.getChild("Tolerancia").setText(instrument.getTole());
+                    existingInstrument.getChild("Descripcion").setText(instrument.getDescri());
+                    existingInstrument.getChild("Maximo").setText(instrument.getMaxi());
+                    existingInstrument.getChild("Tipo").setText(instrument.getType());
 
-                instruments.addContent(typeInstrument);
+                }
             }
 
             XMLOutputter xml = new XMLOutputter();
             xml.setFormat(Format.getPrettyFormat());
 
-            // Utilizar try-with-resources para asegurar el cierre adecuado del recurso
-            try (FileWriter writer = new FileWriter(filePath)) {
-                xml.output(document, writer);
+            try (FileOutputStream fos = new FileOutputStream(filePath); OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8); BufferedWriter writer = new BufferedWriter(osw)) {
+                xml.output(doc, writer);
             }
         } catch (IOException | JDOMException ex) {
-            // Manejar la excepción específica y loguear el error
             ex.printStackTrace();
         }
+    }
+
+    public static void deleteInstrumentsFromXML(String filePath, InstrumentModulo2 instrumentToDelete) throws IOException, JDOMException {
+        SAXBuilder saxBuilder = new SAXBuilder();
+        Document document = saxBuilder.build(new File(filePath));
+
+        Element rootElement = document.getRootElement();
+        List<Element> instrumentElements = rootElement.getChildren("Instrumento");
+
+        for (Element instrumentElement : instrumentElements) {
+            String code = instrumentElement.getChildText("Serie");
+
+            // Verifica si el código coincide con el que se quiere eliminar
+            if (code.equals(instrumentToDelete.getSerie())) {
+                // Elimina el elemento del XML
+                instrumentElement.getParentElement().removeContent(instrumentElement);
+                break;  // Puedes salir del bucle si se eliminó el elemento
+            }
+        }
+        // Guarda los cambios en el archivo XML
+        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+        try {
+            xmlOutputter.output(document, new FileWriter(filePath));
+        } finally {
+            // Cierra el XMLOutputter fuera del bloque try
+            try {
+                xmlOutputter.output(document, new FileWriter(filePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //Validacion para comprobar si el tipo de instrumento ya existe, se actualizarán sus datos en lugar de crear uno nuevo.
+    private static Element findInstrumentBySerie(Element instruments, String code) {
+        // Buscar un elemento por su código dentro del elemento raíz
+        for (Element typeInstrument : instruments.getChildren("Instrumento")) {
+            if (typeInstrument.getChildText("Serie").equals(code)) {
+                return typeInstrument;
+            }
+        }
+        return null;
     }
 
     public static ArrayList<InstrumentModulo2> loadFromXMLS(String filePath) throws FileNotFoundException, IOException, JDOMException {
@@ -183,11 +243,11 @@ public class XMLLoader {
 
         SAXBuilder saxBuilder = new SAXBuilder(); // Puedes manejar estas excepciones de manera más específica según tus necesidades.
         Document document;
-        try (FileReader reader = new FileReader(filePath)) {
-            document = saxBuilder.build(reader);
+        try (FileInputStream fis = new FileInputStream(filePath); InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+            document = saxBuilder.build(isr);
         }
         Element rootElement = document.getRootElement();
-        List<Element> instrumentElements = rootElement.getChildren("Tipo_de_instrumento");
+        List<Element> instrumentElements = rootElement.getChildren("Instrumento");
         for (Element instrumentElement : instrumentElements) {
             String serie = instrumentElement.getChildText("Serie");
             String min = instrumentElement.getChildText("Minimo");
@@ -199,6 +259,7 @@ public class XMLLoader {
             // Crea un objeto InstrumentType y agrégalo a la lista
             InstrumentModulo2 instrumentModulo2 = new InstrumentModulo2(serie, min, tole, descrip, maxi, type);
             instruments.add(instrumentModulo2);
+            System.out.println(instruments);
         }
 
         return instruments;
