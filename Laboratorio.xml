@@ -15,4 +15,19 @@
     <Nombre>Cronometro</Nombre>
     <Unidad>Tiempo</Unidad>
   </Tipo_de_instrumento>
+  <Calibracion>
+    <Fecha>23</Fecha>
+    <Número>1</Número>
+    <Mediciones>2</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Fecha>23</Fecha>
+    <Número>1</Número>
+    <Mediciones>2</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Fecha>23/23/2023</Fecha>
+    <Número>1</Número>
+    <Mediciones>2</Mediciones>
+  </Calibracion>
 </Instrumentos>

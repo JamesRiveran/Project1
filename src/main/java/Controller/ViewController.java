@@ -53,7 +53,7 @@ public class ViewController implements ActionListener {
         view.setVisible(true);
     }
 
-    private void showMessage(String errorMessage) {
+    public void showMessage(String errorMessage) {
         JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
     }
 

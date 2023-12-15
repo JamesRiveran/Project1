@@ -48,13 +48,14 @@ public class Modulo extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        btnPDF = new javax.swing.JButton();
         btnSearch = new javax.swing.JButton();
         txtNameForSearch = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tblListInstruments = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
-        btnPDF = new javax.swing.JButton();
+        btnPDF1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -85,7 +86,7 @@ public class Modulo extends javax.swing.JFrame {
         jPanel12 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblCalibrations = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
 
         jRadioButton1.setText("jRadioButton1");
@@ -196,7 +197,7 @@ public class Modulo extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtNameForSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(175, 175, 175)
                 .addComponent(btnPDF)
@@ -253,8 +254,8 @@ public class Modulo extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setText("Listado");
 
-        btnPDF.setText("Reporte");
-        btnPDF.addActionListener(new java.awt.event.ActionListener() {
+        btnPDF1.setText("Reporte");
+        btnPDF1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPDFActionPerformed(evt);
             }
@@ -270,7 +271,7 @@ public class Modulo extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(124, 124, 124)
-                        .addComponent(btnPDF))
+                        .addComponent(btnPDF1))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -284,7 +285,7 @@ public class Modulo extends javax.swing.JFrame {
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnPDF)
+                .addComponent(btnPDF1)
                 .addGap(67, 67, 67))
         );
 
@@ -314,11 +315,11 @@ public class Modulo extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
+            .addGap(0, 931, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 425, Short.MAX_VALUE)
+            .addGap(0, 536, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Instrumento", jPanel2);
@@ -423,13 +424,14 @@ public class Modulo extends javax.swing.JFrame {
                     .addComponent(calibrationTxtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDateCalibraton))
                 .addGap(24, 24, 24)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(calibrationTxtMeasurement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(calibrationBtnSave)
                         .addComponent(calibrationBtnClean)
-                        .addComponent(calibrationBtnDelete)))
+                        .addComponent(calibrationBtnDelete))
+                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel12)
+                        .addComponent(calibrationTxtMeasurement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -531,7 +533,7 @@ public class Modulo extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setText("Listado");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblCalibrations.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -547,7 +549,7 @@ public class Modulo extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblCalibrations);
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -733,6 +735,15 @@ public class Modulo extends javax.swing.JFrame {
         return txtName;
     }
 
+    public JTable getTblCalibrations() {
+        return tblCalibrations;
+    }
+
+    public void setTblCalibrations(JTable tblCalibrations) {
+        this.tblCalibrations = tblCalibrations;
+    }
+    
+
     public void setTxtName(JTextField txtName) {
         this.txtName = txtName;
     }
@@ -842,6 +853,7 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JButton btnDateCalibraton;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnPDF;
+    private javax.swing.JButton btnPDF1;
     private javax.swing.JButton btnPDFCalibration;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;
@@ -881,13 +893,13 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tblCalibrations;
     private javax.swing.JTable tblListInstruments;
     private javax.swing.JTextField txtCode;
     private javax.swing.JTextField txtName;
