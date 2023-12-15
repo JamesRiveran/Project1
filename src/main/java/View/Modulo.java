@@ -85,7 +85,7 @@ public class Modulo extends javax.swing.JFrame {
         jPanel12 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblCalibrations = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
 
         jRadioButton1.setText("jRadioButton1");
@@ -528,7 +528,7 @@ public class Modulo extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setText("Listado");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblCalibrations.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -544,7 +544,7 @@ public class Modulo extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblCalibrations);
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -726,6 +726,15 @@ public class Modulo extends javax.swing.JFrame {
         return txtName;
     }
 
+    public JTable getTblCalibrations() {
+        return tblCalibrations;
+    }
+
+    public void setTblCalibrations(JTable tblCalibrations) {
+        this.tblCalibrations = tblCalibrations;
+    }
+    
+
     public void setTxtName(JTextField txtName) {
         this.txtName = txtName;
     }
@@ -880,7 +889,7 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tblCalibrations;
     private javax.swing.JTable tblListInstruments;
     private javax.swing.JTextField txtCode;
     private javax.swing.JTextField txtName;

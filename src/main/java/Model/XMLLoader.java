@@ -157,5 +157,60 @@ public class XMLLoader {
         }
         return null;
     }
+    
+    public static void saveToXMLCalibration(String filePath, List<Calibration> calibrationList) {
+        if (calibrationList == null || calibrationList.isEmpty()) {
+            throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacía");
+        }
+
+        try {
+            Document doc;
+
+            // Verificar si el archivo ya existe
+            File file = new File(filePath);
+            if (file.exists()) {
+                // Si el archivo existe, cargar el contenido existente
+                SAXBuilder saxBuilder = new SAXBuilder();
+                doc = saxBuilder.build(file);
+            } else {
+                // Si el archivo no existe, crear uno nuevo
+                doc = new Document(new Element("Instrumentos"));
+            }
+
+            Element instruments = doc.getRootElement();
+
+            // Agregar los nuevos instrumentos
+            for (Calibration calibration : calibrationList) {
+                    
+                    // Si no existe, crear uno nuevo y agregarlo al elemento raíz
+                    Element typeInstrument = new Element("Calibracion");
+
+                    Element date = new Element("Fecha");
+                    date.setText(calibration.getDate());
+                    Element number = new Element("Número");
+                    number.setText(Integer.toString(calibration.getId()));
+                    Element measurement = new Element("Mediciones");
+                    measurement.setText(Integer.toString(calibration.getMeasuring()));
+
+                    typeInstrument.addContent(date);
+                    typeInstrument.addContent(number);
+                    typeInstrument.addContent(measurement);
+
+                    instruments.addContent(typeInstrument);
+                
+            }
+
+            XMLOutputter xml = new XMLOutputter();
+            xml.setFormat(Format.getPrettyFormat());
+            
+            try (FileOutputStream fos = new FileOutputStream(filePath); 
+                    OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8); 
+                    BufferedWriter writer = new BufferedWriter(osw)) {
+                xml.output(doc, writer);
+            }
+        } catch (IOException | JDOMException ex) {
+            ex.printStackTrace();
+        }
+    }
 
 }
