@@ -35,7 +35,7 @@ public class ViewController implements ActionListener {
 
     InstrumentsList listInstrument;
     Modulo view;
-    String filePath = "Tipos de instrumentos.xml";
+    String filePath = "Laboratorio.xml";
 
     public ViewController() {
         this.listInstrument = new InstrumentsList();
@@ -59,6 +59,7 @@ public class ViewController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Guardar
         if (e.getSource().equals(view.getBtnSave())) {
             try {
                 if (view.getTxtCode().getText().trim().isEmpty()) {
@@ -70,9 +71,11 @@ public class ViewController implements ActionListener {
                 } else {
                     try {
                         InstrumentType newInstrumentForSave = new InstrumentType(
-                                view.getTxtCode().getText(), view.getTxtName().getText(), view.getTxtUnit().getText());
+                                view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
                         listInstrument.getList().add(newInstrumentForSave);
                         XMLLoader.saveToXML(filePath,listInstrument.getList());
+                        DefaultTableModel tableModel = (DefaultTableModel) view.getTblListInstruments().getModel();
+                        tableModel.insertRow(0, new Object[]{newInstrumentForSave.getCode(),newInstrumentForSave.getName(),newInstrumentForSave.getUnit()});
                     } catch (Exception ex) {
                         showMessage("Error al guardar en el archivo XML: " + ex.getMessage());
                     }
@@ -84,8 +87,18 @@ public class ViewController implements ActionListener {
                 showMessage(ex.getMessage());
             }
         }
+        //Buscar
         if (e.getSource().equals(view.getBtnSearch())) {
-
+            try {
+                ArrayList<InstrumentType> loadedList = XMLLoader.loadFromXML(filePath);
+                if(loadedList.isEmpty()){
+                    showMessage("No hay tipos de instrumentos registrados");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JDOMException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             String letterSearch = view.getTxtNameForSearch().getText();
             try {
                 filterByName(letterSearch);
@@ -101,7 +114,7 @@ public class ViewController implements ActionListener {
                 editRegister(evt);
             }
         });
-        
+        //Limpiar
         if(e.getSource().equals(view.getBtnClean())){
             view.getBtnDelete().setEnabled(false);
             view.getTxtCode().setEnabled(true);
@@ -109,6 +122,7 @@ public class ViewController implements ActionListener {
             view.getTxtName().setText("");
             view.getTxtUnit().setText("");
         }
+        //Eliminar
         if (e.getSource().equals(view.getBtnDelete())) {
             InstrumentType instrumentToDelete = new InstrumentType(
                     view.getTxtCode().getText(), view.getTxtName().getText(), view.getTxtUnit().getText());
@@ -118,6 +132,7 @@ public class ViewController implements ActionListener {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        //Reporte
         if(e.getSource().equals(view.getBtnPDF())){
             try {
                 ArrayList<InstrumentType> instrumentList = XMLLoader.loadFromXML(filePath);
@@ -149,7 +164,7 @@ public class ViewController implements ActionListener {
             view.getBtnDelete().setEnabled(true);
         }
     }
-
+    
     private void filterByName(String letterSearch) throws JDOMException, IOException {
         try {
             ArrayList<InstrumentType> loadedList = XMLLoader.loadFromXML(filePath);

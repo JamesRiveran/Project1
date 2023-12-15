@@ -4,11 +4,17 @@
  */
 package Model;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import org.jdom2.Document;
@@ -27,10 +33,11 @@ public class XMLLoader {
     public static ArrayList<InstrumentType> loadFromXML(String filePath) throws FileNotFoundException, IOException, JDOMException {
         ArrayList<InstrumentType> instrumentList = new ArrayList<>();
 
-        SAXBuilder saxBuilder = new SAXBuilder(); // Puedes manejar estas excepciones de manera más específica según tus necesidades.
+        SAXBuilder saxBuilder = new SAXBuilder(); 
         Document document;
-        try (FileReader reader = new FileReader(filePath)) {
-            document = saxBuilder.build(reader);
+        try (FileInputStream fis = new FileInputStream(filePath);
+            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+            document = saxBuilder.build(isr);
         }
         Element rootElement = document.getRootElement();
         List<Element> instrumentElements = rootElement.getChildren("Tipo_de_instrumento");
@@ -40,7 +47,7 @@ public class XMLLoader {
             String unit = instrumentElement.getChildText("Unidad");
 
             // Crea un objeto InstrumentType y agrégalo a la lista
-            InstrumentType instrumentType = new InstrumentType(code, name, unit);
+            InstrumentType instrumentType = new InstrumentType(code, unit, name);
             instrumentList.add(instrumentType);
         }
 
@@ -99,14 +106,16 @@ public class XMLLoader {
             XMLOutputter xml = new XMLOutputter();
             xml.setFormat(Format.getPrettyFormat());
 
-            try (FileWriter writer = new FileWriter(filePath)) {
+            try (FileOutputStream fos = new FileOutputStream(filePath); 
+                    OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8); 
+                    BufferedWriter writer = new BufferedWriter(osw)) {
                 xml.output(doc, writer);
             }
         } catch (IOException | JDOMException ex) {
             ex.printStackTrace();
         }
     }
- 
+
     public static void deleteFromXML(String filePath, InstrumentType instrumentToDelete) throws IOException, JDOMException {
         SAXBuilder saxBuilder = new SAXBuilder();
         Document document = saxBuilder.build(new File(filePath));

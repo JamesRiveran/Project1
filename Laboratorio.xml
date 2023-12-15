@@ -2,17 +2,17 @@
 <Instrumentos>
   <Tipo_de_instrumento>
     <Codigo>TER</Codigo>
-    <Nombre>PSI</Nombre>
-    <Unidad>Termometro</Unidad>
+    <Nombre>Termometro</Nombre>
+    <Unidad>Grados Celcius</Unidad>
   </Tipo_de_instrumento>
   <Tipo_de_instrumento>
     <Codigo>BAR</Codigo>
-    <Nombre>PSI</Nombre>
-    <Unidad>Barometro</Unidad>
+    <Nombre>Barometro</Nombre>
+    <Unidad>PSI</Unidad>
   </Tipo_de_instrumento>
   <Tipo_de_instrumento>
-    <Codigo>BRU</Codigo>
-    <Nombre>Aire</Nombre>
-    <Unidad>Brujula</Unidad>
+    <Codigo>CRO</Codigo>
+    <Nombre>Cronometro</Nombre>
+    <Unidad>Tiempo</Unidad>
   </Tipo_de_instrumento>
 </Instrumentos>
