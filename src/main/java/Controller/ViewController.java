@@ -8,6 +8,7 @@ import Model.InstrumentModulo2;
 import Model.InstrumentType;
 import Model.InstrumentsList;
 import Model.IntrumentListModulo2;
+import Model.XMLLoader;
 import View.Modulo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +29,7 @@ public class ViewController implements ActionListener {
     InstrumentsList listInstrument;
     IntrumentListModulo2 listModulo2;
     ArrayList<String> listName;
+    String filePath = "Projecto.xml";
 
     Modulo view;
 
@@ -36,6 +38,7 @@ public class ViewController implements ActionListener {
         this.view = new Modulo();
         this.listModulo2 = new IntrumentListModulo2();
         listName = new ArrayList<>();
+
     }
 
     public void start() {
@@ -54,6 +57,10 @@ public class ViewController implements ActionListener {
         view.getBtnDeleteInstru().addActionListener(this);
         view.getBtnSearchInstru().addActionListener(this);
 
+    }
+
+    private void showMessage(String errorMessage) {
+        JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
@@ -88,12 +95,12 @@ public class ViewController implements ActionListener {
 
                 // Verifica si el número de serie ya existe en la lista
                 if (view.getTxtSerie().getText().isEmpty() || view.getTxtDescri().getText().isEmpty() || view.getTxtMaxi().getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(view, "Error:Existen Campos vacios.", "Error", JOptionPane.ERROR_MESSAGE);
+                    showMessage("Debe llenar todos los campos");
                 } else if (serieExists(serie)) {
-                    JOptionPane.showMessageDialog(view, "Error: El número de serie ya existe en la lista.", "Error", JOptionPane.ERROR_MESSAGE);
+                    showMessage("Ya ese numero de serie existe");
                 } else {
                     InstrumentModulo2 newInstrument = new InstrumentModulo2(
-                            serie,
+                            view.getTxtSerie().getText(),
                             view.getTxtMini().getText(),
                             view.getTxtTole().getText(),
                             view.getTxtDescri().getText(),
@@ -102,7 +109,7 @@ public class ViewController implements ActionListener {
                     );
 
                     listModulo2.getList().add(newInstrument);
-
+                    XMLLoader.addToXML(filePath, listModulo2.getList());
                     // Actualizar la tabla después de agregar el nuevo instrumento
                     DefaultTableModel tableModel = (DefaultTableModel) view.getTbInstru().getModel();
                     tableModel.insertRow(0, new Object[]{newInstrument.getSerie(), newInstrument.getDescri(), newInstrument.getMini(), newInstrument.getMaxi(), newInstrument.getTole()});
@@ -145,6 +152,8 @@ public class ViewController implements ActionListener {
             view.getTxtMini().setText(mini);
             view.getTxtMaxi().setText(maxi);
             view.getTxtTole().setText(tole);
+
+            view.getBtnDeleteInstru().setEnabled(true);
         }
     }
 

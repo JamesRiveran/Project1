@@ -20,6 +20,7 @@ public class Modulo extends javax.swing.JFrame {
      */
     public Modulo() {
         initComponents();
+        btnDeleteInstru.setEnabled(false);
     }
 
     /**

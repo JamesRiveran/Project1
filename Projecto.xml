@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Instrumentos>
+  <Instrumentos>
+    <Serie>1</Serie>
+    <Minimo>012</Minimo>
+    <Tolerancia>022</Tolerancia>
+    <Descripcion>Hola</Descripcion>
+    <Maximo>333</Maximo>
+    <Tipo>Item 1</Tipo>
+  </Instrumentos>
+  <Instrumentos>
+    <Serie>1</Serie>
+    <Minimo>012</Minimo>
+    <Tolerancia>022</Tolerancia>
+    <Descripcion>Hola</Descripcion>
+    <Maximo>333</Maximo>
+    <Tipo>Item 1</Tipo>
+  </Instrumentos>
+  <Instrumentos>
+    <Serie>2</Serie>
+    <Minimo>012</Minimo>
+    <Tolerancia>022</Tolerancia>
+    <Descripcion>Hola</Descripcion>
+    <Maximo>333</Maximo>
+    <Tipo>Item 1</Tipo>
+  </Instrumentos>
+</Instrumentos>
