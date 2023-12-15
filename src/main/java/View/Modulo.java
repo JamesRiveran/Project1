@@ -66,7 +66,7 @@ public class Modulo extends javax.swing.JFrame {
         calibrationTxtMeasurement = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         calibrationTxtDate = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnDateCalibraton = new javax.swing.JButton();
         calibrationBtnSave = new javax.swing.JButton();
         calibrationBtnClean = new javax.swing.JButton();
         calibrationBtnDelete = new javax.swing.JButton();
@@ -78,8 +78,8 @@ public class Modulo extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         txtNumberSearch = new javax.swing.JTextField();
-        btnPDFC = new javax.swing.JButton();
-        btnSearchC = new javax.swing.JButton();
+        btnPDFCalibration = new javax.swing.JButton();
+        btnSearchCalibration = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -345,7 +345,7 @@ public class Modulo extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("...");
+        btnDateCalibraton.setText("...");
 
         calibrationBtnSave.setText("Guardar");
 
@@ -372,7 +372,7 @@ public class Modulo extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(calibrationTxtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDateCalibraton, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(145, 145, 145))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel12)
@@ -396,7 +396,7 @@ public class Modulo extends javax.swing.JFrame {
                     .addComponent(calibrationTxtNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
                     .addComponent(calibrationTxtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnDateCalibraton))
                 .addGap(24, 24, 24)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -462,14 +462,14 @@ public class Modulo extends javax.swing.JFrame {
             }
         });
 
-        btnPDFC.setText("Reporte");
-        btnPDFC.addActionListener(new java.awt.event.ActionListener() {
+        btnPDFCalibration.setText("Reporte");
+        btnPDFCalibration.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPDFCActionPerformed(evt);
+                btnPDFCalibrationActionPerformed(evt);
             }
         });
 
-        btnSearchC.setText("Buscar");
+        btnSearchCalibration.setText("Buscar");
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -485,9 +485,9 @@ public class Modulo extends javax.swing.JFrame {
                         .addComponent(txtNumberSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel15))
                 .addGap(18, 18, 18)
-                .addComponent(btnSearchC)
+                .addComponent(btnSearchCalibration)
                 .addGap(18, 18, 18)
-                .addComponent(btnPDFC)
+                .addComponent(btnPDFCalibration)
                 .addGap(705, 705, 705))
         );
         jPanel11Layout.setVerticalGroup(
@@ -498,8 +498,8 @@ public class Modulo extends javax.swing.JFrame {
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
                     .addComponent(txtNumberSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPDFC)
-                    .addComponent(btnSearchC))
+                    .addComponent(btnPDFCalibration)
+                    .addComponent(btnSearchCalibration))
                 .addGap(0, 14, Short.MAX_VALUE))
         );
 
@@ -636,9 +636,9 @@ public class Modulo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumberSearchActionPerformed
 
-    private void btnPDFCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFCActionPerformed
+    private void btnPDFCalibrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFCalibrationActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnPDFCActionPerformed
+    }//GEN-LAST:event_btnPDFCalibrationActionPerformed
 
     public JTable getTblListInstruments() {
         return tblListInstruments;
@@ -721,23 +721,105 @@ public class Modulo extends javax.swing.JFrame {
         this.txtUnit = txtUnit;
     }
 
+    public JButton getBtnPDFCalibration() {
+        return btnPDFCalibration;
+    }
+
+    public void setBtnPDFCalibration(JButton btnPDFCalibration) {
+        this.btnPDFCalibration = btnPDFCalibration;
+    }
+
+    public JButton getBtnSearchCalibration() {
+        return btnSearchCalibration;
+    }
+
+    public void setBtnSearchCalibration(JButton btnSearchCalibration) {
+        this.btnSearchCalibration = btnSearchCalibration;
+    }
+
+    public JButton getCalibrationBtnClean() {
+        return calibrationBtnClean;
+    }
+
+    public void setCalibrationBtnClean(JButton calibrationBtnClean) {
+        this.calibrationBtnClean = calibrationBtnClean;
+    }
+
+    public JButton getCalibrationBtnDelete() {
+        return calibrationBtnDelete;
+    }
+
+    public void setCalibrationBtnDelete(JButton calibrationBtnDelete) {
+        this.calibrationBtnDelete = calibrationBtnDelete;
+    }
+
+    public JButton getCalibrationBtnSave() {
+        return calibrationBtnSave;
+    }
+
+    public void setCalibrationBtnSave(JButton calibrationBtnSave) {
+        this.calibrationBtnSave = calibrationBtnSave;
+    }
+
+    public JTextField getCalibrationTxtDate() {
+        return calibrationTxtDate;
+    }
+
+    public void setCalibrationTxtDate(JTextField calibrationTxtDate) {
+        this.calibrationTxtDate = calibrationTxtDate;
+    }
+
+    public JTextField getCalibrationTxtMeasurement() {
+        return calibrationTxtMeasurement;
+    }
+
+    public void setCalibrationTxtMeasurement(JTextField calibrationTxtMeasurement) {
+        this.calibrationTxtMeasurement = calibrationTxtMeasurement;
+    }
+
+    public JTextField getCalibrationTxtNumber() {
+        return calibrationTxtNumber;
+    }
+
+    public void setCalibrationTxtNumber(JTextField calibrationTxtNumber) {
+        this.calibrationTxtNumber = calibrationTxtNumber;
+    }
+
+    public JTextField getTxtNumberSearch() {
+        return txtNumberSearch;
+    }
+
+    public void setTxtNumberSearch(JTextField txtNumberSearch) {
+        this.txtNumberSearch = txtNumberSearch;
+    }
+
+    public JButton getBtnDateCalibraton() {
+        return btnDateCalibraton;
+    }
+
+    public void setBtnDateCalibraton(JButton btnDateCalibraton) {
+        this.btnDateCalibraton = btnDateCalibraton;
+    }
+    
+    
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClean;
+    private javax.swing.JButton btnDateCalibraton;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnPDF;
-    private javax.swing.JButton btnPDFC;
+    private javax.swing.JButton btnPDFCalibration;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JButton btnSearchC;
+    private javax.swing.JButton btnSearchCalibration;
     private javax.swing.JButton calibrationBtnClean;
     private javax.swing.JButton calibrationBtnDelete;
     private javax.swing.JButton calibrationBtnSave;
     private javax.swing.JTextField calibrationTxtDate;
     private javax.swing.JTextField calibrationTxtMeasurement;
     private javax.swing.JTextField calibrationTxtNumber;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

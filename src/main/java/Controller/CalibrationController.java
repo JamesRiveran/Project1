@@ -4,42 +4,43 @@
  */
 package Controller;
 
-import Model.Calibration;
-import java.util.ArrayList;
+import Model.CalibrationList;
+import View.Modulo;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 
 /**
  *
  * @author james
  */
-public class CalibrationController {
-    private ArrayList<Calibration> list;
-
-    public CalibrationController(ArrayList<Calibration> list) {
-        this.list = list;
-    }
-
+public class CalibrationController implements ActionListener {
+    CalibrationList calibrationList;
+    Modulo view;
+    static int idCalibration=0;
+   
     public CalibrationController() {
-        this.list = new ArrayList<Calibration> ();
+        this.calibrationList = new CalibrationList();
+        this.view = new Modulo();
     }
-
-    public ArrayList<Calibration> getList() {
-        return list;
-    }
-
-    public void setList(ArrayList<Calibration> list) {
-        this.list = list;
+    
+    public void startCalibration(){
+        view.getCalibrationBtnClean().addActionListener(this);
+        view.getCalibrationBtnDelete().addActionListener(this);
+        view.getCalibrationBtnSave().addActionListener(this);
+        view.getBtnDateCalibraton().addActionListener(this);
+        view.getBtnPDFCalibration().addActionListener(this);
+        view.getBtnSearchCalibration().addActionListener(this);
+        view.setLocationRelativeTo(null);
+        view.setVisible(true);
+        view.getCalibrationTxtNumber().setEnabled(false);
     }
 
     @Override
-    public String toString() {
-        String mediciones =" ";
-        for (int i = 0; i < list.size(); i++) {
-            mediciones+=list.get(i).toString()+"\n";
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource().equals(view.getBtnSave())){
+            
         }
-        return "Mediciones" + list ;
     }
-    
-    
-    
     
 }

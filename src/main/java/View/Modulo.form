@@ -492,7 +492,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="calibrationTxtDate" min="-2" pref="123" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton1" min="-2" pref="21" max="-2" attributes="0"/>
+                                  <Component id="btnDateCalibraton" min="-2" pref="21" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="145" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
@@ -521,7 +521,7 @@
                               <Component id="calibrationTxtNumber" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="calibrationTxtDate" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnDateCalibraton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -574,7 +574,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="calibrationTxtDateActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton1">
+                <Component class="javax.swing.JButton" name="btnDateCalibraton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="..."/>
                   </Properties>
@@ -695,9 +695,9 @@
                               <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnSearchC" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnSearchCalibration" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnPDFC" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnPDFCalibration" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="705" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -710,8 +710,8 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtNumberSearch" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnPDFC" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnSearchC" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnPDFCalibration" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnSearchCalibration" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="14" max="32767" attributes="0"/>
                       </Group>
@@ -737,15 +737,15 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNumberSearchActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnPDFC">
+                <Component class="javax.swing.JButton" name="btnPDFCalibration">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Reporte"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPDFCActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPDFCalibrationActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnSearchC">
+                <Component class="javax.swing.JButton" name="btnSearchCalibration">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Buscar"/>
                   </Properties>
