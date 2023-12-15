@@ -11,6 +11,7 @@ package Model;
  */
 public class InstrumentType {
 
+
     private String code, unit, name;
     
     public InstrumentType(String code, String unit, String name) {
