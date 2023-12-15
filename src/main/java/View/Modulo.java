@@ -68,11 +68,10 @@ public class Modulo extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         calibrationTxtMeasurement = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        calibrationTxtDate = new javax.swing.JTextField();
-        btnDateCalibraton = new javax.swing.JButton();
         calibrationBtnSave = new javax.swing.JButton();
         calibrationBtnClean = new javax.swing.JButton();
         calibrationBtnDelete = new javax.swing.JButton();
+        calibrationDateChooser = new com.toedter.calendar.JDateChooser();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -365,19 +364,15 @@ public class Modulo extends javax.swing.JFrame {
 
         jLabel13.setText("Fecha");
 
-        calibrationTxtDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                calibrationTxtDateActionPerformed(evt);
-            }
-        });
-
-        btnDateCalibraton.setText("...");
-
         calibrationBtnSave.setText("Guardar");
 
         calibrationBtnClean.setText("Limpiar");
 
         calibrationBtnDelete.setText("Borrar");
+
+        calibrationDateChooser.setDateFormatString("dd/MM/yyyy");
+        calibrationDateChooser.setMaxSelectableDate(new java.util.Date());
+        calibrationDateChooser.setMinSelectableDate(new java.util.Date(315558093000L));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -389,49 +384,49 @@ public class Modulo extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(calibrationTxtNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(calibrationTxtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDateCalibraton, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(145, 145, 145))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(calibrationTxtMeasurement, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(calibrationBtnSave)
-                        .addGap(18, 18, 18)
-                        .addComponent(calibrationBtnClean)
-                        .addGap(18, 18, 18)
-                        .addComponent(calibrationBtnDelete)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(calibrationTxtNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(calibrationDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(calibrationTxtMeasurement, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(calibrationBtnSave)
+                                .addGap(18, 18, 18)
+                                .addComponent(calibrationBtnClean)
+                                .addGap(18, 18, 18)
+                                .addComponent(calibrationBtnDelete)))
+                        .addGap(0, 86, Short.MAX_VALUE))))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(calibrationTxtNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13)
-                    .addComponent(calibrationTxtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDateCalibraton))
-                .addGap(24, 24, 24)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(calibrationBtnSave)
-                        .addComponent(calibrationBtnClean)
-                        .addComponent(calibrationBtnDelete))
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel12)
-                        .addComponent(calibrationTxtMeasurement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(calibrationTxtNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(calibrationBtnSave)
+                                .addComponent(calibrationBtnClean)
+                                .addComponent(calibrationBtnDelete))
+                            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel12)
+                                .addComponent(calibrationTxtMeasurement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(calibrationDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -652,10 +647,6 @@ public class Modulo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPDFActionPerformed
 
 
-    private void calibrationTxtDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calibrationTxtDateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_calibrationTxtDateActionPerformed
-
     private void calibrationTxtNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calibrationTxtNumberActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_calibrationTxtNumberActionPerformed
@@ -804,13 +795,13 @@ public class Modulo extends javax.swing.JFrame {
         this.calibrationBtnSave = calibrationBtnSave;
     }
 
-    public JTextField getCalibrationTxtDate() {
-        return calibrationTxtDate;
-    }
+    //public JTextField getCalibrationTxtDate() {
+        //return calibrationTxtDate;
+    //}
 
-    public void setCalibrationTxtDate(JTextField calibrationTxtDate) {
-        this.calibrationTxtDate = calibrationTxtDate;
-    }
+    //public void setCalibrationTxtDate(JTextField calibrationTxtDate) {
+        //this.calibrationTxtDate = calibrationTxtDate;
+    //}
 
     public JTextField getCalibrationTxtMeasurement() {
         return calibrationTxtMeasurement;
@@ -836,13 +827,13 @@ public class Modulo extends javax.swing.JFrame {
         this.txtNumberSearch = txtNumberSearch;
     }
 
-    public JButton getBtnDateCalibraton() {
-        return btnDateCalibraton;
-    }
+    //public JButton getBtnDateCalibraton() {
+        //return btnDateCalibraton;
+    //}
 
-    public void setBtnDateCalibraton(JButton btnDateCalibraton) {
-        this.btnDateCalibraton = btnDateCalibraton;
-    }
+    //public void setBtnDateCalibraton(JButton btnDateCalibraton) {
+        //this.btnDateCalibraton = btnDateCalibraton;
+    //}
     
     
 
@@ -850,7 +841,6 @@ public class Modulo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClean;
-    private javax.swing.JButton btnDateCalibraton;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnPDF;
     private javax.swing.JButton btnPDF1;
@@ -861,7 +851,7 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JButton calibrationBtnClean;
     private javax.swing.JButton calibrationBtnDelete;
     private javax.swing.JButton calibrationBtnSave;
-    private javax.swing.JTextField calibrationTxtDate;
+    private com.toedter.calendar.JDateChooser calibrationDateChooser;
     private javax.swing.JTextField calibrationTxtMeasurement;
     private javax.swing.JTextField calibrationTxtNumber;
     private javax.swing.JLabel jLabel1;
