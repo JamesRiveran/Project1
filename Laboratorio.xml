@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Instrumentos>
+  <Tipo_de_instrumento>
+    <Codigo>TER</Codigo>
+    <Nombre>Termometro</Nombre>
+    <Unidad>Grados Celcius</Unidad>
+  </Tipo_de_instrumento>
+  <Tipo_de_instrumento>
+    <Codigo>BAR</Codigo>
+    <Nombre>Barometro</Nombre>
+    <Unidad>PSI</Unidad>
+  </Tipo_de_instrumento>
+  <Tipo_de_instrumento>
+    <Codigo>CRO</Codigo>
+    <Nombre>Cronometro</Nombre>
+    <Unidad>Tiempo</Unidad>
+  </Tipo_de_instrumento>
+</Instrumentos>
