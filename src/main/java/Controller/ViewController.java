@@ -187,6 +187,8 @@ public class ViewController implements ActionListener {
                     } else {
                         showMessage("Ya ese numero de serie existe", "error");
                     }
+                } else if (Integer.parseInt(view.getTxtMini().getText()) > Integer.parseInt(view.getTxtMaxi().getText())) {
+                    showMessage("El minimo es mayor que el maximo", "error");
                 } else {
                     informationForXml();
                     // Actualizar la tabla después de agregar el nuevo instrumento
