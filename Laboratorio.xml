@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Instrumentos>
-  <Instrumento>
-    <Serie>3</Serie>
-    <Minimo>0</Minimo>
-    <Tolerancia>0</Tolerancia>
-    <Descripcion>12</Descripcion>
-    <Maximo>sd</Maximo>
-    <Tipo>Item 1</Tipo>
-  </Instrumento>
-  <Instrumento>
-    <Serie>12</Serie>
-    <Minimo>0</Minimo>
-    <Tolerancia>0</Tolerancia>
-    <Descripcion>ss</Descripcion>
-    <Maximo>3344</Maximo>
-    <Tipo>Item 1</Tipo>
-  </Instrumento>
+  <Tipo_de_instrumento>
+    <Codigo>TER</Codigo>
+    <Nombre>Termometro</Nombre>
+    <Unidad>Grados Celcius</Unidad>
+  </Tipo_de_instrumento>
+  <Tipo_de_instrumento>
+    <Codigo>BAR</Codigo>
+    <Nombre>Barometro</Nombre>
+    <Unidad>PSI</Unidad>
+  </Tipo_de_instrumento>
+  <Tipo_de_instrumento>
+    <Codigo>CRO</Codigo>
+    <Nombre>Cronometro</Nombre>
+    <Unidad>Tiempo</Unidad>
+  </Tipo_de_instrumento>
+  <idCounter>3</idCounter>
+  <Calibracion>
+    <Fecha>2023/12/04</Fecha>
+    <Numero>1</Numero>
+    <Mediciones>6</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Fecha>2023/12/04</Fecha>
+    <Numero>1</Numero>
+    <Mediciones>6</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Fecha>2023/12/04</Fecha>
+    <Numero>2</Numero>
+    <Mediciones>86</Mediciones>
+  </Calibracion>
 </Instrumentos>

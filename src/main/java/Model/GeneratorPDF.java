@@ -22,7 +22,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+
 import java.util.List;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,6 +35,9 @@ import java.util.logging.Logger;
 public class GeneratorPDF {
 
     public static <T> void generatePDFReport(List<T> itemList, String filePath, String modulo)
+
+    public static void generatePDFReport(ArrayList<InstrumentType> instrumentList, String filePath)
+
             throws DocumentException, FileNotFoundException {
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(filePath));
@@ -50,12 +55,14 @@ public class GeneratorPDF {
             addInstrumentListForInstrument(document, (ArrayList<InstrumentModulo2>) itemList);
         }
 
+
         // Cierra el documento
         document.close();
     }
 
     private static void addHeader(Document document) throws DocumentException {
         //try {
+
 
         Date currentDate = new Date();
 
@@ -66,6 +73,18 @@ public class GeneratorPDF {
         header.setAlignment(Element.ALIGN_RIGHT);
         document.add(header);
         /*
+
+            
+            Date currentDate = new Date();
+            
+            String dateTimeFormat = "dd-MM-yyyy HH:mm:ss";
+            String formattedDate = new java.text.SimpleDateFormat(dateTimeFormat).format(currentDate);
+
+            Paragraph header = new Paragraph("Fecha y hora: " + formattedDate, FontFactory.getFont(FontFactory.HELVETICA, 12));
+            header.setAlignment(Element.ALIGN_RIGHT);
+            document.add(header);
+            /*
+
             document.add(Chunk.NEWLINE);
 
             String imagePath = "/resource/Icon.png";
@@ -78,14 +97,15 @@ public class GeneratorPDF {
 
             document.add(image);*/
 
-        document.add(Chunk.NEWLINE);
 
-        Paragraph title = new Paragraph("Sistema de Laboratorio Industrial", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
-        title.setAlignment(Element.ALIGN_CENTER);
-        document.add(title);
+            document.add(Chunk.NEWLINE);
 
-        // Agrega un espacio en blanco después del título
-        document.add(Chunk.NEWLINE);
+            Paragraph title = new Paragraph("Sistema de Laboratorio Industrial", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+            title.setAlignment(Element.ALIGN_CENTER);
+            document.add(title);
+
+            // Agrega un espacio en blanco después del título
+            document.add(Chunk.NEWLINE);
         /*} catch (IOException e) {
             Logger.getLogger(GeneratorPDF.class.getName()).log(Level.SEVERE, null, e);
         }*/
@@ -94,7 +114,8 @@ public class GeneratorPDF {
     private static void addInstrumentList(Document document, ArrayList<InstrumentType> instrumentList)
             throws DocumentException {
         // Crea una tabla con tres columnas
-        PdfPTable table = new PdfPTable(6);
+
+        PdfPTable table = new PdfPTable(3);
         table.setWidthPercentage(100); // La tabla ocupa el 100% del ancho disponible
 
         // Encabezados de columna con fondo de color #911414

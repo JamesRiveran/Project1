@@ -4,19 +4,22 @@
  */
 package Model;
 
+
 /**
  *
  * @author james
  */
 public class InstrumentType {
-        private String code,unit,name;
 
+
+    private String code, unit, name;
+    
     public InstrumentType(String code, String unit, String name) {
         this.code = code;
         this.unit = unit;
         this.name = name;
     }
-    
+
     public InstrumentType() {
         this.code = "";
         this.unit = "";
@@ -46,7 +49,7 @@ public class InstrumentType {
     public void setName(String name) {
         this.name = name;
     }
-
+    
     @Override
     public String toString() {
         return "Código: " + code + "\n Unidad: " + unit + "\n Nombre: " + name ;
