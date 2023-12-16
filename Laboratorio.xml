@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Instrumentos>
   <Instrumento>
-    <Serie>1</Serie>
+    <Serie>3</Serie>
     <Minimo>0</Minimo>
     <Tolerancia>0</Tolerancia>
     <Descripcion>12</Descripcion>
-    <Maximo>2</Maximo>
+    <Maximo>sd</Maximo>
     <Tipo>Item 1</Tipo>
   </Instrumento>
   <Instrumento>
-    <Serie>2</Serie>
+    <Serie>12</Serie>
     <Minimo>0</Minimo>
     <Tolerancia>0</Tolerancia>
-    <Descripcion>d</Descripcion>
-    <Maximo>3</Maximo>
+    <Descripcion>ss</Descripcion>
+    <Maximo>3344</Maximo>
     <Tipo>Item 1</Tipo>
   </Instrumento>
 </Instrumentos>

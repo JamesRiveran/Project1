@@ -251,15 +251,14 @@ public class XMLLoader {
         for (Element instrumentElement : instrumentElements) {
             String serie = instrumentElement.getChildText("Serie");
             String min = instrumentElement.getChildText("Minimo");
-            String descrip = instrumentElement.getChildText("Tolerancia");
-            String tole = instrumentElement.getChildText("Descripcion");
+            String descrip = instrumentElement.getChildText("Descripcion");
+            String tole = instrumentElement.getChildText("Tolerancia");
             String maxi = instrumentElement.getChildText("Maximo");
             String type = instrumentElement.getChildText("Tipo");
 
             // Crea un objeto InstrumentType y agrégalo a la lista
             InstrumentModulo2 instrumentModulo2 = new InstrumentModulo2(serie, min, tole, descrip, maxi, type);
             instruments.add(instrumentModulo2);
-            System.out.println(instruments);
         }
 
         return instruments;
