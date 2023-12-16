@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import javax.swing.table.DefaultTableModel;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -157,7 +158,7 @@ public class XMLLoader {
         }
         return null;
     }
-    
+   
     public static void saveToXMLCalibration(String filePath, List<Calibration> calibrationList) {
         if (calibrationList == null || calibrationList.isEmpty()) {
             throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacía");
@@ -178,39 +179,138 @@ public class XMLLoader {
             }
 
             Element instruments = doc.getRootElement();
-
             // Agregar los nuevos instrumentos
             for (Calibration calibration : calibrationList) {
-                    
-                    // Si no existe, crear uno nuevo y agregarlo al elemento raíz
-                    Element typeInstrument = new Element("Calibracion");
+                Element typeInstrument = new Element("Calibracion");
 
-                    Element date = new Element("Fecha");
-                    date.setText(calibration.getDate());
-                    Element number = new Element("Número");
-                    number.setText(Integer.toString(calibration.getId()));
-                    Element measurement = new Element("Mediciones");
-                    measurement.setText(Integer.toString(calibration.getMeasuring()));
+                Element date = new Element("Fecha");
+                date.setText(calibration.getDate());
+                Element number = new Element("Numero");
+                number.setText(Integer.toString(calibration.getId()));
+                Element measurement = new Element("Mediciones");
+                measurement.setText(Integer.toString(calibration.getMeasuring()));
 
-                    typeInstrument.addContent(date);
-                    typeInstrument.addContent(number);
-                    typeInstrument.addContent(measurement);
+                typeInstrument.addContent(date);
+                typeInstrument.addContent(number);
+                typeInstrument.addContent(measurement);
 
-                    instruments.addContent(typeInstrument);
-                
+                instruments.addContent(typeInstrument);
             }
 
-            XMLOutputter xml = new XMLOutputter();
-            xml.setFormat(Format.getPrettyFormat());
-            
-            try (FileOutputStream fos = new FileOutputStream(filePath); 
-                    OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8); 
-                    BufferedWriter writer = new BufferedWriter(osw)) {
-                xml.output(doc, writer);
+            // Buscar la etiqueta <idCounter>
+            Element idCounterElement = doc.getRootElement().getChild("idCounter");
+            int updatedIdCounter;
+            if (idCounterElement == null) {
+                // Si la etiqueta <idCounter> no existe, crear una nueva con valor 1
+                idCounterElement = new Element("idCounter");
+                updatedIdCounter = 1;
+                doc.getRootElement().addContent(idCounterElement);
+            } else {
+                // Si la etiqueta <idCounter> existe, obtener el valor actual y aumentarlo en 1
+                int currentIdCounter = Integer.parseInt(idCounterElement.getText());
+                updatedIdCounter = currentIdCounter + 1;
             }
+
+            // Actualizar el valor del contador
+            idCounterElement.setText(Integer.toString(updatedIdCounter));
+
+            // Guardar los cambios en el archivo XML
+            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+            try (FileWriter writer = new FileWriter(filePath)) {
+                xmlOutputter.output(doc, writer);
+            }
+
+            System.out.println("Se ha guardado y actualizado el archivo XML.");
+
         } catch (IOException | JDOMException ex) {
             ex.printStackTrace();
         }
     }
+
+
+    
+   
+
+     public static int getIdCounterFromXML(String filePath) throws IOException, JDOMException {
+        try (FileInputStream fis = new FileInputStream(filePath);
+             InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+            Document document = new SAXBuilder().build(isr);
+            Element rootElement = document.getRootElement();
+            Element idCounterElement = rootElement.getChild("idCounter");
+
+            if (idCounterElement != null) {
+                String idCounterText = idCounterElement.getTextTrim();
+                return Integer.parseInt(idCounterText);
+            } else {
+                throw new RuntimeException("La etiqueta <idCounter> no está presente en el archivo XML.");
+            }
+        }
+    }
+
+    
+    
+    public static void ensureIdCounterExists(String filePath) {
+        try {
+            // Construir el documento XML desde el archivo existente
+            SAXBuilder saxBuilder = new SAXBuilder();
+            Document document;
+            File file = new File(filePath);
+            document = saxBuilder.build(file);
+
+            // Obtener el elemento raíz del documento
+            Element rootElement = document.getRootElement();
+
+            // Buscar la etiqueta <idCounter>
+            Element idCounterElement = rootElement.getChild("idCounter");
+
+            if (idCounterElement == null) {
+                // Si la etiqueta <idCounter> no existe, crear una nueva y asignarle el valor predeterminado
+                Element newIdCounterElement = new Element("idCounter");
+                newIdCounterElement.setText("1"); // Valor predeterminado
+                rootElement.addContent(newIdCounterElement);
+            }
+
+            // Guardar los cambios en el archivo XML
+            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+            try (FileWriter writer = new FileWriter(filePath)) {
+                xmlOutputter.output(document, writer);
+            }
+
+            System.out.println("Se ha actualizado el valor de <idCounter> en el archivo XML.");
+
+        } catch (IOException | org.jdom2.JDOMException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static DefaultTableModel loadAndFilterXMLData(String filePath, String filter) {
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("Fecha");
+    model.addColumn("Número");
+    model.addColumn("Mediciones");
+
+    try {
+        SAXBuilder saxBuilder = new SAXBuilder();
+        Document document = saxBuilder.build(new File(filePath));
+
+        Element rootElement = document.getRootElement();
+        List<Element> calibracionElements = rootElement.getChildren("Calibracion");
+
+        for (Element calibracionElement : calibracionElements) {
+            String fecha = calibracionElement.getChildText("Fecha");
+            int numero = Integer.parseInt(calibracionElement.getChildText("Numero"));
+            int mediciones = Integer.parseInt(calibracionElement.getChildText("Mediciones"));
+
+            // Aplicar el filtro (si es necesario)
+            if (filter == null || filter.isEmpty() || fecha.toLowerCase().contains(filter.toLowerCase())) {
+                model.addRow(new Object[]{fecha, numero, mediciones});
+            }
+        }
+    } catch (IOException | JDOMException e) {
+        e.printStackTrace();
+    }
+
+    return model;
+}
 
 }

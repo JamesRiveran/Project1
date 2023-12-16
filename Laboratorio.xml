@@ -15,34 +15,5 @@
     <Nombre>Cronometro</Nombre>
     <Unidad>Tiempo</Unidad>
   </Tipo_de_instrumento>
-  <Calibracion>
-    <Fecha>23</Fecha>
-    <Número>1</Número>
-    <Mediciones>2</Mediciones>
-  </Calibracion>
-  <Calibracion>
-    <Fecha>23</Fecha>
-    <Número>1</Número>
-    <Mediciones>2</Mediciones>
-  </Calibracion>
-  <Calibracion>
-    <Fecha>23/23/2023</Fecha>
-    <Número>1</Número>
-    <Mediciones>2</Mediciones>
-  </Calibracion>
-  <Calibracion>
-    <Fecha>dd/MM/yyyy</Fecha>
-    <Número>3</Número>
-    <Mediciones>2</Mediciones>
-  </Calibracion>
-  <Calibracion>
-    <Fecha>12/12/2023</Fecha>
-    <Número>232432</Número>
-    <Mediciones>4</Mediciones>
-  </Calibracion>
-  <Calibracion>
-    <Fecha>2023/12/15</Fecha>
-    <Número>342</Número>
-    <Mediciones>3</Mediciones>
-  </Calibracion>
+  <idCounter>1</idCounter>
 </Instrumentos>

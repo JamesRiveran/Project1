@@ -6,6 +6,8 @@ package com.mycompany.project1;
 
 import Controller.CalibrationController;
 import Controller.ViewController;
+import java.io.IOException;
+import org.jdom2.JDOMException;
 
 /**
  *
@@ -13,7 +15,7 @@ import Controller.ViewController;
  */
 public class Project1 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JDOMException, IOException {
         Controller.ViewController view = new ViewController();
         Controller.CalibrationController viewCalibration = new CalibrationController();
         view.start();
