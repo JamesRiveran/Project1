@@ -46,7 +46,6 @@ public class ViewController implements ActionListener {
         this.listInstrument = new InstrumentsList();
         this.view = new Modulo();
         this.listModulo2 = new IntrumentListModulo2();
-        listName = new ArrayList<>();
         clickTable();
         updateTable();
         updateComboBoxModel();
