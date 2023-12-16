@@ -5,6 +5,7 @@
 package View;
 
 import Controller.ViewController;
+import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -750,6 +751,16 @@ public class Modulo extends javax.swing.JFrame {
     public JTextField getTxtUnit() {
         return txtUnit;
     }
+    
+
+    public JDateChooser getCalibrationDateChooser() {
+        return calibrationDateChooser;
+    }
+
+    public void setCalibrationDateChooser(JDateChooser calibrationDateChooser) {
+        this.calibrationDateChooser = calibrationDateChooser;
+    }
+    
 
     public void setTxtUnit(JTextField txtUnit) {
         this.txtUnit = txtUnit;

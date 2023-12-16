@@ -9,8 +9,12 @@ import Model.Calibration;
 import Model.CalibrationList;
 import Model.XMLLoader;
 import View.Modulo;
+import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -33,7 +37,7 @@ public class CalibrationController implements ActionListener {
         view.getCalibrationBtnClean().addActionListener(this);
         view.getCalibrationBtnDelete().addActionListener(this);
         view.getCalibrationBtnSave().addActionListener(this);
-        view.getBtnDateCalibraton().addActionListener(this);
+        //view.getBtnDateCalibraton().addActionListener(this);
         view.getBtnPDFCalibration().addActionListener(this);
         view.getBtnSearchCalibration().addActionListener(this);
         view.setLocationRelativeTo(null);
@@ -41,26 +45,38 @@ public class CalibrationController implements ActionListener {
         //view.getCalibrationTxtNumber().setEnabled(false);
     }
 
+    public void showMessage(String errorMessage) {
+        JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private static String dateToString(JDateChooser dateChooser) {
+        Date fechaSeleccionada = dateChooser.getDate();
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+
+        return formatoFecha.format(fechaSeleccionada);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().equals(view.getCalibrationBtnSave())){
             try{
-                if(view.getCalibrationTxtDate().getText().trim().isEmpty()){
-                    viewController.showMessage("Debe ingresar la fecha del instrumento");
-                }else if(view.getCalibrationTxtMeasurement().getText().trim().isEmpty()){
-                    viewController.showMessage("Debe ingresar la calibración del instrumento");
+                if(view.getCalibrationDateChooser().getDate() == null){
+                    showMessage("Debe ingresar la fecha del instrumento");
+                } if(view.getCalibrationTxtMeasurement().getText().trim().isEmpty()){
+                    showMessage("Debe ingresar la calibración del instrumento");
                 }else{
                     try{
-                        Calibration newCalibration = new Calibration(view.getCalibrationTxtDate().getText(), 
+                        JDateChooser dateChooser = view.getCalibrationDateChooser();
+                        String date = dateToString(dateChooser);
+                        Calibration newCalibration = new Calibration(date, 
                                 Integer.parseInt(view.getCalibrationTxtNumber().getText()), 
                                 Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
-                        
                         calibrationList.getList().add(newCalibration);
                         XMLLoader.saveToXMLCalibration(filePath, calibrationList.getList());
                         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
                         tableModel.insertRow(0, new Object[]{newCalibration.getId(),newCalibration.getDate(),newCalibration.getMeasuring()});
                     }catch(Exception ex){
-                        viewController.showMessage("Error al guardar en el archivo XML: " + ex.getMessage());
+                        showMessage("Error al guardar en el archivo XML: " + ex.getMessage());
                     }
                 }
             }catch(Exception ex){

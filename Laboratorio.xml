@@ -30,4 +30,14 @@
     <Número>1</Número>
     <Mediciones>2</Mediciones>
   </Calibracion>
+  <Calibracion>
+    <Fecha>dd/MM/yyyy</Fecha>
+    <Número>3</Número>
+    <Mediciones>2</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Fecha>12/12/2023</Fecha>
+    <Número>232432</Número>
+    <Mediciones>4</Mediciones>
+  </Calibracion>
 </Instrumentos>
