@@ -158,7 +158,7 @@ public class ViewController implements ActionListener {
         if(e.getSource().equals(view.getBtnPDF())){
             try {
                 ArrayList<InstrumentType> instrumentList = XMLLoader.loadFromXML(filePath);
-                String pdfFilePath = "Reporte.pdf";
+                String pdfFilePath = "Reporte_TiposDeInstrumentos.pdf";
                 GeneratorPDF.generatePDFReport(instrumentList, pdfFilePath,"modulo_1");
             } catch (IOException ex) {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -213,7 +213,7 @@ public class ViewController implements ActionListener {
         if (e.getSource().equals(view.getBtnReport())) {
             try {
                 ArrayList<InstrumentModulo2> instrumentListModulo2 = XMLLoader.loadFromXMLS(filePath);
-                String pdfFilePath = "Reporte.pdf";
+                String pdfFilePath = "Reporte_Instrumentos.pdf";
                 GeneratorPDF.generatePDFReport(instrumentListModulo2, pdfFilePath, "modulo_2");
             } catch (IOException ex) {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);

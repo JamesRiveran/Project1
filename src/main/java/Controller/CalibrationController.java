@@ -47,7 +47,7 @@ public class CalibrationController implements ActionListener {
         view.getBtnPDFCalibration().addActionListener(this);
         view.getBtnSearchCalibration().addActionListener(this);
         view.setLocationRelativeTo(null);
-        view.setVisible(true);
+        //view.setVisible(true);
         XMLLoader.ensureIdCounterExists(filePath);
         int idCounter=idCounter();
         view.getCalibrationTxtNumber().setText(String.valueOf(String.valueOf(idCounter)));

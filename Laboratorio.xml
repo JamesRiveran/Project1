@@ -36,4 +36,28 @@
     <Numero>3</Numero>
     <Mediciones>22</Mediciones>
   </Calibracion>
+  <Instrumento>
+    <Serie>2</Serie>
+    <Minimo>4</Minimo>
+    <Tolerancia>4</Tolerancia>
+    <Descripcion>c</Descripcion>
+    <Maximo>3</Maximo>
+    <Tipo>Item 1</Tipo>
+  </Instrumento>
+  <Instrumento>
+    <Serie>2231</Serie>
+    <Minimo>4</Minimo>
+    <Tolerancia>4</Tolerancia>
+    <Descripcion>c</Descripcion>
+    <Maximo>333</Maximo>
+    <Tipo>Item 1</Tipo>
+  </Instrumento>
+  <Instrumento>
+    <Serie>22311</Serie>
+    <Minimo>4</Minimo>
+    <Tolerancia>4</Tolerancia>
+    <Descripcion>cd</Descripcion>
+    <Maximo>333</Maximo>
+    <Tipo>Item 1</Tipo>
+  </Instrumento>
 </Instrumentos>

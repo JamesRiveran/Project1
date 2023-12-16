@@ -43,7 +43,7 @@ public class GeneratorPDF {
         document.open();
 
         // Agrega el encabezado con la fecha, hora y título
-        addHeader(document);
+        addHeader(document,modulo);
 
         // Agrega la lista de elementos al documento
         if (modulo.equals("modulo_1")) {
@@ -58,7 +58,7 @@ public class GeneratorPDF {
 
    
 
-    private static void addHeader(Document document) throws DocumentException {
+    private static void addHeader(Document document, String modulo) throws DocumentException {
         //try {
 
 
@@ -101,9 +101,23 @@ public class GeneratorPDF {
             Paragraph title = new Paragraph("Sistema de Laboratorio Industrial", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
-
+            
+            if (modulo.equals("modulo_1")) {
+            document.add(Chunk.NEWLINE);
+            Paragraph subTitle = new Paragraph("Tipos de instrumentos", FontFactory.getFont(FontFactory.HELVETICA, 14));
+            subTitle.setAlignment(Element.ALIGN_CENTER);
+            document.add(subTitle);
             // Agrega un espacio en blanco después del título
             document.add(Chunk.NEWLINE);
+        } else if (modulo.equals("modulo_2")) {
+            document.add(Chunk.NEWLINE);
+            Paragraph subTitle = new Paragraph("Instrumentos", FontFactory.getFont(FontFactory.HELVETICA, 14));
+            subTitle.setAlignment(Element.ALIGN_CENTER);
+            document.add(subTitle);
+            // Agrega un espacio en blanco después del título
+            document.add(Chunk.NEWLINE);
+        }
+            
         /*} catch (IOException e) {
             Logger.getLogger(GeneratorPDF.class.getName()).log(Level.SEVERE, null, e);
         }*/
