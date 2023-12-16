@@ -10,12 +10,18 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+
+import javax.swing.table.DefaultTableModel;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+
+import java.util.Date;
+
 import java.util.List;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -33,10 +39,13 @@ public class XMLLoader {
     public static ArrayList<InstrumentType> loadFromXML(String filePath) throws FileNotFoundException, IOException, JDOMException {
         ArrayList<InstrumentType> instrumentList = new ArrayList<>();
 
-        SAXBuilder saxBuilder = new SAXBuilder(); // Puedes manejar estas excepciones de manera más específica según tus necesidades.
+
+        SAXBuilder saxBuilder = new SAXBuilder(); 
         Document document;
-        try (FileReader reader = new FileReader(filePath)) {
-            document = saxBuilder.build(reader);
+        try (FileInputStream fis = new FileInputStream(filePath);
+            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+            document = saxBuilder.build(isr);
+
         }
         Element rootElement = document.getRootElement();
         List<Element> instrumentElements = rootElement.getChildren("Tipo_de_instrumento");
@@ -46,7 +55,9 @@ public class XMLLoader {
             String unit = instrumentElement.getChildText("Unidad");
 
             // Crea un objeto InstrumentType y agrégalo a la lista
-            InstrumentType instrumentType = new InstrumentType(code, name, unit);
+
+            InstrumentType instrumentType = new InstrumentType(code, unit, name);
+
             instrumentList.add(instrumentType);
         }
 
@@ -105,13 +116,50 @@ public class XMLLoader {
             XMLOutputter xml = new XMLOutputter();
             xml.setFormat(Format.getPrettyFormat());
 
-            try (FileWriter writer = new FileWriter(filePath)) {
+
+            try (FileOutputStream fos = new FileOutputStream(filePath); 
+                    OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8); 
+                    BufferedWriter writer = new BufferedWriter(osw)) {
                 xml.output(doc, writer);
             }
         } catch (IOException | JDOMException ex) {
             ex.printStackTrace();
         }
     }
+
+
+    public static void deleteFromXML(String filePath, InstrumentType instrumentToDelete) throws IOException, JDOMException {
+        SAXBuilder saxBuilder = new SAXBuilder();
+        Document document = saxBuilder.build(new File(filePath));
+
+        Element rootElement = document.getRootElement();
+        List<Element> instrumentElements = rootElement.getChildren("Tipo_de_instrumento");
+
+        for (Element instrumentElement : instrumentElements) {
+            String code = instrumentElement.getChildText("Codigo");
+
+            // Verifica si el código coincide con el que se quiere eliminar
+            if (code.equals(instrumentToDelete.getCode())) {
+                // Elimina el elemento del XML
+                instrumentElement.getParentElement().removeContent(instrumentElement);
+                break;  // Puedes salir del bucle si se eliminó el elemento
+            }
+        }
+        // Guarda los cambios en el archivo XML
+        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+        try {
+            xmlOutputter.output(document, new FileWriter(filePath));
+        } finally {
+            // Cierra el XMLOutputter fuera del bloque try
+            try {
+                xmlOutputter.output(document, new FileWriter(filePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //Validacion para comprobar si el tipo de instrumento ya existe, se actualizarán sus datos en lugar de crear uno nuevo.
 
     private static Element findInstrumentByCode(Element instruments, String code) {
         // Buscar un elemento por su código dentro del elemento raíz
@@ -122,8 +170,7 @@ public class XMLLoader {
         }
         return null;
     }
-
-    /*Para el modulo 2*/
+/Para el modulo 2/
     public static void addToXML(String filePath, List<InstrumentModulo2> instrumentList) {
         if (instrumentList == null || instrumentList.isEmpty()) {
             throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacía");
@@ -193,8 +240,76 @@ public class XMLLoader {
             }
         } catch (IOException | JDOMException ex) {
             ex.printStackTrace();
+        }
+    }
+   public static void saveToXMLCalibration(String filePath, List<Calibration> calibrationList) {
+        if (calibrationList == null || calibrationList.isEmpty()) {
+            throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacía");
+        }
+
+        try {
+            Document doc;
+
+            // Verificar si el archivo ya existe
+            File file = new File(filePath);
+            if (file.exists()) {
+                // Si el archivo existe, cargar el contenido existente
+                SAXBuilder saxBuilder = new SAXBuilder();
+                doc = saxBuilder.build(file);
+            } else {
+                // Si el archivo no existe, crear uno nuevo
+                doc = new Document(new Element("Instrumentos"));
+            }
+
+            Element instruments = doc.getRootElement();
+            // Agregar los nuevos instrumentos
+            for (Calibration calibration : calibrationList) {
+                Element typeInstrument = new Element("Calibracion");
+
+                Element date = new Element("Fecha");
+                date.setText(calibration.getDate());
+                Element number = new Element("Numero");
+                number.setText(Integer.toString(calibration.getId()));
+                Element measurement = new Element("Mediciones");
+                measurement.setText(Integer.toString(calibration.getMeasuring()));
+
+                typeInstrument.addContent(date);
+                typeInstrument.addContent(number);
+                typeInstrument.addContent(measurement);
+
+                instruments.addContent(typeInstrument);
+            }
+
+            // Buscar la etiqueta <idCounter>
+            Element idCounterElement = doc.getRootElement().getChild("idCounter");
+            int updatedIdCounter;
+            if (idCounterElement == null) {
+                // Si la etiqueta <idCounter> no existe, crear una nueva con valor 1
+                idCounterElement = new Element("idCounter");
+                updatedIdCounter = 1;
+                doc.getRootElement().addContent(idCounterElement);
+            } else {
+                // Si la etiqueta <idCounter> existe, obtener el valor actual y aumentarlo en 1
+                int currentIdCounter = Integer.parseInt(idCounterElement.getText());
+                updatedIdCounter = currentIdCounter + 1;
+            }
+
+            // Actualizar el valor del contador
+            idCounterElement.setText(Integer.toString(updatedIdCounter));
+
+            // Guardar los cambios en el archivo XML
+            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+            try (FileWriter writer = new FileWriter(filePath)) {
+                xmlOutputter.output(doc, writer);
+            }
+
+            System.out.println("Se ha guardado y actualizado el archivo XML.");
+
+        } catch (IOException | JDOMException ex) {
+            ex.printStackTrace();
         }
     }
+  
 
     public static void deleteInstrumentsFromXML(String filePath, InstrumentModulo2 instrumentToDelete) throws IOException, JDOMException {
         SAXBuilder saxBuilder = new SAXBuilder();
@@ -263,4 +378,84 @@ public class XMLLoader {
 
         return instruments;
     }
+
+
+    
+   
+
+     public static int getIdCounterFromXML(String filePath) throws IOException, JDOMException {
+        try (FileInputStream fis = new FileInputStream(filePath);
+             InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+            Document document = new SAXBuilder().build(isr);
+            Element rootElement = document.getRootElement();
+            Element idCounterElement = rootElement.getChild("idCounter");
+
+            if (idCounterElement != null) {
+                String idCounterText = idCounterElement.getTextTrim();
+                return Integer.parseInt(idCounterText);
+            } else {
+                throw new RuntimeException("La etiqueta <idCounter> no está presente en el archivo XML.");
+            }
+        }
+    }
+
+    
+    
+    public static void ensureIdCounterExists(String filePath) {
+        try {
+            // Construir el documento XML desde el archivo existente
+            SAXBuilder saxBuilder = new SAXBuilder();
+            Document document;
+            File file = new File(filePath);
+            document = saxBuilder.build(file);
+
+            // Obtener el elemento raíz del documento
+            Element rootElement = document.getRootElement();
+
+            // Buscar la etiqueta <idCounter>
+            Element idCounterElement = rootElement.getChild("idCounter");
+
+            if (idCounterElement == null) {
+                // Si la etiqueta <idCounter> no existe, crear una nueva y asignarle el valor predeterminado
+                Element newIdCounterElement = new Element("idCounter");
+                newIdCounterElement.setText("1"); // Valor predeterminado
+                rootElement.addContent(newIdCounterElement);
+            }
+
+            // Guardar los cambios en el archivo XML
+            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+            try (FileWriter writer = new FileWriter(filePath)) {
+                xmlOutputter.output(document, writer);
+            }
+
+            System.out.println("Se ha actualizado el valor de <idCounter> en el archivo XML.");
+
+        } catch (IOException | org.jdom2.JDOMException e) {
+            e.printStackTrace();
+        }
+    }
+    
+      public static ArrayList<Calibration> loadFromCalibrations(String filePath) throws FileNotFoundException, IOException, JDOMException {
+        ArrayList<Calibration> calibrationList = new ArrayList<>();
+        SAXBuilder saxBuilder = new SAXBuilder(); 
+        Document document;
+        try (FileInputStream fis = new FileInputStream(filePath);
+            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+            document = saxBuilder.build(isr);
+        }
+        Element rootElement = document.getRootElement();
+        List<Element> calibrationElements = rootElement.getChildren("Tipo_de_instrumento");
+        for (Element calibrationtElement : calibrationElements) {
+            String date = calibrationtElement.getChildText("Fecha");
+            int id = Integer.parseInt(calibrationtElement.getChildText("Numero"));
+            int measurement = Integer.parseInt(calibrationtElement.getChildText("Mediciones"));
+
+            // Crea un objeto calibration y agrégalo a la lista
+            Calibration calibration = new Calibration(date, id, measurement);
+            calibrationList.add(calibration);
+        }
+
+        return calibrationList;
+    }
+
 }

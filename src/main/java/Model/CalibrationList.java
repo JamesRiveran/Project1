@@ -10,31 +10,32 @@ import java.util.ArrayList;
  *
  * @author james
  */
-public class InstrumentsList {
-    private ArrayList<InstrumentType> list;
+public class CalibrationList {
+    private ArrayList<Calibration> list;
+    
 
-    public InstrumentsList(ArrayList<InstrumentType> list) {
+    public CalibrationList(ArrayList<Calibration> list) {
         this.list = list;
     }
-    
-    public InstrumentsList() {
-        this.list = new ArrayList<InstrumentType> ();
+
+    public CalibrationList() {
+        this.list = new ArrayList<Calibration> ();
     }
 
-    public ArrayList<InstrumentType> getList() {
+    public ArrayList<Calibration> getList() {
         return list;
     }
 
-    public void setList(ArrayList<InstrumentType> list) {
+    public void setList(ArrayList<Calibration> list) {
         this.list = list;
     }
 
     @Override
     public String toString() {
-        String datos=" ";
+        String mediciones =" ";
         for (int i = 0; i < list.size(); i++) {
-            datos+=list.get(i).toString()+"\n";
+            mediciones+=list.get(i).toString()+"\n";
         }
-        return "Instrumentos" + list ;
+        return "Mediciones" + list ;
     }
 }
