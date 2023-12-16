@@ -40,4 +40,9 @@
     <Número>232432</Número>
     <Mediciones>4</Mediciones>
   </Calibracion>
+  <Calibracion>
+    <Fecha>2023/12/15</Fecha>
+    <Número>342</Número>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
 </Instrumentos>

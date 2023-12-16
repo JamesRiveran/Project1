@@ -51,8 +51,7 @@ public class CalibrationController implements ActionListener {
 
     private static String dateToString(JDateChooser dateChooser) {
         Date fechaSeleccionada = dateChooser.getDate();
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
         return formatoFecha.format(fechaSeleccionada);
     }
 
@@ -60,15 +59,18 @@ public class CalibrationController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().equals(view.getCalibrationBtnSave())){
             try{
+                int measurement = Integer.parseInt(view.getCalibrationTxtMeasurement().getText());
                 if(view.getCalibrationDateChooser().getDate() == null){
                     showMessage("Debe ingresar la fecha del instrumento");
-                } if(view.getCalibrationTxtMeasurement().getText().trim().isEmpty()){
+                } else if (view.getCalibrationTxtMeasurement().getText().trim().isEmpty()) {
                     showMessage("Debe ingresar la calibración del instrumento");
-                }else{
-                    try{
+                } else if (measurement < 2)  {
+                    showMessage("La cantidad minima de mediciones que se permite ingresar es de 2");
+                } else {
+                    try {
                         JDateChooser dateChooser = view.getCalibrationDateChooser();
                         String date = dateToString(dateChooser);
-                        Calibration newCalibration = new Calibration(date, 
+                        Calibration newCalibration = new Calibration(date,
                                 Integer.parseInt(view.getCalibrationTxtNumber().getText()), 
                                 Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                         calibrationList.getList().add(newCalibration);
@@ -82,6 +84,10 @@ public class CalibrationController implements ActionListener {
             }catch(Exception ex){
                 viewController.showMessage(ex.getMessage());
             }
+        }
+        if(e.getSource().equals(view.getCalibrationBtnClean())){
+            view.getCalibrationDateChooser().setDate(null);
+            view.getCalibrationTxtMeasurement().setText("");
         }
     }
     
