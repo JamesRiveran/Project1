@@ -36,7 +36,7 @@ public class ViewController implements ActionListener {
 
     InstrumentsList listInstrument;
     IntrumentListModulo2 listModulo2;
-    ArrayList<String> listName;
+    private ArrayList<InstrumentType> listName;
     String filePath = "Laboratorio.xml";
     private ArrayList<InstrumentModulo2> ListOfXml;
     Modulo view;
@@ -49,6 +49,7 @@ public class ViewController implements ActionListener {
         listName = new ArrayList<>();
         clickTable();
         updateTable();
+        updateComboBoxModel();
         this.view.setViewController(this);
     }
 
@@ -60,7 +61,7 @@ public class ViewController implements ActionListener {
         view.getBtnSearch().addActionListener(this);
         view.setLocationRelativeTo(null);
         view.setVisible(true);
-        
+
         /*Los del modulo 2*/
         view.getBtnSaveInstru().addActionListener(this);
         view.getBtnReport().addActionListener(this);
@@ -85,36 +86,37 @@ public class ViewController implements ActionListener {
         if (e.getSource().equals(view.getBtnSave())) {
             try {
                 if (view.getTxtCode().getText().trim().isEmpty()) {
-                    showMessage("Debe ingresar el código del instrumento","error");
+                    showMessage("Debe ingresar el código del instrumento", "error");
                 } else if (view.getTxtName().getText().trim().isEmpty()) {
-                    showMessage("Debe ingresar el nombre del instrumento","error");
+                    showMessage("Debe ingresar el nombre del instrumento", "error");
                 } else if (view.getTxtUnit().getText().trim().isEmpty()) {
-                    showMessage("Debe ingresar la unidad de medida del instrumento","error");
+                    showMessage("Debe ingresar la unidad de medida del instrumento", "error");
                 } else {
                     try {
                         InstrumentType newInstrumentForSave = new InstrumentType(
                                 view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
                         listInstrument.getList().add(newInstrumentForSave);
-                        XMLLoader.saveToXML(filePath,listInstrument.getList());
+                        XMLLoader.saveToXML(filePath, listInstrument.getList());
+                        updateComboBoxModel();
                         DefaultTableModel tableModel = (DefaultTableModel) view.getTblListInstruments().getModel();
-                        tableModel.insertRow(0, new Object[]{newInstrumentForSave.getCode(),newInstrumentForSave.getName(),newInstrumentForSave.getUnit()});
+                        tableModel.insertRow(0, new Object[]{newInstrumentForSave.getCode(), newInstrumentForSave.getName(), newInstrumentForSave.getUnit()});
                     } catch (Exception ex) {
-                        showMessage("Error al guardar en el archivo XML: " + ex.getMessage(),"error");
+                        showMessage("Error al guardar en el archivo XML: " + ex.getMessage(), "error");
                     }
 
                 }
             } catch (NullPointerException ex) {
-                showMessage(ex.getMessage(),"error");
+                showMessage(ex.getMessage(), "error");
             } catch (Exception ex) {
-                showMessage(ex.getMessage(),"error");
+                showMessage(ex.getMessage(), "error");
             }
         }
         //Buscar
         if (e.getSource().equals(view.getBtnSearch())) {
             try {
                 ArrayList<InstrumentType> loadedList = XMLLoader.loadFromXML(filePath);
-                if(loadedList.isEmpty()){
-                    showMessage("No hay tipos de instrumentos registrados","error");
+                if (loadedList.isEmpty()) {
+                    showMessage("No hay tipos de instrumentos registrados", "error");
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -137,7 +139,7 @@ public class ViewController implements ActionListener {
             }
         });
         //Limpiar
-        if(e.getSource().equals(view.getBtnClean())){
+        if (e.getSource().equals(view.getBtnClean())) {
             view.getBtnDelete().setEnabled(false);
             view.getTxtCode().setEnabled(true);
             view.getTxtCode().setText("");
@@ -150,16 +152,17 @@ public class ViewController implements ActionListener {
                     view.getTxtCode().getText(), view.getTxtName().getText(), view.getTxtUnit().getText());
             try {
                 XMLLoader.deleteFromXML(filePath, instrumentToDelete);
+                updateComboBoxModel();
             } catch (JDOMException | IOException ex) {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         //Reporte
-        if(e.getSource().equals(view.getBtnPDF())){
+        if (e.getSource().equals(view.getBtnPDF())) {
             try {
                 ArrayList<InstrumentType> instrumentList = XMLLoader.loadFromXML(filePath);
                 String pdfFilePath = "Reporte_TiposDeInstrumentos.pdf";
-                GeneratorPDF.generatePDFReport(instrumentList, pdfFilePath,"modulo_1");
+                GeneratorPDF.generatePDFReport(instrumentList, pdfFilePath, "modulo_1");
             } catch (IOException ex) {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JDOMException ex) {
@@ -245,24 +248,24 @@ public class ViewController implements ActionListener {
 
         clickTable();
     }
-    
-    public void editRegister(MouseEvent evt){
+
+    public void editRegister(MouseEvent evt) {
         int rowSelected = view.getTblListInstruments().getSelectedRow();
-        
-        if(rowSelected !=-1){
+
+        if (rowSelected != -1) {
             String codeName = view.getTblListInstruments().getValueAt(rowSelected, 0).toString();
-            String instrumentName =view.getTblListInstruments().getValueAt(rowSelected, 1).toString();
-            String unitName =view.getTblListInstruments().getValueAt(rowSelected, 2).toString();
-            
+            String instrumentName = view.getTblListInstruments().getValueAt(rowSelected, 1).toString();
+            String unitName = view.getTblListInstruments().getValueAt(rowSelected, 2).toString();
+
             view.getTxtCode().setText(codeName);
             view.getTxtName().setText(instrumentName);
             view.getTxtUnit().setText(unitName);
-            
+
             view.getTxtCode().setEnabled(false);
             view.getBtnDelete().setEnabled(true);
         }
     }
-    
+
     private void filterByName(String letterSearch) throws JDOMException, IOException {
         try {
             ArrayList<InstrumentType> loadedList = XMLLoader.loadFromXML(filePath);
@@ -284,12 +287,11 @@ public class ViewController implements ActionListener {
             ex.printStackTrace();
         }
     }
-        /**
-         * *******************************************************************************************************************************************************
-         */
-        /*para modulo 2*/
-        
 
+    /**
+     * *******************************************************************************************************************************************************
+     */
+    /*para modulo 2*/
     public void informationForXml() {
         InstrumentModulo2 newInstrument = new InstrumentModulo2(
                 view.getTxtSerie().getText(),
@@ -377,21 +379,29 @@ public class ViewController implements ActionListener {
 
 
     /*Metodo para rellenar el comboBox*/
-    public void updateComboBoxModel(ArrayList<String> listName) {
-        if (view != null) {
-            JComboBox<String> cmbType = view.getCmbType();
+    public void updateComboBoxModel() {
+        try {
+            listName = XMLLoader.loadFromXML(filePath);
 
-            if (cmbType != null) {
-                DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+            if (view != null) {
+                JComboBox<String> cmbType = view.getCmbType();
 
-                // Agrega los elementos de listName al modelo del JComboBox
-                for (String name : listName) {
-                    comboBoxModel.addElement(name);
+                if (cmbType != null) {
+                    DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+
+                    // Agrega los elementos de listName al modelo del JComboBox
+                    for (InstrumentType name : listName) {
+                        comboBoxModel.addElement(name.getName());
+                    }
+
+                    // Establece el modelo en el JComboBox cmbType
+                    cmbType.setModel(comboBoxModel);
                 }
-
-                // Establece el modelo en el JComboBox cmbType
-                cmbType.setModel(comboBoxModel);
             }
+        } catch (IOException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JDOMException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -426,4 +436,3 @@ public class ViewController implements ActionListener {
     }
 
 }
-
