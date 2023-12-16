@@ -5,11 +5,6 @@
     <Nombre>Termometro</Nombre>
     <Unidad>Grados Celcius</Unidad>
   </Tipo_de_instrumento>
-  <Tipo_de_instrumento>
-    <Codigo>BAR</Codigo>
-    <Nombre>Barometro</Nombre>
-    <Unidad>PSI</Unidad>
-  </Tipo_de_instrumento>
   <idCounter>4</idCounter>
   <Calibracion>
     <Fecha>2023/12/04</Fecha>

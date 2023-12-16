@@ -39,6 +39,8 @@ public class ViewController implements ActionListener {
     private ArrayList<InstrumentType> listName;
     String filePath = "Laboratorio.xml";
     private ArrayList<InstrumentModulo2> ListOfXml;
+    private ArrayList<InstrumentType> ListOfIModu1o1;
+
     Modulo view;
     boolean updateInstruments = false;
 
@@ -96,9 +98,9 @@ public class ViewController implements ActionListener {
                                 view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
                         listInstrument.getList().add(newInstrumentForSave);
                         XMLLoader.saveToXML(filePath, listInstrument.getList());
+                        updateTable();
                         updateComboBoxModel();
-                        DefaultTableModel tableModel = (DefaultTableModel) view.getTblListInstruments().getModel();
-                        tableModel.insertRow(0, new Object[]{newInstrumentForSave.getCode(), newInstrumentForSave.getName(), newInstrumentForSave.getUnit()});
+
                     } catch (Exception ex) {
                         showMessage("Error al guardar en el archivo XML: " + ex.getMessage(), "error");
                     }
@@ -139,11 +141,7 @@ public class ViewController implements ActionListener {
         });
         //Limpiar
         if (e.getSource().equals(view.getBtnClean())) {
-            view.getBtnDelete().setEnabled(false);
-            view.getTxtCode().setEnabled(true);
-            view.getTxtCode().setText("");
-            view.getTxtName().setText("");
-            view.getTxtUnit().setText("");
+            clean();
         }
         //Eliminar
         if (e.getSource().equals(view.getBtnDelete())) {
@@ -151,7 +149,9 @@ public class ViewController implements ActionListener {
                     view.getTxtCode().getText(), view.getTxtName().getText(), view.getTxtUnit().getText());
             try {
                 XMLLoader.deleteFromXML(filePath, instrumentToDelete);
+                updateTable();
                 updateComboBoxModel();
+                clean();
             } catch (JDOMException | IOException ex) {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -307,6 +307,7 @@ public class ViewController implements ActionListener {
 
     public void updateTable() {
         try {
+            ListOfIModu1o1 = XMLLoader.loadFromXML(filePath);
             ListOfXml = XMLLoader.loadFromXMLS(filePath);
             DefaultTableModel tableModel = (DefaultTableModel) view.getTbInstru().getModel();
             tableModel.setRowCount(0);
@@ -315,6 +316,15 @@ public class ViewController implements ActionListener {
                 InstrumentModulo2 newInstrument = ListOfXml.get(i);
                 tableModel.insertRow(0, new Object[]{newInstrument.getSerie(), newInstrument.getDescri(), newInstrument.getMini(), newInstrument.getMaxi(), newInstrument.getTole()});
             }
+
+            DefaultTableModel tableModule1 = (DefaultTableModel) view.getTblListInstruments().getModel();
+            tableModule1.setRowCount(0);
+
+            for (int i = ListOfIModu1o1.size() - 1; i >= 0; i--) {
+                InstrumentType module1 = ListOfIModu1o1.get(i);
+                tableModule1.insertRow(0, new Object[]{module1.getCode(), module1.getName(), module1.getUnit()});
+            }
+
         } catch (IOException | JDOMException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -340,6 +350,12 @@ public class ViewController implements ActionListener {
         view.getTxtTole().setText("0");
         view.getTxtMaxi().setText("");
         view.getTxtDescri().setText("");
+
+        view.getBtnDelete().setEnabled(false);
+        view.getTxtCode().setEnabled(true);
+        view.getTxtCode().setText("");
+        view.getTxtName().setText("");
+        view.getTxtUnit().setText("");
     }
 
     public void tbInstruMouseClicked(MouseEvent evt) {
