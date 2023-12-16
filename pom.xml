@@ -32,4 +32,21 @@
             <version>1.4</version>
         </dependency>
     </dependencies>
+    <build>
+        <resources>
+             <resource>
+                <directory>${project.basedir}\src\main\resources</directory>
+                <includes><include>pdfMin.png</include></includes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}\src\main\resources</directory>
+                <includes><include>pdfMax.png</include></includes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}\src\main\resources</directory>
+                <includes><include>Icon.png</include></includes>
+            </resource>
+        </resources>
+    </build>
+    <name>sistemaDeInstrumentosParaLaboratorio</name>
 </project>
