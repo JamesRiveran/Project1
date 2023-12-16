@@ -8,6 +8,7 @@ import Controller.ViewController;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -35,6 +36,8 @@ public class Modulo extends javax.swing.JFrame {
     private void initComponents() {
 
         jRadioButton1 = new javax.swing.JRadioButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -83,40 +86,54 @@ public class Modulo extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbInstru = new javax.swing.JTable();
+        jPanel8 = new javax.swing.JPanel();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jPanel13 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jPanel14 = new javax.swing.JPanel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
         calibrationTxtNumber = new javax.swing.JTextField();
-        jLabel22 = new javax.swing.JLabel();
         calibrationTxtMeasurement = new javax.swing.JTextField();
-        jLabel23 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        CalibrationDateChooser = new com.toedter.calendar.JDateChooser();
         calibrationBtnSave = new javax.swing.JButton();
         calibrationBtnClean = new javax.swing.JButton();
         calibrationBtnDelete = new javax.swing.JButton();
-        calibrationDateChooser = new com.toedter.calendar.JDateChooser();
         jPanel10 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblMeasurement = new javax.swing.JTable();
-        jLabel24 = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        txtNumberSearch = new javax.swing.JTextField();
-        btnPDFCalibration = new javax.swing.JButton();
-        btnSearchCalibration = new javax.swing.JButton();
-        jPanel12 = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblCalibrations = new javax.swing.JTable();
+        tblMeasurement = new javax.swing.JTable();
         btnSaveMeasurement = new javax.swing.JButton();
         btnCleanMeasurement = new javax.swing.JButton();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        txtNumberSearch = new javax.swing.JTextField();
+        btnSearchCalibration = new javax.swing.JButton();
+        jPanel12 = new javax.swing.JPanel();
+        jPanel13 = new javax.swing.JPanel();
+        jLabel22 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tblCalibrations = new javax.swing.JTable();
+        btnPDFCalibration = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
 
         jRadioButton1.setText("jRadioButton1");
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -160,9 +177,9 @@ public class Modulo extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCode, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                        .addComponent(txtName)
                         .addGap(60, 60, 60)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -449,7 +466,7 @@ public class Modulo extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
-                .addComponent(txtSearchInstru, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                .addComponent(txtSearchInstru, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
                 .addGap(366, 366, 366)
                 .addComponent(btnSearchInstru)
                 .addGap(39, 39, 39)
@@ -548,52 +565,124 @@ public class Modulo extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Instrumento", pInstrumento);
 
-        jLabel18.setForeground(new java.awt.Color(204, 0, 0));
-        jLabel18.setText("##AQUI VA EL NUMERO DE SERIE, NOMBRE DEL INSTRUMENTO Y GRADOS##");
-        jPanel13.add(jLabel18);
+        jLabel25.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel25.setText("Instrumento");
 
-        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel19.setText("Instrumento");
-        jPanel13.add(jLabel19);
+        jLabel15.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel15.setText("XXXXXXXXXXXXXXXXXXX");
 
-        jPanel3.add(jPanel13);
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel25)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 931, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(551, 551, 551))
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel15)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel20.setText("Calibración");
-        jPanel14.add(jLabel20);
+        jLabel16.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel16.setText("Calibración");
 
-        jLabel21.setText("Número");
-        jPanel14.add(jLabel21);
+        jLabel17.setText("Número");
+
+        jLabel18.setText("Mediciones");
 
         calibrationTxtNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 calibrationTxtNumberActionPerformed(evt);
             }
         });
-        jPanel14.add(calibrationTxtNumber);
 
-        jLabel22.setText("Mediciones");
-        jPanel14.add(jLabel22);
-        jPanel14.add(calibrationTxtMeasurement);
+        calibrationTxtMeasurement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calibrationTxtMeasurementActionPerformed(evt);
+            }
+        });
 
-        jLabel23.setText("Fecha");
-        jPanel14.add(jLabel23);
+        jLabel19.setText("Fecha");
 
         calibrationBtnSave.setText("Guardar");
-        jPanel14.add(calibrationBtnSave);
+        calibrationBtnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calibrationBtnSaveActionPerformed(evt);
+            }
+        });
 
         calibrationBtnClean.setText("Limpiar");
-        jPanel14.add(calibrationBtnClean);
 
         calibrationBtnDelete.setText("Borrar");
-        jPanel14.add(calibrationBtnDelete);
 
-        calibrationDateChooser.setDateFormatString("dd/MM/yyyy");
-        calibrationDateChooser.setMaxSelectableDate(new java.util.Date());
-        calibrationDateChooser.setMinSelectableDate(new java.util.Date(315558093000L));
-        jPanel14.add(calibrationDateChooser);
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addGap(9, 9, 9)
+                        .addComponent(calibrationTxtNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 16, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(calibrationTxtMeasurement, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(75, 75, 75)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CalibrationDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(calibrationBtnSave)
+                        .addGap(18, 18, 18)
+                        .addComponent(calibrationBtnClean)
+                        .addGap(18, 18, 18)
+                        .addComponent(calibrationBtnDelete)))
+                .addContainerGap(9, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jLabel16)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel17)
+                        .addComponent(calibrationTxtNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel19))
+                    .addComponent(CalibrationDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(calibrationTxtMeasurement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(calibrationBtnSave)
+                    .addComponent(calibrationBtnClean)
+                    .addComponent(calibrationBtnDelete))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        jPanel3.add(jPanel14);
+        jLabel20.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel20.setText("Mediciones");
 
         tblMeasurement.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -602,29 +691,54 @@ public class Modulo extends javax.swing.JFrame {
             new String [] {
                 "Medida", "Referencia", "Lectura"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
+        ));
+        jScrollPane2.setViewportView(tblMeasurement);
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        btnSaveMeasurement.setText("Guardar");
+        btnSaveMeasurement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveMeasurementActionPerformed(evt);
             }
         });
-        jScrollPane3.setViewportView(tblMeasurement);
 
-        jPanel10.add(jScrollPane3);
+        btnCleanMeasurement.setText("Limpiar");
 
-        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel24.setText("Mediciones");
-        jPanel10.add(jLabel24);
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel20)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(188, 188, 188)
+                        .addComponent(btnSaveMeasurement)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCleanMeasurement)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSaveMeasurement)
+                    .addComponent(btnCleanMeasurement))
+                .addContainerGap())
+        );
 
-        jPanel3.add(jPanel10);
+        jLabel26.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel26.setText("Búsqueda");
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel15.setText("Búsqueda");
-
-        jLabel16.setText("Número");
+        jLabel21.setText("Número");
 
         txtNumberSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -632,14 +746,12 @@ public class Modulo extends javax.swing.JFrame {
             }
         });
 
-        btnPDFCalibration.setText("Reporte");
-        btnPDFCalibration.addActionListener(new java.awt.event.ActionListener() {
+        btnSearchCalibration.setText("Buscar");
+        btnSearchCalibration.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPDFCalibrationActionPerformed(evt);
+                btnSearchCalibrationActionPerformed(evt);
             }
         });
-
-        btnSearchCalibration.setText("Buscar");
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -649,34 +761,43 @@ public class Modulo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(jLabel26)
+                        .addContainerGap(122, Short.MAX_VALUE))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtNumberSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel15))
-                .addGap(18, 18, 18)
-                .addComponent(btnSearchCalibration)
-                .addGap(18, 18, 18)
-                .addComponent(btnPDFCalibration)
-                .addGap(705, 705, 705))
+                        .addComponent(jLabel21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNumberSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSearchCalibration)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addComponent(jLabel15)
+                .addContainerGap()
+                .addComponent(jLabel26)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
+                    .addComponent(jLabel21)
                     .addComponent(txtNumberSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPDFCalibration)
                     .addComponent(btnSearchCalibration))
-                .addGap(0, 14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.add(jPanel11);
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel17.setText("Listado");
+        jLabel22.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel22.setText("Listado");
 
         tblCalibrations.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -701,55 +822,100 @@ public class Modulo extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tblCalibrations);
+        jScrollPane6.setViewportView(tblCalibrations);
 
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel17)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jPanel3.add(jPanel12);
-
-        btnSaveMeasurement.setText("Guardar");
-        btnSaveMeasurement.addActionListener(new java.awt.event.ActionListener() {
+        btnPDFCalibration.setText("Reporte");
+        btnPDFCalibration.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveMeasurementActionPerformed(evt);
+                btnPDFCalibrationActionPerformed(evt);
             }
         });
-        jPanel3.add(btnSaveMeasurement);
 
-        btnCleanMeasurement.setText("Limpiar");
-        jPanel3.add(btnCleanMeasurement);
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(77, 77, 77)
+                        .addComponent(btnPDFCalibration))
+                    .addComponent(jLabel22))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addComponent(jLabel22)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(btnPDFCalibration)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        jTabbedPane1.addTab("Calibraciones", jPanel3);
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(37, 37, 37))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(93, 93, 93)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(465, 465, 465))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+
+        jTabbedPane1.addTab("Calibraciones", jPanel8);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 931, Short.MAX_VALUE)
+            .addGap(0, 1326, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 572, Short.MAX_VALUE)
+            .addGap(0, 465, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Acerca de", jPanel4);
@@ -758,77 +924,110 @@ public class Modulo extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 933, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    ViewController viewController;
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        viewController.actionPerformed(evt);
-    }//GEN-LAST:event_btnSaveActionPerformed
-
-    private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnPDFActionPerformed
-
-
-    private void txtSerieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSerieActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSerieActionPerformed
-
-    private void txtMiniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMiniActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMiniActionPerformed
-
-    private void btnSaveInstruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveInstruActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSaveInstruActionPerformed
 
     private void tbInstruMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbInstruMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_tbInstruMouseClicked
 
-
-
-    private void calibrationTxtNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calibrationTxtNumberActionPerformed
+    private void btnSaveInstruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveInstruActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_calibrationTxtNumberActionPerformed
+    }//GEN-LAST:event_btnSaveInstruActionPerformed
 
-    private void txtNumberSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumberSearchActionPerformed
+    private void txtMiniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMiniActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumberSearchActionPerformed
+    }//GEN-LAST:event_txtMiniActionPerformed
 
-    private void btnPDFCalibrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFCalibrationActionPerformed
+    private void txtSerieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSerieActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnPDFCalibrationActionPerformed
+    }//GEN-LAST:event_txtSerieActionPerformed
+
+    private void btnPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPDFActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         viewController.actionPerformed(evt);
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        viewController.actionPerformed(evt);
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnPDFCalibrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFCalibrationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPDFCalibrationActionPerformed
+
+    private void btnSearchCalibrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCalibrationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSearchCalibrationActionPerformed
+
+    private void txtNumberSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumberSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumberSearchActionPerformed
+
     private void btnSaveMeasurementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveMeasurementActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSaveMeasurementActionPerformed
+
+    private void calibrationBtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calibrationBtnSaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_calibrationBtnSaveActionPerformed
+
+    private void calibrationTxtMeasurementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calibrationTxtMeasurementActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_calibrationTxtMeasurementActionPerformed
+
+    private void calibrationTxtNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calibrationTxtNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_calibrationTxtNumberActionPerformed
+    ViewController viewController;
+
+    
+
+    //public JButton getBtnDateCalibraton() {
+        //return btnDateCalibraton;
+    //}
+
+    //public void setBtnDateCalibraton(JButton btnDateCalibraton) {
+        //this.btnDateCalibraton = btnDateCalibraton;
+    //}
+    
+    public ViewController getViewController() {
+        return viewController;
+    }
+
     public void setViewController(ViewController viewController) {
         this.viewController = viewController;
     }
 
-    public JTable getTblListInstruments() {
-        return tblListInstruments;
+    public JButton getBtnClean() {
+        return btnClean;
     }
 
-    public void setTblListInstruments(JTable tblListInstruments) {
-        this.tblListInstruments = tblListInstruments;
+    public void setBtnClean(JButton btnClean) {
+        this.btnClean = btnClean;
+    }
+
+    public JButton getBtnCleanInstru() {
+        return btnCleanInstru;
+    }
+
+    public void setBtnCleanInstru(JButton btnCleanInstru) {
+        this.btnCleanInstru = btnCleanInstru;
     }
 
     public JButton getBtnCleanMeasurement() {
@@ -839,38 +1038,20 @@ public class Modulo extends javax.swing.JFrame {
         this.btnCleanMeasurement = btnCleanMeasurement;
     }
 
-    public JButton getBtnSaveMeasurement() {
-        return btnSaveMeasurement;
-    }
-
-    public void setBtnSaveMeasurement(JButton btnSaveMeasurement) {
-        this.btnSaveMeasurement = btnSaveMeasurement;
-    }
-
-    public JTable getTblMeasurement() {
-        return tblMeasurement;
-    }
-
-    public void setTblMeasurement(JTable tblMeasurement) {
-        this.tblMeasurement = tblMeasurement;
-    }
-    
-    
-    
-    public JButton getBtnClean() {
-        return btnClean;
-    }
-
-    public void setBtnClean(JButton btnClean) {
-        this.btnClean = btnClean;
-    }
-
     public JButton getBtnDelete() {
         return btnDelete;
     }
 
     public void setBtnDelete(JButton btnDelete) {
         this.btnDelete = btnDelete;
+    }
+
+    public JButton getBtnDeleteInstru() {
+        return btnDeleteInstru;
+    }
+
+    public void setBtnDeleteInstru(JButton btnDeleteInstru) {
+        this.btnDeleteInstru = btnDeleteInstru;
     }
 
     public JButton getBtnPDF() {
@@ -881,12 +1062,44 @@ public class Modulo extends javax.swing.JFrame {
         this.btnPDF = btnPDF;
     }
 
+    public JButton getBtnPDFCalibration() {
+        return btnPDFCalibration;
+    }
+
+    public void setBtnPDFCalibration(JButton btnPDFCalibration) {
+        this.btnPDFCalibration = btnPDFCalibration;
+    }
+
+    public JButton getBtnReport() {
+        return btnReport;
+    }
+
+    public void setBtnReport(JButton btnReport) {
+        this.btnReport = btnReport;
+    }
+
     public JButton getBtnSave() {
         return btnSave;
     }
 
     public void setBtnSave(JButton btnSave) {
         this.btnSave = btnSave;
+    }
+
+    public JButton getBtnSaveInstru() {
+        return btnSaveInstru;
+    }
+
+    public void setBtnSaveInstru(JButton btnSaveInstru) {
+        this.btnSaveInstru = btnSaveInstru;
+    }
+
+    public JButton getBtnSaveMeasurement() {
+        return btnSaveMeasurement;
+    }
+
+    public void setBtnSaveMeasurement(JButton btnSaveMeasurement) {
+        this.btnSaveMeasurement = btnSaveMeasurement;
     }
 
     public JButton getBtnSearch() {
@@ -897,179 +1110,20 @@ public class Modulo extends javax.swing.JFrame {
         this.btnSearch = btnSearch;
     }
 
-    public JTextField getTxtCode() {
-        return txtCode;
-    }
-
-    public void setTxtCode(JTextField txtCode) {
-        this.txtCode = txtCode;
-    }
-
-    public JTextField getTxtName() {
-        return txtName;
-    }
-
-    public JTable getTblCalibrations() {
-        return tblCalibrations;
-    }
-
-    public void setTblCalibrations(JTable tblCalibrations) {
-        this.tblCalibrations = tblCalibrations;
-    }
-    
-
-    public void setTxtName(JTextField txtName) {
-        this.txtName = txtName;
-    }
-
-    public JTextField getTxtNameForSearch() {
-        return txtNameForSearch;
-    }
-
-    public void setTxtNameForSearch(JTextField txtNameForSearch) {
-        this.txtNameForSearch = txtNameForSearch;
-    }
-
-    public JTextField getTxtUnit() {
-        return txtUnit;
-    }
-    
-
-    public JDateChooser getCalibrationDateChooser() {
-        return calibrationDateChooser;
-    }
-
-    public void setCalibrationDateChooser(JDateChooser calibrationDateChooser) {
-        this.calibrationDateChooser = calibrationDateChooser;
-    }
-    
-
-    public void setTxtUnit(JTextField txtUnit) {
-        this.txtUnit = txtUnit;
-    }
-    
-    
-/*Aqui estan los gets y sets del segundo modulo*/
-
-    public void setTbInstru(JTable tbInstru) {
-        this.tbInstru = tbInstru;
-    }
-
-    public void setTxtDescri(JTextField txtDescri) {
-        this.txtDescri = txtDescri;
-    }
-
-    public void setTxtMaxi(JTextField txtMaxi) {
-        this.txtMaxi = txtMaxi;
-    }
-
-    public void setTxtMini(JTextField txtMini) {
-        this.txtMini = txtMini;
-    }
-
-    public void setTxtSearchInstru(JTextField txtSearchInstru) {
-        this.txtSearchInstru = txtSearchInstru;
-    }
-
-    public void setTxtSerie(JTextField txtSerie) {
-        this.txtSerie = txtSerie;
-    }
-
-    public void setTxtTole(JTextField txtTole) {
-        this.txtTole = txtTole;
-    }
-
-    public void setCmbType(JComboBox<String> cmbType) {
-        this.cmbType = cmbType;
-    }
-
-    public void setBtnCleanInstru(JButton btnCleanInstru) {
-        this.btnCleanInstru = btnCleanInstru;
-    }
-
-    public void setBtnDeleteInstru(JButton btnDeleteInstru) {
-        this.btnDeleteInstru = btnDeleteInstru;
-    }
-
-
-    public void setBtnReport(JButton btnReport) {
-        this.btnReport = btnReport;
-    }
-
-    public void setBtnSaveInstru(JButton btnSaveInstru) {
-        this.btnSaveInstru = btnSaveInstru;
-    }
-
-    public void setBtnSearchInstru(JButton btnSearchInstru) {
-        this.btnSearchInstru = btnSearchInstru;
-    }
-
-    public JButton getBtnCleanInstru() {
-        return btnCleanInstru;
-    }
-
-    public JButton getBtnDeleteInstru() {
-        return btnDeleteInstru;
-    }
-
-    public JButton getBtnReport() {
-        return btnReport;
-    }
-
-    public JButton getBtnSaveInstru() {
-        return btnSaveInstru;
-    }
-
-    public JButton getBtnSearchInstru() {
-        return btnSearchInstru;
-    }
-
-    public JComboBox<String> getCmbType() {
-        return cmbType;
-    }
-
-    public JTable getTbInstru() {
-        return tbInstru;
-    }
-
-    public JTextField getTxtDescri() {
-        return txtDescri;
-    }
-
-    public JTextField getTxtMaxi() {
-        return txtMaxi;
-    }
-
-    public JTextField getTxtMini() {
-        return txtMini;
-    }
-
-    public JTextField getTxtSearchInstru() {
-        return txtSearchInstru;
-    }
-
-    public JTextField getTxtSerie() {
-        return txtSerie;
-    }
-
-    public JTextField getTxtTole() {
-        return txtTole;
-    }
-
-    public JButton getBtnPDFCalibration() {
-        return btnPDFCalibration;
-    }
-
-    public void setBtnPDFCalibration(JButton btnPDFCalibration) {
-        this.btnPDFCalibration = btnPDFCalibration;
-    }
-
     public JButton getBtnSearchCalibration() {
         return btnSearchCalibration;
     }
 
     public void setBtnSearchCalibration(JButton btnSearchCalibration) {
         this.btnSearchCalibration = btnSearchCalibration;
+    }
+
+    public JButton getBtnSearchInstru() {
+        return btnSearchInstru;
+    }
+
+    public void setBtnSearchInstru(JButton btnSearchInstru) {
+        this.btnSearchInstru = btnSearchInstru;
     }
 
     public JButton getCalibrationBtnClean() {
@@ -1096,14 +1150,6 @@ public class Modulo extends javax.swing.JFrame {
         this.calibrationBtnSave = calibrationBtnSave;
     }
 
-    //public JTextField getCalibrationTxtDate() {
-        //return calibrationTxtDate;
-    //}
-
-    //public void setCalibrationTxtDate(JTextField calibrationTxtDate) {
-        //this.calibrationTxtDate = calibrationTxtDate;
-    //}
-
     public JTextField getCalibrationTxtMeasurement() {
         return calibrationTxtMeasurement;
     }
@@ -1116,8 +1162,128 @@ public class Modulo extends javax.swing.JFrame {
         return calibrationTxtNumber;
     }
 
+    public JDateChooser getCalibrationDateChooser() {
+        return CalibrationDateChooser;
+    }
+
+    public void setCalibrationDateChooser(JDateChooser CalibrationDateChooser) {
+        this.CalibrationDateChooser = CalibrationDateChooser;
+    }
+
+    public JTextField getTxtDescri() {
+        return txtDescri;
+    }
+
+    public void setTxtDescri(JTextField txtDescri) {
+        this.txtDescri = txtDescri;
+    }
+    
     public void setCalibrationTxtNumber(JTextField calibrationTxtNumber) {
         this.calibrationTxtNumber = calibrationTxtNumber;
+    }
+
+    public JComboBox<String> getCmbType() {
+        return cmbType;
+    }
+
+    public void setCmbType(JComboBox<String> cmbType) {
+        this.cmbType = cmbType;
+    }
+
+    public JDateChooser getjDateChooser1() {
+        return CalibrationDateChooser;
+    }
+
+    public void setjDateChooser1(JDateChooser jDateChooser1) {
+        this.CalibrationDateChooser = jDateChooser1;
+    }
+
+    public JTable getjTable2() {
+        return jTable2;
+    }
+
+    public void setjTable2(JTable jTable2) {
+        this.jTable2 = jTable2;
+    }
+
+    public JPanel getpInstrumento() {
+        return pInstrumento;
+    }
+
+    public void setpInstrumento(JPanel pInstrumento) {
+        this.pInstrumento = pInstrumento;
+    }
+
+    public JTable getTbInstru() {
+        return tbInstru;
+    }
+
+    public void setTbInstru(JTable tbInstru) {
+        this.tbInstru = tbInstru;
+    }
+
+    public JTable getTblCalibrations() {
+        return tblCalibrations;
+    }
+
+    public void setTblCalibrations(JTable tblCalibrations) {
+        this.tblCalibrations = tblCalibrations;
+    }
+
+    public JTable getTblListInstruments() {
+        return tblListInstruments;
+    }
+
+    public void setTblListInstruments(JTable tblListInstruments) {
+        this.tblListInstruments = tblListInstruments;
+    }
+
+    public JTable getTblMeasurement() {
+        return tblMeasurement;
+    }
+
+    public void setTblMeasurement(JTable tblMeasurement) {
+        this.tblMeasurement = tblMeasurement;
+    }
+
+    public JTextField getTxtCode() {
+        return txtCode;
+    }
+
+    public void setTxtCode(JTextField txtCode) {
+        this.txtCode = txtCode;
+    }
+
+    public JTextField getTxtMaxi() {
+        return txtMaxi;
+    }
+
+    public void setTxtMaxi(JTextField txtMaxi) {
+        this.txtMaxi = txtMaxi;
+    }
+
+    public JTextField getTxtMini() {
+        return txtMini;
+    }
+
+    public void setTxtMini(JTextField txtMini) {
+        this.txtMini = txtMini;
+    }
+
+    public JTextField getTxtName() {
+        return txtName;
+    }
+
+    public void setTxtName(JTextField txtName) {
+        this.txtName = txtName;
+    }
+
+    public JTextField getTxtNameForSearch() {
+        return txtNameForSearch;
+    }
+
+    public void setTxtNameForSearch(JTextField txtNameForSearch) {
+        this.txtNameForSearch = txtNameForSearch;
     }
 
     public JTextField getTxtNumberSearch() {
@@ -1128,20 +1294,44 @@ public class Modulo extends javax.swing.JFrame {
         this.txtNumberSearch = txtNumberSearch;
     }
 
-    //public JButton getBtnDateCalibraton() {
-        //return btnDateCalibraton;
-    //}
+    public JTextField getTxtSearchInstru() {
+        return txtSearchInstru;
+    }
 
-    //public void setBtnDateCalibraton(JButton btnDateCalibraton) {
-        //this.btnDateCalibraton = btnDateCalibraton;
-    //}
-    
+    public void setTxtSearchInstru(JTextField txtSearchInstru) {
+        this.txtSearchInstru = txtSearchInstru;
+    }
+
+    public JTextField getTxtSerie() {
+        return txtSerie;
+    }
+
+    public void setTxtSerie(JTextField txtSerie) {
+        this.txtSerie = txtSerie;
+    }
+
+    public JTextField getTxtTole() {
+        return txtTole;
+    }
+
+    public void setTxtTole(JTextField txtTole) {
+        this.txtTole = txtTole;
+    }
+
+    public JTextField getTxtUnit() {
+        return txtUnit;
+    }
+
+    public void setTxtUnit(JTextField txtUnit) {
+        this.txtUnit = txtUnit;
+    }
     
 
    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser CalibrationDateChooser;
     private javax.swing.JButton btnClean;
     private javax.swing.JButton btnCleanInstru;
     private javax.swing.JButton btnCleanMeasurement;
@@ -1159,7 +1349,6 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JButton calibrationBtnClean;
     private javax.swing.JButton calibrationBtnDelete;
     private javax.swing.JButton calibrationBtnSave;
-    private com.toedter.calendar.JDateChooser calibrationDateChooser;
     private javax.swing.JTextField calibrationTxtMeasurement;
     private javax.swing.JTextField calibrationTxtNumber;
     private javax.swing.JComboBox<String> cmbType;
@@ -1178,8 +1367,8 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1192,13 +1381,14 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel83;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JRadioButton jRadioButton1;
@@ -1206,7 +1396,9 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JPanel pInstrumento;
     private javax.swing.JTable tbInstru;
     private javax.swing.JTable tblCalibrations;
