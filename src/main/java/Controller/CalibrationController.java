@@ -100,7 +100,7 @@ public class CalibrationController implements ActionListener {
                     }
                 }
             } catch (Exception ex) {
-                viewController.showMessage(ex.getMessage());
+                viewController.showMessage(ex.getMessage(),"error");
             }
         }
         //Limpiar

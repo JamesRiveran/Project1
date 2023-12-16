@@ -70,7 +70,7 @@ public class ViewController implements ActionListener {
 
     }
 
-    private void showMessage(String errorMessage, String info) {
+    public void showMessage(String errorMessage, String info) {
         if (info == "error") {
             JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
         } else if (info == "success") {
@@ -85,11 +85,11 @@ public class ViewController implements ActionListener {
         if (e.getSource().equals(view.getBtnSave())) {
             try {
                 if (view.getTxtCode().getText().trim().isEmpty()) {
-                    showMessage("Debe ingresar el código del instrumento");
+                    showMessage("Debe ingresar el código del instrumento","error");
                 } else if (view.getTxtName().getText().trim().isEmpty()) {
-                    showMessage("Debe ingresar el nombre del instrumento");
+                    showMessage("Debe ingresar el nombre del instrumento","error");
                 } else if (view.getTxtUnit().getText().trim().isEmpty()) {
-                    showMessage("Debe ingresar la unidad de medida del instrumento");
+                    showMessage("Debe ingresar la unidad de medida del instrumento","error");
                 } else {
                     try {
                         InstrumentType newInstrumentForSave = new InstrumentType(
@@ -99,14 +99,14 @@ public class ViewController implements ActionListener {
                         DefaultTableModel tableModel = (DefaultTableModel) view.getTblListInstruments().getModel();
                         tableModel.insertRow(0, new Object[]{newInstrumentForSave.getCode(),newInstrumentForSave.getName(),newInstrumentForSave.getUnit()});
                     } catch (Exception ex) {
-                        showMessage("Error al guardar en el archivo XML: " + ex.getMessage());
+                        showMessage("Error al guardar en el archivo XML: " + ex.getMessage(),"error");
                     }
 
                 }
             } catch (NullPointerException ex) {
-                showMessage(ex.getMessage());
+                showMessage(ex.getMessage(),"error");
             } catch (Exception ex) {
-                showMessage(ex.getMessage());
+                showMessage(ex.getMessage(),"error");
             }
         }
         //Buscar
@@ -114,7 +114,7 @@ public class ViewController implements ActionListener {
             try {
                 ArrayList<InstrumentType> loadedList = XMLLoader.loadFromXML(filePath);
                 if(loadedList.isEmpty()){
-                    showMessage("No hay tipos de instrumentos registrados");
+                    showMessage("No hay tipos de instrumentos registrados","error");
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -159,7 +159,7 @@ public class ViewController implements ActionListener {
             try {
                 ArrayList<InstrumentType> instrumentList = XMLLoader.loadFromXML(filePath);
                 String pdfFilePath = "Reporte.pdf";
-                GeneratorPDF.generatePDFReport(instrumentList, pdfFilePath);
+                GeneratorPDF.generatePDFReport(instrumentList, pdfFilePath,"modulo_1");
             } catch (IOException ex) {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (JDOMException ex) {
@@ -168,51 +168,6 @@ public class ViewController implements ActionListener {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-    
-    public void editRegister(MouseEvent evt){
-        int rowSelected = view.getTblListInstruments().getSelectedRow();
-        
-        if(rowSelected !=-1){
-            String codeName = view.getTblListInstruments().getValueAt(rowSelected, 0).toString();
-            String instrumentName =view.getTblListInstruments().getValueAt(rowSelected, 1).toString();
-            String unitName =view.getTblListInstruments().getValueAt(rowSelected, 2).toString();
-            
-            view.getTxtCode().setText(codeName);
-            view.getTxtName().setText(instrumentName);
-            view.getTxtUnit().setText(unitName);
-            
-            view.getTxtCode().setEnabled(false);
-            view.getBtnDelete().setEnabled(true);
-        }
-    }
-    
-    private void filterByName(String letterSearch) throws JDOMException, IOException {
-        try {
-            ArrayList<InstrumentType> loadedList = XMLLoader.loadFromXML(filePath);
-            DefaultTableModel template = (DefaultTableModel) view.getTblListInstruments().getModel();
-            template.setRowCount(0);
-            if (letterSearch.isEmpty()) {
-                for (InstrumentType instrument : loadedList) {
-                    template.addRow(new Object[]{instrument.getCode(), instrument.getName(), instrument.getUnit()});
-                }
-            } else {
-                for (InstrumentType instrument : loadedList) {
-                    String nameInstrumentForSearch = instrument.getName().toLowerCase();
-                    if (nameInstrumentForSearch.contains(letterSearch.toLowerCase())) {
-                        template.addRow(new Object[]{instrument.getCode(), instrument.getName(), instrument.getUnit()});
-                    }
-                }
-            }
-        } catch (IOException | JDOMException ex) {
-            ex.printStackTrace();
-        }
-    }
-        /**
-         * *******************************************************************************************************************************************************
-         */
-
-        /*para modulo 2*/
         if (e.getSource().equals(view.getBtnSaveInstru())) {
 
             try {
@@ -290,6 +245,50 @@ public class ViewController implements ActionListener {
 
         clickTable();
     }
+    
+    public void editRegister(MouseEvent evt){
+        int rowSelected = view.getTblListInstruments().getSelectedRow();
+        
+        if(rowSelected !=-1){
+            String codeName = view.getTblListInstruments().getValueAt(rowSelected, 0).toString();
+            String instrumentName =view.getTblListInstruments().getValueAt(rowSelected, 1).toString();
+            String unitName =view.getTblListInstruments().getValueAt(rowSelected, 2).toString();
+            
+            view.getTxtCode().setText(codeName);
+            view.getTxtName().setText(instrumentName);
+            view.getTxtUnit().setText(unitName);
+            
+            view.getTxtCode().setEnabled(false);
+            view.getBtnDelete().setEnabled(true);
+        }
+    }
+    
+    private void filterByName(String letterSearch) throws JDOMException, IOException {
+        try {
+            ArrayList<InstrumentType> loadedList = XMLLoader.loadFromXML(filePath);
+            DefaultTableModel template = (DefaultTableModel) view.getTblListInstruments().getModel();
+            template.setRowCount(0);
+            if (letterSearch.isEmpty()) {
+                for (InstrumentType instrument : loadedList) {
+                    template.addRow(new Object[]{instrument.getCode(), instrument.getName(), instrument.getUnit()});
+                }
+            } else {
+                for (InstrumentType instrument : loadedList) {
+                    String nameInstrumentForSearch = instrument.getName().toLowerCase();
+                    if (nameInstrumentForSearch.contains(letterSearch.toLowerCase())) {
+                        template.addRow(new Object[]{instrument.getCode(), instrument.getName(), instrument.getUnit()});
+                    }
+                }
+            }
+        } catch (IOException | JDOMException ex) {
+            ex.printStackTrace();
+        }
+    }
+        /**
+         * *******************************************************************************************************************************************************
+         */
+        /*para modulo 2*/
+        
 
     public void informationForXml() {
         InstrumentModulo2 newInstrument = new InstrumentModulo2(

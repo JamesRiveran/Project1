@@ -35,9 +35,6 @@ import java.util.logging.Logger;
 public class GeneratorPDF {
 
     public static <T> void generatePDFReport(List<T> itemList, String filePath, String modulo)
-
-    public static void generatePDFReport(ArrayList<InstrumentType> instrumentList, String filePath)
-
             throws DocumentException, FileNotFoundException {
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(filePath));
@@ -55,10 +52,11 @@ public class GeneratorPDF {
             addInstrumentListForInstrument(document, (ArrayList<InstrumentModulo2>) itemList);
         }
 
-
         // Cierra el documento
         document.close();
     }
+
+   
 
     private static void addHeader(Document document) throws DocumentException {
         //try {

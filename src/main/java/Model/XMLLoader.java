@@ -241,8 +241,8 @@ public class XMLLoader {
             }
         } catch (IOException | JDOMException ex) {
             ex.printStackTrace();
-        }
-    }
+        }
+    }
   
    public static void saveToXMLCalibration(String filePath, List<Calibration> calibrationList) {
         if (calibrationList == null || calibrationList.isEmpty()) {

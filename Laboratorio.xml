@@ -15,7 +15,7 @@
     <Nombre>Cronometro</Nombre>
     <Unidad>Tiempo</Unidad>
   </Tipo_de_instrumento>
-  <idCounter>3</idCounter>
+  <idCounter>4</idCounter>
   <Calibracion>
     <Fecha>2023/12/04</Fecha>
     <Numero>1</Numero>
@@ -30,5 +30,10 @@
     <Fecha>2023/12/04</Fecha>
     <Numero>2</Numero>
     <Mediciones>86</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Fecha>2023/12/07</Fecha>
+    <Numero>3</Numero>
+    <Mediciones>22</Mediciones>
   </Calibracion>
 </Instrumentos>
