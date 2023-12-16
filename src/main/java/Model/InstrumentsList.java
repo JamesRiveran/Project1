@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author james
  */
 public class InstrumentsList {
-     private ArrayList<InstrumentType> list;
+    private ArrayList<InstrumentType> list;
 
     public InstrumentsList(ArrayList<InstrumentType> list) {
         this.list = list;

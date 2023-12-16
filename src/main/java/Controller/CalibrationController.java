@@ -7,6 +7,7 @@ package Controller;
 
 import Model.Calibration;
 import Model.CalibrationList;
+import Model.InstrumentType;
 import Model.XMLLoader;
 import View.Modulo;
 import com.toedter.calendar.JDateChooser;
@@ -14,7 +15,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jdom2.JDOMException;
@@ -67,6 +71,7 @@ public class CalibrationController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Guardar
         if(e.getSource().equals(view.getCalibrationBtnSave())){
             try{
                 int measurement = Integer.parseInt(view.getCalibrationTxtMeasurement().getText());
@@ -98,13 +103,53 @@ public class CalibrationController implements ActionListener {
                 viewController.showMessage(ex.getMessage());
             }
         }
+        //Limpiar
         if (e.getSource().equals(view.getCalibrationBtnClean())) {
             view.getCalibrationDateChooser().setDate(null);
             view.getCalibrationTxtMeasurement().setText("");
         }
+        //Buscar
         if (e.getSource().equals(view.getBtnSearchCalibration())) {
-            DefaultTableModel model = XMLLoader.loadAndFilterXMLData(filePath, view.getTxtNumberSearch().getText());
-            view.getTblCalibrations().setModel(model);
+            try {
+                ArrayList<Calibration> loadedList = XMLLoader.loadFromCalibrations(filePath);
+                if(loadedList.isEmpty()){
+                    showMessage("No hay calibraciones registradas");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JDOMException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            int numberSearch = Integer.parseInt(view.getTxtNumberSearch().getText());
+            try {
+                filterByNumber(numberSearch);
+            } catch (JDOMException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(CalibrationController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+}
+    private void filterByNumber(int numberSearch) throws JDOMException, IOException {
+        try {
+            ArrayList<Calibration> loadedList = XMLLoader.loadFromCalibrations(filePath);
+            DefaultTableModel template = (DefaultTableModel) view.getTblCalibrations().getModel();
+            template.setRowCount(0);
+            String searchEmpty = String.valueOf(numberSearch);
+            if (searchEmpty.isEmpty()) {
+                for (Calibration calibration : loadedList) {
+                    template.addRow(new Object[]{calibration.getId(),calibration.getDate(),calibration.getMeasuring()});
+                }
+            } else {
+                for (Calibration calibration : loadedList) {
+                    String numberForSearch = String.valueOf(calibration.getId());
+                    if (numberForSearch.contains(searchEmpty.toLowerCase())) {
+                        template.addRow(new Object[]{calibration.getId(),calibration.getDate(),calibration.getMeasuring()});
+                    }
+                }
+            }
+        } catch (IOException | JDOMException ex) {
+            ex.printStackTrace();
         }
     }
 }

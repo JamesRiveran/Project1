@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -283,34 +284,27 @@ public class XMLLoader {
         }
     }
     
-    public static DefaultTableModel loadAndFilterXMLData(String filePath, String filter) {
-    DefaultTableModel model = new DefaultTableModel();
-    model.addColumn("Fecha");
-    model.addColumn("Número");
-    model.addColumn("Mediciones");
-
-    try {
-        SAXBuilder saxBuilder = new SAXBuilder();
-        Document document = saxBuilder.build(new File(filePath));
-
-        Element rootElement = document.getRootElement();
-        List<Element> calibracionElements = rootElement.getChildren("Calibracion");
-
-        for (Element calibracionElement : calibracionElements) {
-            String fecha = calibracionElement.getChildText("Fecha");
-            int numero = Integer.parseInt(calibracionElement.getChildText("Numero"));
-            int mediciones = Integer.parseInt(calibracionElement.getChildText("Mediciones"));
-
-            // Aplicar el filtro (si es necesario)
-            if (filter == null || filter.isEmpty() || fecha.toLowerCase().contains(filter.toLowerCase())) {
-                model.addRow(new Object[]{fecha, numero, mediciones});
-            }
+      public static ArrayList<Calibration> loadFromCalibrations(String filePath) throws FileNotFoundException, IOException, JDOMException {
+        ArrayList<Calibration> calibrationList = new ArrayList<>();
+        SAXBuilder saxBuilder = new SAXBuilder(); 
+        Document document;
+        try (FileInputStream fis = new FileInputStream(filePath);
+            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+            document = saxBuilder.build(isr);
         }
-    } catch (IOException | JDOMException e) {
-        e.printStackTrace();
-    }
+        Element rootElement = document.getRootElement();
+        List<Element> calibrationElements = rootElement.getChildren("Tipo_de_instrumento");
+        for (Element calibrationtElement : calibrationElements) {
+            String date = calibrationtElement.getChildText("Fecha");
+            int id = Integer.parseInt(calibrationtElement.getChildText("Numero"));
+            int measurement = Integer.parseInt(calibrationtElement.getChildText("Mediciones"));
 
-    return model;
-}
+            // Crea un objeto calibration y agrégalo a la lista
+            Calibration calibration = new Calibration(date, id, measurement);
+            calibrationList.add(calibration);
+        }
+
+        return calibrationList;
+    }
 
 }
