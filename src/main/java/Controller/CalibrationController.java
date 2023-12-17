@@ -39,6 +39,7 @@ public class CalibrationController implements ActionListener {
         this.calibrationList = new CalibrationList();
         this.view = new Modulo();
         this.view.setCalibrationController(this);
+        updateTable();
     }
     
     public void startCalibration() throws JDOMException, IOException{
@@ -89,8 +90,9 @@ public class CalibrationController implements ActionListener {
                         int newIdNumber=0;
                         JDateChooser dateChooser = view.getCalibrationDateChooser();
                         String date = dateToString(dateChooser);
-                        Calibration newCalibration = new Calibration(date,
+                        Calibration newCalibration = new Calibration(
                                 Integer.parseInt(view.getCalibrationTxtNumber().getText()), 
+                                date,
                                 Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                         calibrationList.getList().add(newCalibration);
                         XMLLoader.saveToXMLCalibration(filePath, calibrationList.getList());
@@ -113,7 +115,7 @@ public class CalibrationController implements ActionListener {
         }
         //Buscar
         if (e.getSource().equals(view.getBtnSearchCalibration())) {
-            String searchNumber = view.getBtnSearchCalibration().getText();
+            String searchNumber = view.getTxtNumberSearch().getText();
             filterByNumber(searchNumber);
         }
 
@@ -126,37 +128,33 @@ public class CalibrationController implements ActionListener {
             tableModel.setRowCount(0);
             for (int i = listCalibrations.size() - 1; i >= 0; i--) {
                 Calibration newCalibration = listCalibrations.get(i);
-                tableModel.insertRow(0, new Object[]{newCalibration.getDate(), newCalibration.getId(), newCalibration.getMeasuring()});
+                tableModel.insertRow(0, new Object[]{newCalibration.getId(),newCalibration.getDate(), newCalibration.getMeasuring()});
             }
         } catch (IOException | JDOMException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void filterByNumber(String searchNumber){
-        if (listCalibrations == null) {
-            updateTable();
-        }
-        DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
-        tableModel.setRowCount(0);
-        // Si la cadena de búsqueda está vacía, muestra todos los elementos
-        if (searchNumber.isEmpty()) {
-            for (Calibration calibration : listCalibrations) {
-                tableModel.addRow(new Object[]{calibration.getDate(),calibration.getId(),calibration.getMeasuring()});
-            }
-        } else {
-            // Itera sobre la lista de instrumentos y agrega las coincidencias al modelo de la tabla
-            for (Calibration calibration : listCalibrations) {
-                // Convierte la descripción a minúsculas para hacer la búsqueda insensible a mayúsculas y minúsculas
-                String id = String.valueOf(calibration.getId());
 
-                // Verifica si la descripción contiene la letra ingresada
-                if (id.contains(searchNumber)) {
-                    tableModel.addRow(new Object[]{calibration.getDate(),calibration.getId(),calibration.getMeasuring()});
+    private void filterByNumber(String searchNumber) {
+        try {
+            listCalibrations = XMLLoader.loadFromCalibrations(filePath);
+            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+            tableModel.setRowCount(0);
+            // Si la cadena de búsqueda está vacía, muestra todos los elementos
+            if (searchNumber.isEmpty()) {
+                updateTable();
+            } else {
+                // Itera sobre la lista de instrumentos y agrega las coincidencias al modelo de la tabla
+                for (Calibration calibration : listCalibrations) {
+                    String idForSearch = String.valueOf(calibration.getId());
+                    if (idForSearch.contains(searchNumber)) {
+                        tableModel.addRow(new Object[]{calibration.getId(),calibration.getDate(),calibration.getMeasuring()});
+                    }
                 }
             }
-        } 
+        } catch (IOException | JDOMException ex) {
+            ex.printStackTrace();
+        }
     }
 
-    
 }

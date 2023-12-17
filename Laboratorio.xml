@@ -5,7 +5,7 @@
     <Nombre>Termometro</Nombre>
     <Unidad>Grados Celcius</Unidad>
   </Tipo_de_instrumento>
-  <idCounter>6</idCounter>
+  <idCounter>8</idCounter>
   <Calibracion>
     <Fecha>2023/12/06</Fecha>
     <Numero>1</Numero>
@@ -45,5 +45,20 @@
     <Fecha>2023/12/07</Fecha>
     <Numero>5</Numero>
     <Mediciones>4</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Fecha>2023/12/04</Fecha>
+    <Numero>6</Numero>
+    <Mediciones>55</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Fecha>2023/12/04</Fecha>
+    <Numero>6</Numero>
+    <Mediciones>55</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Fecha>2023/12/04</Fecha>
+    <Numero>7</Numero>
+    <Mediciones>555</Mediciones>
   </Calibracion>
 </Instrumentos>

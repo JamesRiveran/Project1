@@ -451,7 +451,7 @@ public class XMLLoader {
             int measurement = Integer.parseInt(calibrationtElement.getChildText("Mediciones"));
 
             // Crea un objeto calibration y agrégalo a la lista
-            Calibration calibration = new Calibration(date, id, measurement);
+            Calibration calibration = new Calibration(id, date, measurement);
             calibrationList.add(calibration);
         }
         return calibrationList;
