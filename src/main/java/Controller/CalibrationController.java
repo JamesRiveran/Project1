@@ -150,14 +150,7 @@ public class CalibrationController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        //Guardar lectura
-        if (e.getSource().equals(view.getBtnSaveMeasurement())) {
-
-        }
-        //Limpiar lectura
-        if (e.getSource().equals(view.getBtnCleanMeasurement())) {
-
-        }
+     
     }
     
 

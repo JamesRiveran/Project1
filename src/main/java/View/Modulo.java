@@ -6,6 +6,7 @@ package View;
 
 import Controller.ViewController;
 import Controller.CalibrationController;
+import Controller.IntrumentsController;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -835,6 +836,7 @@ public class Modulo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     ViewController viewController;
     CalibrationController calibrationController;
+    IntrumentsController intrumentsController;
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         viewController.actionPerformed(evt);
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -861,7 +863,6 @@ public class Modulo extends javax.swing.JFrame {
     }//GEN-LAST:event_tbInstruMouseClicked
 
 
-
     private void calibrationTxtNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calibrationTxtNumberActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_calibrationTxtNumberActionPerformed
@@ -886,7 +887,6 @@ public class Modulo extends javax.swing.JFrame {
 
     }//GEN-LAST:event_calibrationBtnSaveActionPerformed
 
-    
     public ViewController getViewController() {
         return viewController;
     }
@@ -901,6 +901,14 @@ public class Modulo extends javax.swing.JFrame {
 
     public void setCalibrationController(CalibrationController calibrationController) {
         this.calibrationController = calibrationController;
+    }
+
+    public IntrumentsController getIntrumentsController() {
+        return intrumentsController;
+    }
+
+    public void setIntrumentsController(IntrumentsController intrumentsController) {
+        this.intrumentsController = intrumentsController;
     }
 
     public JButton getBtnClean() {
@@ -962,8 +970,6 @@ public class Modulo extends javax.swing.JFrame {
     public void setTblMeasurement(JTable tblMeasurement) {
         this.tblMeasurement = tblMeasurement;
     }
-    
-    
 
     public void setBtnSaveMeasurement(JButton btnSaveMeasurement) {
         this.btnSaveMeasurement = btnSaveMeasurement;
@@ -985,8 +991,6 @@ public class Modulo extends javax.swing.JFrame {
         this.calibrationDateChooser = calibrationDateChooser;
     }
 
-    
-
     public JTable getTblListInstruments() {
         return tblListInstruments;
     }
@@ -994,8 +998,6 @@ public class Modulo extends javax.swing.JFrame {
     public void setTblListInstruments(JTable tblListInstruments) {
         this.tblListInstruments = tblListInstruments;
     }
-
-    
 
     public JTextField getTxtCode() {
         return txtCode;
@@ -1028,10 +1030,8 @@ public class Modulo extends javax.swing.JFrame {
     public void setTxtUnit(JTextField txtUnit) {
         this.txtUnit = txtUnit;
     }
-    
-    
-/*Aqui estan los gets y sets del segundo modulo*/
 
+    /*Aqui estan los gets y sets del segundo modulo*/
     public void setTbInstru(JTable tbInstru) {
         this.tbInstru = tbInstru;
     }
@@ -1071,7 +1071,6 @@ public class Modulo extends javax.swing.JFrame {
     public void setBtnDeleteInstru(JButton btnDeleteInstru) {
         this.btnDeleteInstru = btnDeleteInstru;
     }
-
 
     public void setBtnReport(JButton btnReport) {
         this.btnReport = btnReport;
@@ -1177,8 +1176,6 @@ public class Modulo extends javax.swing.JFrame {
         this.calibrationBtnSave = calibrationBtnSave;
     }
 
-    
-
     public JTextField getCalibrationTxtMeasurement() {
         return calibrationTxtMeasurement;
     }
@@ -1203,11 +1200,6 @@ public class Modulo extends javax.swing.JFrame {
         this.txtNumberSearch = txtNumberSearch;
     }
 
-    
-    
-
-   
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClean;
