@@ -41,7 +41,7 @@ public class ViewController implements ActionListener {
     private ArrayList<InstrumentModulo2> ListOfXml;
     private ArrayList<InstrumentType> ListOfIModu1o1;
 
-    Modulo view;
+    static Modulo view;
     boolean updateInstruments = false;
 
     public ViewController() {
@@ -73,6 +73,23 @@ public class ViewController implements ActionListener {
     }
 
     public void showMessage(String errorMessage, String info) {
+        if (info == "error") {
+            JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
+        } else if (info == "success") {
+            JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+    }
+
+    public static void conection(boolean m) {
+        if (m) {
+            modalForRelations("Posee una relacion no se puede borrar", "error");
+        } else {
+            modalForRelations("Borrado exitosamente", "success");
+        }
+    }
+
+    public static void modalForRelations(String errorMessage, String info) {
         if (info == "error") {
             JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
         } else if (info == "success") {
@@ -133,12 +150,7 @@ public class ViewController implements ActionListener {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        //Selección de un instrumento de la tabla 
-        view.getTblListInstruments().addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editRegister(evt);
-            }
-        });
+
         //Limpiar
         if (e.getSource().equals(view.getBtnClean())) {
             clean();
@@ -146,7 +158,7 @@ public class ViewController implements ActionListener {
         //Eliminar
         if (e.getSource().equals(view.getBtnDelete())) {
             InstrumentType instrumentToDelete = new InstrumentType(
-                    view.getTxtCode().getText(), view.getTxtName().getText(), view.getTxtUnit().getText());
+                    view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
             try {
                 XMLLoader.deleteFromXML(filePath, instrumentToDelete);
                 updateTable();
@@ -238,7 +250,7 @@ public class ViewController implements ActionListener {
                     view.getCmbType().getItemAt(0));
             try {
                 XMLLoader.deleteInstrumentsFromXML(filePath, instrumentToDelete);
-                showMessage("Se borro exitosamente", "succes");
+                showMessage("Se borro exitosamente", "success");
                 clean();
                 updateTable();
 
@@ -339,6 +351,13 @@ public class ViewController implements ActionListener {
                 updateInstruments = true;
             }
 
+        });
+
+        //Selección de un instrumento de la tabla 
+        view.getTblListInstruments().addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editRegister(evt);
+            }
         });
         return true;
 

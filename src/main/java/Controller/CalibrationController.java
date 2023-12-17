@@ -7,7 +7,6 @@ package Controller;
 
 import Model.Calibration;
 import Model.CalibrationList;
-import Model.InstrumentType;
 import Model.XMLLoader;
 import View.Modulo;
 import com.toedter.calendar.JDateChooser;
