@@ -106,7 +106,7 @@ public class ViewController implements ActionListener {
                 if (view.getTxtCode().getText().trim().isEmpty()) {
                     showMessage("Debe ingresar el código del instrumento", "error");
                 } else if (view.getTxtName().getText().trim().isEmpty()) {
-                    showMessage("Debe ingresar el nombre del instrumento", "error");
+                    showMessage("Debe ingresar todos los espacios", "error");
                 } else if (view.getTxtUnit().getText().trim().isEmpty()) {
                     showMessage("Debe ingresar la unidad de medida del instrumento", "error");
                 } else {
