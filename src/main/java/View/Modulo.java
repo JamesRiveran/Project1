@@ -5,6 +5,7 @@
 package View;
 
 import Controller.ViewController;
+import Controller.CalibrationController;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -83,12 +84,9 @@ public class Modulo extends javax.swing.JFrame {
         pCalibraciones = new javax.swing.JPanel();
         btnSaveMeasurement = new javax.swing.JButton();
         btnCleanMeasurement = new javax.swing.JButton();
-        calibrationBtnSave = new javax.swing.JButton();
-        calibrationBtnClean = new javax.swing.JButton();
-        calibrationBtnDelete = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblMeasurement = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblCalibrations = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         lbNombreInstru = new javax.swing.JLabel();
         pCaliMedidas = new javax.swing.JPanel();
@@ -98,9 +96,12 @@ public class Modulo extends javax.swing.JFrame {
         calibrationTxtMeasurement = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         calibrationDateChooser = new com.toedter.calendar.JDateChooser();
+        calibrationBtnSave = new javax.swing.JButton();
+        calibrationBtnClean = new javax.swing.JButton();
+        calibrationBtnDelete = new javax.swing.JButton();
         pMediciones = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblCalibrations = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblMeasurement = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         txtNumberSearch = new javax.swing.JTextField();
@@ -131,7 +132,7 @@ public class Modulo extends javax.swing.JFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtCode, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
@@ -241,7 +242,7 @@ public class Modulo extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 1006, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -431,7 +432,7 @@ public class Modulo extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
-                .addComponent(txtSearchInstru, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+                .addComponent(txtSearchInstru, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
                 .addGap(366, 366, 366)
                 .addComponent(btnSearchInstru)
                 .addGap(39, 39, 39)
@@ -539,47 +540,41 @@ public class Modulo extends javax.swing.JFrame {
 
         btnCleanMeasurement.setText("Limpiar");
 
-        calibrationBtnSave.setText("Guardar");
-
-        calibrationBtnClean.setText("Limpiar");
-
-        calibrationBtnDelete.setText("Borrar");
-
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado"));
 
-        tblMeasurement.setModel(new javax.swing.table.DefaultTableModel(
+        tblCalibrations.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Medida", "Referencia", "Lectura"
+                "Número", "Fecha", "Mediciones"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(tblMeasurement);
+        jScrollPane2.setViewportView(tblCalibrations);
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+            .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 893, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 887, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Instrumento"));
@@ -591,7 +586,7 @@ public class Modulo extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 999, Short.MAX_VALUE)
+            .addGap(0, 1034, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addGap(27, 27, 27)
@@ -626,6 +621,17 @@ public class Modulo extends javax.swing.JFrame {
         calibrationDateChooser.setMaxSelectableDate(new java.util.Date());
         calibrationDateChooser.setMinSelectableDate(new java.util.Date(315558093000L));
 
+        calibrationBtnSave.setText("Guardar");
+        calibrationBtnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calibrationBtnSaveActionPerformed(evt);
+            }
+        });
+
+        calibrationBtnClean.setText("Limpiar");
+
+        calibrationBtnDelete.setText("Borrar");
+
         javax.swing.GroupLayout pCaliMedidasLayout = new javax.swing.GroupLayout(pCaliMedidas);
         pCaliMedidas.setLayout(pCaliMedidasLayout);
         pCaliMedidasLayout.setHorizontalGroup(
@@ -642,9 +648,17 @@ public class Modulo extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(calibrationTxtNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(calibrationDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pCaliMedidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pCaliMedidasLayout.createSequentialGroup()
+                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(calibrationDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pCaliMedidasLayout.createSequentialGroup()
+                        .addComponent(calibrationBtnSave)
+                        .addGap(18, 18, 18)
+                        .addComponent(calibrationBtnClean)
+                        .addGap(18, 18, 18)
+                        .addComponent(calibrationBtnDelete)))
                 .addContainerGap(107, Short.MAX_VALUE))
         );
         pCaliMedidasLayout.setVerticalGroup(
@@ -663,56 +677,40 @@ public class Modulo extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addGroup(pCaliMedidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel22)
-                            .addComponent(calibrationTxtMeasurement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(calibrationTxtMeasurement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(calibrationBtnSave)
+                            .addComponent(calibrationBtnClean)
+                            .addComponent(calibrationBtnDelete))
                         .addGap(12, 12, 12))))
         );
 
         pMediciones.setBorder(javax.swing.BorderFactory.createTitledBorder("Mediciones"));
 
-        tblCalibrations.setModel(new javax.swing.table.DefaultTableModel(
+        tblMeasurement.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Número", "Fecha", "Mediciones"
+                "Medida", "Referencia", "Lectura"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(tblCalibrations);
+        ));
+        jScrollPane3.setViewportView(tblMeasurement);
 
         javax.swing.GroupLayout pMedicionesLayout = new javax.swing.GroupLayout(pMediciones);
         pMediciones.setLayout(pMedicionesLayout);
         pMedicionesLayout.setHorizontalGroup(
             pMedicionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 343, Short.MAX_VALUE)
-            .addGroup(pMedicionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pMedicionesLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(pMedicionesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pMedicionesLayout.setVerticalGroup(
             pMedicionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 116, Short.MAX_VALUE)
-            .addGroup(pMedicionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pMedicionesLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(pMedicionesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Busqueda"));
@@ -739,26 +737,26 @@ public class Modulo extends javax.swing.JFrame {
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
+                .addContainerGap()
                 .addComponent(jLabel16)
                 .addGap(18, 18, 18)
                 .addComponent(txtNumberSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnSearchCalibration)
-                .addGap(42, 42, 42)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnPDFCalibration)
-                .addGap(24, 24, 24))
+                .addGap(189, 189, 189))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNumberSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
                     .addComponent(btnSearchCalibration)
                     .addComponent(btnPDFCalibration))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pCalibracionesLayout = new javax.swing.GroupLayout(pCalibraciones);
@@ -768,57 +766,42 @@ public class Modulo extends javax.swing.JFrame {
             .addGroup(pCalibracionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pCalibracionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pCalibracionesLayout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pCalibracionesLayout.createSequentialGroup()
                         .addGroup(pCalibracionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(pCalibracionesLayout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pCalibracionesLayout.createSequentialGroup()
                                 .addComponent(pCaliMedidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pMediciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(44, 44, 44)
+                                .addComponent(pMediciones, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
                         .addGroup(pCalibracionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pCalibracionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnSaveMeasurement, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                                .addComponent(calibrationBtnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnCleanMeasurement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(calibrationBtnClean)
-                            .addComponent(calibrationBtnSave))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(pCalibracionesLayout.createSequentialGroup()
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(btnCleanMeasurement)
+                            .addComponent(btnSaveMeasurement))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pCalibracionesLayout.setVerticalGroup(
             pCalibracionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pCalibracionesLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pCalibracionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pCaliMedidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pMediciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pCalibracionesLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(btnSaveMeasurement)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(calibrationBtnDelete)
+                        .addGroup(pCalibracionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pCaliMedidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pMediciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pCalibracionesLayout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(btnSaveMeasurement)
                         .addGap(18, 18, 18)
                         .addComponent(btnCleanMeasurement)))
-                .addGroup(pCalibracionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pCalibracionesLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pCalibracionesLayout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(calibrationBtnClean)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(calibrationBtnSave)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pTipoDeInstrumento.addTab("Calibraciones", pCalibraciones);
@@ -827,11 +810,11 @@ public class Modulo extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1037, Short.MAX_VALUE)
+            .addGap(0, 1056, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 511, Short.MAX_VALUE)
+            .addGap(0, 516, Short.MAX_VALUE)
         );
 
         pTipoDeInstrumento.addTab("Acerca de", jPanel4);
@@ -849,12 +832,13 @@ public class Modulo extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pTipoDeInstrumento))
+                .addComponent(pTipoDeInstrumento, javax.swing.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     ViewController viewController;
+    CalibrationController calibrationController;
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         viewController.actionPerformed(evt);
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -901,16 +885,34 @@ public class Modulo extends javax.swing.JFrame {
     private void btnSaveMeasurementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveMeasurementActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSaveMeasurementActionPerformed
+
+    private void calibrationBtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calibrationBtnSaveActionPerformed
+
+    }//GEN-LAST:event_calibrationBtnSaveActionPerformed
+
+    
+    public ViewController getViewController() {
+        return viewController;
+    }
+
     public void setViewController(ViewController viewController) {
         this.viewController = viewController;
     }
 
-    public JTable getTblListInstruments() {
-        return tblListInstruments;
+    public CalibrationController getCalibrationController() {
+        return calibrationController;
     }
 
-    public void setTblListInstruments(JTable tblListInstruments) {
-        this.tblListInstruments = tblListInstruments;
+    public void setCalibrationController(CalibrationController calibrationController) {
+        this.calibrationController = calibrationController;
+    }
+
+    public JButton getBtnClean() {
+        return btnClean;
+    }
+
+    public void setBtnClean(JButton btnClean) {
+        this.btnClean = btnClean;
     }
 
     public JButton getBtnCleanMeasurement() {
@@ -919,32 +921,6 @@ public class Modulo extends javax.swing.JFrame {
 
     public void setBtnCleanMeasurement(JButton btnCleanMeasurement) {
         this.btnCleanMeasurement = btnCleanMeasurement;
-    }
-
-    public JButton getBtnSaveMeasurement() {
-        return btnSaveMeasurement;
-    }
-
-    public void setBtnSaveMeasurement(JButton btnSaveMeasurement) {
-        this.btnSaveMeasurement = btnSaveMeasurement;
-    }
-
-    public JTable getTblMeasurement() {
-        return tblMeasurement;
-    }
-
-    public void setTblMeasurement(JTable tblMeasurement) {
-        this.tblMeasurement = tblMeasurement;
-    }
-    
-    
-    
-    public JButton getBtnClean() {
-        return btnClean;
-    }
-
-    public void setBtnClean(JButton btnClean) {
-        this.btnClean = btnClean;
     }
 
     public JButton getBtnDelete() {
@@ -971,6 +947,32 @@ public class Modulo extends javax.swing.JFrame {
         this.btnSave = btnSave;
     }
 
+    public JButton getBtnSaveMeasurement() {
+        return btnSaveMeasurement;
+    }
+
+    public JTable getTblCalibrations() {
+        return tblCalibrations;
+    }
+
+    public void setTblCalibrations(JTable tblCalibrations) {
+        this.tblCalibrations = tblCalibrations;
+    }
+
+    public JTable getTblMeasurement() {
+        return tblMeasurement;
+    }
+
+    public void setTblMeasurement(JTable tblMeasurement) {
+        this.tblMeasurement = tblMeasurement;
+    }
+    
+    
+
+    public void setBtnSaveMeasurement(JButton btnSaveMeasurement) {
+        this.btnSaveMeasurement = btnSaveMeasurement;
+    }
+
     public JButton getBtnSearch() {
         return btnSearch;
     }
@@ -978,6 +980,26 @@ public class Modulo extends javax.swing.JFrame {
     public void setBtnSearch(JButton btnSearch) {
         this.btnSearch = btnSearch;
     }
+
+    public JDateChooser getCalibrationDateChooser() {
+        return calibrationDateChooser;
+    }
+
+    public void setCalibrationDateChooser(JDateChooser calibrationDateChooser) {
+        this.calibrationDateChooser = calibrationDateChooser;
+    }
+
+    
+
+    public JTable getTblListInstruments() {
+        return tblListInstruments;
+    }
+
+    public void setTblListInstruments(JTable tblListInstruments) {
+        this.tblListInstruments = tblListInstruments;
+    }
+
+    
 
     public JTextField getTxtCode() {
         return txtCode;
@@ -990,15 +1012,6 @@ public class Modulo extends javax.swing.JFrame {
     public JTextField getTxtName() {
         return txtName;
     }
-
-    public JTable getTblCalibrations() {
-        return tblCalibrations;
-    }
-
-    public void setTblCalibrations(JTable tblCalibrations) {
-        this.tblCalibrations = tblCalibrations;
-    }
-    
 
     public void setTxtName(JTextField txtName) {
         this.txtName = txtName;
@@ -1015,16 +1028,6 @@ public class Modulo extends javax.swing.JFrame {
     public JTextField getTxtUnit() {
         return txtUnit;
     }
-    
-
-    public JDateChooser getCalibrationDateChooser() {
-        return calibrationDateChooser;
-    }
-
-    public void setCalibrationDateChooser(JDateChooser calibrationDateChooser) {
-        this.calibrationDateChooser = calibrationDateChooser;
-    }
-    
 
     public void setTxtUnit(JTextField txtUnit) {
         this.txtUnit = txtUnit;
@@ -1178,13 +1181,7 @@ public class Modulo extends javax.swing.JFrame {
         this.calibrationBtnSave = calibrationBtnSave;
     }
 
-    //public JTextField getCalibrationTxtDate() {
-        //return calibrationTxtDate;
-    //}
-
-    //public void setCalibrationTxtDate(JTextField calibrationTxtDate) {
-        //this.calibrationTxtDate = calibrationTxtDate;
-    //}
+    
 
     public JTextField getCalibrationTxtMeasurement() {
         return calibrationTxtMeasurement;
@@ -1210,13 +1207,6 @@ public class Modulo extends javax.swing.JFrame {
         this.txtNumberSearch = txtNumberSearch;
     }
 
-    //public JButton getBtnDateCalibraton() {
-        //return btnDateCalibraton;
-    //}
-
-    //public void setBtnDateCalibraton(JButton btnDateCalibraton) {
-        //this.btnDateCalibraton = btnDateCalibraton;
-    //}
     
     
 
