@@ -9,6 +9,7 @@ import Model.Calibration;
 import Model.CalibrationList;
 import Model.GeneratorPDF;
 import Model.InstrumentType;
+import Model.Measurement;
 import Model.XMLLoader;
 import View.Modulo;
 import com.itextpdf.text.DocumentException;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -102,6 +104,10 @@ public class CalibrationController implements ActionListener {
                         tableModel.insertRow(0, new Object[]{newCalibration.getId(),newCalibration.getDate(),newCalibration.getMeasuring()});
                         newIdNumber=idCounter();
                         view.getCalibrationTxtNumber().setText(String.valueOf(newIdNumber));
+                        int max=90; //Cambiar por valor del instrumento
+                        List<Measurement> measurements = generateMeasurements(measurement, max);
+                        XMLLoader.saveToXMLMeasurement(filePath, measurements);
+                        updateTableMeasurement();
                     }catch(Exception ex){
                         showMessage("Error al guardar en el archivo XML: " + ex.getMessage());
                     }
@@ -136,6 +142,48 @@ public class CalibrationController implements ActionListener {
         }
 
     }
+    
+    public List<Measurement> generateMeasurements(int numMeasurements, double maxValue) {
+    if (numMeasurements <= 0 || maxValue <= 0) {
+        throw new IllegalArgumentException("La cantidad de mediciones y el valor máximo deben ser mayores que cero.");
+    }
+
+    List<Measurement> measurements = new ArrayList<>();
+    double step = maxValue / numMeasurements;
+    double currentReference = 0.0;
+
+    for (int i = 1; i <= numMeasurements; i++) {
+        double medida = i;
+        double referencia = currentReference;
+        double lectura = 0.0; // Inicializar lectura como 0
+
+        Measurement measurement = new Measurement(medida, referencia, lectura);
+        measurements.add(measurement);
+
+        // Actualizar la referencia para la siguiente medición
+        currentReference += step;
+    }
+
+    return measurements;
+    }
+
+ 
+    public void updateTableMeasurement() {
+        DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
+        tableModel.setRowCount(0); // Limpia la tabla antes de cargar los datos
+
+        try {
+            ArrayList<Measurement> loadedMeasurements = XMLLoader.loadFromMeasurement(filePath);
+
+            for (Measurement measurement : loadedMeasurements) {
+                Object[] rowData = {measurement.getId(), measurement.getReference(), measurement.getReading()};
+                tableModel.addRow(rowData);
+            }
+        } catch (IOException | JDOMException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     
     public void updateTable() {
         try {
