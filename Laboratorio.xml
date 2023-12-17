@@ -5,7 +5,7 @@
     <Nombre>Termometro</Nombre>
     <Unidad>Grados Celcius</Unidad>
   </Tipo_de_instrumento>
-  <idCounter>4</idCounter>
+  <idCounter>5</idCounter>
   <Calibracion>
     <Fecha>2023/12/06</Fecha>
     <Numero>1</Numero>
@@ -14,17 +14,17 @@
   <Medicion>
     <Medida>1.0</Medida>
     <Referencia>0.0</Referencia>
-    <Lectura>1</Lectura>
+    <Lectura>1.0</Lectura>
   </Medicion>
   <Medicion>
     <Medida>2.0</Medida>
     <Referencia>30.0</Referencia>
-    <Lectura>1</Lectura>
+    <Lectura>1.0</Lectura>
   </Medicion>
   <Medicion>
     <Medida>3.0</Medida>
     <Referencia>60.0</Referencia>
-    <Lectura>1</Lectura>
+    <Lectura>1.0</Lectura>
   </Medicion>
   <Calibracion>
     <Fecha>2023/12/01</Fecha>
@@ -64,6 +64,36 @@
   <Medicion>
     <Medida>3.0</Medida>
     <Referencia>60.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Calibracion>
+    <Fecha>2023/12/01</Fecha>
+    <Numero>4</Numero>
+    <Mediciones>5</Mediciones>
+  </Calibracion>
+  <Medicion>
+    <Medida>1.0</Medida>
+    <Referencia>0.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Medida>2.0</Medida>
+    <Referencia>18.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Medida>3.0</Medida>
+    <Referencia>36.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Medida>4.0</Medida>
+    <Referencia>54.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Medida>5.0</Medida>
+    <Referencia>72.0</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
 </Instrumentos>

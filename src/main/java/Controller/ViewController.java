@@ -40,6 +40,7 @@ public class ViewController implements ActionListener {
     String filePath = "Laboratorio.xml";
     private ArrayList<InstrumentModulo2> ListOfXml;
     private ArrayList<InstrumentType> ListOfIModu1o1;
+    CalibrationController calibrationController;
 
     static Modulo view;
     boolean updateInstruments = false;
@@ -47,6 +48,7 @@ public class ViewController implements ActionListener {
     public ViewController() {
         this.listInstrument = new InstrumentsList();
         this.view = new Modulo();
+        this.calibrationController = new CalibrationController(this.view);
         this.listModulo2 = new IntrumentListModulo2();
         clickTable();
         updateTable();
@@ -54,7 +56,7 @@ public class ViewController implements ActionListener {
         this.view.setViewController(this);
     }
 
-    public void start() {
+    public void start() throws JDOMException, IOException {
         view.getBtnClean().addActionListener(this);
         view.getBtnDelete().addActionListener(this);
         view.getBtnPDF().addActionListener(this);
@@ -70,6 +72,24 @@ public class ViewController implements ActionListener {
         view.getBtnDeleteInstru().addActionListener(this);
         view.getBtnSearchInstru().addActionListener(this);
 
+        /*modulo 3*/
+        view.getCalibrationBtnDelete().addActionListener(this);
+        view.getCalibrationBtnSave().addActionListener(e -> calibrationController.save());
+        view.getCalibrationBtnClean().addActionListener(e -> calibrationController.clean());
+        view.getBtnPDFCalibration().addActionListener(e -> calibrationController.pdfCalibration());
+        view.getBtnSearchCalibration().addActionListener(e -> calibrationController.search());
+        view.getBtnSaveMeasurement().addActionListener(e->calibrationController.saveMeasurement());
+        view.getBtnCleanMeasurement().addActionListener(e->calibrationController.cleanMeasurement());
+        XMLLoader.ensureIdCounterExists(filePath);
+        int idCounter = idCounter();
+        view.getCalibrationTxtNumber().setText(String.valueOf(idCounter));
+        view.getCalibrationTxtNumber().setEnabled(false);
+
+    }
+
+    private int idCounter() throws JDOMException, IOException {
+        int idCounter = XMLLoader.getIdCounterFromXML(filePath);
+        return idCounter;
     }
 
     public void showMessage(String errorMessage, String info) {
