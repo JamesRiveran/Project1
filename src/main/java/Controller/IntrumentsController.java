@@ -25,7 +25,7 @@ import org.jdom2.JDOMException;
  *
  * @author 50686
  */
-public class IntrumentsController implements ActionListener {
+public class IntrumentsController extends Controller implements ActionListener {
 
     IntrumentListModulo2 listModulo2;
     String filePath = "Laboratorio.xml";
@@ -70,6 +70,7 @@ public class IntrumentsController implements ActionListener {
         }
     }
 
+    @Override
     public void save() {
 
         try {
@@ -103,12 +104,14 @@ public class IntrumentsController implements ActionListener {
         }
     }
 
+    @Override
     public void search() {
         String searchLetter = view.getTxtSearchInstru().getText();
         // Realiza la búsqueda y actualiza la tabla
         filterByDescription(searchLetter);
     }
 
+    @Override
     public void clean() {
         view.getBtnDelete().setEnabled(false);
         view.getTxtSerie().setEnabled(true);
@@ -119,6 +122,7 @@ public class IntrumentsController implements ActionListener {
         view.getTxtDescri().setText("");
     }
 
+    @Override
     public void reportPdf() {
         try {
             ArrayList<InstrumentModulo2> instrumentListModulo2 = XMLLoader.loadFromXMLS(filePath);
@@ -133,6 +137,7 @@ public class IntrumentsController implements ActionListener {
         }
     }
 
+    @Override
     public void delete() {
         InstrumentModulo2 instrumentToDelete = new InstrumentModulo2(
                 view.getTxtSerie().getText(),
@@ -260,4 +265,6 @@ public class IntrumentsController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         clickTable();
     }
+
+ 
 }

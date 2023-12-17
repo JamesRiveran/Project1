@@ -33,7 +33,7 @@ import org.jdom2.JDOMException;
  *
  * @author james
  */
-public class ViewController implements ActionListener {
+public class ViewController extends Controller implements ActionListener {
 
     InstrumentsList listInstrument;
    
@@ -75,7 +75,7 @@ public class ViewController implements ActionListener {
         view.getCalibrationBtnDelete().addActionListener(this);
         view.getCalibrationBtnSave().addActionListener(e -> calibrationController.save());
         view.getCalibrationBtnClean().addActionListener(e -> calibrationController.clean());
-        view.getBtnPDFCalibration().addActionListener(e -> calibrationController.pdfCalibration());
+        view.getBtnPDFCalibration().addActionListener(e -> calibrationController.reportPdf());
         view.getBtnSearchCalibration().addActionListener(e -> calibrationController.search());
         view.getBtnSaveMeasurement().addActionListener(e -> calibrationController.saveMeasurement());
         view.getBtnCleanMeasurement().addActionListener(e -> calibrationController.cleanMeasurement());
@@ -117,6 +117,7 @@ public class ViewController implements ActionListener {
         }
     }
 
+    @Override
     public void save() {
         try {
             if (view.getTxtCode().getText().trim().isEmpty()) {
@@ -173,6 +174,7 @@ public class ViewController implements ActionListener {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    @Override
     public void search() {
         try {
             ArrayList<InstrumentType> loadedList = XMLLoader.loadFromXML(filePath);
@@ -194,6 +196,7 @@ public class ViewController implements ActionListener {
         }
     }
 
+    @Override
     public void delete() {
         InstrumentType instrumentToDelete = new InstrumentType(
                 view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
@@ -207,6 +210,7 @@ public class ViewController implements ActionListener {
         }
     }
 
+    @Override
     public void reportPdf() {
         try {
             ArrayList<InstrumentType> instrumentList = XMLLoader.loadFromXML(filePath);
@@ -291,6 +295,7 @@ public class ViewController implements ActionListener {
 
     }
 
+    @Override
     public void clean() {
         view.getBtnDelete().setEnabled(false);
         view.getTxtCode().setEnabled(true);

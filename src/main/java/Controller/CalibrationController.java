@@ -31,7 +31,7 @@ import org.jdom2.JDOMException;
  *
  * @author james
  */
-public class CalibrationController implements ActionListener {
+public class CalibrationController extends Controller implements ActionListener {
 
     CalibrationList calibrationList;
     ViewController viewController;
@@ -46,6 +46,7 @@ public class CalibrationController implements ActionListener {
         updateTable();
     }
 
+    @Override
     public void save() {
         try {
             int measurement = Integer.parseInt(view.getCalibrationTxtMeasurement().getText());
@@ -83,17 +84,20 @@ public class CalibrationController implements ActionListener {
         }
     }
 
+    @Override
     public void clean() {
         view.getCalibrationDateChooser().setDate(null);
         view.getCalibrationTxtMeasurement().setText("");
     }
 
+    @Override
     public void search() {
         String searchNumber = view.getTxtNumberSearch().getText();
         filterByNumber(searchNumber);
     }
 
-    public void pdfCalibration() {
+    @Override
+    public void reportPdf() {
         try {
             ArrayList<Calibration> calibrationList = XMLLoader.loadFromCalibrations(filePath);
             String pdfFilePath = "Reporte_Calibraciones.pdf";
@@ -228,6 +232,10 @@ public class CalibrationController implements ActionListener {
         } catch (IOException | JDOMException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public void delete() {
     }
 
 }
