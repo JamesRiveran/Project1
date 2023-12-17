@@ -7,9 +7,11 @@ package Controller;
 
 import Model.Calibration;
 import Model.CalibrationList;
+import Model.GeneratorPDF;
 import Model.InstrumentType;
 import Model.XMLLoader;
 import View.Modulo;
+import com.itextpdf.text.DocumentException;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -117,6 +119,20 @@ public class CalibrationController implements ActionListener {
         if (e.getSource().equals(view.getBtnSearchCalibration())) {
             String searchNumber = view.getTxtNumberSearch().getText();
             filterByNumber(searchNumber);
+        }
+        //Reporte
+        if (e.getSource().equals(view.getBtnPDFCalibration())) {
+            try {
+                ArrayList<Calibration> calibrationList = XMLLoader.loadFromCalibrations(filePath);
+                String pdfFilePath = "Reporte_Calibraciones.pdf";
+                GeneratorPDF.generatePDFReport(calibrationList, pdfFilePath, "modulo_3");
+            } catch (IOException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JDOMException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (DocumentException ex) {
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }
