@@ -4,25 +4,23 @@
  */
 package Model;
 
+import Controller.ViewController;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-
 import javax.swing.table.DefaultTableModel;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-
 import java.util.Date;
-
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -34,16 +32,16 @@ import org.jdom2.output.XMLOutputter;
  *
  * @author james
  */
-public class XMLLoader {
+public class XMLLoader extends ViewController {
+
+    String filePath = "Laboratorio.xml";
 
     public static ArrayList<InstrumentType> loadFromXML(String filePath) throws FileNotFoundException, IOException, JDOMException {
         ArrayList<InstrumentType> instrumentList = new ArrayList<>();
 
-
-        SAXBuilder saxBuilder = new SAXBuilder(); 
+        SAXBuilder saxBuilder = new SAXBuilder();
         Document document;
-        try (FileInputStream fis = new FileInputStream(filePath);
-            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+        try (FileInputStream fis = new FileInputStream(filePath); InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
             document = saxBuilder.build(isr);
 
         }
@@ -55,7 +53,6 @@ public class XMLLoader {
             String unit = instrumentElement.getChildText("Unidad");
 
             // Crea un objeto InstrumentType y agrégalo a la lista
-
             InstrumentType instrumentType = new InstrumentType(code, unit, name);
 
             instrumentList.add(instrumentType);
@@ -116,10 +113,7 @@ public class XMLLoader {
             XMLOutputter xml = new XMLOutputter();
             xml.setFormat(Format.getPrettyFormat());
 
-
-            try (FileOutputStream fos = new FileOutputStream(filePath); 
-                    OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8); 
-                    BufferedWriter writer = new BufferedWriter(osw)) {
+            try (FileOutputStream fos = new FileOutputStream(filePath); OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8); BufferedWriter writer = new BufferedWriter(osw)) {
 
                 xml.output(doc, writer);
             }
@@ -128,25 +122,49 @@ public class XMLLoader {
         }
     }
 
-
     public static void deleteFromXML(String filePath, InstrumentType instrumentToDelete) throws IOException, JDOMException {
         SAXBuilder saxBuilder = new SAXBuilder();
         Document document = saxBuilder.build(new File(filePath));
+        ArrayList<InstrumentModulo2> listOfInstruments3 = loadFromXMLS(filePath);
+        if (listOfInstruments3.isEmpty()) {
+            Element rootElement = document.getRootElement();
+            List<Element> instrumentElements = rootElement.getChildren("Tipo_de_instrumento");
+            for (Element instrumentElement : instrumentElements) {
+                String code = instrumentElement.getChildText("Codigo");
 
-        Element rootElement = document.getRootElement();
-        List<Element> instrumentElements = rootElement.getChildren("Tipo_de_instrumento");
+                // Verifica si el código coincide con el que se quiere eliminar
+                if (code.equals(instrumentToDelete.getCode())) {
+                    // Elimina el elemento del XML
+                    instrumentElement.getParentElement().removeContent(instrumentElement);
+                    ViewController.conection(false);
+                    break;  // Puedes salir del bucle si se eliminó el elemento
+                }
+            }
+        } else {
+            for (InstrumentModulo2 name : listOfInstruments3) {
+                Element rootElement = document.getRootElement();
+                List<Element> instrumentElements = rootElement.getChildren("Tipo_de_instrumento");
 
-        for (Element instrumentElement : instrumentElements) {
-            String code = instrumentElement.getChildText("Codigo");
-
-            // Verifica si el código coincide con el que se quiere eliminar
-            if (code.equals(instrumentToDelete.getCode())) {
-                // Elimina el elemento del XML
-                instrumentElement.getParentElement().removeContent(instrumentElement);
-                break;  // Puedes salir del bucle si se eliminó el elemento
+                String type = name.getType();
+                String nameInstru = instrumentToDelete.getName();
+                if (type.equals(nameInstru)) {
+                    ViewController.conection(true);
+                    break;
+                } else {
+                    for (Element instrumentElement : instrumentElements) {
+                        String code = instrumentElement.getChildText("Codigo");
+                        // Verifica si el código coincide con el que se quiere eliminar
+                        if (code.equals(instrumentToDelete.getCode())) {
+                            // Elimina el elemento del XML
+                            instrumentElement.getParentElement().removeContent(instrumentElement);
+                            ViewController.conection(false);
+                            break;  // Puedes salir del bucle si se eliminó el elemento
+                        }
+                    }
+                    // Guarda los cambios en el archivo XML
+                }
             }
         }
-        // Guarda los cambios en el archivo XML
         XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
         try {
             xmlOutputter.output(document, new FileWriter(filePath));
@@ -161,7 +179,6 @@ public class XMLLoader {
     }
 
     //Validacion para comprobar si el tipo de instrumento ya existe, se actualizarán sus datos en lugar de crear uno nuevo.
-
     private static Element findInstrumentByCode(Element instruments, String code) {
         // Buscar un elemento por su código dentro del elemento raíz
         for (Element typeInstrument : instruments.getChildren("Tipo_de_instrumento")) {
@@ -172,6 +189,7 @@ public class XMLLoader {
         return null;
     }
 //Para el modulo 2
+
     public static void addToXML(String filePath, List<InstrumentModulo2> instrumentList) {
         if (instrumentList == null || instrumentList.isEmpty()) {
             throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacía");
@@ -243,8 +261,8 @@ public class XMLLoader {
             ex.printStackTrace();
         }
     }
-  
-   public static void saveToXMLCalibration(String filePath, List<Calibration> calibrationList) {
+
+    public static void saveToXMLCalibration(String filePath, List<Calibration> calibrationList) {
         if (calibrationList == null || calibrationList.isEmpty()) {
             throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacía");
         }
@@ -311,8 +329,6 @@ public class XMLLoader {
             ex.printStackTrace();
         }
     }
-  
-  
 
     public static void deleteInstrumentsFromXML(String filePath, InstrumentModulo2 instrumentToDelete) throws IOException, JDOMException {
         SAXBuilder saxBuilder = new SAXBuilder();
@@ -382,12 +398,8 @@ public class XMLLoader {
         return instruments;
     }
 
-    
-   
-
-     public static int getIdCounterFromXML(String filePath) throws IOException, JDOMException {
-        try (FileInputStream fis = new FileInputStream(filePath);
-             InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+    public static int getIdCounterFromXML(String filePath) throws IOException, JDOMException {
+        try (FileInputStream fis = new FileInputStream(filePath); InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
             Document document = new SAXBuilder().build(isr);
             Element rootElement = document.getRootElement();
             Element idCounterElement = rootElement.getChild("idCounter");
@@ -401,8 +413,6 @@ public class XMLLoader {
         }
     }
 
-    
-    
     public static void ensureIdCounterExists(String filePath) {
         try {
             // Construir el documento XML desde el archivo existente
