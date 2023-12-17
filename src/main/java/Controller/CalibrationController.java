@@ -154,7 +154,17 @@ public class CalibrationController implements ActionListener {
             }
             XMLLoader.updateMeasurement(filePath, datosColumna);
         }
-        
+        //Limpiar lectura
+        if (e.getSource().equals(view.getBtnCleanMeasurement())) {
+            int columna = 2;  // El número de la columna que deseas limpiar
+            DefaultTableModel modelo = (DefaultTableModel) view.getTblMeasurement().getModel();
+            int rowCount = modelo.getRowCount();
+
+            for (int fila = 0; fila < rowCount; fila++) {
+                modelo.setValueAt("", fila, columna); // Establece un valor vacío en la celda
+            }
+        }
+
         
 
     }
