@@ -140,11 +140,27 @@ public class CalibrationController implements ActionListener {
                 Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        //Guardar lectura
+        if (e.getSource().equals(view.getBtnSaveMeasurement())) {
+            int columna = 2;
+            DefaultTableModel modelo = (DefaultTableModel) view.getTblMeasurement().getModel();
+            int rowCount = modelo.getRowCount();
+            List<String> datosColumna = new ArrayList<>();
+
+            for (int fila = 0; fila < rowCount; fila++) {
+                Object valorCelda = modelo.getValueAt(fila, columna);
+                String textoCelda = (valorCelda != null) ? valorCelda.toString() : "";
+                datosColumna.add(textoCelda);
+            }
+            XMLLoader.updateMeasurement(filePath, datosColumna);
+        }
+        
+        
 
     }
-    
+
     public List<Measurement> generateMeasurements(int numMeasurements, double maxValue) {
-    if (numMeasurements <= 0 || maxValue <= 0) {
+        if (numMeasurements <= 0 || maxValue <= 0) {
         throw new IllegalArgumentException("La cantidad de mediciones y el valor máximo deben ser mayores que cero.");
     }
 

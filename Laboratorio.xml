@@ -7,23 +7,23 @@
   </Tipo_de_instrumento>
   <idCounter>2</idCounter>
   <Calibracion>
-    <Fecha>2023/12/03</Fecha>
+    <Fecha>2023/12/06</Fecha>
     <Numero>1</Numero>
     <Mediciones>3</Mediciones>
   </Calibracion>
   <Medicion>
     <Medida>1.0</Medida>
     <Referencia>0.0</Referencia>
-    <Lectura>0.0</Lectura>
+    <Lectura>1</Lectura>
   </Medicion>
   <Medicion>
     <Medida>2.0</Medida>
     <Referencia>30.0</Referencia>
-    <Lectura>0.0</Lectura>
+    <Lectura>1</Lectura>
   </Medicion>
   <Medicion>
     <Medida>3.0</Medida>
     <Referencia>60.0</Referencia>
-    <Lectura>0.0</Lectura>
+    <Lectura>1</Lectura>
   </Medicion>
 </Instrumentos>

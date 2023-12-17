@@ -5,6 +5,7 @@
 package Model;
 
 import Controller.ViewController;
+import View.Modulo;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,7 +36,7 @@ import org.jdom2.output.XMLOutputter;
 public class XMLLoader extends ViewController {
 
     String filePath = "Laboratorio.xml";
-
+    Modulo view;
     public static ArrayList<InstrumentType> loadFromXML(String filePath) throws FileNotFoundException, IOException, JDOMException {
         ArrayList<InstrumentType> instrumentList = new ArrayList<>();
 
@@ -537,6 +538,41 @@ public class XMLLoader extends ViewController {
         }
         return measurementList;
     }
+     
+    public static void updateMeasurement(String filePath,List<String> list) {
+        try {
+            File archivoXML = new File(filePath);
+            Document documento = new SAXBuilder().build(archivoXML);
+            Element raiz = documento.getRootElement();
+
+            List<Element> elementosMedicion = raiz.getChildren("Medicion");
+
+            if (elementosMedicion.size() == list.size()) {
+                for (int i = 0; i < elementosMedicion.size(); i++) {
+                    Element elementoMedicion = elementosMedicion.get(i);
+                    String nuevoValorDeLectura = list.get(i);
+
+                    Element elementoLectura = elementoMedicion.getChild("Lectura");
+                    elementoLectura.setText(nuevoValorDeLectura);
+                }
+
+                // Guardar el documento XML actualizado en el archivo
+                XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
+                try (FileWriter writer = new FileWriter(filePath)) {
+                    xmlOutput.output(documento, writer);
+                    System.out.println("Valores de Lectura actualizados con éxito.");
+                }
+            } else {
+                System.err.println("La cantidad de elementos en la lista no coincide con la cantidad de elementos en el XML.");
+            }
+        } catch (IOException | JDOMException e) {
+            e.printStackTrace();
+        }
+
+
+        
+    }
+     
 
     
     
