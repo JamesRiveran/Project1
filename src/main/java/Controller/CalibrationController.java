@@ -37,20 +37,22 @@ public class CalibrationController implements ActionListener {
     public CalibrationController() {
         this.calibrationList = new CalibrationList();
         this.view = new Modulo();
+        this.view.setCalibrationController(this);
     }
     
     public void startCalibration() throws JDOMException, IOException{
-        view.getCalibrationBtnClean().addActionListener(this);
         view.getCalibrationBtnDelete().addActionListener(this);
         view.getCalibrationBtnSave().addActionListener(this);
-        //view.getBtnDateCalibraton().addActionListener(this);
+        view.getCalibrationBtnClean().addActionListener(this);
         view.getBtnPDFCalibration().addActionListener(this);
         view.getBtnSearchCalibration().addActionListener(this);
+        view.getBtnSaveMeasurement().addActionListener(this);
+        view.getBtnCleanMeasurement().addActionListener(this);
         view.setLocationRelativeTo(null);
-        //view.setVisible(true);
+        view.setVisible(true);
         XMLLoader.ensureIdCounterExists(filePath);
-        int idCounter=idCounter();
-        view.getCalibrationTxtNumber().setText(String.valueOf(String.valueOf(idCounter)));
+        int idCounter = idCounter();
+        view.getCalibrationTxtNumber().setText(String.valueOf(idCounter));
         view.getCalibrationTxtNumber().setEnabled(false);
     }
 
@@ -71,8 +73,8 @@ public class CalibrationController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //Guardar
-        if(e.getSource().equals(view.getCalibrationBtnSave())){
+        //Guardar///
+        if (e.getSource().equals(view.getCalibrationBtnSave())){
             try{
                 int measurement = Integer.parseInt(view.getCalibrationTxtMeasurement().getText());
                 if(view.getCalibrationDateChooser().getDate() == null){
