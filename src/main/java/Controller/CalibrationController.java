@@ -73,7 +73,7 @@ public class CalibrationController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //Guardar
+        //Guardar///
         if (e.getSource().equals(view.getCalibrationBtnSave())){
             try{
                 int measurement = Integer.parseInt(view.getCalibrationTxtMeasurement().getText());
