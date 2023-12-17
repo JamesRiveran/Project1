@@ -455,11 +455,7 @@ public class Modulo extends javax.swing.JFrame {
 
         tbInstru.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "No. Serie", "Descripcion", "Minimo", "Maximo", "Tolerancia"
@@ -832,7 +828,7 @@ public class Modulo extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pTipoDeInstrumento, javax.swing.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE))
+                .addComponent(pTipoDeInstrumento))
         );
 
         pack();

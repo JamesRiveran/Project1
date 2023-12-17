@@ -446,7 +446,6 @@ public class XMLLoader extends ViewController {
             e.printStackTrace();
         }
     }
-
     public static ArrayList<Calibration> loadFromCalibrations(String filePath) throws FileNotFoundException, IOException, JDOMException {
         ArrayList<Calibration> calibrationList = new ArrayList<>();
         SAXBuilder saxBuilder = new SAXBuilder();
@@ -455,18 +454,91 @@ public class XMLLoader extends ViewController {
             document = saxBuilder.build(isr);
         }
         Element rootElement = document.getRootElement();
-        List<Element> calibrationElements = rootElement.getChildren("Tipo_de_instrumento");
+        List<Element> calibrationElements = rootElement.getChildren("Calibracion");
         for (Element calibrationtElement : calibrationElements) {
             String date = calibrationtElement.getChildText("Fecha");
             int id = Integer.parseInt(calibrationtElement.getChildText("Numero"));
             int measurement = Integer.parseInt(calibrationtElement.getChildText("Mediciones"));
 
             // Crea un objeto calibration y agrégalo a la lista
-            Calibration calibration = new Calibration(date, id, measurement);
+            Calibration calibration = new Calibration(id, date, measurement);
             calibrationList.add(calibration);
         }
-
         return calibrationList;
     }
+    
+    public static void saveToXMLMeasurement(String filePath, List<Measurement> measurementList) {
+    if (measurementList == null || measurementList.isEmpty()) {
+        throw new IllegalArgumentException("La lista de mediciones no puede ser nula ni estar vacía");
+    }
+
+    try {
+        Document doc;
+
+        // Verificar si el archivo ya existe
+        File file = new File(filePath);
+        if (file.exists()) {
+            // Si el archivo existe, cargar el contenido existente
+            SAXBuilder saxBuilder = new SAXBuilder();
+            doc = saxBuilder.build(file);
+        } else {
+            // Si el archivo no existe, crear uno nuevo
+            doc = new Document(new Element("Mediciones"));
+        }
+
+        Element measurements = doc.getRootElement();
+        // Agregar las nuevas mediciones
+        for (Measurement measurement : measurementList) {
+            Element measurementElement = new Element("Medicion");
+
+            Element medidaElement = new Element("Medida");
+            medidaElement.setText(Double.toString(measurement.getId()));
+            Element referenciaElement = new Element("Referencia");
+            referenciaElement.setText(Double.toString(measurement.getReference()));
+            Element lecturaElement = new Element("Lectura");
+            lecturaElement.setText(Double.toString(measurement.getReading()));
+
+            measurementElement.addContent(medidaElement);
+            measurementElement.addContent(referenciaElement);
+            measurementElement.addContent(lecturaElement);
+
+            measurements.addContent(measurementElement);
+        }
+
+        // Guardar los cambios en el archivo XML
+        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+        try (FileWriter writer = new FileWriter(filePath)) {
+            xmlOutputter.output(doc, writer);
+        }
+
+        System.out.println("Se ha guardado el archivo XML de mediciones.");
+
+    } catch (IOException | JDOMException ex) {
+        ex.printStackTrace();
+    }
+}
+     public static ArrayList<Measurement> loadFromMeasurement(String filePath) throws FileNotFoundException, IOException, JDOMException {
+        ArrayList<Measurement> measurementList = new ArrayList<>();
+        SAXBuilder saxBuilder = new SAXBuilder();
+        Document document;
+        try (FileInputStream fis = new FileInputStream(filePath); InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+            document = saxBuilder.build(isr);
+        }
+        Element rootElement = document.getRootElement();
+        List<Element> calibrationElements = rootElement.getChildren("Medicion");
+        for (Element calibrationtElement : calibrationElements) {
+            double id = Double.parseDouble(calibrationtElement.getChildText("Medida"));
+            double measurement = Double.parseDouble(calibrationtElement.getChildText("Referencia"));
+            double reading = Double.parseDouble(calibrationtElement.getChildText("Lectura"));
+
+            // Crea un objeto calibration y agrégalo a la lista
+            Measurement measurements = new Measurement(id, measurement, reading);
+            measurementList.add(measurements);
+        }
+        return measurementList;
+    }
+
+    
+    
 
 }
