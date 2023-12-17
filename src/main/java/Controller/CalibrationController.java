@@ -33,6 +33,7 @@ public class CalibrationController implements ActionListener {
     ViewController viewController;
     Modulo view;
     String filePath = "Laboratorio.xml";
+    private ArrayList<Calibration> listCalibrations;
    
     public CalibrationController() {
         this.calibrationList = new CalibrationList();
@@ -112,46 +113,50 @@ public class CalibrationController implements ActionListener {
         }
         //Buscar
         if (e.getSource().equals(view.getBtnSearchCalibration())) {
-            try {
-                ArrayList<Calibration> loadedList = XMLLoader.loadFromCalibrations(filePath);
-                if(loadedList.isEmpty()){
-                    showMessage("No hay calibraciones registradas");
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (JDOMException ex) {
-                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            int numberSearch = Integer.parseInt(view.getTxtNumberSearch().getText());
-            try {
-                filterByNumber(numberSearch);
-            } catch (JDOMException ex) {
-                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(CalibrationController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            String searchNumber = view.getBtnSearchCalibration().getText();
+            filterByNumber(searchNumber);
+        }
+
     }
-}
-    private void filterByNumber(int numberSearch) throws JDOMException, IOException {
+    
+    public void updateTable() {
         try {
-            ArrayList<Calibration> loadedList = XMLLoader.loadFromCalibrations(filePath);
-            DefaultTableModel template = (DefaultTableModel) view.getTblCalibrations().getModel();
-            template.setRowCount(0);
-            String searchEmpty = String.valueOf(numberSearch);
-            if (searchEmpty.isEmpty()) {
-                for (Calibration calibration : loadedList) {
-                    template.addRow(new Object[]{calibration.getId(),calibration.getDate(),calibration.getMeasuring()});
-                }
-            } else {
-                for (Calibration calibration : loadedList) {
-                    String numberForSearch = String.valueOf(calibration.getId());
-                    if (numberForSearch.contains(searchEmpty.toLowerCase())) {
-                        template.addRow(new Object[]{calibration.getId(),calibration.getDate(),calibration.getMeasuring()});
-                    }
-                }
+            listCalibrations = XMLLoader.loadFromCalibrations(filePath);
+            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+            tableModel.setRowCount(0);
+            for (int i = listCalibrations.size() - 1; i >= 0; i--) {
+                Calibration newCalibration = listCalibrations.get(i);
+                tableModel.insertRow(0, new Object[]{newCalibration.getDate(), newCalibration.getId(), newCalibration.getMeasuring()});
             }
         } catch (IOException | JDOMException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    private void filterByNumber(String searchNumber){
+        if (listCalibrations == null) {
+            updateTable();
+        }
+        DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+        tableModel.setRowCount(0);
+        // Si la cadena de búsqueda está vacía, muestra todos los elementos
+        if (searchNumber.isEmpty()) {
+            for (Calibration calibration : listCalibrations) {
+                tableModel.addRow(new Object[]{calibration.getDate(),calibration.getId(),calibration.getMeasuring()});
+            }
+        } else {
+            // Itera sobre la lista de instrumentos y agrega las coincidencias al modelo de la tabla
+            for (Calibration calibration : listCalibrations) {
+                // Convierte la descripción a minúsculas para hacer la búsqueda insensible a mayúsculas y minúsculas
+                String id = String.valueOf(calibration.getId());
+
+                // Verifica si la descripción contiene la letra ingresada
+                if (id.contains(searchNumber)) {
+                    tableModel.addRow(new Object[]{calibration.getDate(),calibration.getId(),calibration.getMeasuring()});
+                }
+            }
+        } 
+    }
+
+    
 }

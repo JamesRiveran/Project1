@@ -436,17 +436,15 @@ public class XMLLoader {
             e.printStackTrace();
         }
     }
-    
-      public static ArrayList<Calibration> loadFromCalibrations(String filePath) throws FileNotFoundException, IOException, JDOMException {
+    public static ArrayList<Calibration> loadFromCalibrations(String filePath) throws FileNotFoundException, IOException, JDOMException {
         ArrayList<Calibration> calibrationList = new ArrayList<>();
-        SAXBuilder saxBuilder = new SAXBuilder(); 
+        SAXBuilder saxBuilder = new SAXBuilder();
         Document document;
-        try (FileInputStream fis = new FileInputStream(filePath);
-            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+        try (FileInputStream fis = new FileInputStream(filePath); InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
             document = saxBuilder.build(isr);
         }
         Element rootElement = document.getRootElement();
-        List<Element> calibrationElements = rootElement.getChildren("Tipo_de_instrumento");
+        List<Element> calibrationElements = rootElement.getChildren("Calibracion");
         for (Element calibrationtElement : calibrationElements) {
             String date = calibrationtElement.getChildText("Fecha");
             int id = Integer.parseInt(calibrationtElement.getChildText("Numero"));
@@ -456,7 +454,6 @@ public class XMLLoader {
             Calibration calibration = new Calibration(date, id, measurement);
             calibrationList.add(calibration);
         }
-
         return calibrationList;
     }
 
