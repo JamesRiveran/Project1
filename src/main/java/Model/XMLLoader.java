@@ -37,6 +37,7 @@ public class XMLLoader extends ViewController {
 
     String filePath = "Laboratorio.xml";
     Modulo view;
+
     public static ArrayList<InstrumentType> loadFromXML(String filePath) throws FileNotFoundException, IOException, JDOMException {
         ArrayList<InstrumentType> instrumentList = new ArrayList<>();
 
@@ -263,7 +264,7 @@ public class XMLLoader extends ViewController {
         }
     }
 
-    public static void saveToXMLCalibration(String filePath, List<Calibration> calibrationList) {
+    public static void saveToXMLCalibration(String filePath, List<Calibration> calibrationList, String serie) {
         if (calibrationList == null || calibrationList.isEmpty()) {
             throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacía");
         }
@@ -286,7 +287,8 @@ public class XMLLoader extends ViewController {
             // Agregar los nuevos instrumentos
             for (Calibration calibration : calibrationList) {
                 Element typeInstrument = new Element("Calibracion");
-
+                Element series = new Element("Serie");
+                series.setText(serie);
                 Element date = new Element("Fecha");
                 date.setText(calibration.getDate());
                 Element number = new Element("Numero");
@@ -294,6 +296,7 @@ public class XMLLoader extends ViewController {
                 Element measurement = new Element("Mediciones");
                 measurement.setText(Integer.toString(calibration.getMeasuring()));
 
+                typeInstrument.addContent(series);
                 typeInstrument.addContent(date);
                 typeInstrument.addContent(number);
                 typeInstrument.addContent(measurement);
@@ -447,6 +450,7 @@ public class XMLLoader extends ViewController {
             e.printStackTrace();
         }
     }
+
     public static ArrayList<Calibration> loadFromCalibrations(String filePath) throws FileNotFoundException, IOException, JDOMException {
         ArrayList<Calibration> calibrationList = new ArrayList<>();
         SAXBuilder saxBuilder = new SAXBuilder();
@@ -467,58 +471,61 @@ public class XMLLoader extends ViewController {
         }
         return calibrationList;
     }
-    
-    public static void saveToXMLMeasurement(String filePath, List<Measurement> measurementList) {
-    if (measurementList == null || measurementList.isEmpty()) {
-        throw new IllegalArgumentException("La lista de mediciones no puede ser nula ni estar vacía");
+
+    public static void saveToXMLMeasurement(String filePath, List<Measurement> measurementList, String txtNumber) {
+        if (measurementList == null || measurementList.isEmpty()) {
+            throw new IllegalArgumentException("La lista de mediciones no puede ser nula ni estar vacía");
+        }
+
+        try {
+            Document doc;
+
+            // Verificar si el archivo ya existe
+            File file = new File(filePath);
+            if (file.exists()) {
+                // Si el archivo existe, cargar el contenido existente
+                SAXBuilder saxBuilder = new SAXBuilder();
+                doc = saxBuilder.build(file);
+            } else {
+                // Si el archivo no existe, crear uno nuevo
+                doc = new Document(new Element("Mediciones"));
+            }
+
+            Element measurements = doc.getRootElement();
+            // Agregar las nuevas mediciones
+            for (Measurement measurement : measurementList) {
+                Element measurementElement = new Element("Medicion");
+                Element number = new Element("Numero");
+                number.setText(txtNumber);
+                Element medidaElement = new Element("Medida");
+                medidaElement.setText(Double.toString(measurement.getId()));
+                Element referenciaElement = new Element("Referencia");
+                referenciaElement.setText(Double.toString(measurement.getReference()));
+                Element lecturaElement = new Element("Lectura");
+                lecturaElement.setText(Double.toString(measurement.getReading()));
+
+                measurementElement.addContent(number);
+                measurementElement.addContent(medidaElement);
+                measurementElement.addContent(referenciaElement);
+                measurementElement.addContent(lecturaElement);
+
+                measurements.addContent(measurementElement);
+            }
+
+            // Guardar los cambios en el archivo XML
+            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+            try (FileWriter writer = new FileWriter(filePath)) {
+                xmlOutputter.output(doc, writer);
+            }
+
+            System.out.println("Se ha guardado el archivo XML de mediciones.");
+
+        } catch (IOException | JDOMException ex) {
+            ex.printStackTrace();
+        }
     }
 
-    try {
-        Document doc;
-
-        // Verificar si el archivo ya existe
-        File file = new File(filePath);
-        if (file.exists()) {
-            // Si el archivo existe, cargar el contenido existente
-            SAXBuilder saxBuilder = new SAXBuilder();
-            doc = saxBuilder.build(file);
-        } else {
-            // Si el archivo no existe, crear uno nuevo
-            doc = new Document(new Element("Mediciones"));
-        }
-
-        Element measurements = doc.getRootElement();
-        // Agregar las nuevas mediciones
-        for (Measurement measurement : measurementList) {
-            Element measurementElement = new Element("Medicion");
-
-            Element medidaElement = new Element("Medida");
-            medidaElement.setText(Double.toString(measurement.getId()));
-            Element referenciaElement = new Element("Referencia");
-            referenciaElement.setText(Double.toString(measurement.getReference()));
-            Element lecturaElement = new Element("Lectura");
-            lecturaElement.setText(Double.toString(measurement.getReading()));
-
-            measurementElement.addContent(medidaElement);
-            measurementElement.addContent(referenciaElement);
-            measurementElement.addContent(lecturaElement);
-
-            measurements.addContent(measurementElement);
-        }
-
-        // Guardar los cambios en el archivo XML
-        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-        try (FileWriter writer = new FileWriter(filePath)) {
-            xmlOutputter.output(doc, writer);
-        }
-
-        System.out.println("Se ha guardado el archivo XML de mediciones.");
-
-    } catch (IOException | JDOMException ex) {
-        ex.printStackTrace();
-    }
-}
-     public static ArrayList<Measurement> loadFromMeasurement(String filePath) throws FileNotFoundException, IOException, JDOMException {
+    public static ArrayList<Measurement> loadFromMeasurement(String filePath) throws FileNotFoundException, IOException, JDOMException {
         ArrayList<Measurement> measurementList = new ArrayList<>();
         SAXBuilder saxBuilder = new SAXBuilder();
         Document document;
@@ -538,8 +545,8 @@ public class XMLLoader extends ViewController {
         }
         return measurementList;
     }
-     
-    public static void updateMeasurement(String filePath,List<String> list) {
+
+    public static void updateMeasurement(String filePath, List<String> list) {
         try {
             File archivoXML = new File(filePath);
             Document documento = new SAXBuilder().build(archivoXML);
@@ -569,12 +576,6 @@ public class XMLLoader extends ViewController {
             e.printStackTrace();
         }
 
-
-        
     }
-     
-
-    
-    
 
 }

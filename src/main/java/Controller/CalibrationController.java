@@ -8,7 +8,6 @@ package Controller;
 import Model.Calibration;
 import Model.CalibrationList;
 import Model.GeneratorPDF;
-import Model.InstrumentType;
 import Model.Measurement;
 import Model.XMLLoader;
 import View.Modulo;
@@ -31,7 +30,11 @@ import org.jdom2.JDOMException;
  *
  * @author james
  */
-public class CalibrationController extends Controller implements ActionListener {
+public class CalibrationController extends Controller implements ActionListener, InstruSelectionListener {
+
+    String serie;
+    int min;
+    String max;
 
     CalibrationList calibrationList;
     ViewController viewController;
@@ -43,19 +46,27 @@ public class CalibrationController extends Controller implements ActionListener 
         this.view = view;
         this.view.setCalibrationController(this);
         this.calibrationList = new CalibrationList();
+    }
+
+    // Constructor con argumentos, incluyendo la serie
+    public CalibrationController(Modulo view, String serie, String max) {
+        this.view = view;
+        this.view.setCalibrationController(this);
+        this.calibrationList = new CalibrationList();
+        this.serie = serie; // Asigna la serie recibida
+        this.max = max;
         updateTable();
     }
 
     @Override
     public void save() {
         try {
-            int measurement = Integer.parseInt(view.getCalibrationTxtMeasurement().getText());
             if (view.getCalibrationDateChooser().getDate() == null) {
-                showMessage("Debe ingresar la fecha del instrumento");
+                showMessage("Debe ingresar la fecha del instrumento","error");
             } else if (view.getCalibrationTxtMeasurement().getText().trim().isEmpty()) {
-                showMessage("Debe ingresar la calibración del instrumento");
-            } else if (measurement < 2) {
-                showMessage("La cantidad minima de mediciones que se permite ingresar es de 2");
+                showMessage("Debe ingresar la calibración del instrumento","error");
+            } else if (Integer.parseInt(view.getCalibrationTxtMeasurement().getText()) < 2) {
+                showMessage("La cantidad minima de mediciones que se permite ingresar es de 2","error");
             } else {
                 try {
                     int newIdNumber = 0;
@@ -66,21 +77,21 @@ public class CalibrationController extends Controller implements ActionListener 
                             date,
                             Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                     calibrationList.getList().add(newCalibration);
-                    XMLLoader.saveToXMLCalibration(filePath, calibrationList.getList());
+                    XMLLoader.saveToXMLCalibration(filePath, calibrationList.getList(), serie);
                     DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
                     tableModel.insertRow(0, new Object[]{newCalibration.getId(), newCalibration.getDate(), newCalibration.getMeasuring()});
+                    List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max));
+                    XMLLoader.saveToXMLMeasurement(filePath, measurements, view.getCalibrationTxtNumber().getText());
                     newIdNumber = idCounter();
                     view.getCalibrationTxtNumber().setText(String.valueOf(newIdNumber));
-                    int max = 90; //Cambiar por valor del instrumento
-                    List<Measurement> measurements = generateMeasurements(measurement, max);
-                    XMLLoader.saveToXMLMeasurement(filePath, measurements);
                     updateTableMeasurement();
+                    showMessage("Se guardo con exito","success");
                 } catch (Exception ex) {
-                    showMessage("Error al guardar en el archivo XML: " + ex.getMessage());
+                    showMessage("Error al guardar en el archivo XML: " + ex.getMessage(),"error");
                 }
             }
         } catch (Exception ex) {
-            viewController.showMessage(ex.getMessage(), "error");
+            showMessage(ex.getMessage(),"error");
         }
     }
 
@@ -102,6 +113,7 @@ public class CalibrationController extends Controller implements ActionListener 
             ArrayList<Calibration> calibrationList = XMLLoader.loadFromCalibrations(filePath);
             String pdfFilePath = "Reporte_Calibraciones.pdf";
             GeneratorPDF.generatePDFReport(calibrationList, pdfFilePath, "modulo_3");
+            showMessage("Generado con exito","success");
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JDOMException ex) {
@@ -123,6 +135,7 @@ public class CalibrationController extends Controller implements ActionListener 
             datosColumna.add(textoCelda);
         }
         XMLLoader.updateMeasurement(filePath, datosColumna);
+        showMessage("Guardados con exito","success");
     }
 
     public void cleanMeasurement() {
@@ -136,8 +149,13 @@ public class CalibrationController extends Controller implements ActionListener 
         }
     }
 
-    public void showMessage(String errorMessage) {
-        JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
+     public void showMessage(String errorMessage, String info) {
+        if (info == "error") {
+            JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
+        } else if (info == "success") {
+            JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.INFORMATION_MESSAGE);
+
+        }
     }
 
     private static String dateToString(JDateChooser dateChooser) {
@@ -154,9 +172,7 @@ public class CalibrationController extends Controller implements ActionListener 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-     
     }
-    
 
     public List<Measurement> generateMeasurements(int numMeasurements, double maxValue) {
         if (numMeasurements <= 0 || maxValue <= 0) {
@@ -236,6 +252,14 @@ public class CalibrationController extends Controller implements ActionListener 
 
     @Override
     public void delete() {
+    }
+
+    @Override
+    public void onInstruSelected(String serie, String descri, String mini, String max) {
+        view.getLbNombreInstru().setText(serie + "-" + "Descripción: " + descri + ", Mínimo: " + mini + ", Máximo: " + max);
+        this.serie = serie;
+        this.max=max;
+        CalibrationController cali = new CalibrationController(this.view, serie, max);
     }
 
 }

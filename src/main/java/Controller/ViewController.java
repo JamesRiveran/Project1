@@ -36,7 +36,6 @@ import org.jdom2.JDOMException;
 public class ViewController extends Controller implements ActionListener {
 
     InstrumentsList listInstrument;
-   
     private ArrayList<InstrumentType> listName;
     String filePath = "Laboratorio.xml";
     private ArrayList<InstrumentType> ListOfIModu1o1;
@@ -49,6 +48,7 @@ public class ViewController extends Controller implements ActionListener {
         this.view = new Modulo();
         this.calibrationController = new CalibrationController(this.view);
         this.intrumentsController = new IntrumentsController(this.view);
+        intrumentsController.setInstruSelectionListener(calibrationController);
         clickTable();
         updateTable();
         updateComboBoxModel();
@@ -287,6 +287,7 @@ public class ViewController extends Controller implements ActionListener {
     public boolean clickTable() {
         //Selección de un instrumento de la tabla 
         view.getTblListInstruments().addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editRegister(evt);
             }

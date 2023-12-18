@@ -10,6 +10,7 @@ import Controller.IntrumentsController;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -1198,6 +1199,14 @@ public class Modulo extends javax.swing.JFrame {
 
     public void setTxtNumberSearch(JTextField txtNumberSearch) {
         this.txtNumberSearch = txtNumberSearch;
+    }
+
+    public void setLbNombreInstru(JLabel lbNombreInstru) {
+        this.lbNombreInstru = lbNombreInstru;
+    }
+
+    public JLabel getLbNombreInstru() {
+        return lbNombreInstru;
     }
 
 

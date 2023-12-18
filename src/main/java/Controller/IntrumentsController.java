@@ -31,7 +31,7 @@ public class IntrumentsController extends Controller implements ActionListener {
     String filePath = "Laboratorio.xml";
     private ArrayList<InstrumentModulo2> ListOfXml;
     CalibrationController calibrationController;
-
+    private InstruSelectionListener instruSelectionListener;
     static Modulo view;
     boolean updateInstruments = false;
 
@@ -42,6 +42,10 @@ public class IntrumentsController extends Controller implements ActionListener {
         clickTable();
         updateTable();
         this.view.setIntrumentsController(this);
+    }
+
+    public void setInstruSelectionListener(InstruSelectionListener listener) {
+        this.instruSelectionListener = listener;
     }
 
     public void showMessage(String errorMessage, String info) {
@@ -188,6 +192,7 @@ public class IntrumentsController extends Controller implements ActionListener {
 
     public boolean clickTable() {
         view.getTbInstru().addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbInstruMouseClicked(evt);
                 updateInstruments = true;
@@ -217,6 +222,9 @@ public class IntrumentsController extends Controller implements ActionListener {
             view.getTxtTole().setText(tole);
 
             view.getBtnDeleteInstru().setEnabled(true);
+            if (instruSelectionListener != null) {
+                instruSelectionListener.onInstruSelected(serie,descri, mini, maxi);
+            }
 
         }
     }
@@ -266,5 +274,4 @@ public class IntrumentsController extends Controller implements ActionListener {
         clickTable();
     }
 
- 
 }

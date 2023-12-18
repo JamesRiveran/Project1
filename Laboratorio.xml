@@ -1,107 +1,233 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Instrumentos>
-  <idCounter>5</idCounter>
+  <Tipo_de_instrumento>
+    <Codigo>Ter</Codigo>
+    <Nombre>Termometro</Nombre>
+    <Unidad>Celsius</Unidad>
+  </Tipo_de_instrumento>
+  <idCounter>7</idCounter>
+  <Instrumento>
+    <Serie>1</Serie>
+    <Minimo>0</Minimo>
+    <Tolerancia>0</Tolerancia>
+    <Descripcion>Termometro Bals</Descripcion>
+    <Maximo>90</Maximo>
+    <Tipo>Termometro</Tipo>
+  </Instrumento>
   <Calibracion>
-    <Fecha>2023/12/06</Fecha>
+    <Serie />
+    <Fecha>2023/12/17</Fecha>
+    <Numero>1</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/17</Fecha>
+    <Numero>1</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
     <Numero>1</Numero>
     <Mediciones>3</Mediciones>
   </Calibracion>
   <Medicion>
+    <Numero>1</Numero>
     <Medida>1.0</Medida>
     <Referencia>0.0</Referencia>
-    <Lectura>1.0</Lectura>
+    <Lectura>0.0</Lectura>
   </Medicion>
   <Medicion>
+    <Numero>1</Numero>
     <Medida>2.0</Medida>
     <Referencia>30.0</Referencia>
-    <Lectura>1.0</Lectura>
+    <Lectura>0.0</Lectura>
   </Medicion>
   <Medicion>
+    <Numero>1</Numero>
     <Medida>3.0</Medida>
     <Referencia>60.0</Referencia>
-    <Lectura>1.0</Lectura>
+    <Lectura>0.0</Lectura>
   </Medicion>
   <Calibracion>
-    <Fecha>2023/12/01</Fecha>
-    <Numero>2</Numero>
+    <Serie>1</Serie>
+    <Fecha>2023/12/17</Fecha>
+    <Numero>1</Numero>
     <Mediciones>3</Mediciones>
   </Calibracion>
-  <Medicion>
-    <Medida>1.0</Medida>
-    <Referencia>0.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Medida>2.0</Medida>
-    <Referencia>30.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Medida>3.0</Medida>
-    <Referencia>60.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
   <Calibracion>
-    <Fecha>2023/12/01</Fecha>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
+    <Numero>1</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
     <Numero>3</Numero>
     <Mediciones>3</Mediciones>
   </Calibracion>
   <Medicion>
+    <Numero>3</Numero>
     <Medida>1.0</Medida>
     <Referencia>0.0</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
   <Medicion>
+    <Numero>3</Numero>
     <Medida>2.0</Medida>
     <Referencia>30.0</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
   <Medicion>
+    <Numero>3</Numero>
     <Medida>3.0</Medida>
     <Referencia>60.0</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
   <Calibracion>
-    <Fecha>2023/12/01</Fecha>
+    <Serie>1</Serie>
+    <Fecha>2023/12/17</Fecha>
+    <Numero>1</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
+    <Numero>1</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
+    <Numero>3</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
     <Numero>4</Numero>
-    <Mediciones>5</Mediciones>
+    <Mediciones>3</Mediciones>
   </Calibracion>
   <Medicion>
+    <Numero>4</Numero>
     <Medida>1.0</Medida>
     <Referencia>0.0</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
   <Medicion>
+    <Numero>4</Numero>
     <Medida>2.0</Medida>
-    <Referencia>18.0</Referencia>
+    <Referencia>30.0</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
   <Medicion>
+    <Numero>4</Numero>
     <Medida>3.0</Medida>
-    <Referencia>36.0</Referencia>
+    <Referencia>60.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/17</Fecha>
+    <Numero>1</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
+    <Numero>1</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
+    <Numero>3</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
+    <Numero>4</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
+    <Numero>5</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Medicion>
+    <Numero>5</Numero>
+    <Medida>1.0</Medida>
+    <Referencia>0.0</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
   <Medicion>
-    <Medida>4.0</Medida>
-    <Referencia>54.0</Referencia>
+    <Numero>5</Numero>
+    <Medida>2.0</Medida>
+    <Referencia>30.0</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
   <Medicion>
-    <Medida>5.0</Medida>
-    <Referencia>72.0</Referencia>
+    <Numero>5</Numero>
+    <Medida>3.0</Medida>
+    <Referencia>60.0</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
-  <Tipo_de_instrumento>
-    <Codigo>12</Codigo>
-    <Nombre>ss</Nombre>
-    <Unidad>e</Unidad>
-  </Tipo_de_instrumento>
-  <Instrumento>
-    <Serie>22</Serie>
-    <Minimo>0</Minimo>
-    <Tolerancia>0</Tolerancia>
-    <Descripcion>pedro</Descripcion>
-    <Maximo>12</Maximo>
-    <Tipo>ss</Tipo>
-  </Instrumento>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/17</Fecha>
+    <Numero>1</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
+    <Numero>1</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
+    <Numero>3</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
+    <Numero>4</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
+    <Numero>5</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
+    <Numero>6</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Medicion>
+    <Numero>6</Numero>
+    <Medida>1.0</Medida>
+    <Referencia>0.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>6</Numero>
+    <Medida>2.0</Medida>
+    <Referencia>30.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>6</Numero>
+    <Medida>3.0</Medida>
+    <Referencia>60.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
 </Instrumentos>
