@@ -476,7 +476,7 @@ public class XMLLoader extends ViewController {
         return calibrationList;
     }
 
-    public static void saveToXMLMeasurement(String filePath, List<Measurement> measurementList, String txtNumber) {
+    public static void saveToXMLMeasurement(String filePath, List<Measurement> measurementList) {
         if (measurementList == null || measurementList.isEmpty()) {
             throw new IllegalArgumentException("La lista de mediciones no puede ser nula ni estar vacía");
         }
@@ -500,7 +500,7 @@ public class XMLLoader extends ViewController {
             for (Measurement measurement : measurementList) {
                 Element measurementElement = new Element("Medicion");
                 Element number = new Element("Numero");
-                number.setText(txtNumber);
+                number.setText(measurement.getCode());
                 Element medidaElement = new Element("Medida");
                 medidaElement.setText(Double.toString(measurement.getId()));
                 Element referenciaElement = new Element("Referencia");
@@ -539,12 +539,13 @@ public class XMLLoader extends ViewController {
         Element rootElement = document.getRootElement();
         List<Element> calibrationElements = rootElement.getChildren("Medicion");
         for (Element calibrationtElement : calibrationElements) {
+            String code=calibrationtElement.getChildText("Numero");
             double id = Double.parseDouble(calibrationtElement.getChildText("Medida"));
             double measurement = Double.parseDouble(calibrationtElement.getChildText("Referencia"));
             double reading = Double.parseDouble(calibrationtElement.getChildText("Lectura"));
 
             // Crea un objeto calibration y agrégalo a la lista
-            Measurement measurements = new Measurement(id, measurement, reading);
+            Measurement measurements = new Measurement(code,id, measurement, reading);
             measurementList.add(measurements);
         }
         return measurementList;

@@ -11,17 +11,28 @@ package Model;
 public class Measurement {
 
     private double id, reference, reading;
+    private String code;
 
     public Measurement() {
+        this.code = "";
         this.id = 0;
         this.reference = 0;
         this.reading = 0;
     }
 
-    public Measurement(double id, double reference, double reading) {
+    public Measurement(String code, double id, double reference, double reading) {
+        this.code = code;
         this.id = id;
         this.reference = reference;
         this.reading = reading;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCode() {
+        return code;
     }
 
     public double getId() {
@@ -48,14 +59,9 @@ public class Measurement {
         this.reading = reading;
     }
 
-    
-
     @Override
     public String toString() {
         return "Measurement{" + "id=" + id + ", reference=" + reference + ", reading=" + reading + '}';
     }
-    
-    
-    
-    
+
 }

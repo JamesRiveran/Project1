@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Instrumentos>
-  <idCounter>3</idCounter>
+  <Tipo_de_instrumento>
+    <Codigo>Ter</Codigo>
+    <Nombre>Termometro</Nombre>
+    <Unidad>Celsius</Unidad>
+  </Tipo_de_instrumento>
+  <idCounter>2</idCounter>
+  <Instrumento>
+    <Serie>1</Serie>
+    <Minimo>0</Minimo>
+    <Tolerancia>0</Tolerancia>
+    <Descripcion>Termometro-8B</Descripcion>
+    <Maximo>90</Maximo>
+    <Tipo>Termometro</Tipo>
+  </Instrumento>
   <Calibracion>
     <Serie>1</Serie>
     <Fecha>2023/12/17</Fecha>
@@ -25,41 +38,4 @@
     <Referencia>60.0</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
-  <Calibracion>
-    <Serie>1</Serie>
-    <Fecha>2023/12/01</Fecha>
-    <Numero>2</Numero>
-    <Mediciones>3</Mediciones>
-  </Calibracion>
-  <Medicion>
-    <Numero>2</Numero>
-    <Medida>1.0</Medida>
-    <Referencia>0.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>2</Numero>
-    <Medida>2.0</Medida>
-    <Referencia>30.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>2</Numero>
-    <Medida>3.0</Medida>
-    <Referencia>60.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Tipo_de_instrumento>
-    <Codigo>TER</Codigo>
-    <Nombre>Termometro</Nombre>
-    <Unidad>Celsius</Unidad>
-  </Tipo_de_instrumento>
-  <Instrumento>
-    <Serie>1</Serie>
-    <Minimo>0</Minimo>
-    <Tolerancia>0</Tolerancia>
-    <Descripcion>dd</Descripcion>
-    <Maximo>122</Maximo>
-    <Tipo>Termometro</Tipo>
-  </Instrumento>
 </Instrumentos>

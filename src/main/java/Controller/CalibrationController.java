@@ -16,14 +16,19 @@ import com.itextpdf.text.DocumentException;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.jdom2.JDOMException;
 
@@ -41,6 +46,7 @@ public class CalibrationController extends Controller implements ActionListener,
     Modulo view;
     String filePath = "Laboratorio.xml";
     private ArrayList<Calibration> listCalibrations;
+    boolean updateInstruments = false;
 
     public CalibrationController(Modulo view) {
         this.view = view;
@@ -55,7 +61,10 @@ public class CalibrationController extends Controller implements ActionListener,
         this.calibrationList = new CalibrationList();
         this.serie = serie; // Asigna la serie recibida
         this.max = max;
+        clickTable();
+
         updateTable();
+
     }
 
     @Override
@@ -82,7 +91,7 @@ public class CalibrationController extends Controller implements ActionListener,
                     DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
                     tableModel.insertRow(0, new Object[]{newCalibration.getId(), newCalibration.getDate(), newCalibration.getMeasuring()});
                     List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max));
-                    XMLLoader.saveToXMLMeasurement(filePath, measurements, view.getCalibrationTxtNumber().getText());
+                    XMLLoader.saveToXMLMeasurement(filePath, measurements);
                     newIdNumber = idCounter();
                     view.getCalibrationTxtNumber().setText(String.valueOf(newIdNumber));
                     updateTableMeasurement();
@@ -189,7 +198,7 @@ public class CalibrationController extends Controller implements ActionListener,
             double referencia = currentReference;
             double lectura = 0.0; // Inicializar lectura como 0
 
-            Measurement measurement = new Measurement(medida, referencia, lectura);
+            Measurement measurement = new Measurement(view.getCalibrationTxtNumber().getText(), medida, referencia, lectura);
             measurements.add(measurement);
 
             // Actualizar la referencia para la siguiente medición
@@ -199,17 +208,102 @@ public class CalibrationController extends Controller implements ActionListener,
         return measurements;
     }
 
+    public boolean clickTable() {
+
+        view.getTblCalibrations().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int selectedRow = view.getTblCalibrations().getSelectedRow();
+                    if (selectedRow >= 0) {
+                        Object id = view.getTblCalibrations().getValueAt(selectedRow, 0);
+                        Object dateObject = view.getTblCalibrations().getValueAt(selectedRow, 1);
+                        Object measurement = view.getTblCalibrations().getValueAt(selectedRow, 2);
+
+                        if (dateObject instanceof String) {
+                            String dateString = (String) dateObject;
+                            // Utiliza el patrón correcto para parsear la cadena de fecha
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                            try {
+                                // Parsear la cadena a un objeto Date
+                                Date date = dateFormat.parse(dateString);
+                                // Crear un objeto Calendar y establecer la fecha
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.setTime(date);
+                                // Ahora, 'calendar' es un objeto Calendar que contiene la fecha de 'dateObject'
+                                view.getCalibrationDateChooser().setCalendar(calendar);
+                            } catch (ParseException parseException) {
+                                // Manejar la excepción si la cadena no puede ser parseada
+                                parseException.printStackTrace();
+                            }
+                        } else {
+                            // Manejar el caso en el que el objeto no sea de tipo String
+                            System.out.println("El objeto no es de tipo String");
+                        }
+
+                        // Asigna los valores a los campos correspondientes
+                        view.getCalibrationTxtNumber().setText(id.toString());
+                        view.getCalibrationTxtMeasurement().setText(measurement.toString());
+
+                        updateTableMeasurement();
+                        System.out.println("ID: " + id);
+//                        System.out.println("Date: " + date);
+                        System.out.println("Measurement: " + measurement);
+                    }
+                }
+            }
+        });
+        return true;
+    }
+
+    public void tbInstruMouseClicked(MouseEvent evt) throws ParseException {
+        int selectedRow = view.getTblCalibrations().getSelectedRow();
+        System.out.println(selectedRow);
+
+        // Verifica si se hizo clic en una fila válida
+        if (selectedRow != -1) {
+
+            // Obtén los valores de la fila seleccionada
+            String number = view.getTbInstru().getValueAt(selectedRow, 0).toString();
+            String date = view.getTbInstru().getValueAt(selectedRow, 1).toString();
+            String mean = view.getTbInstru().getValueAt(selectedRow, 2).toString();
+
+            System.out.println(number);
+            System.out.println(date);
+            System.out.println(mean);
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsedDate = dateFormat.parse(date);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(parsedDate);
+            // Asigna los valores a los campos correspondientes
+            view.getCalibrationTxtNumber().setText(number);
+            view.getCalibrationDateChooser().setCalendar(calendar);
+            view.getCalibrationTxtMeasurement().setText(mean);
+
+            updateTableMeasurement();
+        }
+    }
+
     public void updateTableMeasurement() {
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
         tableModel.setRowCount(0); // Limpia la tabla antes de cargar los datos
 
         try {
-            ArrayList<Measurement> loadedMeasurements = XMLLoader.loadFromMeasurement(filePath);
+            listCalibrations = XMLLoader.loadFromCalibrations(filePath);
 
-            for (Measurement measurement : loadedMeasurements) {
-                Object[] rowData = {measurement.getId(), measurement.getReference(), measurement.getReading()};
-                tableModel.addRow(rowData);
+            ArrayList<Measurement> loadedMeasurements = XMLLoader.loadFromMeasurement(filePath);
+            for (int i = listCalibrations.size() - 1; i >= 0; i--) {
+                Calibration newCalibration = listCalibrations.get(i);
+
+                for (Measurement measurement : loadedMeasurements) {
+                    if (Integer.parseInt(measurement.getCode()) == newCalibration.getId()) {
+                        Object[] rowData = {measurement.getId(), measurement.getReference(), measurement.getReading()};
+                        tableModel.addRow(rowData);
+                    }
+                }
             }
+
         } catch (IOException | JDOMException ex) {
             ex.printStackTrace();
         }
@@ -222,7 +316,9 @@ public class CalibrationController extends Controller implements ActionListener,
             tableModel.setRowCount(0);
             for (int i = listCalibrations.size() - 1; i >= 0; i--) {
                 Calibration newCalibration = listCalibrations.get(i);
-                tableModel.insertRow(0, new Object[]{newCalibration.getId(), newCalibration.getDate(), newCalibration.getMeasuring()});
+                if (newCalibration.getNumber().equals(serie)) {
+                    tableModel.insertRow(0, new Object[]{newCalibration.getId(), newCalibration.getDate(), newCalibration.getMeasuring()});
+                }
             }
         } catch (IOException | JDOMException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -261,7 +357,6 @@ public class CalibrationController extends Controller implements ActionListener,
         this.serie = serie;
         this.max = max;
         CalibrationController cali = new CalibrationController(this.view, serie, max);
-        updateTable();
     }
 
 }
