@@ -5,19 +5,15 @@
  */
 package Controller;
 
-import static Controller.IntrumentsController.view;
 import Model.GeneratorPDF;
-import Model.InstrumentModulo2;
 import Model.InstrumentType;
 import Model.InstrumentsList;
-import Model.IntrumentListModulo2;
 import Model.XMLLoader;
 import View.Modulo;
 import com.itextpdf.text.DocumentException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -25,7 +21,6 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.jdom2.JDOMException;
 
@@ -65,11 +60,11 @@ public class ViewController extends Controller implements ActionListener {
         view.setVisible(true);
 
         /*Los del modulo 2*/
-        view.getBtnSaveInstru().addActionListener(e->intrumentsController.save());
-        view.getBtnReport().addActionListener(e->intrumentsController.reportPdf());
-        view.getBtnCleanInstru().addActionListener(e->intrumentsController.clean());
-        view.getBtnDeleteInstru().addActionListener(e->intrumentsController.delete());
-        view.getBtnSearchInstru().addActionListener(e->intrumentsController.search());
+        view.getBtnSaveInstru().addActionListener(e -> intrumentsController.save());
+        view.getBtnReport().addActionListener(e -> intrumentsController.reportPdf());
+        view.getBtnCleanInstru().addActionListener(e -> intrumentsController.clean());
+        view.getBtnDeleteInstru().addActionListener(e -> intrumentsController.delete());
+        view.getBtnSearchInstru().addActionListener(e -> intrumentsController.search());
 
         /*modulo 3*/
         view.getCalibrationBtnDelete().addActionListener(this);
@@ -134,7 +129,7 @@ public class ViewController extends Controller implements ActionListener {
                     XMLLoader.saveToXML(filePath, listInstrument.getList());
                     updateTable();
                     updateComboBoxModel();
-
+                    showMessage("Se guardo exitosamente", "success");
                 } catch (Exception ex) {
                     showMessage("Error al guardar en el archivo XML: " + ex.getMessage(), "error");
                 }
@@ -146,8 +141,7 @@ public class ViewController extends Controller implements ActionListener {
             showMessage(ex.getMessage(), "error");
         }
     }
-    
-    
+
     /*Metodo para rellenar el comboBox*/
     public void updateComboBoxModel() {
         try {
@@ -174,6 +168,7 @@ public class ViewController extends Controller implements ActionListener {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     @Override
     public void search() {
         try {
@@ -205,6 +200,7 @@ public class ViewController extends Controller implements ActionListener {
             updateTable();
             updateComboBoxModel();
             clean();
+            showMessage("Se borro exitosamente","success");
         } catch (JDOMException | IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -268,6 +264,7 @@ public class ViewController extends Controller implements ActionListener {
             ex.printStackTrace();
         }
     }
+
     public void updateTable() {
         try {
             ListOfIModu1o1 = XMLLoader.loadFromXML(filePath);

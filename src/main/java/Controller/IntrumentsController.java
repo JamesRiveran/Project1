@@ -173,6 +173,7 @@ public class IntrumentsController extends Controller implements ActionListener {
 
         listModulo2.getList().add(newInstrument);
         XMLLoader.addToXML(filePath, listModulo2.getList());
+        listModulo2.getList().clear();
     }
 
     public void updateTable() {
