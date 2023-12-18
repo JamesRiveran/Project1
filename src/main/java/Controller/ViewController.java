@@ -127,6 +127,7 @@ public class ViewController extends Controller implements ActionListener {
                             view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
                     listInstrument.getList().add(newInstrumentForSave);
                     XMLLoader.saveToXML(filePath, listInstrument.getList());
+                    listInstrument.getList().clear();
                     updateTable();
                     updateComboBoxModel();
                     showMessage("Se guardo exitosamente", "success");
@@ -200,7 +201,7 @@ public class ViewController extends Controller implements ActionListener {
             updateTable();
             updateComboBoxModel();
             clean();
-            showMessage("Se borro exitosamente","success");
+            showMessage("Se borro exitosamente", "success");
         } catch (JDOMException | IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -212,6 +213,7 @@ public class ViewController extends Controller implements ActionListener {
             ArrayList<InstrumentType> instrumentList = XMLLoader.loadFromXML(filePath);
             String pdfFilePath = "Reporte_TiposDeInstrumentos.pdf";
             GeneratorPDF.generatePDFReport(instrumentList, pdfFilePath, "modulo_1");
+            showMessage("Generado con exito", "success");
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JDOMException ex) {

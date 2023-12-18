@@ -143,27 +143,30 @@ public class XMLLoader extends ViewController {
                 }
             }
         } else {
+            Element rootElement = document.getRootElement();
+            List<Element> instrumentElements = rootElement.getChildren("Tipo_de_instrumento");
+            boolean foundMatch = false;
             for (InstrumentModulo2 name : listOfInstruments3) {
-                Element rootElement = document.getRootElement();
-                List<Element> instrumentElements = rootElement.getChildren("Tipo_de_instrumento");
-
+                System.out.println(name.toString());
                 String type = name.getType();
-                String nameInstru = instrumentToDelete.getName();
-                if (type.equals(nameInstru)) {
-                    ViewController.conection(true);
-                    break;
-                } else {
-                    for (Element instrumentElement : instrumentElements) {
-                        String code = instrumentElement.getChildText("Codigo");
-                        // Verifica si el código coincide con el que se quiere eliminar
-                        if (code.equals(instrumentToDelete.getCode())) {
-                            // Elimina el elemento del XML
-                            instrumentElement.getParentElement().removeContent(instrumentElement);
-                            ViewController.conection(false);
-                            break;  // Puedes salir del bucle si se eliminó el elemento
-                        }
+                // Verifica si hay una coincidencia con el tipo
+                if (type.equals(instrumentToDelete.getName())) {
+                    foundMatch = true;
+                    break;  // Puedes salir del bucle si se encuentra una coincidencia
+                }
+            }
+            if (foundMatch) {
+                ViewController.conection(true);
+            } else {
+                for (Element instrumentElement : instrumentElements) {
+                    String code = instrumentElement.getChildText("Codigo");
+                    // Verifica si el código coincide con el que se quiere eliminar
+                    if (code.equals(instrumentToDelete.getCode())) {
+                        // Elimina el elemento del XML
+                        instrumentElement.getParentElement().removeContent(instrumentElement);
+                        ViewController.conection(false);
+                        break;  // Puedes salir del bucle si se eliminó el elemento
                     }
-                    // Guarda los cambios en el archivo XML
                 }
             }
         }
@@ -264,7 +267,7 @@ public class XMLLoader extends ViewController {
         }
     }
 
-    public static void saveToXMLCalibration(String filePath, List<Calibration> calibrationList, String serie) {
+    public static void saveToXMLCalibration(String filePath, List<Calibration> calibrationList) {
         if (calibrationList == null || calibrationList.isEmpty()) {
             throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacía");
         }
@@ -288,7 +291,7 @@ public class XMLLoader extends ViewController {
             for (Calibration calibration : calibrationList) {
                 Element typeInstrument = new Element("Calibracion");
                 Element series = new Element("Serie");
-                series.setText(serie);
+                series.setText(calibration.getNumber());
                 Element date = new Element("Fecha");
                 date.setText(calibration.getDate());
                 Element number = new Element("Numero");
@@ -461,12 +464,13 @@ public class XMLLoader extends ViewController {
         Element rootElement = document.getRootElement();
         List<Element> calibrationElements = rootElement.getChildren("Calibracion");
         for (Element calibrationtElement : calibrationElements) {
+            String number = calibrationtElement.getChildText("Numero");
             String date = calibrationtElement.getChildText("Fecha");
             int id = Integer.parseInt(calibrationtElement.getChildText("Numero"));
             int measurement = Integer.parseInt(calibrationtElement.getChildText("Mediciones"));
 
             // Crea un objeto calibration y agrégalo a la lista
-            Calibration calibration = new Calibration(id, date, measurement);
+            Calibration calibration = new Calibration(number, id, date, measurement);
             calibrationList.add(calibration);
         }
         return calibrationList;

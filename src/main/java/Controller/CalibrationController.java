@@ -8,6 +8,7 @@ package Controller;
 import Model.Calibration;
 import Model.CalibrationList;
 import Model.GeneratorPDF;
+import Model.InstrumentModulo2;
 import Model.Measurement;
 import Model.XMLLoader;
 import View.Modulo;
@@ -35,7 +36,6 @@ public class CalibrationController extends Controller implements ActionListener,
     String serie;
     int min;
     String max;
-
     CalibrationList calibrationList;
     ViewController viewController;
     Modulo view;
@@ -62,22 +62,23 @@ public class CalibrationController extends Controller implements ActionListener,
     public void save() {
         try {
             if (view.getCalibrationDateChooser().getDate() == null) {
-                showMessage("Debe ingresar la fecha del instrumento","error");
+                showMessage("Debe ingresar la fecha del instrumento", "error");
             } else if (view.getCalibrationTxtMeasurement().getText().trim().isEmpty()) {
-                showMessage("Debe ingresar la calibración del instrumento","error");
+                showMessage("Debe ingresar la calibración del instrumento", "error");
             } else if (Integer.parseInt(view.getCalibrationTxtMeasurement().getText()) < 2) {
-                showMessage("La cantidad minima de mediciones que se permite ingresar es de 2","error");
+                showMessage("La cantidad minima de mediciones que se permite ingresar es de 2", "error");
             } else {
                 try {
                     int newIdNumber = 0;
                     JDateChooser dateChooser = view.getCalibrationDateChooser();
                     String date = dateToString(dateChooser);
                     Calibration newCalibration = new Calibration(
+                            serie,
                             Integer.parseInt(view.getCalibrationTxtNumber().getText()),
                             date,
                             Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                     calibrationList.getList().add(newCalibration);
-                    XMLLoader.saveToXMLCalibration(filePath, calibrationList.getList(), serie);
+                    XMLLoader.saveToXMLCalibration(filePath, calibrationList.getList());
                     DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
                     tableModel.insertRow(0, new Object[]{newCalibration.getId(), newCalibration.getDate(), newCalibration.getMeasuring()});
                     List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max));
@@ -85,13 +86,13 @@ public class CalibrationController extends Controller implements ActionListener,
                     newIdNumber = idCounter();
                     view.getCalibrationTxtNumber().setText(String.valueOf(newIdNumber));
                     updateTableMeasurement();
-                    showMessage("Se guardo con exito","success");
+                    showMessage("Se guardo con exito", "success");
                 } catch (Exception ex) {
-                    showMessage("Error al guardar en el archivo XML: " + ex.getMessage(),"error");
+                    showMessage("Error al guardar en el archivo XML: " + ex.getMessage(), "error");
                 }
             }
         } catch (Exception ex) {
-            showMessage(ex.getMessage(),"error");
+            showMessage(ex.getMessage(), "error");
         }
     }
 
@@ -113,7 +114,7 @@ public class CalibrationController extends Controller implements ActionListener,
             ArrayList<Calibration> calibrationList = XMLLoader.loadFromCalibrations(filePath);
             String pdfFilePath = "Reporte_Calibraciones.pdf";
             GeneratorPDF.generatePDFReport(calibrationList, pdfFilePath, "modulo_3");
-            showMessage("Generado con exito","success");
+            showMessage("Generado con exito", "success");
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JDOMException ex) {
@@ -135,7 +136,7 @@ public class CalibrationController extends Controller implements ActionListener,
             datosColumna.add(textoCelda);
         }
         XMLLoader.updateMeasurement(filePath, datosColumna);
-        showMessage("Guardados con exito","success");
+        showMessage("Guardados con exito", "success");
     }
 
     public void cleanMeasurement() {
@@ -149,7 +150,7 @@ public class CalibrationController extends Controller implements ActionListener,
         }
     }
 
-     public void showMessage(String errorMessage, String info) {
+    public void showMessage(String errorMessage, String info) {
         if (info == "error") {
             JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
         } else if (info == "success") {
@@ -258,8 +259,9 @@ public class CalibrationController extends Controller implements ActionListener,
     public void onInstruSelected(String serie, String descri, String mini, String max) {
         view.getLbNombreInstru().setText(serie + "-" + "Descripción: " + descri + ", Mínimo: " + mini + ", Máximo: " + max);
         this.serie = serie;
-        this.max=max;
+        this.max = max;
         CalibrationController cali = new CalibrationController(this.view, serie, max);
+        updateTable();
     }
 
 }

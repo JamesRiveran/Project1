@@ -132,6 +132,7 @@ public class IntrumentsController extends Controller implements ActionListener {
             ArrayList<InstrumentModulo2> instrumentListModulo2 = XMLLoader.loadFromXMLS(filePath);
             String pdfFilePath = "Reporte_Instrumentos.pdf";
             GeneratorPDF.generatePDFReport(instrumentListModulo2, pdfFilePath, "modulo_2");
+            showMessage("Generado con exito", "success");
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JDOMException ex) {
@@ -149,7 +150,7 @@ public class IntrumentsController extends Controller implements ActionListener {
                 view.getTxtTole().getText(),
                 view.getTxtDescri().getText(),
                 view.getTxtMaxi().getText(),
-                view.getCmbType().getItemAt(0));
+                view.getCmbType().getSelectedItem().toString());
         try {
             XMLLoader.deleteInstrumentsFromXML(filePath, instrumentToDelete);
             showMessage("Se borro exitosamente", "success");
@@ -168,7 +169,7 @@ public class IntrumentsController extends Controller implements ActionListener {
                 view.getTxtTole().getText(),
                 view.getTxtDescri().getText(),
                 view.getTxtMaxi().getText(),
-                view.getCmbType().getItemAt(0)
+                view.getCmbType().getSelectedItem().toString()
         );
 
         listModulo2.getList().add(newInstrument);
@@ -224,7 +225,7 @@ public class IntrumentsController extends Controller implements ActionListener {
 
             view.getBtnDeleteInstru().setEnabled(true);
             if (instruSelectionListener != null) {
-                instruSelectionListener.onInstruSelected(serie,descri, mini, maxi);
+                instruSelectionListener.onInstruSelected(serie, descri, mini, maxi);
             }
 
         }

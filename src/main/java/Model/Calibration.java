@@ -9,19 +9,31 @@ package Model;
  * @author james
  */
 public class Calibration {
-    private String date;
-    private int id,measuring;
 
-    public Calibration(int id,String date, int measuring) {
+    private String date;
+    private String number;
+    private int id, measuring;
+
+    public Calibration(String number, int id, String date, int measuring) {
         this.date = date;
+        this.number = number;
         this.id = id;
         this.measuring = measuring;
     }
 
     public Calibration() {
         this.date = "";
+        this.number = "";
         this.id = 0;
         this.measuring = 0;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getDate() {
@@ -50,10 +62,7 @@ public class Calibration {
 
     @Override
     public String toString() {
-        return  "Fecha: " + date + "\n Número: " + id + "\n Mediciones=" + measuring ;
+        return "Fecha: " + date + "\n Número: " + id + "\n Mediciones=" + measuring;
     }
-    
-    
-    
-    
+
 }
