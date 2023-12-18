@@ -275,5 +275,7 @@ public class IntrumentsController extends Controller implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         clickTable();
     }
+    
+    
 
 }

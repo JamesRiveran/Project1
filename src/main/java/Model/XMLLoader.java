@@ -4,6 +4,7 @@
  */
 package Model;
 
+import Controller.IntrumentsController;
 import Controller.ViewController;
 import View.Modulo;
 import java.io.BufferedWriter;
@@ -340,20 +341,48 @@ public class XMLLoader extends ViewController {
     public static void deleteInstrumentsFromXML(String filePath, InstrumentModulo2 instrumentToDelete) throws IOException, JDOMException {
         SAXBuilder saxBuilder = new SAXBuilder();
         Document document = saxBuilder.build(new File(filePath));
-
+        ArrayList<Calibration> listOfcalibrations = loadFromCalibrations(filePath);
         Element rootElement = document.getRootElement();
         List<Element> instrumentElements = rootElement.getChildren("Instrumento");
 
-        for (Element instrumentElement : instrumentElements) {
-            String code = instrumentElement.getChildText("Serie");
+        if (listOfcalibrations.isEmpty()) {
+            for (Element instrumentElement : instrumentElements) {
+                String code = instrumentElement.getChildText("Serie");
 
-            // Verifica si el código coincide con el que se quiere eliminar
-            if (code.equals(instrumentToDelete.getSerie())) {
-                // Elimina el elemento del XML
-                instrumentElement.getParentElement().removeContent(instrumentElement);
-                break;  // Puedes salir del bucle si se eliminó el elemento
+                // Verifica si el código coincide con el que se quiere eliminar
+                if (code.equals(instrumentToDelete.getSerie())) {
+                    // Elimina el elemento del XML
+                    instrumentElement.getParentElement().removeContent(instrumentElement);
+                    break;  // Puedes salir del bucle si se eliminó el elemento
+                }
+            }
+        } else {
+
+            boolean foundMatch = false;
+            for (Calibration name : listOfcalibrations) {
+                System.out.println(name.toString());
+                String number = name.getNumber();
+                // Verifica si hay una coincidencia con el tipo
+                if (number.equals(instrumentToDelete.getSerie())) {
+                    foundMatch = true;
+                    break;  // Puedes salir del bucle si se encuentra una coincidencia
+                }
+            }
+            if (foundMatch) {
+                IntrumentsController.conection(true);
+            } else {
+                for (Element instrumentElement : instrumentElements) {
+                    String code = instrumentElement.getChildText("Serie");
+                    // Verifica si el código coincide con el que se quiere eliminar
+                    if (code.equals(instrumentToDelete.getSerie())) {
+                        // Elimina el elemento del XML
+                        instrumentElement.getParentElement().removeContent(instrumentElement);
+                        break;  // Puedes salir del bucle si se eliminó el elemento
+                    }
+                }
             }
         }
+
         // Guarda los cambios en el archivo XML
         XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
         try {
@@ -539,13 +568,13 @@ public class XMLLoader extends ViewController {
         Element rootElement = document.getRootElement();
         List<Element> calibrationElements = rootElement.getChildren("Medicion");
         for (Element calibrationtElement : calibrationElements) {
-            String code=calibrationtElement.getChildText("Numero");
+            String code = calibrationtElement.getChildText("Numero");
             double id = Double.parseDouble(calibrationtElement.getChildText("Medida"));
             double measurement = Double.parseDouble(calibrationtElement.getChildText("Referencia"));
             double reading = Double.parseDouble(calibrationtElement.getChildText("Lectura"));
 
             // Crea un objeto calibration y agrégalo a la lista
-            Measurement measurements = new Measurement(code,id, measurement, reading);
+            Measurement measurements = new Measurement(code, id, measurement, reading);
             measurementList.add(measurements);
         }
         return measurementList;
