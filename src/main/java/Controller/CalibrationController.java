@@ -7,6 +7,7 @@ package Controller;
 
 import Model.Calibration;
 import Model.CalibrationList;
+import Model.ColorCelda;
 import Model.GeneratorPDF;
 import Model.InstrumentModulo2;
 import Model.Measurement;
@@ -14,6 +15,8 @@ import Model.XMLLoader;
 import View.Modulo;
 import com.itextpdf.text.DocumentException;
 import com.toedter.calendar.JDateChooser;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -132,21 +135,39 @@ public class CalibrationController extends Controller implements ActionListener,
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 
     public void saveMeasurement() {
         int columna = 2;
+        int columnaReference = 1;
         DefaultTableModel modelo = (DefaultTableModel) view.getTblMeasurement().getModel();
         int rowCount = modelo.getRowCount();
         List<String> datosColumna = new ArrayList<>();
-
+        double tolerance=2;
         for (int fila = 0; fila < rowCount; fila++) {
+            
             Object valorCelda = modelo.getValueAt(fila, columna);
+            Object valueReference = modelo.getValueAt(fila, columnaReference);
             String textoCelda = (valorCelda != null) ? valorCelda.toString() : "";
-            datosColumna.add(textoCelda);
+            Double integerObject = (double) valueReference;
+            int reference = integerObject.intValue();
+            
+            double  validation = (double)reference+tolerance;
+            double  intTextoCelda=Double.parseDouble(textoCelda);
+            if(intTextoCelda>validation){
+                showMessage("Lectura fuera de rango, ingrese otra lectura","error");
+                ColorCelda colorCelda = new ColorCelda(columna,tolerance,integerObject);
+                view.getTblMeasurement().getColumnModel().getColumn(columna).setCellRenderer(colorCelda);
+            }else{
+                datosColumna.add(textoCelda);
+                XMLLoader.updateMeasurement(filePath, datosColumna);
+                showMessage("Guardados con exito", "success");
+            }
+            
         }
-        XMLLoader.updateMeasurement(filePath, datosColumna);
-        showMessage("Guardados con exito", "success");
     }
+    
+    
 
     public void cleanMeasurement() {
 
