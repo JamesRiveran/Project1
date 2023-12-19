@@ -125,6 +125,7 @@ public class Modulo extends javax.swing.JFrame {
         miscTxtInstitution = new javax.swing.JLabel();
         unaImageIcon = new javax.swing.JLabel();
 
+
         jRadioButton1.setText("jRadioButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -188,6 +189,7 @@ public class Modulo extends javax.swing.JFrame {
         });
 
         btnPDF.setText("Reporte");
+
         btnPDF.setContentAreaFilled(false);
         btnPDF.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPDF.setIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMin.png"));
@@ -197,6 +199,7 @@ public class Modulo extends javax.swing.JFrame {
         btnPDF.setPressedIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMin.png"));
 
         btnPDF.setRolloverIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMax.png"));
+
         btnPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPDFActionPerformed(evt);
@@ -215,8 +218,9 @@ public class Modulo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 387, Short.MAX_VALUE)
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
-                .addComponent(btnPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addComponent(btnPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41))
+
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,9 +230,11 @@ public class Modulo extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnSearch)
-                        .addComponent(txtNameForSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+
+                        .addComponent(txtNameForSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPDF)))
                 .addContainerGap(35, Short.MAX_VALUE))
-            .addComponent(btnPDF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+
         );
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado"));
@@ -268,7 +274,9 @@ public class Modulo extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 1006, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+
+                .addContainerGap(34, Short.MAX_VALUE))
+
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,6 +290,7 @@ public class Modulo extends javax.swing.JFrame {
         btnSave.setForeground(new java.awt.Color(255, 255, 255));
         btnSave.setText("Guardar");
         btnSave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
@@ -297,6 +306,7 @@ public class Modulo extends javax.swing.JFrame {
         btnDelete.setForeground(new java.awt.Color(255, 255, 255));
         btnDelete.setText("Borrar");
         btnDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
 
         javax.swing.GroupLayout pTipoInstrumentoLayout = new javax.swing.GroupLayout(pTipoInstrumento);
         pTipoInstrumento.setLayout(pTipoInstrumentoLayout);
@@ -588,15 +598,18 @@ public class Modulo extends javax.swing.JFrame {
 
         pTipoDeInstrumento.addTab("Instrumento", pInstrumento);
 
+
         btnSaveMeasurement.setBackground(new java.awt.Color(0, 204, 0));
         btnSaveMeasurement.setForeground(new java.awt.Color(255, 255, 255));
         btnSaveMeasurement.setText("Guardar");
         btnSaveMeasurement.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
         btnSaveMeasurement.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveMeasurementActionPerformed(evt);
             }
         });
+
 
         btnCleanMeasurement.setBackground(new java.awt.Color(0, 204, 204));
         btnCleanMeasurement.setForeground(new java.awt.Color(255, 255, 255));
@@ -616,6 +629,7 @@ public class Modulo extends javax.swing.JFrame {
             boolean[] canEdit = new boolean [] {
                 false, true, false
             };
+
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -681,6 +695,12 @@ public class Modulo extends javax.swing.JFrame {
 
         jLabel23.setText("Fecha");
 
+
+        calibrationDateChooser.setDateFormatString("dd/MM/yyyy");
+        calibrationDateChooser.setMaxSelectableDate(new java.util.Date());
+        calibrationDateChooser.setMinSelectableDate(new java.util.Date(315558093000L));
+
+
         calibrationDateChooser.setDateFormatString("dd/MM/yyyy");
         calibrationDateChooser.setMaxSelectableDate(new java.util.Date());
         calibrationDateChooser.setMinSelectableDate(new java.util.Date(315558093000L));
@@ -688,7 +708,9 @@ public class Modulo extends javax.swing.JFrame {
         calibrationBtnSave.setBackground(new java.awt.Color(0, 204, 0));
         calibrationBtnSave.setForeground(new java.awt.Color(255, 255, 255));
         calibrationBtnSave.setText("Guardar");
+
         calibrationBtnSave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
         calibrationBtnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 calibrationBtnSaveActionPerformed(evt);
@@ -698,12 +720,16 @@ public class Modulo extends javax.swing.JFrame {
         calibrationBtnClean.setBackground(new java.awt.Color(0, 204, 204));
         calibrationBtnClean.setForeground(new java.awt.Color(255, 255, 255));
         calibrationBtnClean.setText("Limpiar");
+
         calibrationBtnClean.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
 
         calibrationBtnDelete.setBackground(new java.awt.Color(255, 0, 0));
         calibrationBtnDelete.setForeground(new java.awt.Color(255, 255, 255));
         calibrationBtnDelete.setText("Borrar");
+
         calibrationBtnDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
 
         javax.swing.GroupLayout pCaliMedidasLayout = new javax.swing.GroupLayout(pCaliMedidas);
         pCaliMedidas.setLayout(pCaliMedidasLayout);
@@ -824,8 +850,10 @@ public class Modulo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnSearchCalibration)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnPDFCalibration, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(161, 161, 161))
+
+                .addComponent(btnPDFCalibration)
+                .addGap(189, 189, 189))
+
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -834,9 +862,11 @@ public class Modulo extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNumberSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
-                    .addComponent(btnSearchCalibration))
-                .addContainerGap(43, Short.MAX_VALUE))
-            .addComponent(btnPDFCalibration, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+
+                    .addComponent(btnSearchCalibration)
+                    .addComponent(btnPDFCalibration))
+                .addContainerGap(13, Short.MAX_VALUE))
+
         );
 
         javax.swing.GroupLayout pCalibracionesLayout = new javax.swing.GroupLayout(pCalibraciones);
@@ -879,6 +909,7 @@ public class Modulo extends javax.swing.JFrame {
                         .addComponent(btnCleanMeasurement)))
                 .addGap(22, 22, 22)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -938,6 +969,7 @@ public class Modulo extends javax.swing.JFrame {
         pAcercaDe.add(unaImageIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 70));
 
         pTipoDeInstrumento.addTab("Acerca de", pAcercaDe);
+
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

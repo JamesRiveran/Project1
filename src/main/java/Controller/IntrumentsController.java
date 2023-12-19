@@ -225,7 +225,9 @@ public class IntrumentsController extends Controller implements ActionListener {
 
             view.getBtnDeleteInstru().setEnabled(true);
             if (instruSelectionListener != null) {
-                instruSelectionListener.onInstruSelected(serie, descri, mini, maxi);
+
+                instruSelectionListener.onInstruSelected(serie, descri, mini, maxi,true);
+
             }
 
         }

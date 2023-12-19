@@ -211,20 +211,24 @@
                           <EmptySpace pref="387" max="32767" attributes="0"/>
                           <Component id="btnSearch" min="-2" pref="148" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                          <Component id="btnPDF" min="-2" pref="140" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+
+                          <Component id="btnPDF" min="-2" pref="133" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+
+                      <Group type="102" attributes="0">
+
                           <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="btnSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtNameForSearch" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnPDF" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace pref="35" max="32767" attributes="0"/>
@@ -255,17 +259,21 @@
                 <Component class="javax.swing.JButton" name="btnPDF">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Reporte"/>
+
                     <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Hand Cursor"/>
                     </Property>
+
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPDFActionPerformed"/>
                   </Events>
+
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnPDF.setIcon(new javax.swing.ImageIcon(&quot;src/main/resources/images/pdfMin.png&quot;));&#xa;&#xa;btnPDF.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);&#xa;&#xa;btnPDF.setPressedIcon(new javax.swing.ImageIcon(&quot;src/main/resources/images/pdfMin.png&quot;));&#xa;&#xa;btnPDF.setRolloverIcon(new javax.swing.ImageIcon(&quot;src/main/resources/images/pdfMax.png&quot;));"/>
                   </AuxValues>
+
                 </Component>
               </SubComponents>
             </Container>
@@ -284,7 +292,9 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane5" min="-2" pref="1006" max="-2" attributes="0"/>
-                          <EmptySpace pref="74" max="32767" attributes="0"/>
+
+                          <EmptySpace pref="34" max="32767" attributes="0"/>
+
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -345,6 +355,7 @@
             </Container>
             <Component class="javax.swing.JButton" name="btnSave">
               <Properties>
+
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="cc" red="0" type="rgb"/>
                 </Property>
@@ -355,6 +366,7 @@
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>
+
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
@@ -372,6 +384,7 @@
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>
+
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnDelete">
@@ -386,6 +399,7 @@
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>
+
               </Properties>
             </Component>
           </SubComponents>
@@ -866,9 +880,11 @@
                       </Group>
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="14" max="32767" attributes="0"/>
+
                   </Group>
               </Group>
             </DimensionLayout>
@@ -886,6 +902,7 @@
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>
+
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveMeasurementActionPerformed"/>
@@ -903,6 +920,7 @@
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>
+
               </Properties>
             </Component>
             <Container class="javax.swing.JPanel" name="jPanel12">
@@ -1149,6 +1167,7 @@
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Hand Cursor"/>
                     </Property>
+
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="calibrationBtnSaveActionPerformed"/>
@@ -1166,6 +1185,7 @@
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Hand Cursor"/>
                     </Property>
+
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="calibrationBtnDelete">
@@ -1180,6 +1200,7 @@
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Hand Cursor"/>
                     </Property>
+
                   </Properties>
                 </Component>
               </SubComponents>
@@ -1281,8 +1302,10 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnSearchCalibration" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnPDFCalibration" min="-2" pref="120" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="161" max="-2" attributes="0"/>
+
+                          <Component id="btnPDFCalibration" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="189" max="-2" attributes="0"/>
+
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1294,10 +1317,12 @@
                               <Component id="txtNumberSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnSearchCalibration" alignment="3" min="-2" max="-2" attributes="0"/>
+
                           </Group>
                           <EmptySpace pref="43" max="32767" attributes="0"/>
                       </Group>
                       <Component id="btnPDFCalibration" alignment="0" max="32767" attributes="0"/>
+
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -1329,6 +1354,7 @@
                     <Property name="selectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="new javax.swing.ImageIcon(&quot;src/main/resources/images/pdfMin.png&quot;)" type="code"/>
                     </Property>
+
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPDFCalibrationActionPerformed"/>
@@ -1337,6 +1363,7 @@
                 <Component class="javax.swing.JButton" name="btnSearchCalibration">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Buscar"/>
+
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Hand Cursor"/>
                     </Property>
@@ -1355,8 +1382,19 @@
             </Constraint>
           </Constraints>
 
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-            <Property name="useNullLayout" type="boolean" value="false"/>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="1056" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="516" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="logoImageIcon">
