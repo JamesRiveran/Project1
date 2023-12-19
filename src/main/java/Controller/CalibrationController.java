@@ -9,17 +9,13 @@ import Model.Calibration;
 import Model.CalibrationList;
 import Model.ColorCelda;
 import Model.GeneratorPDF;
-import Model.InstrumentModulo2;
 import Model.Measurement;
 import Model.XMLLoader;
 import View.Modulo;
 import com.itextpdf.text.DocumentException;
 import com.toedter.calendar.JDateChooser;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -299,7 +295,7 @@ public class CalibrationController extends Controller implements ActionListener,
                         view.getCalibrationDateChooser().setEnabled(false);
                         view.getCalibrationTxtMeasurement().setEnabled(false);
                         updateTableMeasurement();
-
+                        
                     }
                 }
             }
@@ -326,7 +322,7 @@ public class CalibrationController extends Controller implements ActionListener,
             ex.printStackTrace();
         }
     }
-
+    
     public void clearTable(DefaultTableModel tableModel) {
         int rowCount = tableModel.getRowCount();
 
