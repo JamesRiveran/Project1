@@ -61,6 +61,7 @@
             </resource>
         </resources>
     </build>
+    <name>Project1</name>
     <repositories>
         <repository>
             <id>unknown-jars-temp-repo</id>

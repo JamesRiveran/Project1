@@ -1,34 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Instrumentos>
   <Tipo_de_instrumento>
-    <Codigo>TER</Codigo>
+    <Codigo>Ter</Codigo>
     <Nombre>Termometro</Nombre>
-    <Unidad>Grados Celcius</Unidad>
+    <Unidad>Celsius</Unidad>
   </Tipo_de_instrumento>
-  <Tipo_de_instrumento>
-    <Codigo>BAR</Codigo>
-    <Nombre>Barometro</Nombre>
-    <Unidad>PSI</Unidad>
-  </Tipo_de_instrumento>
-  <idCounter>4</idCounter>
-  <Calibracion>
-    <Fecha>2023/12/04</Fecha>
-    <Numero>1</Numero>
-    <Mediciones>6</Mediciones>
-  </Calibracion>
-  <Calibracion>
-    <Fecha>2023/12/04</Fecha>
-    <Numero>1</Numero>
-    <Mediciones>6</Mediciones>
-  </Calibracion>
-  <Calibracion>
-    <Fecha>2023/12/04</Fecha>
-    <Numero>2</Numero>
-    <Mediciones>86</Mediciones>
-  </Calibracion>
-  <Calibracion>
-    <Fecha>2023/12/07</Fecha>
-    <Numero>3</Numero>
-    <Mediciones>22</Mediciones>
-  </Calibracion>
+  <Instrumento>
+    <Serie>1</Serie>
+    <Minimo>0</Minimo>
+    <Tolerancia>0</Tolerancia>
+    <Descripcion>Termometro-8B</Descripcion>
+    <Maximo>90</Maximo>
+    <Tipo>Termometro</Tipo>
+  </Instrumento>
+  <idCounter>2</idCounter>
 </Instrumentos>
