@@ -7,6 +7,7 @@ package View;
 import Controller.ViewController;
 import Controller.CalibrationController;
 import Controller.IntrumentsController;
+import Model.ColorCelda;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
