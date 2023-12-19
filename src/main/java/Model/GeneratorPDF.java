@@ -35,7 +35,7 @@ import java.util.logging.Logger;
 public class GeneratorPDF {
 
     public static <T> void generatePDFReport(List<T> itemList, String filePath, String modulo)
-        throws DocumentException, FileNotFoundException {
+            throws DocumentException, FileNotFoundException {
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(filePath));
 
@@ -50,8 +50,6 @@ public class GeneratorPDF {
             addInstrumentList(document, (ArrayList<InstrumentType>) itemList);
         } else if (modulo.equals("modulo_2")) {
             addInstrumentListForInstrument(document, (ArrayList<InstrumentModulo2>) itemList);
-        }else if (modulo.equals("modulo_3")) {
-            addForCalibration(document, (ArrayList<Calibration>) itemList);
         }
 
         // Cierra el documento
@@ -114,13 +112,6 @@ public class GeneratorPDF {
         } else if (modulo.equals("modulo_2")) {
             document.add(Chunk.NEWLINE);
             Paragraph subTitle = new Paragraph("Instrumentos", FontFactory.getFont(FontFactory.HELVETICA, 14));
-            subTitle.setAlignment(Element.ALIGN_CENTER);
-            document.add(subTitle);
-            // Agrega un espacio en blanco después del título
-            document.add(Chunk.NEWLINE);
-        }else if (modulo.equals("modulo_3")) {
-            document.add(Chunk.NEWLINE);
-            Paragraph subTitle = new Paragraph("Calibraciones", FontFactory.getFont(FontFactory.HELVETICA, 14));
             subTitle.setAlignment(Element.ALIGN_CENTER);
             document.add(subTitle);
             // Agrega un espacio en blanco después del título
@@ -248,53 +239,6 @@ public class GeneratorPDF {
             table.addCell(desCell);
             table.addCell(maxCell);
             table.addCell(typeCell);
-        }
-
-        // Agrega la tabla al documento
-        document.add(table);
-    }
-        private static void addForCalibration(Document document, ArrayList<Calibration> calibrationList)
-            throws DocumentException {
-        // Crea una tabla con tres columnas
-
-        PdfPTable table = new PdfPTable(3);
-        table.setWidthPercentage(100); // La tabla ocupa el 100% del ancho disponible
-
-        // Encabezados de columna con fondo de color #911414
-        PdfPCell headerCell1 = new PdfPCell(new Phrase("Número", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
-        headerCell1.setBackgroundColor(new BaseColor(145, 20, 20));
-
-        PdfPCell headerCell2 = new PdfPCell(new Phrase("Fecha", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
-        headerCell2.setBackgroundColor(new BaseColor(145, 20, 20));
-
-        PdfPCell headerCell3 = new PdfPCell(new Phrase("Mediciones", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
-        headerCell3.setBackgroundColor(new BaseColor(145, 20, 20));
-
-        // Alineación de los encabezados de columna
-        headerCell1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        headerCell2.setHorizontalAlignment(Element.ALIGN_CENTER);
-        headerCell3.setHorizontalAlignment(Element.ALIGN_CENTER);
-
-        // Agrega los encabezados a la tabla
-        table.addCell(headerCell1);
-        table.addCell(headerCell2);
-        table.addCell(headerCell3);
-
-        // Agrega la lista de instrumentos a la tabla con fondo de color #c88989
-        for (Calibration calibration : calibrationList) {
-            PdfPCell codeCell = new PdfPCell(new Phrase(String.valueOf(calibration.getId()), FontFactory.getFont(FontFactory.HELVETICA, 12)));
-            codeCell.setBackgroundColor(new BaseColor(200, 137, 137));
-
-            PdfPCell nameCell = new PdfPCell(new Phrase(calibration.getDate(), FontFactory.getFont(FontFactory.HELVETICA, 12)));
-            nameCell.setBackgroundColor(new BaseColor(200, 137, 137));
-
-            PdfPCell unitCell = new PdfPCell(new Phrase(String.valueOf(calibration.getMeasuring()), FontFactory.getFont(FontFactory.HELVETICA, 12)));
-            unitCell.setBackgroundColor(new BaseColor(200, 137, 137));
-
-            // Añade celdas con la información de cada instrumento
-            table.addCell(codeCell);
-            table.addCell(nameCell);
-            table.addCell(unitCell);
         }
 
         // Agrega la tabla al documento
