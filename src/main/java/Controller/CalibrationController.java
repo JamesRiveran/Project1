@@ -136,6 +136,12 @@ public class CalibrationController extends Controller implements ActionListener,
         }
     }
     
+    public void deleteCalibration(){
+        String serie = view.getCalibrationTxtNumber().getText();
+        XMLLoader.deleteData(filePath, serie);
+        showMessage("Eliminado con exito", "success");
+    }
+
 
     public void saveMeasurement() {
         int columna = 2;

@@ -21,6 +21,7 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.jdom2.Document;
@@ -611,5 +612,76 @@ public class XMLLoader extends ViewController {
         }
 
     }
+
+
+public static void deleteData(String filePath, String serie) {
+    try {
+        // Crear un constructor SAX para construir un documento JDOM a partir del archivo XML
+        SAXBuilder saxBuilder = new SAXBuilder();
+        Document document = saxBuilder.build(new File(filePath));
+
+        // Obtener el elemento raíz (en este caso, <Calibracion>)
+        Element rootElement = document.getRootElement();
+
+        // Obtener todas las calibraciones
+        List<Element> calibraciones = rootElement.getChildren("Calibracion");
+
+        // Iterar a través de las calibraciones
+        Iterator<Element> calibracionIterator = calibraciones.iterator();
+        while (calibracionIterator.hasNext()) {
+            Element calibracion = calibracionIterator.next();
+            List<Element> mediciones = calibracion.getChildren("Medicion");
+
+            Iterator<Element> medicionIterator = mediciones.iterator();
+            while (medicionIterator.hasNext()) {
+                Element medicion = medicionIterator.next();
+                Element numeroElement = medicion.getChild("Numero");
+                String numero = numeroElement.getText();
+
+                if (numero.equals(serie)) {
+                    // Eliminar la medicion
+                    medicionIterator.remove();
+                }
+            }
+
+            // Eliminar el elemento <Calibracion> si ya no contiene mediciones
+            if (mediciones.isEmpty()) {
+                calibracionIterator.remove();
+            }
+        }
+
+        // Obtener todas las mediciones fuera de las calibraciones
+        List<Element> mediciones = rootElement.getChildren("Medicion");
+
+        // Iterar a través de las mediciones y eliminar las que coincidan con la serie
+        Iterator<Element> iterator = mediciones.iterator();
+        while (iterator.hasNext()) {
+            Element medicion = iterator.next();
+            Element numeroElement = medicion.getChild("Numero");
+            String numero = numeroElement.getText();
+
+            if (numero.equals(serie)) {
+                // Eliminar la medicion
+                iterator.remove();
+            }
+        }
+
+        // Guardar los cambios en el archivo XML
+        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+        FileWriter writer = new FileWriter(filePath);
+        xmlOutputter.output(document, writer);
+        writer.close();
+
+        System.out.println("Registros eliminados con éxito.");
+    } catch (IOException | JDOMException e) {
+        e.printStackTrace();
+    }
+}
+
+
+
+
+
+
 
 }
