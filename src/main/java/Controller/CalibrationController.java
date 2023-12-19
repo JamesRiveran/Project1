@@ -91,12 +91,15 @@ public class CalibrationController extends Controller implements ActionListener,
     @Override
     public void save() {
         try {
+            int measurement = Integer.parseInt(view.getCalibrationTxtMeasurement().getText());
             if (view.getCalibrationDateChooser().getDate() == null) {
                 showMessage("Debe ingresar la fecha del instrumento", "error");
             } else if (view.getCalibrationTxtMeasurement().getText().trim().isEmpty()) {
                 showMessage("Debe ingresar la calibración del instrumento", "error");
             } else if (Integer.parseInt(view.getCalibrationTxtMeasurement().getText()) < 2) {
                 showMessage("La cantidad minima de mediciones que se permite ingresar es de 2", "error");
+            } else if (measurement > Integer.parseInt(max) + 1) {
+                showMessage("La cantidad de mediciones es mayor a la cantidad de enteros que hay en el rango del instrumento", "error");
             } else {
                 try {
                     int newIdNumber = 0;

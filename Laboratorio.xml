@@ -5,7 +5,7 @@
     <Nombre>Termometro</Nombre>
     <Unidad>Celsius</Unidad>
   </Tipo_de_instrumento>
-  <idCounter>8</idCounter>
+  <idCounter>9</idCounter>
   <Instrumento>
     <Serie>1</Serie>
     <Minimo>0</Minimo>
