@@ -202,7 +202,6 @@ public class ViewController extends Controller implements ActionListener {
             updateTable();
             updateComboBoxModel();
             clean();
-            showMessage("Se borro exitosamente", "success");
         } catch (JDOMException | IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }

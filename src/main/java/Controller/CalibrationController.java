@@ -292,7 +292,9 @@ public class CalibrationController extends Controller implements ActionListener,
 
                         setNumber(id.toString());
                         view.getCalibrationTxtMeasurement().setText(measurement.toString());
-
+                        view.getCalibrationTxtNumber().setEnabled(false);
+                        view.getCalibrationDateChooser().setEnabled(false);
+                        view.getCalibrationTxtMeasurement().setEnabled(false);
                         updateTableMeasurement();
 
                     }

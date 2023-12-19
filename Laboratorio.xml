@@ -5,7 +5,7 @@
     <Nombre>Termometro</Nombre>
     <Unidad>Celsius</Unidad>
   </Tipo_de_instrumento>
-  <idCounter>7</idCounter>
+  <idCounter>8</idCounter>
   <Instrumento>
     <Serie>1</Serie>
     <Minimo>0</Minimo>
@@ -35,7 +35,7 @@
   <Tipo_de_instrumento>
     <Codigo>BAR</Codigo>
     <Nombre>Barometro</Nombre>
-    <Unidad>Km/h</Unidad>
+    <Unidad>Km/</Unidad>
   </Tipo_de_instrumento>
   <Instrumento>
     <Serie>2</Serie>
@@ -163,6 +163,30 @@
     <Numero>6</Numero>
     <Medida>5.0</Medida>
     <Referencia>16.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/03</Fecha>
+    <Numero>7</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Medicion>
+    <Numero>7</Numero>
+    <Medida>1.0</Medida>
+    <Referencia>0.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>7</Numero>
+    <Medida>2.0</Medida>
+    <Referencia>30.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>7</Numero>
+    <Medida>3.0</Medida>
+    <Referencia>60.0</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
 </Instrumentos>
