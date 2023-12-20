@@ -594,12 +594,10 @@ public class XMLLoader extends ViewController {
             for (Element instrumentElement : instrumentElements) {
                 String code = instrumentElement.getChildText("Numero");
                 if (!code.equals(serie)) {
-                    // Conserva los elementos que no coinciden con el código a eliminar
                     elementsToKeep.add(instrumentElement);
                 }
             }
 
-            // Asigna la nueva lista de elementos al elemento padre
             rootElement.setContent(elementsToKeep);
 
             XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
