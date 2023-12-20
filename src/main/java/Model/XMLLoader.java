@@ -677,6 +677,36 @@ public static void deleteData(String filePath, String serie) {
         e.printStackTrace();
     }
 }
+   public static List<Element> findCalibrationsByNumber(String filePath, String numero) {
+        List<Element> calibracionesEncontradas = new ArrayList<>();
+
+        try {
+            // Crear un constructor SAX para construir un documento JDOM a partir del archivo XML
+            SAXBuilder saxBuilder = new SAXBuilder();
+            Document document = saxBuilder.build(new File(filePath));
+
+            // Obtener el elemento raíz (en este caso, <Calibraciones>)
+            Element rootElement = document.getRootElement();
+
+            // Obtener todas las calibraciones
+            List<Element> calibraciones = rootElement.getChildren("Calibracion");
+
+            // Iterar a través de las calibraciones y buscar las que coincidan con el número
+            for (Element calibracion : calibraciones) {
+                Element serieElement = calibracion.getChild("Serie");
+                String serie = serieElement.getText();
+
+                if (serie.equals(numero)) {
+                    // Agregar la calibración a la lista de calibraciones encontradas
+                    calibracionesEncontradas.add(calibracion);
+                }
+            }
+        } catch (IOException | JDOMException e) {
+            e.printStackTrace();
+        }
+
+        return calibracionesEncontradas;
+    }
 
 
 

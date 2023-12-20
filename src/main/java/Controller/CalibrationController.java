@@ -29,6 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import org.jdom2.Element;
 import org.jdom2.JDOMException;
 
 /**
@@ -404,7 +405,18 @@ public class CalibrationController extends Controller implements ActionListener,
         this.max = max;
         this.pass = true;
         CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
-
+        List<Element> calibracionesEncontradas = XMLLoader.findCalibrationsByNumber(filePath, serie);
+        DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+        tableModel.setRowCount(0);
+        
+        for (Element calibracion : calibracionesEncontradas) {
+                String id = calibracion.getChildText("Numero"); // Cambia "Id" al nombre correcto
+                String date = calibracion.getChildText("Fecha"); // Cambia "Referencia" al nombre correcto
+                String measurement = calibracion.getChildText("Mediciones"); 
+                Object[] rowData = {id, date, measurement};
+                tableModel.addRow(rowData);
+            }
+        
     }
 
 }

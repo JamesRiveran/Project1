@@ -5,7 +5,6 @@
     <Nombre>Termometro</Nombre>
     <Unidad>Celsius</Unidad>
   </Tipo_de_instrumento>
-  <idCounter>9</idCounter>
   <Instrumento>
     <Serie>1</Serie>
     <Minimo>0</Minimo>
@@ -14,24 +13,6 @@
     <Maximo>90</Maximo>
     <Tipo>Termometro</Tipo>
   </Instrumento>
-  <Medicion>
-    <Numero>1</Numero>
-    <Medida>1.0</Medida>
-    <Referencia>0.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>1</Numero>
-    <Medida>2.0</Medida>
-    <Referencia>30.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>1</Numero>
-    <Medida>3.0</Medida>
-    <Referencia>60.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
   <Tipo_de_instrumento>
     <Codigo>BAR</Codigo>
     <Nombre>Barometro</Nombre>
@@ -45,148 +26,59 @@
     <Maximo>20</Maximo>
     <Tipo>Barometro</Tipo>
   </Instrumento>
-  <Medicion>
-    <Numero>2</Numero>
-    <Medida>1.0</Medida>
-    <Referencia>0.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>2</Numero>
-    <Medida>2.0</Medida>
-    <Referencia>6.666666666666667</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>2</Numero>
-    <Medida>3.0</Medida>
-    <Referencia>13.333333333333334</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>3</Numero>
-    <Medida>1.0</Medida>
-    <Referencia>0.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>3</Numero>
-    <Medida>2.0</Medida>
-    <Referencia>22.5</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>3</Numero>
-    <Medida>3.0</Medida>
-    <Referencia>45.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>3</Numero>
-    <Medida>4.0</Medida>
-    <Referencia>67.5</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>3</Numero>
-    <Medida>1.0</Medida>
-    <Referencia>0.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>3</Numero>
-    <Medida>2.0</Medida>
-    <Referencia>18.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>3</Numero>
-    <Medida>3.0</Medida>
-    <Referencia>36.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>3</Numero>
-    <Medida>4.0</Medida>
-    <Referencia>54.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>3</Numero>
-    <Medida>5.0</Medida>
-    <Referencia>72.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>5</Numero>
-    <Medida>1.0</Medida>
-    <Referencia>0.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>5</Numero>
-    <Medida>2.0</Medida>
-    <Referencia>6.666666666666667</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>5</Numero>
-    <Medida>3.0</Medida>
-    <Referencia>13.333333333333334</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>6</Numero>
-    <Medida>1.0</Medida>
-    <Referencia>0.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>6</Numero>
-    <Medida>2.0</Medida>
-    <Referencia>4.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>6</Numero>
-    <Medida>3.0</Medida>
-    <Referencia>8.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>6</Numero>
-    <Medida>4.0</Medida>
-    <Referencia>12.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <Numero>6</Numero>
-    <Medida>5.0</Medida>
-    <Referencia>16.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
+  <idCounter>3</idCounter>
   <Calibracion>
     <Serie>1</Serie>
     <Fecha>2023/12/03</Fecha>
-    <Numero>7</Numero>
+    <Numero>1</Numero>
     <Mediciones>3</Mediciones>
   </Calibracion>
   <Medicion>
-    <Numero>7</Numero>
+    <Numero>1</Numero>
     <Medida>1.0</Medida>
     <Referencia>0.0</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
   <Medicion>
-    <Numero>7</Numero>
+    <Numero>1</Numero>
     <Medida>2.0</Medida>
     <Referencia>30.0</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
   <Medicion>
-    <Numero>7</Numero>
+    <Numero>1</Numero>
     <Medida>3.0</Medida>
     <Referencia>60.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/03</Fecha>
+    <Numero>1</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Calibracion>
+    <Serie>2</Serie>
+    <Fecha>2023/12/05</Fecha>
+    <Numero>2</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Medicion>
+    <Numero>2</Numero>
+    <Medida>1.0</Medida>
+    <Referencia>0.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>2</Numero>
+    <Medida>2.0</Medida>
+    <Referencia>6.666666666666667</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>2</Numero>
+    <Medida>3.0</Medida>
+    <Referencia>13.333333333333334</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
 </Instrumentos>
