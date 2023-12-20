@@ -15,10 +15,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.jdom2.Element;
 import org.jdom2.JDOMException;
 
 /**
@@ -144,6 +146,7 @@ public class IntrumentsController extends Controller implements ActionListener {
 
     @Override
     public void delete() {
+        try{
         InstrumentModulo2 instrumentToDelete = new InstrumentModulo2(
                 view.getTxtSerie().getText(),
                 view.getTxtMini().getText(),
@@ -151,11 +154,20 @@ public class IntrumentsController extends Controller implements ActionListener {
                 view.getTxtDescri().getText(),
                 view.getTxtMaxi().getText(),
                 view.getCmbType().getSelectedItem().toString());
-        try {
-            XMLLoader.deleteInstrumentsFromXML(filePath, instrumentToDelete);
-            showMessage("Se borro exitosamente", "success");
-            clean();
-            updateTable();
+        
+            List<Element> calibracionesEncontradas = XMLLoader.findCalibrationsByNumber(filePath, instrumentToDelete.getSerie());
+            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+            tableModel.setRowCount(0);
+
+            if(calibracionesEncontradas.isEmpty()){
+                XMLLoader.deleteInstrumentsFromXML(filePath, instrumentToDelete);
+                showMessage("Se borro exitosamente", "success");
+                clean();
+                updateTable();
+            }else{
+                showMessage("Error no se puede eliminar porque el instrumento tiene calibraciones registradas", "error");
+            }
+
 
         } catch (JDOMException | IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
