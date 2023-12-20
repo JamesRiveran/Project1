@@ -382,6 +382,7 @@ public class CalibrationController extends Controller implements ActionListener,
 
     @Override
     public void delete() {
+        XMLLoader.deleteDataMensu(filePath, getNumber());
         XMLLoader.deleteData(filePath, getNumber());
         showMessage("Eliminado con exito", "success");
         updateTable();
