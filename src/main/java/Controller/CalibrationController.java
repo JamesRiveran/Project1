@@ -55,7 +55,7 @@ public class CalibrationController extends Controller implements ActionListener,
         this.view.setCalibrationController(this);
         this.calibrationList = new CalibrationList();
         this.number = "0";
-        updateTableData();
+        //updateTableData();
     }
 
     // Constructor con argumentos, incluyendo la serie
@@ -95,6 +95,7 @@ public class CalibrationController extends Controller implements ActionListener,
             } else {
                 try {
                     int newIdNumber = 0;
+                    calibrationList.getList().clear();
                     JDateChooser dateChooser = view.getCalibrationDateChooser();
                     String date = dateToString(dateChooser);
                     Calibration newCalibration = new Calibration(
