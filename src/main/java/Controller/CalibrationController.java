@@ -301,8 +301,6 @@ public class CalibrationController extends Controller implements ActionListener,
                     Object[] rowData = {measurement.getId(), measurement.getReference(), measurement.getReading()};
                     tableModel.addRow(rowData);
                 }
-//                clearTable(tableModel);
-                // Si no se encontró ninguna correspondencia, podrías manejarlo aquí si es necesario
             }
 
         } catch (IOException | JDOMException ex) {
@@ -382,10 +380,12 @@ public class CalibrationController extends Controller implements ActionListener,
 
     @Override
     public void delete() {
+        DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
         XMLLoader.deleteDataMensu(filePath, getNumber());
         XMLLoader.deleteData(filePath, getNumber());
         showMessage("Eliminado con exito", "success");
         updateTable();
+        clearTable(tableModel);
     }
 
     @Override

@@ -589,16 +589,19 @@ public class XMLLoader extends ViewController {
             Element rootElement = document.getRootElement();
             List<Element> instrumentElements = rootElement.getChildren("Medicion");
 
-            List<Element> elementsToKeep = new ArrayList<>();
+            // Almacena las mediciones que se eliminarán
+            List<Element> elementsToRemove = new ArrayList<>();
 
             for (Element instrumentElement : instrumentElements) {
                 String code = instrumentElement.getChildText("Numero");
-                if (!code.equals(serie)) {
-                    elementsToKeep.add(instrumentElement);
+
+                if (code.equals(serie)) {
+                    elementsToRemove.add(instrumentElement);
                 }
             }
 
-            rootElement.setContent(elementsToKeep);
+            // Elimina las mediciones después de completar la iteración
+            instrumentElements.removeAll(elementsToRemove);
 
             XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
             try (FileWriter writer = new FileWriter(filePath)) {
