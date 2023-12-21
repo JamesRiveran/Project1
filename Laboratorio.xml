@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Laboratorio>
+
+  <idCounter>2</idCounter>
   <Tipo_de_instrumento>
-    <Codigo>Ter</Codigo>
-    <Nombre>Termometro</Nombre>
-    <Unidad>Celsois</Unidad>
+    <Codigo>ter</Codigo>
+    <Nombre>ddsf</Nombre>
+    <Unidad>4e</Unidad>
   </Tipo_de_instrumento>
   <Instrumento>
     <Serie>1</Serie>
     <Minimo>0</Minimo>
     <Tolerancia>0</Tolerancia>
-    <Descripcion>Pedro</Descripcion>
+    <Descripcion>ddd</Descripcion>
     <Maximo>90</Maximo>
-    <Tipo>Termometro</Tipo>
+    <Tipo>ddsf</Tipo>
   </Instrumento>
+
   <idCounter>3</idCounter>
   <Calibracion>
     <Serie>1</Serie>
