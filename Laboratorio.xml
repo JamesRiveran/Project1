@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Laboratorio>
+
   <idCounter>2</idCounter>
   <Tipo_de_instrumento>
     <Codigo>ter</Codigo>
@@ -14,4 +15,60 @@
     <Maximo>90</Maximo>
     <Tipo>ddsf</Tipo>
   </Instrumento>
+
+  <idCounter>3</idCounter>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/01</Fecha>
+    <Numero>1</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Medicion>
+    <Numero>1</Numero>
+    <Medida>1.0</Medida>
+    <Referencia>0.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>1</Numero>
+    <Medida>2.0</Medida>
+    <Referencia>30.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>1</Numero>
+    <Medida>3.0</Medida>
+    <Referencia>60.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
+    <Numero>2</Numero>
+    <Mediciones>4</Mediciones>
+  </Calibracion>
+  <Medicion>
+    <Numero>2</Numero>
+    <Medida>1.0</Medida>
+    <Referencia>0.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>2</Numero>
+    <Medida>2.0</Medida>
+    <Referencia>22.5</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>2</Numero>
+    <Medida>3.0</Medida>
+    <Referencia>45.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>2</Numero>
+    <Medida>4.0</Medida>
+    <Referencia>67.5</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
 </Laboratorio>

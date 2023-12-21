@@ -28,6 +28,7 @@ public class Modulo extends javax.swing.JFrame {
     public Modulo() {
         initComponents();
         btnDeleteInstru.setEnabled(false);
+        setIconImage(new javax.swing.ImageIcon("src/main/resources/images/Logo.png").getImage());
     }
 
     /**
@@ -112,18 +113,20 @@ public class Modulo extends javax.swing.JFrame {
         btnPDFCalibration = new javax.swing.JButton();
         btnSearchCalibration = new javax.swing.JButton();
         pAcercaDe = new javax.swing.JPanel();
-        logoImageIcon = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        unaImageIcon = new javax.swing.JLabel();
         miscTxtTitle = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
         miscTxtSubtitle = new javax.swing.JLabel();
         miscTxtVersion = new javax.swing.JLabel();
         miscTxtTeam = new javax.swing.JLabel();
-        miscTxtNameK = new javax.swing.JLabel();
         miscTxtNameJ = new javax.swing.JLabel();
         miscTxtNameG = new javax.swing.JLabel();
-        miscTxtDate = new javax.swing.JLabel();
+        miscTxtNameK = new javax.swing.JLabel();
         miscTxtCareer = new javax.swing.JLabel();
         miscTxtInstitution = new javax.swing.JLabel();
-        unaImageIcon = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        logoImageIcon = new javax.swing.JLabel();
 
         jRadioButton1.setText("jRadioButton1");
 
@@ -179,6 +182,8 @@ public class Modulo extends javax.swing.JFrame {
 
         jLabel6.setText("Nombre");
 
+        btnSearch.setBackground(new java.awt.Color(51, 51, 255));
+        btnSearch.setForeground(new java.awt.Color(255, 255, 255));
         btnSearch.setText("Buscar");
         btnSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -190,6 +195,7 @@ public class Modulo extends javax.swing.JFrame {
         btnPDF.setText("Reporte");
         btnPDF.setContentAreaFilled(false);
         btnPDF.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPDF.setFocusable(false);
         btnPDF.setIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMin.png"));
 
         btnPDF.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -215,8 +221,8 @@ public class Modulo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 387, Short.MAX_VALUE)
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
-                .addComponent(btnPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
+                .addComponent(btnPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,9 +232,11 @@ public class Modulo extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnSearch)
-                        .addComponent(txtNameForSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnPDF)))
+                        .addComponent(txtNameForSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(35, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnPDF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado"));
@@ -486,11 +494,15 @@ public class Modulo extends javax.swing.JFrame {
 
         jLabel11.setText("Descripcion");
 
+        btnSearchInstru.setBackground(new java.awt.Color(51, 51, 255));
+        btnSearchInstru.setForeground(new java.awt.Color(255, 255, 255));
         btnSearchInstru.setText("Buscar");
         btnSearchInstru.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         btnReport.setText("Reporte");
+        btnReport.setContentAreaFilled(false);
         btnReport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnReport.setFocusable(false);
         btnReport.setIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMin.png"));
 
         btnReport.setContentAreaFilled(false);
@@ -845,6 +857,8 @@ public class Modulo extends javax.swing.JFrame {
             }
         });
 
+        btnSearchCalibration.setBackground(new java.awt.Color(51, 51, 255));
+        btnSearchCalibration.setForeground(new java.awt.Color(255, 255, 255));
         btnSearchCalibration.setText("Buscar");
         btnSearchCalibration.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -922,9 +936,24 @@ public class Modulo extends javax.swing.JFrame {
 
         pTipoDeInstrumento.addTab("Calibraciones", pCalibraciones);
 
-        ImageIcon imageLogo = new ImageIcon("src/main/resources/images/Logo.png");
-        logoImageIcon.setIcon(imageLogo);
-        logoImageIcon.setText(null);
+        ImageIcon imageUna = new ImageIcon("src/main/resources/images/Una.png");
+        unaImageIcon.setIcon(imageUna);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(unaImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(unaImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 14, Short.MAX_VALUE))
+        );
 
         miscTxtTitle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         miscTxtTitle.setText("Proyecto 1");
@@ -935,11 +964,31 @@ public class Modulo extends javax.swing.JFrame {
         miscTxtVersion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         miscTxtVersion.setText("Versión: 1.0");
 
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(miscTxtSubtitle)
+                .addGap(15, 15, 15))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(miscTxtVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(miscTxtSubtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(miscTxtVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         miscTxtTeam.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         miscTxtTeam.setText("Integrantes:");
-
-        miscTxtNameK.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        miscTxtNameK.setText("Kevin Fallas Chavarría");
 
         miscTxtNameJ.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         miscTxtNameJ.setText("James Rivera Nuñez");
@@ -947,27 +996,95 @@ public class Modulo extends javax.swing.JFrame {
         miscTxtNameG.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         miscTxtNameG.setText("Gabriel Madrigal Castro");
 
-        miscTxtDate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        miscTxtDate.setText("Universidad Nacional de Costa Rica");
+        miscTxtNameK.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        miscTxtNameK.setText("Kevin Fallas Chavarría");
 
         miscTxtCareer.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         miscTxtCareer.setText("EIF206 - Programación III");
 
         miscTxtInstitution.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        miscTxtInstitution.setText("Escuela de Informática");
+        miscTxtInstitution.setText("Universidad Nacional - Escuela de Informática");
 
-        ImageIcon imageUna = new ImageIcon("src/main/resources/images/Una.png");
-        unaImageIcon.setIcon(imageUna);
+        ImageIcon imageLogo = new ImageIcon("src/main/resources/images/Logo.png");
+        logoImageIcon.setIcon(imageLogo);
+        logoImageIcon.setText(null);
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 592, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel10Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(logoImageIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(logoImageIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
 
         javax.swing.GroupLayout pAcercaDeLayout = new javax.swing.GroupLayout(pAcercaDe);
         pAcercaDe.setLayout(pAcercaDeLayout);
         pAcercaDeLayout.setHorizontalGroup(
             pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1056, Short.MAX_VALUE)
+            .addGroup(pAcercaDeLayout.createSequentialGroup()
+                .addGroup(pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pAcercaDeLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(miscTxtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pAcercaDeLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addGroup(pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(miscTxtTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(miscTxtNameJ)
+                            .addComponent(miscTxtNameG)
+                            .addComponent(miscTxtNameK)))
+                    .addGroup(pAcercaDeLayout.createSequentialGroup()
+                        .addGap(138, 138, 138)
+                        .addComponent(miscTxtCareer))
+                    .addGroup(pAcercaDeLayout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(miscTxtInstitution)))
+                .addGap(67, 67, 67)
+                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pAcercaDeLayout.setVerticalGroup(
             pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 516, Short.MAX_VALUE)
+            .addGroup(pAcercaDeLayout.createSequentialGroup()
+                .addGroup(pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pAcercaDeLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(miscTxtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(miscTxtTeam)
+                .addGap(18, 18, 18)
+                .addComponent(miscTxtNameJ)
+                .addGap(18, 18, 18)
+                .addComponent(miscTxtNameG, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addComponent(miscTxtNameK)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addComponent(miscTxtInstitution, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(miscTxtCareer)
+                .addGap(24, 24, 24))
+            .addGroup(pAcercaDeLayout.createSequentialGroup()
+                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pTipoDeInstrumento.addTab("Acerca de", pAcercaDe);
@@ -1448,9 +1565,12 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -1465,7 +1585,6 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JLabel lbNombreInstru;
     private javax.swing.JLabel logoImageIcon;
     private javax.swing.JLabel miscTxtCareer;
-    private javax.swing.JLabel miscTxtDate;
     private javax.swing.JLabel miscTxtInstitution;
     private javax.swing.JLabel miscTxtNameG;
     private javax.swing.JLabel miscTxtNameJ;
