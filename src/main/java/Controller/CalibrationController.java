@@ -50,15 +50,12 @@ public class CalibrationController extends Controller implements ActionListener,
     boolean pass = false;
     private String number;
 
-
     public CalibrationController(Modulo view) {
         this.view = view;
         this.view.setCalibrationController(this);
-
         this.calibrationList = new CalibrationList();
         this.number = "0";
-        updateTable();
-        updateTableData();
+        //updateTableData();
     }
 
     // Constructor con argumentos, incluyendo la serie
@@ -75,7 +72,6 @@ public class CalibrationController extends Controller implements ActionListener,
 
     }
 
-
     public String getNumber() {
         return number;
     }
@@ -83,7 +79,6 @@ public class CalibrationController extends Controller implements ActionListener,
     public void setNumber(String number) {
         this.number = number;
     }
-
 
     @Override
     public void save() {
@@ -100,6 +95,7 @@ public class CalibrationController extends Controller implements ActionListener,
             } else {
                 try {
                     int newIdNumber = 0;
+                    calibrationList.getList().clear();
                     JDateChooser dateChooser = view.getCalibrationDateChooser();
                     String date = dateToString(dateChooser);
                     Calibration newCalibration = new Calibration(
@@ -130,6 +126,8 @@ public class CalibrationController extends Controller implements ActionListener,
     public void clean() {
         view.getCalibrationDateChooser().setDate(null);
         view.getCalibrationTxtMeasurement().setText("");
+        view.getCalibrationDateChooser().setEnabled(true);
+        view.getCalibrationTxtMeasurement().setEnabled(true);
     }
 
     @Override
@@ -154,12 +152,6 @@ public class CalibrationController extends Controller implements ActionListener,
         }
     }
 
-    public void deleteCalibration() {
-        String serie = view.getCalibrationTxtNumber().getText();
-        XMLLoader.deleteData(filePath, serie);
-        showMessage("Eliminado con exito", "success");
-    }
-
     public void saveMeasurement() {
         int columna = 2;
         int columnaReference = 1;
@@ -170,13 +162,11 @@ public class CalibrationController extends Controller implements ActionListener,
         double tolerance = 2;
         for (int fila = 0; fila < rowCount; fila++) {
 
-
             Object valorCelda = modelo.getValueAt(fila, columna);
             Object valueReference = modelo.getValueAt(fila, columnaReference);
             String textoCelda = (valorCelda != null) ? valorCelda.toString() : "";
             Double integerObject = (double) valueReference;
             int reference = integerObject.intValue();
-
 
             double validation = (double) reference + tolerance;
             double intTextoCelda = Double.parseDouble(textoCelda);
@@ -190,7 +180,6 @@ public class CalibrationController extends Controller implements ActionListener,
                 XMLLoader.updateMeasurement(filePath, datosColumna);
                 showMessage("Guardados con exito", "success");
             }
-
 
         }
     }
@@ -289,21 +278,19 @@ public class CalibrationController extends Controller implements ActionListener,
                         }
 
                         // Asigna los valores a los campos correspondientes
-
                         setNumber(id.toString());
                         view.getCalibrationTxtMeasurement().setText(measurement.toString());
                         view.getCalibrationTxtNumber().setEnabled(false);
                         view.getCalibrationDateChooser().setEnabled(false);
                         view.getCalibrationTxtMeasurement().setEnabled(false);
                         updateTableMeasurement();
-                        
+
                     }
                 }
             }
         });
         return true;
     }
-
 
     public void updateTableMeasurement() {
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
@@ -323,7 +310,7 @@ public class CalibrationController extends Controller implements ActionListener,
             ex.printStackTrace();
         }
     }
-    
+
     public void clearTable(DefaultTableModel tableModel) {
         int rowCount = tableModel.getRowCount();
 
@@ -352,6 +339,7 @@ public class CalibrationController extends Controller implements ActionListener,
 
     public void updateTable() {
         try {
+
             listCalibrations = XMLLoader.loadFromCalibrations(filePath);
             DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
             tableModel.setRowCount(0);
@@ -395,6 +383,9 @@ public class CalibrationController extends Controller implements ActionListener,
 
     @Override
     public void delete() {
+        XMLLoader.deleteData(filePath, getNumber());
+        showMessage("Eliminado con exito", "success");
+        updateTable();
     }
 
     @Override
@@ -408,15 +399,15 @@ public class CalibrationController extends Controller implements ActionListener,
         List<Element> calibracionesEncontradas = XMLLoader.findCalibrationsByNumber(filePath, serie);
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
-        
+
         for (Element calibracion : calibracionesEncontradas) {
-                String id = calibracion.getChildText("Numero"); // Cambia "Id" al nombre correcto
-                String date = calibracion.getChildText("Fecha"); // Cambia "Referencia" al nombre correcto
-                String measurement = calibracion.getChildText("Mediciones"); 
-                Object[] rowData = {id, date, measurement};
-                tableModel.addRow(rowData);
-            }
-        
+            String id = calibracion.getChildText("Numero"); // Cambia "Id" al nombre correcto
+            String date = calibracion.getChildText("Fecha"); // Cambia "Referencia" al nombre correcto
+            String measurement = calibracion.getChildText("Mediciones");
+            Object[] rowData = {id, date, measurement};
+            tableModel.addRow(rowData);
+        }
+
     }
 
 }

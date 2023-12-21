@@ -78,7 +78,7 @@ public class ViewController extends Controller implements ActionListener {
         int idCounter = idCounter();
         view.getCalibrationTxtNumber().setText(String.valueOf(idCounter));
         view.getCalibrationTxtNumber().setEnabled(false);
-        view.getCalibrationBtnDelete().addActionListener(e->calibrationController.deleteCalibration());
+        view.getCalibrationBtnDelete().addActionListener(e->calibrationController.delete());
 
     }
 

@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Instrumentos>
+<Laboratorio>
   <Tipo_de_instrumento>
     <Codigo>Ter</Codigo>
     <Nombre>Termometro</Nombre>
-    <Unidad>Celsius</Unidad>
-  </Tipo_de_instrumento>
-  <Tipo_de_instrumento>
-    <Codigo>BAR</Codigo>
-    <Nombre>Barometro</Nombre>
-    <Unidad>Km/</Unidad>
+    <Unidad>Celsois</Unidad>
   </Tipo_de_instrumento>
   <Instrumento>
-    <Serie>2</Serie>
+    <Serie>1</Serie>
     <Minimo>0</Minimo>
     <Tolerancia>0</Tolerancia>
-    <Descripcion>Barometro togge</Descripcion>
-    <Maximo>20</Maximo>
-    <Tipo>Barometro</Tipo>
+    <Descripcion>Pedro</Descripcion>
+    <Maximo>90</Maximo>
+    <Tipo>Termometro</Tipo>
   </Instrumento>
   <idCounter>3</idCounter>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/01</Fecha>
+    <Numero>1</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
   <Medicion>
     <Numero>1</Numero>
     <Medida>1.0</Medida>
@@ -37,6 +38,12 @@
     <Referencia>60.0</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/16</Fecha>
+    <Numero>2</Numero>
+    <Mediciones>4</Mediciones>
+  </Calibracion>
   <Medicion>
     <Numero>2</Numero>
     <Medida>1.0</Medida>
@@ -46,13 +53,19 @@
   <Medicion>
     <Numero>2</Numero>
     <Medida>2.0</Medida>
-    <Referencia>6.666666666666667</Referencia>
+    <Referencia>22.5</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
   <Medicion>
     <Numero>2</Numero>
     <Medida>3.0</Medida>
-    <Referencia>13.333333333333334</Referencia>
+    <Referencia>45.0</Referencia>
     <Lectura>0.0</Lectura>
   </Medicion>
-</Instrumentos>
+  <Medicion>
+    <Numero>2</Numero>
+    <Medida>4.0</Medida>
+    <Referencia>67.5</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+</Laboratorio>

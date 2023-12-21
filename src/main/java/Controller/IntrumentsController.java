@@ -44,6 +44,7 @@ public class IntrumentsController extends Controller implements ActionListener {
         clickTable();
         updateTable();
         this.view.setIntrumentsController(this);
+        
     }
 
     public void setInstruSelectionListener(InstruSelectionListener listener) {
@@ -58,24 +59,6 @@ public class IntrumentsController extends Controller implements ActionListener {
 
         }
     }
-
-    public static void conection(boolean m) {
-        if (m) {
-            modalForRelations("Posee una relacion no se puede borrar", "error");
-        } else {
-            modalForRelations("Borrado exitosamente", "success");
-        }
-    }
-
-    public static void modalForRelations(String errorMessage, String info) {
-        if (info == "error") {
-            JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
-        } else if (info == "success") {
-            JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.INFORMATION_MESSAGE);
-
-        }
-    }
-
     @Override
     public void save() {
 
@@ -257,9 +240,9 @@ public class IntrumentsController extends Controller implements ActionListener {
 
     /*Para filtrar*/
     private void filterByDescription(String searchLetter) {
-        // Asegúrate de tener la lista cargada antes de realizar la búsqueda
+        // 
         if (ListOfXml == null) {
-            // Si la lista no está cargada, intenta cargarla
+          
             updateTable();
         }
 

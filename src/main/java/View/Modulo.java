@@ -365,6 +365,11 @@ public class Modulo extends javax.swing.JFrame {
                 txtSerieActionPerformed(evt);
             }
         });
+        txtSerie.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSerieKeyTyped(evt);
+            }
+        });
 
         txtMini.setText("0");
         txtMini.addActionListener(new java.awt.event.ActionListener() {
@@ -372,8 +377,24 @@ public class Modulo extends javax.swing.JFrame {
                 txtMiniActionPerformed(evt);
             }
         });
+        txtMini.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMiniKeyTyped(evt);
+            }
+        });
 
         txtTole.setText("0");
+        txtTole.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtToleKeyTyped(evt);
+            }
+        });
+
+        txtMaxi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMaxiKeyTyped(evt);
+            }
+        });
 
         cmbType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbType.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -688,6 +709,12 @@ public class Modulo extends javax.swing.JFrame {
         calibrationTxtNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 calibrationTxtNumberActionPerformed(evt);
+            }
+        });
+
+        calibrationTxtMeasurement.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                calibrationTxtMeasurementKeyTyped(evt);
             }
         });
 
@@ -1132,6 +1159,52 @@ public class Modulo extends javax.swing.JFrame {
     private void calibrationBtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calibrationBtnSaveActionPerformed
 
     }//GEN-LAST:event_calibrationBtnSaveActionPerformed
+
+    private void txtSerieKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSerieKeyTyped
+        int key = evt.getKeyChar();
+        boolean number = key >= 48 && key <= 57;
+
+        if (!number) {
+            evt.consume();
+        }
+
+    }//GEN-LAST:event_txtSerieKeyTyped
+
+    private void txtMaxiKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMaxiKeyTyped
+        int key = evt.getKeyChar();
+        boolean number = key >= 48 && key <= 57;
+
+        if (!number) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtMaxiKeyTyped
+
+    private void txtMiniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMiniKeyTyped
+        int key = evt.getKeyChar();
+        boolean number = key >= 48 && key <= 57;
+
+        if (!number) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtMiniKeyTyped
+
+    private void txtToleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtToleKeyTyped
+        int key = evt.getKeyChar();
+        boolean number = key >= 48 && key <= 57;
+
+        if (!number) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtToleKeyTyped
+
+    private void calibrationTxtMeasurementKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_calibrationTxtMeasurementKeyTyped
+        int key = evt.getKeyChar();
+        boolean number = key >= 48 && key <= 57;
+
+        if (!number) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_calibrationTxtMeasurementKeyTyped
 
     public ViewController getViewController() {
         return viewController;
