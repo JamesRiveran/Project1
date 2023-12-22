@@ -303,4 +303,14 @@ public class ViewController extends Controller implements ActionListener {
         view.getTxtName().setText("");
         view.getTxtUnit().setText("");
     }
+    
+    public void close(){
+        String botones[] = {"Cerrar", "Cancelar"};
+        int eleccion = JOptionPane.showOptionDialog(view,"¿Desea cerrar la aplicación?","Cerrar",0,0,null,botones,this);
+        if(eleccion==JOptionPane.YES_OPTION){
+            System.exit(0);
+        }else if(eleccion==JOptionPane.NO_OPTION){
+            
+        }
+    }
 }
