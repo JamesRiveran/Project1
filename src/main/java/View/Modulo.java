@@ -114,7 +114,6 @@ public class Modulo extends javax.swing.JFrame {
         btnSearchCalibration = new javax.swing.JButton();
         pAcercaDe = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        unaImageIcon = new javax.swing.JLabel();
         miscTxtTitle = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         miscTxtSubtitle = new javax.swing.JLabel();
@@ -127,10 +126,16 @@ public class Modulo extends javax.swing.JFrame {
         miscTxtInstitution = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         logoImageIcon = new javax.swing.JLabel();
+        unaImageIcon = new javax.swing.JLabel();
 
         jRadioButton1.setText("jRadioButton1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo de Instrumento"));
 
@@ -936,23 +941,15 @@ public class Modulo extends javax.swing.JFrame {
 
         pTipoDeInstrumento.addTab("Calibraciones", pCalibraciones);
 
-        ImageIcon imageUna = new ImageIcon("src/main/resources/images/Una.png");
-        unaImageIcon.setIcon(imageUna);
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(unaImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 106, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(unaImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 14, Short.MAX_VALUE))
+            .addGap(0, 105, Short.MAX_VALUE)
         );
 
         miscTxtTitle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -1013,7 +1010,7 @@ public class Modulo extends javax.swing.JFrame {
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 592, Short.MAX_VALUE)
+            .addGap(0, 581, Short.MAX_VALUE)
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel10Layout.createSequentialGroup()
                     .addContainerGap()
@@ -1030,6 +1027,9 @@ public class Modulo extends javax.swing.JFrame {
                     .addContainerGap()))
         );
 
+        ImageIcon imageUna = new ImageIcon("src/main/resources/images/Una.png");
+        unaImageIcon.setIcon(imageUna);
+
         javax.swing.GroupLayout pAcercaDeLayout = new javax.swing.GroupLayout(pAcercaDe);
         pAcercaDe.setLayout(pAcercaDeLayout);
         pAcercaDeLayout.setHorizontalGroup(
@@ -1038,7 +1038,9 @@ public class Modulo extends javax.swing.JFrame {
                 .addGroup(pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pAcercaDeLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(unaImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
                         .addComponent(miscTxtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pAcercaDeLayout.createSequentialGroup()
@@ -1065,7 +1067,9 @@ public class Modulo extends javax.swing.JFrame {
                 .addGroup(pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pAcercaDeLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(miscTxtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(miscTxtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(unaImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1205,6 +1209,10 @@ public class Modulo extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_calibrationTxtMeasurementKeyTyped
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.viewController.close();
+    }//GEN-LAST:event_formWindowClosing
 
     public ViewController getViewController() {
         return viewController;
