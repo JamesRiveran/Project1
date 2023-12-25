@@ -216,13 +216,11 @@ public class Modulo extends javax.swing.JFrame {
         btnPDF.setContentAreaFilled(false);
         btnPDF.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPDF.setFocusable(false);
-        btnPDF.setIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMin.png"));
+        btnPDF.setIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMax.png"));
 
         btnPDF.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         btnPDF.setPressedIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMin.png"));
-
-        btnPDF.setRolloverIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMax.png"));
         btnPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPDFActionPerformed(evt);
@@ -376,7 +374,7 @@ public class Modulo extends javax.swing.JFrame {
                         .addGap(40, 40, 40)
                         .addComponent(btnDelete))
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -544,7 +542,7 @@ public class Modulo extends javax.swing.JFrame {
         btnReport.setContentAreaFilled(false);
         btnReport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnReport.setFocusable(false);
-        btnReport.setIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMin.png"));
+        btnReport.setIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMax.png"));
 
         btnReport.setContentAreaFilled(false);
 
@@ -553,8 +551,6 @@ public class Modulo extends javax.swing.JFrame {
         btnReport.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         btnReport.setPressedIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMin.png"));
-
-        btnReport.setRolloverIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMax.png"));
 
         javax.swing.GroupLayout jPanel83Layout = new javax.swing.GroupLayout(jPanel83);
         jPanel83.setLayout(jPanel83Layout);
@@ -565,10 +561,10 @@ public class Modulo extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
                 .addComponent(txtSearchInstru, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
-                .addGap(366, 366, 366)
+                .addGap(325, 325, 325)
                 .addComponent(btnSearchInstru)
                 .addGap(18, 18, 18)
-                .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel83Layout.setVerticalGroup(
@@ -686,7 +682,7 @@ public class Modulo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel19)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 239, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 252, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -915,13 +911,13 @@ public class Modulo extends javax.swing.JFrame {
             }
         });
 
-        btnPDFCalibration.setIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMin.png"));
+        btnPDFCalibration.setIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMax.png"));
         btnPDFCalibration.setText("Reporte");
         btnPDFCalibration.setContentAreaFilled(false);
         btnPDFCalibration.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPDFCalibration.setFocusable(false);
         btnPDFCalibration.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        btnPDFCalibration.setRolloverIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMax.png"));
-        btnPDFCalibration.setSelectedIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMin.png"));
+        btnPDFCalibration.setPressedIcon(new javax.swing.ImageIcon("src/main/resources/images/pdfMin.png"));
         btnPDFCalibration.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPDFCalibrationActionPerformed(evt);
@@ -945,8 +941,8 @@ public class Modulo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnSearchCalibration)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 274, Short.MAX_VALUE)
-                .addComponent(btnPDFCalibration)
-                .addGap(189, 189, 189))
+                .addComponent(btnPDFCalibration, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(116, 116, 116))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -956,8 +952,10 @@ public class Modulo extends javax.swing.JFrame {
                     .addComponent(txtNumberSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
                     .addComponent(btnSearchCalibration))
-                .addContainerGap(31, Short.MAX_VALUE))
-            .addComponent(btnPDFCalibration)
+                .addContainerGap(48, Short.MAX_VALUE))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(btnPDFCalibration, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -1039,7 +1037,7 @@ public class Modulo extends javax.swing.JFrame {
                         .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1187,7 +1185,7 @@ public class Modulo extends javax.swing.JFrame {
                 .addComponent(miscTxtNameG, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addComponent(miscTxtNameK)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                 .addComponent(miscTxtInstitution, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(miscTxtCareer)
