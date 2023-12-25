@@ -7,6 +7,7 @@ package View;
 import Controller.ViewController;
 import Controller.CalibrationController;
 import Controller.IntrumentsController;
+import Model.MaterialTabbed;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
