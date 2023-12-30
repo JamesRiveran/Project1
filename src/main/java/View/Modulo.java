@@ -1292,11 +1292,12 @@ public class Modulo extends javax.swing.JFrame {
 
     private void txtMiniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMiniKeyTyped
         int key = evt.getKeyChar();
-        boolean number = key >= 48 && key <= 57;
+        boolean isDigit = (key >= 48 && key <= 57) || key == 45;
 
-        if (!number) {
+        if (!isDigit) {
             evt.consume();
         }
+
     }//GEN-LAST:event_txtMiniKeyTyped
 
     private void txtToleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtToleKeyTyped

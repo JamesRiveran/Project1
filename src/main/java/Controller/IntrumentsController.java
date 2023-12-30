@@ -104,6 +104,7 @@ public class IntrumentsController extends Controller implements ActionListener {
     public void clean() {
         view.getBtnDelete().setEnabled(false);
         view.getTxtSerie().setEnabled(true);
+        view.getBtnDeleteInstru().setEnabled(false);
         view.getTxtSerie().setText("");
         view.getTxtMini().setText("0");
         view.getTxtTole().setText("0");
