@@ -62,7 +62,7 @@ public class Calibration {
 
     @Override
     public String toString() {
-        return "Fecha: " + date + "\n Número: " + id + "\n Mediciones=" + measuring;
+        return "Serie: " + number + "\n Fecha: " + date + "\n Número: " + id + "\n Mediciones=" + measuring;
     }
 
 }

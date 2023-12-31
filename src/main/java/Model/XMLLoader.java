@@ -462,7 +462,7 @@ public class XMLLoader extends ViewController {
         Element rootElement = document.getRootElement();
         List<Element> calibrationElements = rootElement.getChildren("Calibracion");
         for (Element calibrationtElement : calibrationElements) {
-            String number = calibrationtElement.getChildText("Numero");
+            String number = calibrationtElement.getChildText("Serie");
             String date = calibrationtElement.getChildText("Fecha");
             int id = Integer.parseInt(calibrationtElement.getChildText("Numero"));
             int measurement = Integer.parseInt(calibrationtElement.getChildText("Mediciones"));

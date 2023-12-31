@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Laboratorio>
-  <idCounter>1</idCounter>
+  <idCounter>6</idCounter>
   <Tipo_de_instrumento>
     <Codigo>TER</Codigo>
     <Nombre>Termometro</Nombre>
@@ -11,7 +11,74 @@
     <Minimo>0</Minimo>
     <Tolerancia>0</Tolerancia>
     <Descripcion>Prueba</Descripcion>
-    <Maximo>2</Maximo>
+    <Maximo>90</Maximo>
     <Tipo>Termometro</Tipo>
+  </Instrumento>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/30</Fecha>
+    <Numero>4</Numero>
+    <Mediciones>3</Mediciones>
+  </Calibracion>
+  <Medicion>
+    <Numero>4</Numero>
+    <Medida>1.0</Medida>
+    <Referencia>0.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>4</Numero>
+    <Medida>2.0</Medida>
+    <Referencia>30.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>4</Numero>
+    <Medida>3.0</Medida>
+    <Referencia>60.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Calibracion>
+    <Serie>1</Serie>
+    <Fecha>2023/12/09</Fecha>
+    <Numero>5</Numero>
+    <Mediciones>4</Mediciones>
+  </Calibracion>
+  <Medicion>
+    <Numero>5</Numero>
+    <Medida>1.0</Medida>
+    <Referencia>0.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>5</Numero>
+    <Medida>2.0</Medida>
+    <Referencia>22.5</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>5</Numero>
+    <Medida>3.0</Medida>
+    <Referencia>45.0</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Medicion>
+    <Numero>5</Numero>
+    <Medida>4.0</Medida>
+    <Referencia>67.5</Referencia>
+    <Lectura>0.0</Lectura>
+  </Medicion>
+  <Tipo_de_instrumento>
+    <Codigo>bar</Codigo>
+    <Nombre>Kevin</Nombre>
+    <Unidad>sd</Unidad>
+  </Tipo_de_instrumento>
+  <Instrumento>
+    <Serie>2</Serie>
+    <Minimo>0</Minimo>
+    <Tolerancia>0</Tolerancia>
+    <Descripcion>ddd</Descripcion>
+    <Maximo>90</Maximo>
+    <Tipo>Kevin</Tipo>
   </Instrumento>
 </Laboratorio>
