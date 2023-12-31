@@ -55,7 +55,6 @@ public class CalibrationController extends Controller implements ActionListener,
         this.view.setCalibrationController(this);
         this.calibrationList = new CalibrationList();
         this.number = "0";
-        //updateTableData();
     }
 
     // Constructor con argumentos, incluyendo la serie
@@ -63,11 +62,9 @@ public class CalibrationController extends Controller implements ActionListener,
         this.view = view;
         this.view.setCalibrationController(this);
         this.calibrationList = new CalibrationList();
-
         this.serie = serie; // Asigna la serie recibida
         this.max = max;
         clickTable();
-
         updateTable();
 
     }
