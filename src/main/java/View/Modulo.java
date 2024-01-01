@@ -30,6 +30,11 @@ public class Modulo extends javax.swing.JFrame {
         btnDeleteInstru.setEnabled(false);
         setIconImage(new javax.swing.ImageIcon("src/main/resources/images/Logo.png").getImage());
         setTitle("SILAB Sistema de Laboratorio Industrial");
+
+        tblMeasurement.getColumnModel().getColumn(3).setMinWidth(0);
+        tblMeasurement.getColumnModel().getColumn(3).setMaxWidth(0);
+        tblMeasurement.getColumnModel().getColumn(3).setWidth(0);
+
     }
 
     /**
@@ -871,11 +876,11 @@ public class Modulo extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Medida", "Referencia", "Lectura"
+                "Medida", "Referencia", "Lectura", "id"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

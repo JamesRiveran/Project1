@@ -403,6 +403,36 @@ public class XMLLoader extends ViewController {
         return instruments;
     }
 
+    public static int getIdMedicionFromXML(String filePath) throws IOException, JDOMException {
+        try (FileInputStream fis = new FileInputStream(filePath); InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+            Document document = new SAXBuilder().build(isr);
+            Element rootElement = document.getRootElement();
+            Element idMedicionElement = rootElement.getChild("IdMedicionCounter");
+
+            int updatedIdMedicion;
+            if (idMedicionElement == null) {
+                // Si la etiqueta <IdMedicionCounter> no existe, crear una nueva con valor 1
+                idMedicionElement = new Element("IdMedicionCounter");
+                updatedIdMedicion = 1;
+                rootElement.addContent(idMedicionElement);
+            } else {
+                // Si la etiqueta <IdMedicionCounter> existe, obtener el valor actual y aumentarlo en 1
+                int currentIdMedicion = Integer.parseInt(idMedicionElement.getTextTrim());
+                updatedIdMedicion = currentIdMedicion + 1;
+                // Actualizar el valor del contador
+                idMedicionElement.setText(Integer.toString(updatedIdMedicion));
+
+                // Guardar los cambios en el archivo XML
+                try (FileOutputStream fos = new FileOutputStream(filePath)) {
+                    XMLOutputter xmlOutputter = new XMLOutputter();
+                    xmlOutputter.output(document, fos);
+                }
+            }
+
+            return updatedIdMedicion;
+        }
+    }
+
     public static int getIdCounterFromXML(String filePath) throws IOException, JDOMException {
         try (FileInputStream fis = new FileInputStream(filePath); InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
             Document document = new SAXBuilder().build(isr);
@@ -415,6 +445,40 @@ public class XMLLoader extends ViewController {
             } else {
                 throw new RuntimeException("La etiqueta <idCounter> no está presente en el archivo XML.");
             }
+        }
+    }
+
+    public static void ensureIdMedicionExists(String filePath) {
+        try {
+            // Construir el documento XML desde el archivo existente
+            SAXBuilder saxBuilder = new SAXBuilder();
+            Document document;
+            File file = new File(filePath);
+            document = saxBuilder.build(file);
+
+            // Obtener el elemento raíz del documento
+            Element rootElement = document.getRootElement();
+
+            // Buscar la etiqueta <idCounter>
+            Element idCounterElement = rootElement.getChild("IdMedicionCounter");
+
+            if (idCounterElement == null) {
+                // Si la etiqueta <idCounter> no existe, crear una nueva y asignarle el valor predeterminado
+                Element newIdCounterElement = new Element("IdMedicionCounter");
+                newIdCounterElement.setText("1"); // Valor predeterminado
+                rootElement.addContent(newIdCounterElement);
+            }
+
+            // Guardar los cambios en el archivo XML
+            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+            try (FileWriter writer = new FileWriter(filePath)) {
+                xmlOutputter.output(document, writer);
+            }
+
+            System.out.println("Se ha actualizado el valor de <idMedicion> en el archivo XML.");
+
+        } catch (IOException | org.jdom2.JDOMException e) {
+            e.printStackTrace();
         }
     }
 
@@ -493,10 +557,29 @@ public class XMLLoader extends ViewController {
                 doc = new Document(new Element("Mediciones"));
             }
 
+            // Buscar la etiqueta <idCounter>
+            Element idMedicionElement = doc.getRootElement().getChild("IdMedicionCounter");
+            int updatedIdMedicion;
+            if (idMedicionElement == null) {
+                // Si la etiqueta <idCounter> no existe, crear una nueva con valor 1
+                idMedicionElement = new Element("IdMedicionCounter");
+                updatedIdMedicion = 1;
+                doc.getRootElement().addContent(idMedicionElement);
+            } else {
+                // Si la etiqueta <idCounter> existe, obtener el valor actual y aumentarlo en 1
+                int currentIdMedicion = Integer.parseInt(idMedicionElement.getText());
+                updatedIdMedicion = currentIdMedicion + 1;
+            }
+
+            // Actualizar el valor del contador
+            idMedicionElement.setText(Integer.toString(updatedIdMedicion));
+
             Element measurements = doc.getRootElement();
             // Agregar las nuevas mediciones
             for (Measurement measurement : measurementList) {
                 Element measurementElement = new Element("Medicion");
+                Element idMedi = new Element("IdMedicion");
+                idMedi.setText(String.valueOf(measurement.getIdMeasure()));
                 Element number = new Element("Numero");
                 number.setText(measurement.getCode());
                 Element medidaElement = new Element("Medida");
@@ -506,6 +589,7 @@ public class XMLLoader extends ViewController {
                 Element lecturaElement = new Element("Lectura");
                 lecturaElement.setText(Double.toString(measurement.getReading()));
 
+                measurementElement.addContent(idMedi);
                 measurementElement.addContent(number);
                 measurementElement.addContent(medidaElement);
                 measurementElement.addContent(referenciaElement);
@@ -537,13 +621,14 @@ public class XMLLoader extends ViewController {
         Element rootElement = document.getRootElement();
         List<Element> calibrationElements = rootElement.getChildren("Medicion");
         for (Element calibrationtElement : calibrationElements) {
+            int idMedi = Integer.parseInt(calibrationtElement.getChildText("IdMedicion"));
             String code = calibrationtElement.getChildText("Numero");
             double id = Double.parseDouble(calibrationtElement.getChildText("Medida"));
             double measurement = Double.parseDouble(calibrationtElement.getChildText("Referencia"));
             double reading = Double.parseDouble(calibrationtElement.getChildText("Lectura"));
 
             // Crea un objeto calibration y agrégalo a la lista
-            Measurement measurements = new Measurement(code, id, measurement, reading);
+            Measurement measurements = new Measurement(code, id, measurement, reading, idMedi);
             measurementList.add(measurements);
         }
         return measurementList;
@@ -555,24 +640,40 @@ public class XMLLoader extends ViewController {
             Document documento = new SAXBuilder().build(archivoXML);
             Element raiz = documento.getRootElement();
 
-            List<Element> elementosMedicion = raiz.getChildren("Medicion");
-            if (elementosMedicion.size() == list.size()) {
-                for (int i = 0; i < elementosMedicion.size(); i++) {
-                    Element elementoMedicion = elementosMedicion.get(i);
-                    String nuevoValorDeLectura = list.get(i);
+            ArrayList<Measurement> listM = loadFromMeasurement(filePath);
 
-                    Element elementoLectura = elementoMedicion.getChild("Lectura");
-                    elementoLectura.setText(nuevoValorDeLectura);
+            System.out.println("Esti es en el xml " + list);
+            List<Element> elementosMedicion = raiz.getChildren("Medicion");
+            if (list.size() <= elementosMedicion.size()) {
+                for (int i = 0; i <= list.size(); i++) {
+                    for (int j = 0; j <= listM.size(); j++) {
+                        Measurement m = listM.get(j);
+                        if (m.getIdMeasure() == Integer.parseInt(list.get(1))) {
+                            Element elementoMedicion = elementosMedicion.get(j);
+                            String nuevoValorDeLectura = list.get(0);
+
+                            Element elementoLectura = elementoMedicion.getChild("Lectura");
+                            elementoLectura.setText(nuevoValorDeLectura);
+                            break;
+                        }
+                    }
+
+                    break;
+
                 }
 
-                // Guardar el documento XML actualizado en el archivo
+//                 Guardar el documento XML actualizado en el archivo
                 XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
                 try (FileWriter writer = new FileWriter(filePath)) {
                     xmlOutput.output(documento, writer);
                     System.out.println("Valores de Lectura actualizados con éxito.");
                 }
+                list.clear();
+
             } else {
                 System.err.println("La cantidad de elementos en la lista no coincide con la cantidad de elementos en el XML.");
+                list.clear();
+
             }
         } catch (IOException | JDOMException e) {
             e.printStackTrace();

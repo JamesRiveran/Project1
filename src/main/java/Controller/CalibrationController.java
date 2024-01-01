@@ -150,7 +150,9 @@ public class CalibrationController extends Controller implements ActionListener,
     }
 
     public void saveMeasurement() {
-        int columna = 2;
+
+        int columna2 = 2;  // Columna 2
+        int columna3 = 3;  // Columna 3
         int columnaReference = 1;
         DefaultTableModel modelo = (DefaultTableModel) view.getTblMeasurement().getModel();
         int rowCount = modelo.getRowCount();
@@ -159,7 +161,7 @@ public class CalibrationController extends Controller implements ActionListener,
         double tolerance = 2;
         for (int fila = 0; fila < rowCount; fila++) {
 
-            Object valorCelda = modelo.getValueAt(fila, columna);
+            Object valorCelda = modelo.getValueAt(fila, columna2);
             Object valueReference = modelo.getValueAt(fila, columnaReference);
             String textoCelda = (valorCelda != null) ? valorCelda.toString() : "";
             Double integerObject = (double) valueReference;
@@ -167,13 +169,19 @@ public class CalibrationController extends Controller implements ActionListener,
 
             double validation = (double) reference + tolerance;
             double intTextoCelda = Double.parseDouble(textoCelda);
+
+            Object valorCelda3 = modelo.getValueAt(fila, columna3);
+            String textoCelda3 = (valorCelda3 != null) ? valorCelda3.toString() : "";
+
             if (intTextoCelda > validation) {
                 showMessage("Lectura fuera de rango, ingrese otra lectura", "error");
-                ColorCelda colorCelda = new ColorCelda(columna, tolerance, integerObject);
-                view.getTblMeasurement().getColumnModel().getColumn(columna).setCellRenderer(colorCelda);
+                ColorCelda colorCelda = new ColorCelda(columna2, tolerance, integerObject);
+                view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(colorCelda);
             } else {
 
                 datosColumna.add(textoCelda);
+                datosColumna.add(textoCelda3);
+                System.out.println(datosColumna);
                 XMLLoader.updateMeasurement(filePath, datosColumna);
                 showMessage("Guardados con exito", "success");
             }
@@ -212,12 +220,17 @@ public class CalibrationController extends Controller implements ActionListener,
         return idCounter;
     }
 
+    private int idMedicion() throws JDOMException, IOException {
+        int idMedicion = XMLLoader.getIdMedicionFromXML(filePath);
+        return idMedicion;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
 
-    public List<Measurement> generateMeasurements(int numMeasurements, double maxValue) {
+    public List<Measurement> generateMeasurements(int numMeasurements, double maxValue) throws JDOMException, IOException {
         if (numMeasurements <= 0 || maxValue <= 0) {
             throw new IllegalArgumentException("La cantidad de mediciones y el valor máximo deben ser mayores que cero.");
         }
@@ -225,13 +238,15 @@ public class CalibrationController extends Controller implements ActionListener,
         List<Measurement> measurements = new ArrayList<>();
         double step = maxValue / numMeasurements;
         double currentReference = 0.0;
-
+        int newIdMedicion = 0;
         for (int i = 1; i <= numMeasurements; i++) {
             double medida = i;
             double referencia = currentReference;
             double lectura = 0.0; // Inicializar lectura como 0
+            newIdMedicion = idMedicion();
+            System.out.println(newIdMedicion);
 
-            Measurement measurement = new Measurement(view.getCalibrationTxtNumber().getText(), medida, referencia, lectura);
+            Measurement measurement = new Measurement(view.getCalibrationTxtNumber().getText(), medida, referencia, lectura, newIdMedicion);
             measurements.add(measurement);
 
             // Actualizar la referencia para la siguiente medición
@@ -289,7 +304,7 @@ public class CalibrationController extends Controller implements ActionListener,
             ArrayList<Measurement> loadedMeasurements = XMLLoader.loadFromMeasurement(filePath);
             for (Measurement measurement : loadedMeasurements) {
                 if (Integer.parseInt(measurement.getCode()) == Integer.parseInt(getNumber())) {
-                    Object[] rowData = {measurement.getId(), measurement.getReference(), measurement.getReading()};
+                    Object[] rowData = {measurement.getId(), measurement.getReference(), measurement.getReading(), measurement.getIdMeasure()};
                     tableModel.addRow(rowData);
                 }
             }

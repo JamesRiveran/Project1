@@ -12,23 +12,34 @@ public class Measurement {
 
     private double id, reference, reading;
     private String code;
+    private int idMeasure;
 
     public Measurement() {
         this.code = "";
         this.id = 0;
         this.reference = 0;
         this.reading = 0;
+        this.idMeasure = 0;
     }
 
-    public Measurement(String code, double id, double reference, double reading) {
+    public Measurement(String code, double id, double reference, double reading, int idMeasure) {
         this.code = code;
         this.id = id;
         this.reference = reference;
         this.reading = reading;
+        this.idMeasure = idMeasure;
+    }
+
+    public void setIdMeasure(int idMeasure) {
+        this.idMeasure = idMeasure;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public int getIdMeasure() {
+        return idMeasure;
     }
 
     public String getCode() {
@@ -61,7 +72,9 @@ public class Measurement {
 
     @Override
     public String toString() {
-        return "Measurement{" + "numero=" + code + ", id=" + id + ", reference=" + reference + ", reading=" + reading + '}';
+        return "Measurement{" + "id=" + id + ", reference=" + reference + ", reading=" + reading + ", code=" + code + ", idMeasure=" + idMeasure + '}';
     }
+
+  
 
 }

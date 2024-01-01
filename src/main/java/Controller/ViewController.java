@@ -75,10 +75,11 @@ public class ViewController extends Controller implements ActionListener {
         view.getBtnSaveMeasurement().addActionListener(e -> calibrationController.saveMeasurement());
         view.getBtnCleanMeasurement().addActionListener(e -> calibrationController.cleanMeasurement());
         XMLLoader.ensureIdCounterExists(filePath);
+        XMLLoader.ensureIdMedicionExists(filePath);
         int idCounter = idCounter();
         view.getCalibrationTxtNumber().setText(String.valueOf(idCounter));
         view.getCalibrationTxtNumber().setEnabled(false);
-        view.getCalibrationBtnDelete().addActionListener(e->calibrationController.delete());
+        view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
 
     }
 
@@ -303,14 +304,14 @@ public class ViewController extends Controller implements ActionListener {
         view.getTxtName().setText("");
         view.getTxtUnit().setText("");
     }
-    
-    public void close(){
+
+    public void close() {
         String botones[] = {"Cerrar", "Cancelar"};
-        int eleccion = JOptionPane.showOptionDialog(view,"¿Desea cerrar la aplicación?","Cerrar",0,0,null,botones,this);
-        if(eleccion==JOptionPane.YES_OPTION){
+        int eleccion = JOptionPane.showOptionDialog(view, "¿Desea cerrar la aplicación?", "Cerrar", 0, 0, null, botones, this);
+        if (eleccion == JOptionPane.YES_OPTION) {
             System.exit(0);
-        }else if(eleccion==JOptionPane.NO_OPTION){
-            
+        } else if (eleccion == JOptionPane.NO_OPTION) {
+
         }
     }
 }
