@@ -61,7 +61,7 @@ public class Measurement {
 
     @Override
     public String toString() {
-        return "Measurement{" + "id=" + id + ", reference=" + reference + ", reading=" + reading + '}';
+        return "Measurement{" + "numero=" + code + ", id=" + id + ", reference=" + reference + ", reading=" + reading + '}';
     }
 
 }

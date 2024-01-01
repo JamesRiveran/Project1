@@ -556,7 +556,6 @@ public class XMLLoader extends ViewController {
             Element raiz = documento.getRootElement();
 
             List<Element> elementosMedicion = raiz.getChildren("Medicion");
-
             if (elementosMedicion.size() == list.size()) {
                 for (int i = 0; i < elementosMedicion.size(); i++) {
                     Element elementoMedicion = elementosMedicion.get(i);
