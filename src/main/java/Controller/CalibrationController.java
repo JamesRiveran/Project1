@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -177,12 +178,13 @@ public class CalibrationController extends Controller implements ActionListener,
                 showMessage("Lectura fuera de rango, ingrese otra lectura", "error");
                 ColorCelda colorCelda = new ColorCelda(columna2, tolerance, integerObject);
                 view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(colorCelda);
+                break;
             } else {
-
+                DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
                 datosColumna.add(textoCelda);
                 datosColumna.add(textoCelda3);
-                System.out.println(datosColumna);
                 XMLLoader.updateMeasurement(filePath, datosColumna);
+                view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
                 showMessage("Guardados con exito", "success");
             }
 
@@ -244,7 +246,6 @@ public class CalibrationController extends Controller implements ActionListener,
             double referencia = currentReference;
             double lectura = 0.0; // Inicializar lectura como 0
             newIdMedicion = idMedicion();
-            System.out.println(newIdMedicion);
 
             Measurement measurement = new Measurement(view.getCalibrationTxtNumber().getText(), medida, referencia, lectura, newIdMedicion);
             measurements.add(measurement);

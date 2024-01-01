@@ -651,7 +651,6 @@ public class XMLLoader extends ViewController {
                         if (m.getIdMeasure() == Integer.parseInt(list.get(1))) {
                             Element elementoMedicion = elementosMedicion.get(j);
                             String nuevoValorDeLectura = list.get(0);
-
                             Element elementoLectura = elementoMedicion.getChild("Lectura");
                             elementoLectura.setText(nuevoValorDeLectura);
                             break;
