@@ -15,31 +15,32 @@ import javax.swing.table.TableCellRenderer;
  * @author james
  */
 public class ColorCelda extends DefaultTableCellRenderer {
+
     private int columnIndex; // Índice de la columna que se va a personalizar
     private double tolerance; // Tolerancia para la comparación
-     private double reference;
+    private double reference;
+    private int rows;
 
-    public ColorCelda(int columnIndex, double tolerance, double reference) {
+    public ColorCelda(int columnIndex, int rows, double tolerance, double reference) {
         this.columnIndex = columnIndex;
         this.tolerance = tolerance;
         this.reference = reference;
+        this.rows = rows;
     }
-
-    
-
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
         Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
-        if (col == columnIndex && value != null) {
+        if (col == columnIndex && row == rows) {
             double cellValue = Double.parseDouble(value.toString());
             double validationValue = reference + tolerance;
+            double validationFew = reference - tolerance;
 
-            if (cellValue > validationValue) {
+            if (cellValue > validationValue || cellValue < validationFew) {
                 component.setBackground(Color.RED);
                 component.setForeground(Color.WHITE);
-            } 
+            }
         } else {
             component.setBackground(Color.WHITE);
             component.setForeground(Color.BLACK);
