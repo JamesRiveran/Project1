@@ -88,7 +88,7 @@ public class ViewController extends Controller implements ActionListener {
         return idCounter;
     }
 
-    public void showMessage(String errorMessage, String info) {
+    public static void showMessage(String errorMessage, String info) {
         if (info == "error") {
             JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
         } else if (info == "success") {
@@ -125,18 +125,20 @@ public class ViewController extends Controller implements ActionListener {
                 showMessage("Debe ingresar la unidad de medida del instrumento", "error");
             } else {
                 try {
+                    String newName = view.getTxtName().getText();
                     InstrumentType newInstrumentForSave = new InstrumentType(
                             view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
                     listInstrument.getList().add(newInstrumentForSave);
                     XMLLoader.saveToXML(filePath, listInstrument.getList());
                     listInstrument.getList().clear();
                     updateTable();
+                    // Actualizar <Instrumento>
+                    XMLLoader.updateInstrument(filePath, oldName,  newName);
                     updateComboBoxModel();
-                    showMessage("Se guardo exitosamente", "success");
+                    showMessage("Se guardó exitosamente", "success");
                 } catch (Exception ex) {
                     showMessage("Error al guardar en el archivo XML: " + ex.getMessage(), "error");
                 }
-
             }
         } catch (NullPointerException ex) {
             showMessage(ex.getMessage(), "error");
@@ -228,19 +230,20 @@ public class ViewController extends Controller implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         clickTable();
     }
+    public String oldName="";
 
     public void editRegister(MouseEvent evt) {
         int rowSelected = view.getTblListInstruments().getSelectedRow();
-
+        
         if (rowSelected != -1) {
             String codeName = view.getTblListInstruments().getValueAt(rowSelected, 0).toString();
             String instrumentName = view.getTblListInstruments().getValueAt(rowSelected, 1).toString();
             String unitName = view.getTblListInstruments().getValueAt(rowSelected, 2).toString();
-
+           
             view.getTxtCode().setText(codeName);
             view.getTxtName().setText(instrumentName);
             view.getTxtUnit().setText(unitName);
-
+            oldName=instrumentName;
             view.getTxtCode().setEnabled(false);
             view.getBtnDelete().setEnabled(true);
         }
