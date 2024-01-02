@@ -187,7 +187,6 @@ public class XMLLoader extends ViewController {
         return null;
     }
 //Para el modulo 2
-
     public static void addToXML(String filePath, List<InstrumentModulo2> instrumentList) {
         if (instrumentList == null || instrumentList.isEmpty()) {
             throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacía");

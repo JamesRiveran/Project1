@@ -9,13 +9,14 @@ package Model;
  * @author 50686
  */
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
-
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class XMLCreator {
 
@@ -37,13 +38,13 @@ public class XMLCreator {
         // Crear un formato para la salida XML (puedes ajustar la indentación y otros detalles)
         Format format = Format.getPrettyFormat();
 
-        // Crear un escritor para escribir el documento en un archivo XML
-        try (FileWriter fileWriter = new FileWriter(NOMBRE_ARCHIVO)) {
+        // Crear un escritor para escribir el documento en un archivo XML con la codificación UTF-8
+        try (Writer writer = new OutputStreamWriter(new FileOutputStream(NOMBRE_ARCHIVO), "UTF-8")) {
             // Crear un objeto XMLOutputter
             XMLOutputter xmlOutputter = new XMLOutputter(format);
 
             // Escribir el documento en el archivo XML
-            xmlOutputter.output(document, fileWriter);
+            xmlOutputter.output(document, writer);
 
             System.out.println("Archivo XML '" + NOMBRE_ARCHIVO + "' creado con éxito.");
         } catch (IOException e) {
