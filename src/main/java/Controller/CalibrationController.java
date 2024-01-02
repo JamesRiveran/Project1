@@ -159,6 +159,8 @@ public class CalibrationController extends Controller implements ActionListener,
         int rowCount = modelo.getRowCount();
         List<String> datosColumna = new ArrayList<>();
 
+        
+        //Cambiar a la tolerancia del instrumento que esta puesto
         double tolerance = 2;
         for (int fila = 0; fila < rowCount; fila++) {
 
@@ -174,6 +176,7 @@ public class CalibrationController extends Controller implements ActionListener,
             Object valorCelda3 = modelo.getValueAt(fila, columna3);
             String textoCelda3 = (valorCelda3 != null) ? valorCelda3.toString() : "";
 
+            //Hacer la validacion donde se sume y otra donde se reste
             if (intTextoCelda > validation) {
                 showMessage("Lectura fuera de rango, ingrese otra lectura", "error");
                 ColorCelda colorCelda = new ColorCelda(columna2, tolerance, integerObject);
@@ -198,7 +201,7 @@ public class CalibrationController extends Controller implements ActionListener,
         int rowCount = modelo.getRowCount();
 
         for (int fila = 0; fila < rowCount; fila++) {
-            modelo.setValueAt("", fila, columna); // Establece un valor vacío en la celda
+            modelo.setValueAt(0.0, fila, columna); // Establece un valor vacío en la celda
         }
     }
 
@@ -397,6 +400,8 @@ public class CalibrationController extends Controller implements ActionListener,
             Object[] rowData = {id, date, measurement};
             tableModel.addRow(rowData);
         }
+        DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
+        clearTable(tableModels);
 
     }
 
