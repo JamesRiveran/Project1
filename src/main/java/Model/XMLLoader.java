@@ -52,7 +52,7 @@ public class XMLLoader extends ViewController {
             String name = instrumentElement.getChildText("Nombre");
             String unit = instrumentElement.getChildText("Unidad");
 
-            // Crea un objeto InstrumentType y agr√©galo a la lista
+            // Crea un objeto InstrumentType y agrÈgalo a la lista
             InstrumentType instrumentType = new InstrumentType(code, unit, name);
 
             instrumentList.add(instrumentType);
@@ -63,7 +63,7 @@ public class XMLLoader extends ViewController {
 
     public static void saveToXML(String filePath, List<InstrumentType> instrumentList) {
         if (instrumentList == null || instrumentList.isEmpty()) {
-            throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vac√≠a");
+            throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacÌa");
         }
 
         try {
@@ -88,7 +88,7 @@ public class XMLLoader extends ViewController {
                 Element existingInstrument = findInstrumentByCode(instruments, instrument.getCode());
 
                 if (existingInstrument == null) {
-                    // Si no existe, crear uno nuevo y agregarlo al elemento ra√≠z
+                    // Si no existe, crear uno nuevo y agregarlo al elemento raÌz
                     Element typeInstrument = new Element("Tipo_de_instrumento");
 
                     Element code = new Element("Codigo");
@@ -104,7 +104,7 @@ public class XMLLoader extends ViewController {
 
                     instruments.addContent(typeInstrument);
                 } else {
-                    // Si ya existe, actualizar sus datos seg√∫n sea necesario
+                    // Si ya existe, actualizar sus datos seg˙n sea necesario
                     existingInstrument.getChild("Nombre").setText(instrument.getName());
                     existingInstrument.getChild("Unidad").setText(instrument.getUnit());
                 }
@@ -114,7 +114,6 @@ public class XMLLoader extends ViewController {
             xml.setFormat(Format.getPrettyFormat());
 
             try (FileOutputStream fos = new FileOutputStream(filePath); OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8); BufferedWriter writer = new BufferedWriter(osw)) {
-
                 xml.output(doc, writer);
             }
         } catch (IOException | JDOMException ex) {
@@ -132,12 +131,12 @@ public class XMLLoader extends ViewController {
             for (Element instrumentElement : instrumentElements) {
                 String code = instrumentElement.getChildText("Codigo");
 
-                // Verifica si el c√≥digo coincide con el que se quiere eliminar
+                // Verifica si el cÛdigo coincide con el que se quiere eliminar
                 if (code.equals(instrumentToDelete.getCode())) {
                     // Elimina el elemento del XML
                     instrumentElement.getParentElement().removeContent(instrumentElement);
                     ViewController.conection(false);
-                    break;  // Puedes salir del bucle si se elimin√≥ el elemento
+                    break;  // Puedes salir del bucle si se eliminÛ el elemento
                 }
             }
         } else {
@@ -158,12 +157,12 @@ public class XMLLoader extends ViewController {
             } else {
                 for (Element instrumentElement : instrumentElements) {
                     String code = instrumentElement.getChildText("Codigo");
-                    // Verifica si el c√≥digo coincide con el que se quiere eliminar
+                    // Verifica si el cÛdigo coincide con el que se quiere eliminar
                     if (code.equals(instrumentToDelete.getCode())) {
                         // Elimina el elemento del XML
                         instrumentElement.getParentElement().removeContent(instrumentElement);
                         ViewController.conection(false);
-                        break;  // Puedes salir del bucle si se elimin√≥ el elemento
+                        break;  // Puedes salir del bucle si se eliminÛ el elemento
                     }
                 }
             }
@@ -181,9 +180,9 @@ public class XMLLoader extends ViewController {
         }
     }
 
-    //Validacion para comprobar si el tipo de instrumento ya existe, se actualizar√°n sus datos en lugar de crear uno nuevo.
+    //Validacion para comprobar si el tipo de instrumento ya existe, se actualizar·n sus datos en lugar de crear uno nuevo.
     private static Element findInstrumentByCode(Element instruments, String code) {
-        // Buscar un elemento por su c√≥digo dentro del elemento ra√≠z
+        // Buscar un elemento por su cÛdigo dentro del elemento raÌz
         for (Element typeInstrument : instruments.getChildren("Tipo_de_instrumento")) {
             if (typeInstrument.getChildText("Codigo").equals(code)) {
                 return typeInstrument;
@@ -195,7 +194,7 @@ public class XMLLoader extends ViewController {
 
     public static void addToXML(String filePath, List<InstrumentModulo2> instrumentList) {
         if (instrumentList == null || instrumentList.isEmpty()) {
-            throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vac√≠a");
+            throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacÌa");
         }
 
         try {
@@ -220,7 +219,7 @@ public class XMLLoader extends ViewController {
                 Element existingInstrument = findInstrumentBySerie(instruments, instrument.getSerie());
 
                 if (existingInstrument == null) {
-                    // Si no existe, crear uno nuevo y agregarlo al elemento ra√≠z
+                    // Si no existe, crear uno nuevo y agregarlo al elemento raÌz
                     Element typeInstrument = new Element("Instrumento");
                     Element serie = new Element("Serie");
                     serie.setText(instrument.getSerie());
@@ -243,7 +242,7 @@ public class XMLLoader extends ViewController {
                     typeInstrument.addContent(type);
                     instruments.addContent(typeInstrument);
                 } else {
-                    // Si ya existe, actualizar sus datos seg√∫n sea necesario
+                    // Si ya existe, actualizar sus datos seg˙n sea necesario
                     existingInstrument.getChild("Serie").setText(instrument.getSerie());
                     existingInstrument.getChild("Minimo").setText(instrument.getMini());
                     existingInstrument.getChild("Tolerancia").setText(instrument.getTole());
@@ -279,7 +278,7 @@ public class XMLLoader extends ViewController {
                 // Obtener la lista de todos los elementos <Instrumento>
                 List<Element> instrumentos = doc.getRootElement().getChildren("Instrumento");
 
-                // Iterar a trav√©s de los elementos <Instrumento> y actualizar <Tipo> si coincide con el nombre
+                // Iterar a travÈs de los elementos <Instrumento> y actualizar <Tipo> si coincide con el nombre
                 for (Element instrumento : instrumentos) {
                     Element tipoElement = instrumento.getChild("Tipo");
                     String tipoValue = tipoElement.getText();
@@ -304,7 +303,7 @@ public class XMLLoader extends ViewController {
 
     public static void saveToXMLCalibration(String filePath, List<Calibration> calibrationList) {
         if (calibrationList == null || calibrationList.isEmpty()) {
-            throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vac√≠a");
+            throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacÌa");
         }
 
         try {
@@ -382,11 +381,11 @@ public class XMLLoader extends ViewController {
         for (Element instrumentElement : instrumentElements) {
             String code = instrumentElement.getChildText("Serie");
 
-            // Verifica si el c√≥digo coincide con el que se quiere eliminar
+            // Verifica si el cÛdigo coincide con el que se quiere eliminar
             if (code.equals(instrumentToDelete.getSerie())) {
                 // Elimina el elemento del XML
                 instrumentElement.getParentElement().removeContent(instrumentElement);
-                break;  // Puedes salir del bucle si se elimin√≥ el elemento
+                break;  // Puedes salir del bucle si se eliminÛ el elemento
             }
         }
 
@@ -404,9 +403,9 @@ public class XMLLoader extends ViewController {
         }
     }
 
-    //Validacion para comprobar si el tipo de instrumento ya existe, se actualizar√°n sus datos en lugar de crear uno nuevo.
+    //Validacion para comprobar si el tipo de instrumento ya existe, se actualizar·n sus datos en lugar de crear uno nuevo.
     private static Element findInstrumentBySerie(Element instruments, String code) {
-        // Buscar un elemento por su c√≥digo dentro del elemento ra√≠z
+        // Buscar un elemento por su cÛdigo dentro del elemento raÌz
         for (Element typeInstrument : instruments.getChildren("Instrumento")) {
             if (typeInstrument.getChildText("Serie").equals(code)) {
                 return typeInstrument;
@@ -418,7 +417,7 @@ public class XMLLoader extends ViewController {
     public static ArrayList<InstrumentModulo2> loadFromXMLS(String filePath) throws FileNotFoundException, IOException, JDOMException {
         ArrayList<InstrumentModulo2> instruments = new ArrayList<>();
 
-        SAXBuilder saxBuilder = new SAXBuilder(); // Puedes manejar estas excepciones de manera m√°s espec√≠fica seg√∫n tus necesidades.
+        SAXBuilder saxBuilder = new SAXBuilder(); // Puedes manejar estas excepciones de manera m·s especÌfica seg˙n tus necesidades.
         Document document;
         try (FileInputStream fis = new FileInputStream(filePath); InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
             document = saxBuilder.build(isr);
@@ -433,7 +432,7 @@ public class XMLLoader extends ViewController {
             String maxi = instrumentElement.getChildText("Maximo");
             String type = instrumentElement.getChildText("Tipo");
 
-            // Crea un objeto InstrumentType y agr√©galo a la lista
+            // Crea un objeto InstrumentType y agrÈgalo a la lista
             InstrumentModulo2 instrumentModulo2 = new InstrumentModulo2(serie, min, tole, descrip, maxi, type);
             instruments.add(instrumentModulo2);
         }
@@ -481,7 +480,7 @@ public class XMLLoader extends ViewController {
                 String idCounterText = idCounterElement.getTextTrim();
                 return Integer.parseInt(idCounterText);
             } else {
-                throw new RuntimeException("La etiqueta <idCounter> no est√° presente en el archivo XML.");
+                throw new RuntimeException("La etiqueta <idCounter> no est· presente en el archivo XML.");
             }
         }
     }
@@ -494,7 +493,7 @@ public class XMLLoader extends ViewController {
             File file = new File(filePath);
             document = saxBuilder.build(file);
 
-            // Obtener el elemento ra√≠z del documento
+            // Obtener el elemento raÌz del documento
             Element rootElement = document.getRootElement();
 
             // Buscar la etiqueta <idCounter>
@@ -528,7 +527,7 @@ public class XMLLoader extends ViewController {
             File file = new File(filePath);
             document = saxBuilder.build(file);
 
-            // Obtener el elemento ra√≠z del documento
+            // Obtener el elemento raÌz del documento
             Element rootElement = document.getRootElement();
 
             // Buscar la etiqueta <idCounter>
@@ -569,7 +568,7 @@ public class XMLLoader extends ViewController {
             int id = Integer.parseInt(calibrationtElement.getChildText("Numero"));
             int measurement = Integer.parseInt(calibrationtElement.getChildText("Mediciones"));
 
-            // Crea un objeto calibration y agr√©galo a la lista
+            // Crea un objeto calibration y agrÈgalo a la lista
             Calibration calibration = new Calibration(number, id, date, measurement);
             calibrationList.add(calibration);
         }
@@ -578,7 +577,7 @@ public class XMLLoader extends ViewController {
 
     public static void saveToXMLMeasurement(String filePath, List<Measurement> measurementList) {
         if (measurementList == null || measurementList.isEmpty()) {
-            throw new IllegalArgumentException("La lista de mediciones no puede ser nula ni estar vac√≠a");
+            throw new IllegalArgumentException("La lista de mediciones no puede ser nula ni estar vacÌa");
         }
 
         try {
@@ -665,7 +664,7 @@ public class XMLLoader extends ViewController {
             double measurement = Double.parseDouble(calibrationtElement.getChildText("Referencia"));
             double reading = Double.parseDouble(calibrationtElement.getChildText("Lectura"));
 
-            // Crea un objeto calibration y agr√©galo a la lista
+            // Crea un objeto calibration y agrÈgalo a la lista
             Measurement measurements = new Measurement(code, id, measurement, reading, idMedi);
             measurementList.add(measurements);
         }
@@ -703,7 +702,7 @@ public class XMLLoader extends ViewController {
                 XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
                 try (FileWriter writer = new FileWriter(filePath)) {
                     xmlOutput.output(documento, writer);
-                    System.out.println("Valores de Lectura actualizados con √©xito.");
+                    System.out.println("Valores de Lectura actualizados con Èxito.");
                 }
                 list.clear();
 
@@ -726,7 +725,7 @@ public class XMLLoader extends ViewController {
             Element rootElement = document.getRootElement();
             List<Element> instrumentElements = rootElement.getChildren("Medicion");
 
-            // Almacena las mediciones que se eliminar√°n
+            // Almacena las mediciones que se eliminar·n
             List<Element> elementsToRemove = new ArrayList<>();
 
             for (Element instrumentElement : instrumentElements) {
@@ -737,7 +736,7 @@ public class XMLLoader extends ViewController {
                 }
             }
 
-            // Elimina las mediciones despu√©s de completar la iteraci√≥n
+            // Elimina las mediciones despuÈs de completar la iteraciÛn
             instrumentElements.removeAll(elementsToRemove);
 
             XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
@@ -763,7 +762,7 @@ public class XMLLoader extends ViewController {
                 if (code.equals(serie)) {
 //                // Elimina el elemento del XML
                     instrumentElement.getParentElement().removeContent(instrumentElement);
-//                break;  // Puedes salir del bucle si se elimin√≥ el elemento
+//                break;  // Puedes salir del bucle si se eliminÛ el elemento
                 }
             }
 
@@ -773,7 +772,7 @@ public class XMLLoader extends ViewController {
             xmlOutputter.output(document, writer);
             writer.close();
 //
-            System.out.println("Registros eliminados con √©xito.");
+            System.out.println("Registros eliminados con Èxito.");
         } catch (IOException | JDOMException e) {
             e.printStackTrace();
         }
@@ -787,19 +786,19 @@ public class XMLLoader extends ViewController {
             SAXBuilder saxBuilder = new SAXBuilder();
             Document document = saxBuilder.build(new File(filePath));
 
-            // Obtener el elemento ra√≠z (en este caso, <Calibraciones>)
+            // Obtener el elemento raÌz (en este caso, <Calibraciones>)
             Element rootElement = document.getRootElement();
 
             // Obtener todas las calibraciones
             List<Element> calibraciones = rootElement.getChildren("Calibracion");
 
-            // Iterar a trav√©s de las calibraciones y buscar las que coincidan con el n√∫mero
+            // Iterar a travÈs de las calibraciones y buscar las que coincidan con el n˙mero
             for (Element calibracion : calibraciones) {
                 Element serieElement = calibracion.getChild("Serie");
                 String serie = serieElement.getText();
 
                 if (serie.equals(numero)) {
-                    // Agregar la calibraci√≥n a la lista de calibraciones encontradas
+                    // Agregar la calibraciÛn a la lista de calibraciones encontradas
                     calibracionesEncontradas.add(calibracion);
                 }
             }

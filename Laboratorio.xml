@@ -1,40 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Laboratorio>
-
   <idCounter>1</idCounter>
   <IdMedicionCounter>1</IdMedicionCounter>
-  <Tipo_de_instrumento>
-    <Codigo>TER</Codigo>
-    <Nombre>Termometro</Nombre>
-    <Unidad>Grados</Unidad>
-  </Tipo_de_instrumento>
-  <Instrumento>
-    <Serie>1</Serie>
-    <Minimo>0</Minimo>
-    <Tolerancia>0</Tolerancia>
-    <Descripcion>ds</Descripcion>
-    <Maximo>3</Maximo>
-    <Tipo>Termometro</Tipo>
-  </Instrumento>
-  <Instrumento>
-    <Serie>2</Serie>
-    <Minimo>0</Minimo>
-    <Tolerancia>0</Tolerancia>
-    <Descripcion>s</Descripcion>
-    <Maximo>3</Maximo>
-    <Tipo>Termometro</Tipo>
-  </Instrumento>
-  <Tipo_de_instrumento>
-    <Codigo>CRO</Codigo>
-    <Nombre>Crono</Nombre>
-    <Unidad>Tiempo</Unidad>
-  </Tipo_de_instrumento>
-  <Instrumento>
-    <Serie>222</Serie>
-    <Minimo>0</Minimo>
-    <Tolerancia>0</Tolerancia>
-    <Descripcion>s</Descripcion>
-    <Maximo>3</Maximo>
-    <Tipo>Crono</Tipo>
-  </Instrumento>
 </Laboratorio>
