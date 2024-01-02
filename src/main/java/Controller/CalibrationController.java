@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -178,12 +179,22 @@ public class CalibrationController extends Controller implements ActionListener,
             String textoCelda3 = (valorCelda3 != null) ? valorCelda3.toString() : "";
 
             if (intTextoCelda > validation || intTextoCelda < validationFew) {
-
                 showMessage("Lectura fuera de rango, ingrese otra lectura", "error");
-                ColorCelda colorCelda = new ColorCelda(columna2, tolerance, integerObject);
-                view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(colorCelda);
-                break;
 
+                final int finalFila = fila;
+     
+
+                final ColorCelda colorCelda = new ColorCelda(columna2, finalFila, tolerance, integerObject);
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(colorCelda);
+                        modelo.fireTableCellUpdated(finalFila, columna2);
+                    }
+                });
+
+                break;
             } else {
                 DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
                 datosColumna.add(textoCelda);

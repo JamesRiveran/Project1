@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Laboratorio>
+
   <idCounter>1</idCounter>
   <IdMedicionCounter>1</IdMedicionCounter>
   <Tipo_de_instrumento>
