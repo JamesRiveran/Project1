@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -260,6 +261,43 @@ public class XMLLoader extends ViewController {
                 xml.output(doc, writer);
             }
         } catch (IOException | JDOMException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void updateInstrument(String filePath, String name, String newName) {
+        try {
+            Document doc;
+
+            // Verificar si el archivo ya existe
+            File file = new File(filePath);
+            if (file.exists()) {
+                // Si el archivo existe, cargar el contenido existente
+                SAXBuilder saxBuilder = new SAXBuilder();
+                doc = saxBuilder.build(file);
+
+                // Obtener la lista de todos los elementos <Instrumento>
+                List<Element> instrumentos = doc.getRootElement().getChildren("Instrumento");
+
+                // Iterar a través de los elementos <Instrumento> y actualizar <Tipo> si coincide con el nombre
+                for (Element instrumento : instrumentos) {
+                    Element tipoElement = instrumento.getChild("Tipo");
+                    String tipoValue = tipoElement.getText();
+
+                    if (tipoValue.equals(name)) {
+                        tipoElement.setText(newName);
+                    }
+                }
+                // Guardar los cambios en el archivo
+                XMLOutputter xmlOutput = new XMLOutputter();
+                xmlOutput.setFormat(Format.getPrettyFormat());
+                FileWriter fileWriter = new FileWriter(filePath);
+                xmlOutput.output(doc, fileWriter);
+                fileWriter.close();
+            } else {
+                ViewController.showMessage("El archivo no existe.", "error");
+            }
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

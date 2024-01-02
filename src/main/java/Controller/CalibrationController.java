@@ -177,7 +177,6 @@ public class CalibrationController extends Controller implements ActionListener,
             Object valorCelda3 = modelo.getValueAt(fila, columna3);
             String textoCelda3 = (valorCelda3 != null) ? valorCelda3.toString() : "";
 
-            //Hacer la validacion donde se sume y otra donde se reste
             if (intTextoCelda > validation || intTextoCelda < validationFew) {
 
                 showMessage("Lectura fuera de rango, ingrese otra lectura", "error");
@@ -207,7 +206,7 @@ public class CalibrationController extends Controller implements ActionListener,
             modelo.setValueAt(0.0, fila, columna); // Establece un valor vacío en la celda
         }
     }
-
+    //
     public void showMessage(String errorMessage, String info) {
         if (info == "error") {
             JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
