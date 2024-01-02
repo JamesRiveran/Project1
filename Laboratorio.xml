@@ -16,6 +16,7 @@
     <Tipo>Termometro</Tipo>
   </Instrumento>
   <Calibracion>
+
     <Serie>12231</Serie>
     <Fecha>2024/01/01</Fecha>
     <Numero>1</Numero>
@@ -32,8 +33,10 @@
     <IdMedicion>3</IdMedicion>
     <Numero>1</Numero>
     <Medida>2.0</Medida>
+
     <Referencia>18.0</Referencia>
     <Lectura>18</Lectura>
+
   </Medicion>
   <Medicion>
     <IdMedicion>4</IdMedicion>

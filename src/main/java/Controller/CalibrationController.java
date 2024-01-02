@@ -182,7 +182,6 @@ public class CalibrationController extends Controller implements ActionListener,
                 showMessage("Lectura fuera de rango, ingrese otra lectura", "error");
 
                 final int finalFila = fila;
-     
 
                 final ColorCelda colorCelda = new ColorCelda(columna2, finalFila, tolerance, integerObject);
 
@@ -201,7 +200,11 @@ public class CalibrationController extends Controller implements ActionListener,
                 datosColumna.add(textoCelda3);
                 XMLLoader.updateMeasurement(filePath, datosColumna);
                 view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
-                
+
+                if ((rowCount-1) == fila) {
+                    showMessage("Guardados con exito", "success");
+                }
+
             }
 
         }
@@ -220,6 +223,7 @@ public class CalibrationController extends Controller implements ActionListener,
             modelo.setValueAt(0.0, fila, columna); // Establece un valor vacío en la celda
         }
     }
+
     //
     public void showMessage(String errorMessage, String info) {
         if (info == "error") {
