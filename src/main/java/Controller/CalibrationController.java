@@ -206,7 +206,7 @@ public class CalibrationController extends Controller implements ActionListener,
             modelo.setValueAt(0.0, fila, columna); // Establece un valor vacío en la celda
         }
     }
-
+    //
     public void showMessage(String errorMessage, String info) {
         if (info == "error") {
             JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
