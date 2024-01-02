@@ -44,7 +44,7 @@ public class IntrumentsController extends Controller implements ActionListener {
         clickTable();
         updateTable();
         this.view.setIntrumentsController(this);
-        
+
     }
 
     public void setInstruSelectionListener(InstruSelectionListener listener) {
@@ -59,6 +59,7 @@ public class IntrumentsController extends Controller implements ActionListener {
 
         }
     }
+
     @Override
     public void save() {
 
@@ -130,28 +131,27 @@ public class IntrumentsController extends Controller implements ActionListener {
 
     @Override
     public void delete() {
-        try{
-        InstrumentModulo2 instrumentToDelete = new InstrumentModulo2(
-                view.getTxtSerie().getText(),
-                view.getTxtMini().getText(),
-                view.getTxtTole().getText(),
-                view.getTxtDescri().getText(),
-                view.getTxtMaxi().getText(),
-                view.getCmbType().getSelectedItem().toString());
-        
+        try {
+            InstrumentModulo2 instrumentToDelete = new InstrumentModulo2(
+                    view.getTxtSerie().getText(),
+                    view.getTxtMini().getText(),
+                    view.getTxtTole().getText(),
+                    view.getTxtDescri().getText(),
+                    view.getTxtMaxi().getText(),
+                    view.getCmbType().getSelectedItem().toString());
+
             List<Element> calibracionesEncontradas = XMLLoader.findCalibrationsByNumber(filePath, instrumentToDelete.getSerie());
             DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
             tableModel.setRowCount(0);
 
-            if(calibracionesEncontradas.isEmpty()){
+            if (calibracionesEncontradas.isEmpty()) {
                 XMLLoader.deleteInstrumentsFromXML(filePath, instrumentToDelete);
                 showMessage("Se borro exitosamente", "success");
                 clean();
                 updateTable();
-            }else{
+            } else {
                 showMessage("Error no se puede eliminar porque el instrumento tiene calibraciones registradas", "error");
             }
-
 
         } catch (JDOMException | IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -222,7 +222,7 @@ public class IntrumentsController extends Controller implements ActionListener {
             view.getBtnDeleteInstru().setEnabled(true);
             if (instruSelectionListener != null) {
 
-                instruSelectionListener.onInstruSelected(serie, descri, mini, maxi,true);
+                instruSelectionListener.onInstruSelected(serie, tole, descri, mini, maxi, true);
 
             }
 
@@ -243,7 +243,7 @@ public class IntrumentsController extends Controller implements ActionListener {
     private void filterByDescription(String searchLetter) {
         // 
         if (ListOfXml == null) {
-          
+
             updateTable();
         }
 
@@ -273,7 +273,5 @@ public class IntrumentsController extends Controller implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         clickTable();
     }
-    
-    
 
 }

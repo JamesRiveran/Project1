@@ -11,5 +11,5 @@ package Controller;
 public interface InstruSelectionListener {
 
 
-    void onInstruSelected(String serie,String descri, String mini, String maxi,boolean pass);
+    void onInstruSelected(String serie,String tole,String descri, String mini, String maxi,boolean pass);
 }

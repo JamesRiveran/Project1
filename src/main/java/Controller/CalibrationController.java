@@ -42,6 +42,7 @@ public class CalibrationController extends Controller implements ActionListener,
     String serie;
     int min;
     String max;
+    String tolerancia;
     CalibrationList calibrationList;
     ViewController viewController;
     Modulo view;
@@ -159,9 +160,7 @@ public class CalibrationController extends Controller implements ActionListener,
         int rowCount = modelo.getRowCount();
         List<String> datosColumna = new ArrayList<>();
 
-        
-        //Cambiar a la tolerancia del instrumento que esta puesto
-        double tolerance = 2;
+        double tolerance = Double.parseDouble(tolerancia);
         for (int fila = 0; fila < rowCount; fila++) {
 
             Object valorCelda = modelo.getValueAt(fila, columna2);
@@ -171,17 +170,21 @@ public class CalibrationController extends Controller implements ActionListener,
             int reference = integerObject.intValue();
 
             double validation = (double) reference + tolerance;
+            double validationFew = (double) reference - tolerance;
+
             double intTextoCelda = Double.parseDouble(textoCelda);
 
             Object valorCelda3 = modelo.getValueAt(fila, columna3);
             String textoCelda3 = (valorCelda3 != null) ? valorCelda3.toString() : "";
 
             //Hacer la validacion donde se sume y otra donde se reste
-            if (intTextoCelda > validation) {
+            if (intTextoCelda > validation || intTextoCelda < validationFew) {
+
                 showMessage("Lectura fuera de rango, ingrese otra lectura", "error");
                 ColorCelda colorCelda = new ColorCelda(columna2, tolerance, integerObject);
                 view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(colorCelda);
                 break;
+
             } else {
                 DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
                 datosColumna.add(textoCelda);
@@ -382,12 +385,13 @@ public class CalibrationController extends Controller implements ActionListener,
     }
 
     @Override
-
-    public void onInstruSelected(String serie, String descri, String mini, String max, boolean pass) {
-        view.getLbNombreInstru().setText(serie + "-" + "Descripción: " + descri + ", Mínimo: " + mini + ", Máximo: " + max);
+    public void onInstruSelected(String serie, String tolerancia, String descri, String mini, String max, boolean pass) {
+        view.getLbNombreInstru().setText(serie + "-" + "Descripción: " + descri + ", Mínimo: " + mini + ", Máximo: " + max + ", Tolerancia: " + tolerancia);
         this.serie = serie;
+        this.tolerancia = tolerancia;
         this.max = max;
         this.pass = true;
+
         CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
         List<Element> calibracionesEncontradas = XMLLoader.findCalibrationsByNumber(filePath, serie);
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();

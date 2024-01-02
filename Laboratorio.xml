@@ -4,7 +4,7 @@
   <IdMedicionCounter>130</IdMedicionCounter>
   <Tipo_de_instrumento>
     <Codigo>TER</Codigo>
-    <Nombre>Termometro</Nombre>
+    <Nombre>Termo</Nombre>
     <Unidad>Grados Celcius</Unidad>
   </Tipo_de_instrumento>
   <Instrumento>
@@ -18,10 +18,10 @@
   <Instrumento>
     <Serie>2</Serie>
     <Minimo>0</Minimo>
-    <Tolerancia>0</Tolerancia>
+    <Tolerancia>90</Tolerancia>
     <Descripcion>Pedro</Descripcion>
     <Maximo>41</Maximo>
-    <Tipo>Termometro</Tipo>
+    <Tipo>Termo</Tipo>
   </Instrumento>
   <Calibracion>
     <Serie>2</Serie>
@@ -48,7 +48,7 @@
     <Numero>1</Numero>
     <Medida>3.0</Medida>
     <Referencia>20.5</Referencia>
-    <Lectura>21</Lectura>
+    <Lectura>21.0</Lectura>
   </Medicion>
   <Medicion>
     <IdMedicion>5</IdMedicion>
