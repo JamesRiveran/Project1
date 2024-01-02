@@ -1,155 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Laboratorio>
-  <idCounter>10</idCounter>
-  <IdMedicionCounter>134</IdMedicionCounter>
+
+  <idCounter>1</idCounter>
+  <IdMedicionCounter>1</IdMedicionCounter>
   <Tipo_de_instrumento>
     <Codigo>TER</Codigo>
-    <Nombre>Termo</Nombre>
-    <Unidad>Grados Celcius</Unidad>
+    <Nombre>Termometro</Nombre>
+    <Unidad>Grados</Unidad>
   </Tipo_de_instrumento>
   <Instrumento>
     <Serie>1</Serie>
     <Minimo>0</Minimo>
     <Tolerancia>0</Tolerancia>
-    <Descripcion>Senor</Descripcion>
-    <Maximo>90</Maximo>
+    <Descripcion>ds</Descripcion>
+    <Maximo>3</Maximo>
     <Tipo>Termometro</Tipo>
   </Instrumento>
   <Instrumento>
     <Serie>2</Serie>
     <Minimo>0</Minimo>
-    <Tolerancia>90</Tolerancia>
-    <Descripcion>Pedro</Descripcion>
-    <Maximo>41</Maximo>
-    <Tipo>Termo</Tipo>
+    <Tolerancia>0</Tolerancia>
+    <Descripcion>s</Descripcion>
+    <Maximo>3</Maximo>
+    <Tipo>Termometro</Tipo>
   </Instrumento>
-  <Calibracion>
-    <Serie>2</Serie>
-    <Fecha>2024/01/02</Fecha>
-    <Numero>1</Numero>
-    <Mediciones>4</Mediciones>
-  </Calibracion>
-  <Medicion>
-    <IdMedicion>2</IdMedicion>
-    <Numero>1</Numero>
-    <Medida>1.0</Medida>
-    <Referencia>0.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <IdMedicion>3</IdMedicion>
-    <Numero>1</Numero>
-    <Medida>2.0</Medida>
-    <Referencia>10.25</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <IdMedicion>4</IdMedicion>
-    <Numero>1</Numero>
-    <Medida>3.0</Medida>
-    <Referencia>20.5</Referencia>
-    <Lectura>0</Lectura>
-  </Medicion>
-  <Medicion>
-    <IdMedicion>5</IdMedicion>
-    <Numero>1</Numero>
-    <Medida>4.0</Medida>
-    <Referencia>30.75</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Calibracion>
-    <Serie>2</Serie>
-    <Fecha>2023/01/17</Fecha>
-    <Numero>6</Numero>
-    <Mediciones>5</Mediciones>
-  </Calibracion>
-  <Medicion>
-    <IdMedicion>29</IdMedicion>
-    <Numero>6</Numero>
-    <Medida>1.0</Medida>
-    <Referencia>0.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <IdMedicion>30</IdMedicion>
-    <Numero>6</Numero>
-    <Medida>2.0</Medida>
-    <Referencia>8.2</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <IdMedicion>31</IdMedicion>
-    <Numero>6</Numero>
-    <Medida>3.0</Medida>
-    <Referencia>16.4</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <IdMedicion>32</IdMedicion>
-    <Numero>6</Numero>
-    <Medida>4.0</Medida>
-    <Referencia>24.599999999999998</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <IdMedicion>33</IdMedicion>
-    <Numero>6</Numero>
-    <Medida>5.0</Medida>
-    <Referencia>32.8</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Calibracion>
-    <Serie>1</Serie>
-    <Fecha>2024/01/01</Fecha>
-    <Numero>8</Numero>
-    <Mediciones>3</Mediciones>
-  </Calibracion>
-  <Medicion>
-    <IdMedicion>127</IdMedicion>
-    <Numero>8</Numero>
-    <Medida>1.0</Medida>
-    <Referencia>0.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <IdMedicion>128</IdMedicion>
-    <Numero>8</Numero>
-    <Medida>2.0</Medida>
-    <Referencia>30.0</Referencia>
-    <Lectura>30.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <IdMedicion>129</IdMedicion>
-    <Numero>8</Numero>
-    <Medida>3.0</Medida>
-    <Referencia>60.0</Referencia>
-    <Lectura>60</Lectura>
-  </Medicion>
-  <Calibracion>
-    <Serie>2</Serie>
-    <Fecha>2023/01/12</Fecha>
-    <Numero>9</Numero>
-    <Mediciones>3</Mediciones>
-  </Calibracion>
-  <Medicion>
-    <IdMedicion>131</IdMedicion>
-    <Numero>9</Numero>
-    <Medida>1.0</Medida>
-    <Referencia>0.0</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <IdMedicion>132</IdMedicion>
-    <Numero>9</Numero>
-    <Medida>2.0</Medida>
-    <Referencia>13.666666666666666</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
-  <Medicion>
-    <IdMedicion>133</IdMedicion>
-    <Numero>9</Numero>
-    <Medida>3.0</Medida>
-    <Referencia>27.333333333333332</Referencia>
-    <Lectura>0.0</Lectura>
-  </Medicion>
+  <Tipo_de_instrumento>
+    <Codigo>CRO</Codigo>
+    <Nombre>Crono</Nombre>
+    <Unidad>Tiempo</Unidad>
+  </Tipo_de_instrumento>
+  <Instrumento>
+    <Serie>222</Serie>
+    <Minimo>0</Minimo>
+    <Tolerancia>0</Tolerancia>
+    <Descripcion>s</Descripcion>
+    <Maximo>3</Maximo>
+    <Tipo>Crono</Tipo>
+  </Instrumento>
 </Laboratorio>
