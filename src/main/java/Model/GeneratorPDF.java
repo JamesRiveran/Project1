@@ -4,14 +4,12 @@
  */
 package Model;
 
-import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -19,14 +17,11 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.List;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -46,12 +41,12 @@ public class GeneratorPDF {
         addHeader(document,modulo);
 
         // Agrega la lista de elementos al documento
-        if (modulo.equals("modulo_1")) {
-            addInstrumentList(document, (ArrayList<InstrumentType>) itemList);
-        } else if (modulo.equals("modulo_2")) {
-            addInstrumentListForInstrument(document, (ArrayList<InstrumentModulo2>) itemList);
-        }else if (modulo.equals("modulo_3")) {
-            addForCalibration(document, (ArrayList<Calibration>) itemList);
+        switch (modulo) {
+            case "modulo_1" -> addInstrumentList(document, (ArrayList<InstrumentType>) itemList);
+            case "modulo_2" -> addInstrumentListForInstrument(document, (ArrayList<InstrumentModulo2>) itemList);
+            case "modulo_3" -> addForCalibration(document, (ArrayList<Calibration>) itemList);
+            default -> {
+            }
         }
 
         // Cierra el documento
@@ -104,33 +99,39 @@ public class GeneratorPDF {
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
             
-            if (modulo.equals("modulo_1")) {
-            document.add(Chunk.NEWLINE);
-            Paragraph subTitle = new Paragraph("Tipos de instrumentos", FontFactory.getFont(FontFactory.HELVETICA, 14));
-            subTitle.setAlignment(Element.ALIGN_CENTER);
-            document.add(subTitle);
-            // Agrega un espacio en blanco después del título
-            document.add(Chunk.NEWLINE);
-        } else if (modulo.equals("modulo_2")) {
-            document.add(Chunk.NEWLINE);
-            Paragraph subTitle = new Paragraph("Instrumentos", FontFactory.getFont(FontFactory.HELVETICA, 14));
-            subTitle.setAlignment(Element.ALIGN_CENTER);
-            document.add(subTitle);
-            // Agrega un espacio en blanco después del título
-            document.add(Chunk.NEWLINE);
-        }else if (modulo.equals("modulo_3")) {
-            document.add(Chunk.NEWLINE);
-            Paragraph subTitle = new Paragraph("Calibraciones", FontFactory.getFont(FontFactory.HELVETICA, 14));
-            subTitle.setAlignment(Element.ALIGN_CENTER);
-            document.add(subTitle);
-            // Agrega un espacio en blanco después del título
-            document.add(Chunk.NEWLINE);
+        switch (modulo) {
+            case "modulo_1" ->                 {
+                    document.add(Chunk.NEWLINE);
+                    Paragraph subTitle = new Paragraph("Tipos de instrumentos", FontFactory.getFont(FontFactory.HELVETICA, 14));
+                    subTitle.setAlignment(Element.ALIGN_CENTER);
+                    document.add(subTitle);
+                    // Agrega un espacio en blanco después del título
+                    document.add(Chunk.NEWLINE);
+                }
+
+            case "modulo_2" ->                 {
+                    document.add(Chunk.NEWLINE);
+                    Paragraph subTitle = new Paragraph("Instrumentos", FontFactory.getFont(FontFactory.HELVETICA, 14));
+                    subTitle.setAlignment(Element.ALIGN_CENTER);
+                    document.add(subTitle);
+                    // Agrega un espacio en blanco después del título
+                    document.add(Chunk.NEWLINE);
+                }
+            case "modulo_3" ->                 {
+                    document.add(Chunk.NEWLINE);
+                    Paragraph subTitle = new Paragraph("Calibraciones", FontFactory.getFont(FontFactory.HELVETICA, 14));
+                    subTitle.setAlignment(Element.ALIGN_CENTER);
+                    document.add(subTitle);
+                    // Agrega un espacio en blanco después del título
+                    document.add(Chunk.NEWLINE);
+                }
+            default -> {
+            }
         }
-            
         /*} catch (IOException e) {
-            Logger.getLogger(GeneratorPDF.class.getName()).log(Level.SEVERE, null, e);
+        Logger.getLogger(GeneratorPDF.class.getName()).log(Level.SEVERE, null, e);
         }*/
-    }
+            }
 
     private static void addInstrumentList(Document document, ArrayList<InstrumentType> instrumentList)
             throws DocumentException {
