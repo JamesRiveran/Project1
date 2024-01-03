@@ -31,8 +31,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -145,8 +148,6 @@ public class CalibrationController extends Controller implements ActionListener,
             showMessage("Generado con exito", "success");
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JDOMException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -240,12 +241,12 @@ public class CalibrationController extends Controller implements ActionListener,
         return formatoFecha.format(fechaSeleccionada);
     }
 
-    private int idCounter() throws JDOMException, IOException {
+    private int idCounter() throws JDOMException, IOException, SAXException, ParserConfigurationException {
         int idCounter = XMLLoader.getIdCounterFromXML(filePath);
         return idCounter;
     }
 
-    private int idMedicion() throws JDOMException, IOException {
+    private int idMedicion() throws JDOMException, IOException, SAXException, ParserConfigurationException, TransformerException {
         int idMedicion = XMLLoader.getIdMedicionFromXML(filePath);
         return idMedicion;
     }
@@ -255,7 +256,7 @@ public class CalibrationController extends Controller implements ActionListener,
 
     }
 
-    public List<Measurement> generateMeasurements(int numMeasurements, double maxValue) throws JDOMException, IOException {
+    public List<Measurement> generateMeasurements(int numMeasurements, double maxValue) throws JDOMException, IOException, SAXException, ParserConfigurationException, TransformerException {
         if (numMeasurements <= 0 || maxValue <= 0) {
             throw new IllegalArgumentException("La cantidad de mediciones y el valor máximo deben ser mayores que cero.");
         }
@@ -333,8 +334,12 @@ public class CalibrationController extends Controller implements ActionListener,
                 }
             }
 
-        } catch (IOException | JDOMException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
+        } catch (SAXException ex) {
+            Logger.getLogger(CalibrationController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(CalibrationController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -348,47 +353,35 @@ public class CalibrationController extends Controller implements ActionListener,
     }
 
     public void updateTable() {
-        try {
-
-            listCalibrations = XMLLoader.loadFromCalibrations(filePath);
-            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
-            tableModel.setRowCount(0);
-            for (int i = listCalibrations.size() - 1; i >= 0; i--) {
-                Calibration newCalibration = listCalibrations.get(i);
-                if (newCalibration.getNumber().equals(serie)) {
-                    tableModel.insertRow(0, new Object[]{newCalibration.getId(), newCalibration.getDate(), newCalibration.getMeasuring()});
-                }
+        listCalibrations = XMLLoader.loadFromCalibrations(filePath);
+        DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+        tableModel.setRowCount(0);
+        for (int i = listCalibrations.size() - 1; i >= 0; i--) {
+            Calibration newCalibration = listCalibrations.get(i);
+            if (newCalibration.getNumber().equals(serie)) {
+                tableModel.insertRow(0, new Object[]{newCalibration.getId(), newCalibration.getDate(), newCalibration.getMeasuring()});
             }
-
-            clickTable();
-
-        } catch (IOException | JDOMException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        clickTable();
     }
 
     private void filterByNumber(String searchNumber) {
-        try {
-            listCalibrations = XMLLoader.loadFromCalibrations(filePath);
-            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
-            tableModel.setRowCount(0);
-            // Si la cadena de búsqueda está vacía, muestra todos los elementos
-            if (searchNumber.isEmpty()) {
-                updateTable();
-            } else {
-                // Itera sobre la lista de instrumentos y agrega las coincidencias al modelo de la tabla
-                for (Calibration calibration : listCalibrations) {
-                    String idForSearch = String.valueOf(calibration.getId());
-                    if (idForSearch.contains(searchNumber)) {
-                        tableModel.addRow(new Object[]{calibration.getId(), calibration.getDate(), calibration.getMeasuring()});
-                    }
+        listCalibrations = XMLLoader.loadFromCalibrations(filePath);
+        DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+        tableModel.setRowCount(0);
+        // Si la cadena de búsqueda está vacía, muestra todos los elementos
+        if (searchNumber.isEmpty()) {
+            updateTable();
+        } else {
+            // Itera sobre la lista de instrumentos y agrega las coincidencias al modelo de la tabla
+            for (Calibration calibration : listCalibrations) {
+                String idForSearch = String.valueOf(calibration.getId());
+                if (idForSearch.contains(searchNumber)) {
+                    tableModel.addRow(new Object[]{calibration.getId(), calibration.getDate(), calibration.getMeasuring()});
                 }
             }
-            clickTable();
-
-        } catch (IOException | JDOMException ex) {
-            ex.printStackTrace();
         }
+        clickTable();
     }
 
     @Override
@@ -402,28 +395,28 @@ public class CalibrationController extends Controller implements ActionListener,
     }
 
     @Override
-    public void onInstruSelected(String serie, String tolerancia, String descri, String mini, String max, boolean pass) {
-        view.getLbNombreInstru().setText(serie + "-" + "Descripción: " + descri + ", Mínimo: " + mini + ", Máximo: " + max + ", Tolerancia: " + tolerancia);
-        this.serie = serie;
-        this.tolerancia = tolerancia;
-        this.max = max;
-        this.pass = true;
+public void onInstruSelected(String serie, String tolerancia, String descri, String mini, String max, boolean pass) {
+    view.getLbNombreInstru().setText(serie + "-" + "Descripción: " + descri + ", Mínimo: " + mini + ", Máximo: " + max + ", Tolerancia: " + tolerancia);
+    this.serie = serie;
+    this.tolerancia = tolerancia;
+    this.max = max;
+    this.pass = true;
 
-        CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
-        List<Element> calibracionesEncontradas = XMLLoader.findCalibrationsByNumber(filePath, serie);
-        DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
-        tableModel.setRowCount(0);
+    CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
+    List<org.w3c.dom.Element> calibracionesEncontradas = XMLLoader.findCalibrationsByNumber(filePath, serie);
+    DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+    tableModel.setRowCount(0);
 
-        for (Element calibracion : calibracionesEncontradas) {
-            String id = calibracion.getChildText("Numero"); // Cambia "Id" al nombre correcto
-            String date = calibracion.getChildText("Fecha"); // Cambia "Referencia" al nombre correcto
-            String measurement = calibracion.getChildText("Mediciones");
-            Object[] rowData = {id, date, measurement};
-            tableModel.addRow(rowData);
-        }
-        DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
-        clearTable(tableModels);
-
+    for (org.w3c.dom.Element calibracion : calibracionesEncontradas) {
+        String id = calibracion.getElementsByTagName("Numero").item(0).getTextContent(); // Cambia "Id" al nombre correcto
+        String date = calibracion.getElementsByTagName("Fecha").item(0).getTextContent(); // Cambia "Referencia" al nombre correcto
+        String measurement = calibracion.getElementsByTagName("Mediciones").item(0).getTextContent();
+        Object[] rowData = {id, date, measurement};
+        tableModel.addRow(rowData);
     }
+    DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
+    clearTable(tableModels);
+}
+
 
 }

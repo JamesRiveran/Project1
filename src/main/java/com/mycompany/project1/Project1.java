@@ -6,7 +6,9 @@ package com.mycompany.project1;
 import Controller.ViewController;
 import Model.XMLCreator;
 import java.io.IOException;
+import javax.xml.parsers.ParserConfigurationException;
 import org.jdom2.JDOMException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -14,10 +16,14 @@ import org.jdom2.JDOMException;
  */
 public class Project1 {
 
-    public static void main(String[] args) throws JDOMException, IOException {
-        XMLCreator xmlCreator = new XMLCreator();
-        xmlCreator.createLaboratorioXML();
-        Controller.ViewController view = new ViewController();
-        view.start();
+    public static void main(String[] args) throws JDOMException, IOException, ParserConfigurationException, SAXException {
+        try {
+            XMLCreator xmlCreator = new XMLCreator();
+            xmlCreator.createLaboratorioXML();
+            Controller.ViewController view = new ViewController();
+            view.start();
+        } catch (javax.xml.parsers.ParserConfigurationException | org.xml.sax.SAXException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -20,8 +20,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.parsers.ParserConfigurationException;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -37,7 +39,7 @@ public class IntrumentsController extends Controller implements ActionListener {
     static Modulo view;
     boolean updateInstruments = false;
 
-    public IntrumentsController(Modulo view) {
+    public IntrumentsController(Modulo view) throws ParserConfigurationException, SAXException {
         this.listModulo2 = new IntrumentListModulo2();
         this.view = view;
         this.calibrationController = new CalibrationController(this.view);
@@ -97,8 +99,14 @@ public class IntrumentsController extends Controller implements ActionListener {
     @Override
     public void search() {
         String searchLetter = view.getTxtSearchInstru().getText();
-        // Realiza la búsqueda y actualiza la tabla
-        filterByDescription(searchLetter);
+        try {
+            // Realiza la búsqueda y actualiza la tabla
+            filterByDescription(searchLetter);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -122,39 +130,40 @@ public class IntrumentsController extends Controller implements ActionListener {
             showMessage("Generado con exito", "success");
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JDOMException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
     public void delete() {
-        try {
-            InstrumentModulo2 instrumentToDelete = new InstrumentModulo2(
-                    view.getTxtSerie().getText(),
-                    view.getTxtMini().getText(),
-                    view.getTxtTole().getText(),
-                    view.getTxtDescri().getText(),
-                    view.getTxtMaxi().getText(),
-                    view.getCmbType().getSelectedItem().toString());
-
-            List<Element> calibracionesEncontradas = XMLLoader.findCalibrationsByNumber(filePath, instrumentToDelete.getSerie());
-            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
-            tableModel.setRowCount(0);
-
-            if (calibracionesEncontradas.isEmpty()) {
-                XMLLoader.deleteInstrumentsFromXML(filePath, instrumentToDelete);
-                showMessage("Se borro exitosamente", "success");
-                clean();
+        InstrumentModulo2 instrumentToDelete = new InstrumentModulo2(
+                view.getTxtSerie().getText(),
+                view.getTxtMini().getText(),
+                view.getTxtTole().getText(),
+                view.getTxtDescri().getText(),
+                view.getTxtMaxi().getText(),
+                view.getCmbType().getSelectedItem().toString());
+        List<org.w3c.dom.Element> calibracionesEncontradas = XMLLoader.findCalibrationsByNumber(filePath, instrumentToDelete.getSerie());
+        DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+        tableModel.setRowCount(0);
+        if (calibracionesEncontradas.isEmpty()) {
+            XMLLoader.deleteInstrumentsFromXML(filePath, instrumentToDelete);
+            showMessage("Se borro exitosamente", "success");
+            clean();
+            try {
                 updateTable();
-            } else {
-                showMessage("Error no se puede eliminar porque el instrumento tiene calibraciones registradas", "error");
+            } catch (ParserConfigurationException ex) {
+                Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SAXException ex) {
+                Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-        } catch (JDOMException | IOException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            showMessage("Error no se puede eliminar porque el instrumento tiene calibraciones registradas", "error");
         }
     }
 
@@ -173,7 +182,7 @@ public class IntrumentsController extends Controller implements ActionListener {
         listModulo2.getList().clear();
     }
 
-    public void updateTable() {
+    public void updateTable() throws ParserConfigurationException, SAXException {
         try {
             ListOfXml = XMLLoader.loadFromXMLS(filePath);
             DefaultTableModel tableModel = (DefaultTableModel) view.getTbInstru().getModel();
@@ -183,7 +192,7 @@ public class IntrumentsController extends Controller implements ActionListener {
                 InstrumentModulo2 newInstrument = ListOfXml.get(i);
                 tableModel.insertRow(0, new Object[]{newInstrument.getSerie(), newInstrument.getDescri(), newInstrument.getMini(), newInstrument.getMaxi(), newInstrument.getTole()});
             }
-        } catch (IOException | JDOMException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -240,7 +249,7 @@ public class IntrumentsController extends Controller implements ActionListener {
     }
 
     /*Para filtrar*/
-    private void filterByDescription(String searchLetter) {
+    private void filterByDescription(String searchLetter) throws ParserConfigurationException, SAXException {
         // 
         if (ListOfXml == null) {
 

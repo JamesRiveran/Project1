@@ -20,9 +20,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import org.jdom2.JDOMException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -38,7 +42,7 @@ public class ViewController extends Controller implements ActionListener {
     IntrumentsController intrumentsController;
     static Modulo view;
 
-    public ViewController() {
+    public ViewController() throws ParserConfigurationException, SAXException {
         this.listInstrument = new InstrumentsList();
         this.view = new Modulo();
         this.calibrationController = new CalibrationController(this.view);
@@ -50,7 +54,7 @@ public class ViewController extends Controller implements ActionListener {
         this.view.setViewController(this);
     }
 
-    public void start() throws JDOMException, IOException {
+    public void start() throws JDOMException, IOException, SAXException, ParserConfigurationException {
         view.getBtnClean().addActionListener(e -> clean());
         view.getBtnDelete().addActionListener(e -> delete());
         view.getBtnPDF().addActionListener(e -> reportPdf());
@@ -83,16 +87,16 @@ public class ViewController extends Controller implements ActionListener {
 
     }
 
-    private int idCounter() throws JDOMException, IOException {
+    private int idCounter() throws JDOMException, IOException, SAXException, ParserConfigurationException {
         int idCounter = XMLLoader.getIdCounterFromXML(filePath);
         return idCounter;
     }
 
-    public static void showMessage(String errorMessage, String info) {
+    public static void showMessage(String message, String info) {
         if (info == "error") {
-            JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(view, message, "Validación", JOptionPane.ERROR_MESSAGE);
         } else if (info == "success") {
-            JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(view, message, "Validación", JOptionPane.INFORMATION_MESSAGE);
 
         }
     }
@@ -148,7 +152,7 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     /*Metodo para rellenar el comboBox*/
-    public void updateComboBoxModel() {
+    public void updateComboBoxModel() throws ParserConfigurationException, SAXException {
         try {
             listName = XMLLoader.loadFromXML(filePath);
 
@@ -169,8 +173,6 @@ public class ViewController extends Controller implements ActionListener {
             }
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JDOMException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -183,7 +185,9 @@ public class ViewController extends Controller implements ActionListener {
             }
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JDOMException ex) {
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
         String letterSearch = view.getTxtNameForSearch().getText();
@@ -192,6 +196,10 @@ public class ViewController extends Controller implements ActionListener {
         } catch (JDOMException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -205,7 +213,13 @@ public class ViewController extends Controller implements ActionListener {
             updateTable();
             updateComboBoxModel();
             clean();
-        } catch (JDOMException | IOException ex) {
+        } catch (IOException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TransformerException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -219,9 +233,11 @@ public class ViewController extends Controller implements ActionListener {
             showMessage("Generado con exito", "success");
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JDOMException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -249,7 +265,7 @@ public class ViewController extends Controller implements ActionListener {
         }
     }
 
-    private void filterByName(String letterSearch) throws JDOMException, IOException {
+    private void filterByName(String letterSearch) throws JDOMException, IOException, ParserConfigurationException, SAXException {
         try {
             ArrayList<InstrumentType> loadedList = XMLLoader.loadFromXML(filePath);
             DefaultTableModel template = (DefaultTableModel) view.getTblListInstruments().getModel();
@@ -266,12 +282,12 @@ public class ViewController extends Controller implements ActionListener {
                     }
                 }
             }
-        } catch (IOException | JDOMException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void updateTable() {
+    public void updateTable() throws ParserConfigurationException, SAXException {
         try {
             ListOfIModu1o1 = XMLLoader.loadFromXML(filePath);
             DefaultTableModel tableModule1 = (DefaultTableModel) view.getTblListInstruments().getModel();
@@ -282,7 +298,7 @@ public class ViewController extends Controller implements ActionListener {
                 tableModule1.insertRow(0, new Object[]{module1.getCode(), module1.getName(), module1.getUnit()});
             }
 
-        } catch (IOException | JDOMException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

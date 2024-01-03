@@ -31,6 +31,7 @@ public class GeneratorPDF {
 
     public static <T> void generatePDFReport(List<T> itemList, String filePath, String modulo)
         throws DocumentException, FileNotFoundException {
+        try{
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(filePath));
 
@@ -51,6 +52,9 @@ public class GeneratorPDF {
 
         // Cierra el documento
         document.close();
+        }catch(DocumentException ex){
+            ex.printStackTrace();
+        }
     }
 
    
