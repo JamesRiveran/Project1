@@ -163,7 +163,6 @@ public class CalibrationController extends Controller implements ActionListener,
         List<String> datosColumna = new ArrayList<>();
 
         double tolerance = Double.parseDouble(tolerancia);
-        boolean allCellsReady = true;
         for (int fila = 0; fila < rowCount; fila++) {
 
             Object valorCelda = modelo.getValueAt(fila, columna2);
@@ -193,7 +192,7 @@ public class CalibrationController extends Controller implements ActionListener,
                         modelo.fireTableCellUpdated(finalFila, columna2);
                     }
                 });
-                allCellsReady = false;
+                
                 break;
             } else {
                 DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
@@ -209,9 +208,7 @@ public class CalibrationController extends Controller implements ActionListener,
             }
 
         }
-        if (allCellsReady) {
-            showMessage("Guardados con éxito", "success");
-        }
+        
     }
 
     public void cleanMeasurement() {

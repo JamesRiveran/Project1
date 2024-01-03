@@ -780,7 +780,7 @@ public class XMLLoader {
                 for (int i = 0; i < list.size(); i++) {
                     for (int j = 0; j < listM.size(); j++) {
                         Measurement m = listM.get(j);
-                        if (m.getIdMeasure() == Integer.parseInt(list.get(i))) {
+                        if (m.getIdMeasure() == Double.valueOf(list.get(i))){
                             Element elementoMedicion = (Element) elementosMedicion.item(j);
                             Element elementoLectura = (Element) elementoMedicion.getElementsByTagName("Lectura").item(0);
                             elementoLectura.setTextContent(list.get(0));
