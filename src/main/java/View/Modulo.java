@@ -177,7 +177,7 @@ public class Modulo extends javax.swing.JFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtCode, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
@@ -397,13 +397,13 @@ public class Modulo extends javax.swing.JFrame {
 
         jLabel8.setText("Serie");
 
-        jLabel9.setText("Minimo");
+        jLabel9.setText("Mínimo");
 
         jLabel10.setText("Tolerancia");
 
         jLabel12.setText("Tipo");
 
-        jLabel13.setText("Maximo");
+        jLabel13.setText("Máximo");
 
         txtSerie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -444,7 +444,7 @@ public class Modulo extends javax.swing.JFrame {
         cmbType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbType.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jLabel14.setText("Descripcion");
+        jLabel14.setText("Descripción");
 
         btnSaveInstru.setBackground(new java.awt.Color(0, 204, 0));
         btnSaveInstru.setForeground(new java.awt.Color(255, 255, 255));
@@ -537,7 +537,7 @@ public class Modulo extends javax.swing.JFrame {
 
         jPanel83.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel11.setText("Descripcion");
+        jLabel11.setText("Descripción");
 
         btnSearchInstru.setBackground(new java.awt.Color(51, 51, 255));
         btnSearchInstru.setForeground(new java.awt.Color(255, 255, 255));
@@ -595,7 +595,7 @@ public class Modulo extends javax.swing.JFrame {
 
             },
             new String [] {
-                "No. Serie", "Descripcion", "Minimo", "Maximo", "Tolerancia"
+                "No. Serie", "Descripción", "Mínimo", "Máximo", "Tolerancia"
             }
         ) {
             Class[] types = new Class [] {

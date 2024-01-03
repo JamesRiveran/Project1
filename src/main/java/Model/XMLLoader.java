@@ -17,9 +17,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import javax.swing.JOptionPane;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -109,11 +107,17 @@ public class XMLLoader extends ViewController {
                 }
             }
 
-            XMLOutputter xml = new XMLOutputter();
-            xml.setFormat(Format.getPrettyFormat());
+            try {
+                XMLOutputter xmlOutput = new XMLOutputter();
+                xmlOutput.setFormat(Format.getPrettyFormat().setEncoding("UTF-8"));
 
-            try (FileOutputStream fos = new FileOutputStream(filePath); OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8); BufferedWriter writer = new BufferedWriter(osw)) {
-                xml.output(doc, writer);
+                try (FileOutputStream fos = new FileOutputStream(filePath); OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
+                    xmlOutput.output(doc, osw);
+                }
+
+                System.out.println("Archivo XML guardado correctamente con codificación UTF-8.");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         } catch (IOException | JDOMException ex) {
             ex.printStackTrace();
@@ -165,15 +169,18 @@ public class XMLLoader extends ViewController {
                 }
             }
         }
-        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
         try {
-            xmlOutputter.output(document, new FileWriter(filePath));
-        } finally {
-            try {
-                xmlOutputter.output(document, new FileWriter(filePath));
-            } catch (IOException e) {
-                e.printStackTrace();
+            XMLOutputter xmlOutput = new XMLOutputter();
+            xmlOutput.setFormat(Format.getPrettyFormat().setEncoding("UTF-8"));
+
+            try (FileOutputStream fos = new FileOutputStream(filePath);
+                 OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
+                xmlOutput.output(document, osw);
             }
+
+            System.out.println("Archivo XML guardado correctamente con codificación UTF-8.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -248,12 +255,19 @@ public class XMLLoader extends ViewController {
                 }
             }
 
-            XMLOutputter xml = new XMLOutputter();
-            xml.setFormat(Format.getPrettyFormat());
+            try {
+            XMLOutputter xmlOutput = new XMLOutputter();
+            xmlOutput.setFormat(Format.getPrettyFormat().setEncoding("UTF-8"));
 
-            try (FileOutputStream fos = new FileOutputStream(filePath); OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8); BufferedWriter writer = new BufferedWriter(osw)) {
-                xml.output(doc, writer);
+            try (FileOutputStream fos = new FileOutputStream(filePath);
+                 OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
+                xmlOutput.output(doc, osw);
             }
+
+            System.out.println("Archivo XML guardado correctamente con codificación UTF-8.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         } catch (IOException | JDOMException ex) {
             ex.printStackTrace();
         }
@@ -283,11 +297,19 @@ public class XMLLoader extends ViewController {
                     }
                 }
                 // Guardar los cambios en el archivo
-                XMLOutputter xmlOutput = new XMLOutputter();
-                xmlOutput.setFormat(Format.getPrettyFormat());
-                FileWriter fileWriter = new FileWriter(filePath);
-                xmlOutput.output(doc, fileWriter);
-                fileWriter.close();
+                try {
+            XMLOutputter xmlOutput = new XMLOutputter();
+            xmlOutput.setFormat(Format.getPrettyFormat().setEncoding("UTF-8"));
+
+            try (FileOutputStream fos = new FileOutputStream(filePath);
+                 OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
+                xmlOutput.output(doc, osw);
+            }
+
+            System.out.println("Archivo XML guardado correctamente con codificación UTF-8.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
             } else {
                 ViewController.showMessage("El archivo no existe.", "error");
             }
@@ -354,12 +376,19 @@ public class XMLLoader extends ViewController {
             idCounterElement.setText(Integer.toString(updatedIdCounter));
 
             // Guardar los cambios en el archivo XML
-            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-            try (FileWriter writer = new FileWriter(filePath)) {
-                xmlOutputter.output(doc, writer);
+            try {
+            XMLOutputter xmlOutput = new XMLOutputter();
+            xmlOutput.setFormat(Format.getPrettyFormat().setEncoding("UTF-8"));
+
+            try (FileOutputStream fos = new FileOutputStream(filePath);
+                 OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
+                xmlOutput.output(doc, osw);
             }
 
-            System.out.println("Se ha guardado y actualizado el archivo XML.");
+            System.out.println("Archivo XML guardado correctamente con codificación UTF-8.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         } catch (IOException | JDOMException ex) {
             ex.printStackTrace();
@@ -501,12 +530,20 @@ public class XMLLoader extends ViewController {
             }
 
             // Guardar los cambios en el archivo XML
-            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-            try (FileWriter writer = new FileWriter(filePath)) {
-                xmlOutputter.output(document, writer);
-            }
+            try {
+            XMLOutputter xmlOutput = new XMLOutputter();
+            xmlOutput.setFormat(Format.getPrettyFormat().setEncoding("UTF-8"));
 
+            try (FileOutputStream fos = new FileOutputStream("Laboratorio.xml");
+                 OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
+                xmlOutput.output(document, osw);
+            }
             System.out.println("Se ha actualizado el valor de <idMedicion> en el archivo XML.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+           
 
         } catch (IOException | org.jdom2.JDOMException e) {
             e.printStackTrace();
@@ -690,7 +727,6 @@ public class XMLLoader extends ViewController {
                     break;
 
                 }
-
 //                 Guardar el documento XML actualizado en el archivo
                 XMLOutputter xmlOutput = new XMLOutputter(Format.getPrettyFormat());
                 try (FileWriter writer = new FileWriter(filePath)) {
@@ -702,7 +738,6 @@ public class XMLLoader extends ViewController {
             } else {
                 System.err.println("La cantidad de elementos en la lista no coincide con la cantidad de elementos en el XML.");
                 list.clear();
-
             }
         } catch (IOException | JDOMException e) {
             e.printStackTrace();
@@ -761,9 +796,9 @@ public class XMLLoader extends ViewController {
 
             // Guardar los cambios en el archivo XML
             XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-            FileWriter writer = new FileWriter(filePath);
-            xmlOutputter.output(document, writer);
-            writer.close();
+            try (FileWriter writer = new FileWriter(filePath)) {
+                xmlOutputter.output(document, writer);
+            }
             System.out.println("Registros eliminados con éxito.");
         } catch (IOException | JDOMException e) {
             e.printStackTrace();
