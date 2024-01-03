@@ -1,93 +1,122 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Laboratorio>
-                    
+                        
+    
     
     
     
     <idCounter>1</idCounter>
-                
+                    
+    
     
     
     
     <IdMedicionCounter>1</IdMedicionCounter>
-            
+                
+    
     
     
     <Tipo_de_instrumento>
-                        
+                                
+        
         
         <Codigo>ter</Codigo>
-                        
+                                
+        
         
         <Nombre>Termómetro</Nombre>
-                        
+                                
+        
         
         <Unidad>cel</Unidad>
-                    
+                            
+    
     
     </Tipo_de_instrumento>
-            
+                
+    
     
     <Tipo_de_instrumento>
-                        
+                                
+        
         
         <Codigo>Cro</Codigo>
-                        
+                                
+        
         
         <Nombre>Cronometro</Nombre>
-                        
+                                
+        
         
         <Unidad>pedro</Unidad>
-                    
+                            
+    
     
     </Tipo_de_instrumento>
-            
+                
+    
     
     <Instrumento>
-                        
+                                
+        
         
         <Serie>1</Serie>
-                        
+                                
+        
         
         <Minimo>0</Minimo>
-                        
+                                
+        
         
         <Tolerancia>0</Tolerancia>
-                        
+                                
+        
         
         <Descripcion>preueba</Descripcion>
-                        
+                                
+        
         
         <Maximo>90</Maximo>
-                        
+                                
+        
         
         <Tipo>Termómetro</Tipo>
-                    
+                            
+    
+    
+    </Instrumento>
+                
+    
+    
+    <Instrumento>
+                                
+        
+        
+        <Serie>2</Serie>
+                                
+        
+        
+        <Minimo>0</Minimo>
+                                
+        
+        
+        <Tolerancia>0</Tolerancia>
+                                
+        
+        
+        <Descripcion>prueba</Descripcion>
+                                
+        
+        
+        <Maximo>90</Maximo>
+                                
+        
+        
+        <Tipo>Cronometro</Tipo>
+                            
+    
     
     </Instrumento>
             
-    
-    <Instrumento>
-                        
-        
-        <Serie>2</Serie>
-                        
-        
-        <Minimo>0</Minimo>
-                        
-        
-        <Tolerancia>0</Tolerancia>
-                        
-        
-        <Descripcion>prueba</Descripcion>
-                        
-        
-        <Maximo>90</Maximo>
-                        
-        
-        <Tipo>Cronometro</Tipo>
-                    
-    
-    </Instrumento>
-        
+
 
 </Laboratorio>
