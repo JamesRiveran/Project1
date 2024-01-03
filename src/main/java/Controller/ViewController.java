@@ -128,6 +128,9 @@ public class ViewController extends Controller implements ActionListener {
                 showMessage(viewError,"Debe ingresar la unidad de medida del instrumento", "error");
             } else {
                 try {
+                    // Actualizar <Instrumento>
+                    String code = view.getTxtCode().getText();
+                    String oldName = XMLLoader.getNameOfInstrument(filePath, code);
                     String newName = view.getTxtName().getText();
                     InstrumentType newInstrumentForSave = new InstrumentType(
                             view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
@@ -135,9 +138,8 @@ public class ViewController extends Controller implements ActionListener {
                     XMLLoader.saveToXML(filePath, listInstrument.getList());
                     listInstrument.getList().clear();
                     updateTable();
-                    // Actualizar <Instrumento>
-                    XMLLoader.updateInstrument(filePath, oldName,  newName);
                     updateComboBoxModel();
+                    XMLLoader.updateInstrument(filePath, oldName,  newName);
                     showMessage(viewError,"Se guardó exitosamente", "success");
                 } catch (Exception ex) {
                     showMessage(viewError,"Error al guardar en el archivo XML: " + ex.getMessage(), "error");
@@ -149,6 +151,7 @@ public class ViewController extends Controller implements ActionListener {
             showMessage(viewError,ex.getMessage(), "error");
         }
     }
+    
 
     /*Metodo para rellenar el comboBox*/
     public void updateComboBoxModel() throws ParserConfigurationException, SAXException {
@@ -243,7 +246,6 @@ public class ViewController extends Controller implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         clickTable();
     }
-    public String oldName="";
 
     public void editRegister(MouseEvent evt) {
         int rowSelected = view.getTblListInstruments().getSelectedRow();
@@ -256,7 +258,6 @@ public class ViewController extends Controller implements ActionListener {
             view.getTxtCode().setText(codeName);
             view.getTxtName().setText(instrumentName);
             view.getTxtUnit().setText(unitName);
-            oldName=instrumentName;
             view.getTxtCode().setEnabled(false);
             view.getBtnDelete().setEnabled(true);
         }

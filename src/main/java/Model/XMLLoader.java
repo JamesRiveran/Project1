@@ -555,6 +555,35 @@ public class XMLLoader {
         throw new RuntimeException("Error al parsear el archivo XML: " + e.getMessage(), e);
     }
 }
+    
+    public static String getNameOfInstrument(String filePath, String codigoBuscar) {
+        try {
+            File xmlFile = new File(filePath);
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+
+            Document document = builder.parse(xmlFile);
+
+            NodeList tipoInstrumentos = document.getElementsByTagName("Tipo_de_instrumento");
+
+            for (int i = 0; i < tipoInstrumentos.getLength(); i++) {
+                Node tipoInstrumentoNode = tipoInstrumentos.item(i);
+                if (tipoInstrumentoNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element tipoInstrumentoElement = (Element) tipoInstrumentoNode;
+                    String codigo = tipoInstrumentoElement.getElementsByTagName("Codigo").item(0).getTextContent();
+                    String nombre = tipoInstrumentoElement.getElementsByTagName("Nombre").item(0).getTextContent();
+
+                    if (codigo.equals(codigoBuscar)) {
+                        return nombre;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     
     public static void ensureIdMedicionExists(String filePath) {

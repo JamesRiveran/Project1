@@ -381,7 +381,7 @@ public class CalibrationController extends Controller implements ActionListener,
 
     @Override
     public void onInstruSelected(String serie, String tolerancia, String descri, String mini, String max, boolean pass) {
-        view.getLbNombreInstru().setText("Código: " + serie + ", Descripción: " + descri + ", Mínimo: " + mini + ", Máximo: " + max + ", Tolerancia: " + tolerancia);
+        view.getLbNombreInstru().setText(serie + " - " + descri + " ("+ mini + "-" + max +") - "+"Tolerancia: " + tolerancia);
         this.serie = serie;
         this.tolerancia = tolerancia;
         this.max = max;
