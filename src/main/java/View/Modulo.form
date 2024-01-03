@@ -512,7 +512,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jPanel9" pref="252" max="32767" attributes="0"/>
+                      <Component id="jPanel9" pref="258" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -861,12 +861,13 @@
                     <Component class="javax.swing.JTable" name="tbInstru">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="5" rowCount="0">
+                          <Table columnCount="6" rowCount="0">
                             <Column editable="false" title="No. Serie" type="java.lang.String"/>
                             <Column editable="false" title="Descripci&#xf3;n" type="java.lang.String"/>
                             <Column editable="false" title="M&#xed;nimo" type="java.lang.String"/>
                             <Column editable="false" title="M&#xe1;ximo" type="java.lang.String"/>
                             <Column editable="false" title="Tolerancia" type="java.lang.String"/>
+                            <Column editable="false" title="Instrumento" type="java.lang.Object"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" preCode="tbInstru.getTableHeader().setReorderingAllowed(false);">
@@ -1145,11 +1146,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <EmptySpace min="0" pref="1034" max="32767" attributes="0"/>
                       <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                              <Component id="lbNombreInstru" min="-2" pref="611" max="-2" attributes="0"/>
-                              <EmptySpace pref="396" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="lbNombreInstru" alignment="1" pref="1034" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1160,7 +1157,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                               <Component id="lbNombreInstru" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="24" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>

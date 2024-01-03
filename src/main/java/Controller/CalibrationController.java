@@ -59,6 +59,8 @@ public class CalibrationController extends Controller implements ActionListener,
         this.view.setCalibrationController(this);
         this.calibrationList = new CalibrationList();
         this.number = "0";
+        updateTable();
+
     }
 
     // Constructor con argumentos, incluyendo la serie
@@ -277,7 +279,7 @@ public class CalibrationController extends Controller implements ActionListener,
                         Object id = view.getTblCalibrations().getValueAt(selectedRow, 0);
                         Object dateObject = view.getTblCalibrations().getValueAt(selectedRow, 1);
                         Object measurement = view.getTblCalibrations().getValueAt(selectedRow, 2);
-
+                        setNumber(id.toString());
                         if (dateObject instanceof String) {
                             String dateString = (String) dateObject;
                             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -293,7 +295,6 @@ public class CalibrationController extends Controller implements ActionListener,
                             System.out.println("El objeto no es de tipo String");
                         }
 
-                        setNumber(id.toString());
                         view.getCalibrationTxtMeasurement().setText(measurement.toString());
                         view.getCalibrationTxtNumber().setEnabled(false);
                         view.getCalibrationDateChooser().setEnabled(false);
@@ -374,6 +375,7 @@ public class CalibrationController extends Controller implements ActionListener,
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
         XMLLoader.deleteDataMensu(filePath, getNumber());
         XMLLoader.deleteData(filePath, getNumber());
+        System.out.println(getNumber());
         viewController.showMessage(view, "Eliminado con exito", "success");
         updateTable();
         clearTable(tableModel);

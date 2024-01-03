@@ -26,7 +26,7 @@ public class Modulo extends javax.swing.JFrame {
      * Creates new form Modulo
      */
     public Modulo() {
-        initComponents();
+        initComponents  ();
         btnDeleteInstru.setEnabled(false);
         setIconImage(new javax.swing.ImageIcon("src/main/resources/images/Logo.png").getImage());
         setTitle("SILAB: Sistema de Laboratorio Industrial");
@@ -34,6 +34,10 @@ public class Modulo extends javax.swing.JFrame {
         tblMeasurement.getColumnModel().getColumn(3).setMinWidth(0);
         tblMeasurement.getColumnModel().getColumn(3).setMaxWidth(0);
         tblMeasurement.getColumnModel().getColumn(3).setWidth(0);
+
+        tbInstru.getColumnModel().getColumn(5).setMinWidth(0);
+        tbInstru.getColumnModel().getColumn(5).setMaxWidth(0);
+        tbInstru.getColumnModel().getColumn(5).setWidth(0);
 
     }
 
@@ -595,14 +599,14 @@ public class Modulo extends javax.swing.JFrame {
 
             },
             new String [] {
-                "No. Serie", "Descripción", "Mínimo", "Máximo", "Tolerancia"
+                "No. Serie", "Descripción", "Mínimo", "Máximo", "Tolerancia", "Instrumento"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -689,7 +693,7 @@ public class Modulo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel19)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 252, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 258, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -760,10 +764,7 @@ public class Modulo extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1034, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addGap(27, 27, 27)
-                    .addComponent(lbNombreInstru, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(396, Short.MAX_VALUE)))
+                .addComponent(lbNombreInstru, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1007, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -772,7 +773,7 @@ public class Modulo extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addGap(7, 7, 7)
                     .addComponent(lbNombreInstru)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addContainerGap(24, Short.MAX_VALUE)))
         );
 
         pCaliMedidas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
