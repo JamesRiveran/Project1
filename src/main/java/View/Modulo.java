@@ -289,6 +289,7 @@ public class Modulo extends javax.swing.JFrame {
             }
         });
         jScrollPane5.setViewportView(tblListInstruments);
+        tblListInstruments.getTableHeader().setReorderingAllowed(false);
         if (tblListInstruments.getColumnModel().getColumnCount() > 0) {
             tblListInstruments.getColumnModel().getColumn(0).setResizable(false);
         }
@@ -618,6 +619,7 @@ public class Modulo extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tbInstru);
+        tbInstru.getTableHeader().setReorderingAllowed(false);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -726,6 +728,7 @@ public class Modulo extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblCalibrations.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tblCalibrations);
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);

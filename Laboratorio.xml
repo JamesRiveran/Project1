@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Laboratorio>
-                                                        
+                                                                            
+    
+    
+    
+    
+    
     
     
     
@@ -13,7 +18,12 @@
     
     
     <idCounter>5</idCounter>
-                                                    
+                                                                        
+    
+    
+    
+    
+    
     
     
     
@@ -27,7 +37,7 @@
     
     
     <IdMedicionCounter>17</IdMedicionCounter>
-                                                
+                                                                    
     
     
         
@@ -61,56 +71,191 @@
     
     
     
+    
+    
+    
+    
+    
     <Tipo_de_instrumento>
-                                                        
+                                                                                                
+        
+        
+        
+        
+        
         
         
         
         
         
         <Codigo>BAR</Codigo>
-                                                        
+                                                                                                
+        
+        
+        
+        
+        
         
         
         
         
         
         <Nombre>Barómetro</Nombre>
-                                                        
+                                                                                                
+        
+        
+        
+        
+        
         
         
         
         
         
         <Unidad>PSI</Unidad>
-                                                    
+                                                                                            
+    
+    
+    
+    
+    
     
     
     
     
     
     </Tipo_de_instrumento>
-                        
+                                            
 
 
 
     
 
+    
+    
+    
+    
+    
     
     <Instrumento>
-                
+                                                        
+        
+        
+        
+        
+        
         <Serie>2332</Serie>
-                
+                                                        
+        
+        
+        
+        
+        
         <Minimo>0</Minimo>
-                
+                                                        
+        
+        
+        
+        
+        
         <Tolerancia>1</Tolerancia>
-                
+                                                        
+        
+        
+        
+        
+        
         <Descripcion>Termómetro marca Teletica</Descripcion>
-                
+                                                        
+        
+        
+        
+        
+        
         <Maximo>90</Maximo>
-                
+                                                        
+        
+        
+        
+        
+        
         <Tipo>Termómetro</Tipo>
-            
-    </Instrumento>
+                                                    
     
-<Tipo_de_instrumento><Codigo>TER</Codigo><Nombre>Termómetro</Nombre><Unidad>Grados Celcius</Unidad></Tipo_de_instrumento><Instrumento><Serie>2321</Serie><Minimo>0</Minimo><Tolerancia>0</Tolerancia><Descripcion>Barómetro falso</Descripcion><Maximo>50</Maximo><Tipo>Barómetro</Tipo></Instrumento></Laboratorio>
+    
+    
+    
+    
+    </Instrumento>
+                        
+
+    
+    
+    
+    
+    <Tipo_de_instrumento>
+                                        
+        
+        
+        
+        <Codigo>TER</Codigo>
+                                        
+        
+        
+        
+        <Nombre>Termómetro</Nombre>
+                                        
+        
+        
+        
+        <Unidad>Grados Celcius</Unidad>
+                                    
+    
+    
+    
+    </Tipo_de_instrumento>
+                    
+    
+    
+    
+    <Instrumento>
+                                        
+        
+        
+        
+        <Serie>2321</Serie>
+                                        
+        
+        
+        
+        <Minimo>0</Minimo>
+                                        
+        
+        
+        
+        <Tolerancia>0</Tolerancia>
+                                        
+        
+        
+        
+        <Descripcion>Barómetro falso</Descripcion>
+                                        
+        
+        
+        
+        <Maximo>50</Maximo>
+                                        
+        
+        
+        
+        <Tipo>Barómetro</Tipo>
+                                    
+    
+    
+    
+    </Instrumento>
+                
+
+
+
+</Laboratorio>
