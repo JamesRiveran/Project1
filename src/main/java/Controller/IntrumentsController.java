@@ -31,6 +31,7 @@ import org.xml.sax.SAXException;
  */
 public class IntrumentsController extends Controller implements ActionListener {
 
+    ViewController viewController;
     IntrumentListModulo2 listModulo2;
     String filePath = "Laboratorio.xml";
     private ArrayList<InstrumentModulo2> ListOfXml;
@@ -53,15 +54,6 @@ public class IntrumentsController extends Controller implements ActionListener {
         this.instruSelectionListener = listener;
     }
 
-    public void showMessage(String errorMessage, String info) {
-        if (info == "error") {
-            JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
-        } else if (info == "success") {
-            JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.INFORMATION_MESSAGE);
-
-        }
-    }
-
     @Override
     public void save() {
 
@@ -70,28 +62,29 @@ public class IntrumentsController extends Controller implements ActionListener {
 
             // Verifica si el número de serie ya existe en la lista
             if (view.getTxtSerie().getText().isEmpty() || view.getTxtDescri().getText().isEmpty() || view.getTxtMaxi().getText().isEmpty()) {
-                showMessage("Debe llenar todos los campos", "error");
+                viewController.showMessage(view, "Debe llenar todos los campos", "error");
             } else if (serieExists(serie, ListOfXml)) {
                 if (updateInstruments == true) {
                     if (Integer.parseInt(view.getTxtMini().getText()) > Integer.parseInt(view.getTxtMaxi().getText())) {
-                        showMessage("El minimo es mayor que el maximo", "error");
+                        viewController.showMessage(view, "El minimo es mayor que el maximo", "error");
                     } else {
                         informationForXml();
                         updateTable();
-                        JOptionPane.showMessageDialog(view, "Datos Actualizados");
+                        viewController.showMessage(view, "Datos Actualizados", "success");
                         updateInstruments = false;
                     }
                 } else {
-                    showMessage("Ya ese numero de serie existe", "error");
+
+                    viewController.showMessage(view, "Ya ese numero de serie existe", "error");
                 }
             } else if (Integer.parseInt(view.getTxtMini().getText()) > Integer.parseInt(view.getTxtMaxi().getText())) {
-                showMessage("El minimo es mayor que el maximo", "error");
+                viewController.showMessage(view, "El minimo es mayor que el maximo", "error");
             } else {
                 informationForXml();
                 // Actualizar la tabla después de agregar el nuevo instrumento
                 updateTable();
                 updateInstruments = false;
-                JOptionPane.showMessageDialog(view, "Datos registrados");
+                viewController.showMessage(view, "Datos registrados", "success");
             }
         } catch (Exception ex) {
             // Manejar la excepción (puedes imprimir el mensaje o realizar otras acciones)
@@ -131,7 +124,7 @@ public class IntrumentsController extends Controller implements ActionListener {
             ArrayList<InstrumentModulo2> instrumentListModulo2 = XMLLoader.loadFromXMLS(filePath);
             String pdfFilePath = "Reporte_Instrumentos.pdf";
             GeneratorPDF.generatePDFReport(instrumentListModulo2, pdfFilePath, "modulo_2");
-            showMessage("Generado con exito", "success");
+            viewController.showMessage(view, "Generado con exito", "success");
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
@@ -157,7 +150,7 @@ public class IntrumentsController extends Controller implements ActionListener {
         tableModel.setRowCount(0);
         if (calibracionesEncontradas.isEmpty()) {
             XMLLoader.deleteInstrumentsFromXML(filePath, instrumentToDelete);
-            showMessage("Se borro exitosamente", "success");
+            viewController.showMessage(view, "Se borro exitosamente", "success");
             clean();
             try {
                 updateTable();
@@ -167,7 +160,7 @@ public class IntrumentsController extends Controller implements ActionListener {
                 Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            showMessage("Error no se puede eliminar porque el instrumento tiene calibraciones registradas", "error");
+            viewController.showMessage(view, "Error no se puede eliminar porque el instrumento tiene calibraciones registradas", "error");
         }
     }
 

@@ -88,13 +88,13 @@ public class CalibrationController extends Controller implements ActionListener,
         try {
             int measurement = Integer.parseInt(view.getCalibrationTxtMeasurement().getText());
             if (view.getCalibrationDateChooser().getDate() == null) {
-                showMessage("Debe ingresar la fecha del instrumento", "error");
+                viewController.showMessage(view, "Debe ingresar la fecha del instrumento", "error");
             } else if (view.getCalibrationTxtMeasurement().getText().trim().isEmpty()) {
-                showMessage("Debe ingresar la calibración del instrumento", "error");
+                viewController.showMessage(view, "Debe ingresar la calibración del instrumento", "error");
             } else if (Integer.parseInt(view.getCalibrationTxtMeasurement().getText()) < 2) {
-                showMessage("La cantidad minima de mediciones que se permite ingresar es de 2", "error");
+                viewController.showMessage(view, "La cantidad minima de mediciones que se permite ingresar es de 2", "error");
             } else if (measurement > Integer.parseInt(max) + 1) {
-                showMessage("La cantidad de mediciones es mayor a la cantidad de enteros que hay en el rango del instrumento", "error");
+                viewController.showMessage(view, "La cantidad de mediciones es mayor a la cantidad de enteros que hay en el rango del instrumento", "error");
             } else {
                 try {
                     int newIdNumber = 0;
@@ -115,13 +115,13 @@ public class CalibrationController extends Controller implements ActionListener,
                     newIdNumber = idCounter();
                     view.getCalibrationTxtNumber().setText(String.valueOf(newIdNumber));
                     updateTableMeasurement();
-                    showMessage("Se guardo con exito", "success");
+                    viewController.showMessage(view, "Se guardo con exito", "success");
                 } catch (Exception ex) {
-                    showMessage("Error al guardar en el archivo XML: " + ex.getMessage(), "error");
+                    viewController.showMessage(view, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
                 }
             }
         } catch (Exception ex) {
-            showMessage(ex.getMessage(), "error");
+            viewController.showMessage(view, ex.getMessage(), "error");
         }
     }
 
@@ -145,7 +145,7 @@ public class CalibrationController extends Controller implements ActionListener,
             ArrayList<Calibration> calibrationList = XMLLoader.loadFromCalibrations(filePath);
             String pdfFilePath = "Reporte_Calibraciones.pdf";
             GeneratorPDF.generatePDFReport(calibrationList, pdfFilePath, "modulo_3");
-            showMessage("Generado con exito", "success");
+            viewController.showMessage(view, "Generado con exito", "success");
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
@@ -179,7 +179,7 @@ public class CalibrationController extends Controller implements ActionListener,
             String textoCelda3 = (valorCelda3 != null) ? valorCelda3.toString() : "";
 
             if (intTextoCelda > validation || intTextoCelda < validationFew) {
-                showMessage("Lectura fuera de rango, ingrese otra lectura", "error");
+                viewController.showMessage(view, "Lectura fuera de rango, ingrese otra lectura", "error");
 
                 final int finalFila = fila;
 
@@ -192,7 +192,7 @@ public class CalibrationController extends Controller implements ActionListener,
                         modelo.fireTableCellUpdated(finalFila, columna2);
                     }
                 });
-                
+
                 break;
             } else {
                 DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
@@ -201,14 +201,14 @@ public class CalibrationController extends Controller implements ActionListener,
                 XMLLoader.updateMeasurement(filePath, datosColumna);
                 view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
 
-                if ((rowCount-1) == fila) {
-                    showMessage("Guardados con exito", "success");
+                if ((rowCount - 1) == fila) {
+                    viewController.showMessage(view, "Guardados con exito", "success");
                 }
 
             }
 
         }
-        
+
     }
 
     public void cleanMeasurement() {
@@ -219,16 +219,6 @@ public class CalibrationController extends Controller implements ActionListener,
 
         for (int fila = 0; fila < rowCount; fila++) {
             modelo.setValueAt(0.0, fila, columna); // Establece un valor vacío en la celda
-        }
-    }
-
-    //
-    public void showMessage(String errorMessage, String info) {
-        if (info == "error") {
-            JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
-        } else if (info == "success") {
-            JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.INFORMATION_MESSAGE);
-
         }
     }
 
@@ -386,34 +376,33 @@ public class CalibrationController extends Controller implements ActionListener,
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
         XMLLoader.deleteDataMensu(filePath, getNumber());
         XMLLoader.deleteData(filePath, getNumber());
-        showMessage("Eliminado con exito", "success");
+        viewController.showMessage(view, "Eliminado con exito", "success");
         updateTable();
         clearTable(tableModel);
     }
 
     @Override
-public void onInstruSelected(String serie, String tolerancia, String descri, String mini, String max, boolean pass) {
-    view.getLbNombreInstru().setText("Código: "+serie+ ", Descripción: " + descri + ", Mínimo: " + mini + ", Máximo: " + max + ", Tolerancia: " + tolerancia);
-    this.serie = serie;
-    this.tolerancia = tolerancia;
-    this.max = max;
-    this.pass = true;
+    public void onInstruSelected(String serie, String tolerancia, String descri, String mini, String max, boolean pass) {
+        view.getLbNombreInstru().setText("Código: " + serie + ", Descripción: " + descri + ", Mínimo: " + mini + ", Máximo: " + max + ", Tolerancia: " + tolerancia);
+        this.serie = serie;
+        this.tolerancia = tolerancia;
+        this.max = max;
+        this.pass = true;
 
-    CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
-    List<org.w3c.dom.Element> calibracionesEncontradas = XMLLoader.findCalibrationsByNumber(filePath, serie);
-    DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
-    tableModel.setRowCount(0);
+        CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
+        List<org.w3c.dom.Element> calibracionesEncontradas = XMLLoader.findCalibrationsByNumber(filePath, serie);
+        DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+        tableModel.setRowCount(0);
 
-    for (org.w3c.dom.Element calibracion : calibracionesEncontradas) {
-        String id = calibracion.getElementsByTagName("Numero").item(0).getTextContent(); // Cambia "Id" al nombre correcto
-        String date = calibracion.getElementsByTagName("Fecha").item(0).getTextContent(); // Cambia "Referencia" al nombre correcto
-        String measurement = calibracion.getElementsByTagName("Mediciones").item(0).getTextContent();
-        Object[] rowData = {id, date, measurement};
-        tableModel.addRow(rowData);
+        for (org.w3c.dom.Element calibracion : calibracionesEncontradas) {
+            String id = calibracion.getElementsByTagName("Numero").item(0).getTextContent(); // Cambia "Id" al nombre correcto
+            String date = calibracion.getElementsByTagName("Fecha").item(0).getTextContent(); // Cambia "Referencia" al nombre correcto
+            String measurement = calibracion.getElementsByTagName("Mediciones").item(0).getTextContent();
+            Object[] rowData = {id, date, measurement};
+            tableModel.addRow(rowData);
+        }
+        DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
+        clearTable(tableModels);
     }
-    DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
-    clearTable(tableModels);
-}
-
 
 }
