@@ -25,7 +25,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import org.jdom2.JDOMException;
 import org.xml.sax.SAXException;
 
 /**
@@ -55,7 +54,7 @@ public class ViewController extends Controller implements ActionListener {
         this.view.setViewController(this);
     }
 
-    public void start() throws JDOMException, IOException, SAXException, ParserConfigurationException {
+    public void start() throws IOException, SAXException, ParserConfigurationException {
         view.getBtnClean().addActionListener(e -> clean());
         view.getBtnDelete().addActionListener(e -> delete());
         view.getBtnPDF().addActionListener(e -> reportPdf());
@@ -88,7 +87,7 @@ public class ViewController extends Controller implements ActionListener {
 
     }
 
-    private int idCounter() throws JDOMException, IOException, SAXException, ParserConfigurationException {
+    private int idCounter() throws IOException, SAXException, ParserConfigurationException {
         int idCounter = XMLLoader.getIdCounterFromXML(filePath);
         return idCounter;
     }
@@ -193,8 +192,6 @@ public class ViewController extends Controller implements ActionListener {
         String letterSearch = view.getTxtNameForSearch().getText();
         try {
             filterByName(letterSearch);
-        } catch (JDOMException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParserConfigurationException ex) {
@@ -265,7 +262,7 @@ public class ViewController extends Controller implements ActionListener {
         }
     }
 
-    private void filterByName(String letterSearch) throws JDOMException, IOException, ParserConfigurationException, SAXException {
+    private void filterByName(String letterSearch) throws IOException, ParserConfigurationException, SAXException {
         try {
             ArrayList<InstrumentType> loadedList = XMLLoader.loadFromXML(filePath);
             DefaultTableModel template = (DefaultTableModel) view.getTblListInstruments().getModel();

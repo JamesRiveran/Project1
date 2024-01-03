@@ -7,7 +7,6 @@ import Controller.ViewController;
 import Model.XMLCreator;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
-import org.jdom2.JDOMException;
 import org.xml.sax.SAXException;
 
 /**
@@ -16,7 +15,7 @@ import org.xml.sax.SAXException;
  */
 public class Project1 {
 
-    public static void main(String[] args) throws JDOMException, IOException, ParserConfigurationException, SAXException {
+    public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
         try {
             XMLCreator xmlCreator = new XMLCreator();
             xmlCreator.createLaboratorioXML();

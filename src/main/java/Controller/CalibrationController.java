@@ -33,8 +33,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.xml.sax.SAXException;
 
 /**
@@ -228,12 +226,12 @@ public class CalibrationController extends Controller implements ActionListener,
         return formatoFecha.format(fechaSeleccionada);
     }
 
-    private int idCounter() throws JDOMException, IOException, SAXException, ParserConfigurationException {
+    private int idCounter() throws IOException, SAXException, ParserConfigurationException {
         int idCounter = XMLLoader.getIdCounterFromXML(filePath);
         return idCounter;
     }
 
-    private int idMedicion() throws JDOMException, IOException, SAXException, ParserConfigurationException, TransformerException {
+    private int idMedicion() throws SAXException, ParserConfigurationException, TransformerException, IOException {
         int idMedicion = XMLLoader.getIdMedicionFromXML(filePath);
         return idMedicion;
     }
@@ -243,7 +241,7 @@ public class CalibrationController extends Controller implements ActionListener,
 
     }
 
-    public List<Measurement> generateMeasurements(int numMeasurements, double maxValue) throws JDOMException, IOException, SAXException, ParserConfigurationException, TransformerException {
+    public List<Measurement> generateMeasurements(int numMeasurements, double maxValue) throws IOException, SAXException, ParserConfigurationException, TransformerException {
         if (numMeasurements <= 0 || maxValue <= 0) {
             throw new IllegalArgumentException("La cantidad de mediciones y el valor máximo deben ser mayores que cero.");
         }

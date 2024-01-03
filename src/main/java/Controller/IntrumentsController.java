@@ -21,8 +21,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.xml.sax.SAXException;
 
 /**

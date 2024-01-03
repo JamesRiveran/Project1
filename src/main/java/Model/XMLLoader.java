@@ -533,21 +533,29 @@ public class XMLLoader {
     }
 
     // Método para obtener el valor de idCounter desde XML
-    public static int getIdCounterFromXML(String filePath) throws IOException, SAXException, ParserConfigurationException {
+    public static int getIdCounterFromXML(String filePath) {
+    try {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(new File(filePath));
 
-        Element rootElement = document.getDocumentElement();
-        Element idCounterElement = (Element) rootElement.getElementsByTagName("idCounter").item(0);
+        try (InputStream inputStream = new FileInputStream(filePath)) {
+            Document document = builder.parse(inputStream);
 
-        if (idCounterElement != null) {
-            String idCounterText = idCounterElement.getTextContent();
-            return Integer.parseInt(idCounterText);
-        } else {
-            throw new RuntimeException("La etiqueta <idCounter> no está presente en el archivo XML.");
+            Element rootElement = document.getDocumentElement();
+            Element idCounterElement = (Element) rootElement.getElementsByTagName("idCounter").item(0);
+
+            if (idCounterElement != null) {
+                String idCounterText = idCounterElement.getTextContent();
+                return Integer.parseInt(idCounterText);
+            } else {
+                throw new RuntimeException("La etiqueta <idCounter> no está presente en el archivo XML.");
+            }
         }
+    } catch (IOException | SAXException | ParserConfigurationException e) {
+        throw new RuntimeException("Error al parsear el archivo XML: " + e.getMessage(), e);
     }
+}
+
     
     public static void ensureIdMedicionExists(String filePath) {
     try {
