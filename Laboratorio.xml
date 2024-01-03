@@ -1,3 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Laboratorio>
-    <idCounter>1</idCounter>
-<IdMedicionCounter>1</IdMedicionCounter></Laboratorio>
+        
+    <idCounter>2</idCounter>
+    
+    <IdMedicionCounter>5</IdMedicionCounter>
+<Tipo_de_instrumento><Codigo>TER</Codigo><Nombre>Termómetro</Nombre><Unidad>Grados Celcius</Unidad></Tipo_de_instrumento><Tipo_de_instrumento><Codigo>BAR</Codigo><Nombre>Barómetro</Nombre><Unidad>PSI</Unidad></Tipo_de_instrumento><Instrumento><Serie>312</Serie><Minimo>0</Minimo><Tolerancia>0</Tolerancia><Descripcion>Termómetro marca Teletica</Descripcion><Maximo>50</Maximo><Tipo>Termómetro</Tipo></Instrumento><Calibracion><Serie>312</Serie><Fecha>2024/01/01</Fecha><Numero>1</Numero><Mediciones>3</Mediciones></Calibracion><Medicion><IdMedicion>2</IdMedicion><Numero>1</Numero><Medida>1.0</Medida><Referencia>0.0</Referencia><Lectura>0.0</Lectura></Medicion><Medicion><IdMedicion>3</IdMedicion><Numero>1</Numero><Medida>2.0</Medida><Referencia>16.666666666666668</Referencia><Lectura>0.0</Lectura></Medicion><Medicion><IdMedicion>4</IdMedicion><Numero>1</Numero><Medida>3.0</Medida><Referencia>33.333333333333336</Referencia><Lectura>0.0</Lectura></Medicion></Laboratorio>
