@@ -37,7 +37,7 @@ public class XMLLoader {
 
  
     String filePath = "Laboratorio.xml";
-    Modulo view;
+    static Modulo view;
     
     
 
@@ -344,7 +344,7 @@ public class XMLLoader {
 
                 System.out.println("Archivo XML guardado correctamente con codificación UTF-8.");
             } else {
-                ViewController.showMessage("El archivo no existe.", "error");
+                ViewController.showMessage(view,"El archivo no existe.", "error");
             }
         } catch (ParserConfigurationException | IOException | SAXException | TransformerException e) {
             e.printStackTrace();

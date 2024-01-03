@@ -73,10 +73,14 @@ public class IntrumentsController extends Controller implements ActionListener {
                 showMessage("Debe llenar todos los campos", "error");
             } else if (serieExists(serie, ListOfXml)) {
                 if (updateInstruments == true) {
-                    informationForXml();
-                    updateTable();
-                    JOptionPane.showMessageDialog(view, "Datos Actualizados");
-                    updateInstruments = false;
+                    if (Integer.parseInt(view.getTxtMini().getText()) > Integer.parseInt(view.getTxtMaxi().getText())) {
+                        showMessage("El minimo es mayor que el maximo", "error");
+                    } else {
+                        informationForXml();
+                        updateTable();
+                        JOptionPane.showMessageDialog(view, "Datos Actualizados");
+                        updateInstruments = false;
+                    }
                 } else {
                     showMessage("Ya ese numero de serie existe", "error");
                 }

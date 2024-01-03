@@ -41,7 +41,8 @@ public class ViewController extends Controller implements ActionListener {
     CalibrationController calibrationController;
     IntrumentsController intrumentsController;
     static Modulo view;
-
+    protected Modulo viewError;
+    
     public ViewController() throws ParserConfigurationException, SAXException {
         this.listInstrument = new InstrumentsList();
         this.view = new Modulo();
@@ -91,10 +92,9 @@ public class ViewController extends Controller implements ActionListener {
         int idCounter = XMLLoader.getIdCounterFromXML(filePath);
         return idCounter;
     }
-
-    public static void showMessage(String message, String info) {
+    public static void showMessage(JFrame parent, String message, String info) {
         if (info == "error") {
-            JOptionPane.showMessageDialog(view, message, "Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(parent, message, "Validación", JOptionPane.ERROR_MESSAGE);
         } else if (info == "success") {
             JOptionPane.showMessageDialog(view, message, "Validación", JOptionPane.INFORMATION_MESSAGE);
 
@@ -122,11 +122,11 @@ public class ViewController extends Controller implements ActionListener {
     public void save() {
         try {
             if (view.getTxtCode().getText().trim().isEmpty()) {
-                showMessage("Debe ingresar el código del instrumento", "error");
+                showMessage(viewError,"Debe ingresar el código del instrumento", "error");
             } else if (view.getTxtName().getText().trim().isEmpty()) {
-                showMessage("Debe ingresar todos los espacios", "error");
+                showMessage(viewError,"Debe ingresar todos los espacios", "error");
             } else if (view.getTxtUnit().getText().trim().isEmpty()) {
-                showMessage("Debe ingresar la unidad de medida del instrumento", "error");
+                showMessage(viewError,"Debe ingresar la unidad de medida del instrumento", "error");
             } else {
                 try {
                     String newName = view.getTxtName().getText();
@@ -139,15 +139,15 @@ public class ViewController extends Controller implements ActionListener {
                     // Actualizar <Instrumento>
                     XMLLoader.updateInstrument(filePath, oldName,  newName);
                     updateComboBoxModel();
-                    showMessage("Se guardó exitosamente", "success");
+                    showMessage(viewError,"Se guardó exitosamente", "success");
                 } catch (Exception ex) {
-                    showMessage("Error al guardar en el archivo XML: " + ex.getMessage(), "error");
+                    showMessage(viewError,"Error al guardar en el archivo XML: " + ex.getMessage(), "error");
                 }
             }
         } catch (NullPointerException ex) {
-            showMessage(ex.getMessage(), "error");
+            showMessage(viewError,ex.getMessage(), "error");
         } catch (Exception ex) {
-            showMessage(ex.getMessage(), "error");
+            showMessage(viewError,ex.getMessage(), "error");
         }
     }
 
@@ -181,7 +181,7 @@ public class ViewController extends Controller implements ActionListener {
         try {
             ArrayList<InstrumentType> loadedList = XMLLoader.loadFromXML(filePath);
             if (loadedList.isEmpty()) {
-                showMessage("No hay tipos de instrumentos registrados", "error");
+                showMessage(viewError,"No hay tipos de instrumentos registrados", "error");
             }
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -230,7 +230,7 @@ public class ViewController extends Controller implements ActionListener {
             ArrayList<InstrumentType> instrumentList = XMLLoader.loadFromXML(filePath);
             String pdfFilePath = "Reporte_TiposDeInstrumentos.pdf";
             GeneratorPDF.generatePDFReport(instrumentList, pdfFilePath, "modulo_1");
-            showMessage("Generado con exito", "success");
+            showMessage(viewError,"Generado con exito", "success");
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
