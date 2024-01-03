@@ -238,8 +238,8 @@
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="txtNameForSearch" min="-2" pref="200" max="-2" attributes="0"/>
-                          <EmptySpace pref="387" max="32767" attributes="0"/>
-                          <Component id="btnSearch" min="-2" pref="148" max="-2" attributes="0"/>
+                          <EmptySpace pref="445" max="32767" attributes="0"/>
+                          <Component id="btnSearch" min="-2" pref="90" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           <Component id="btnPDF" min="-2" pref="151" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
@@ -574,13 +574,13 @@
                               <Component id="cmbType" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="btnSaveInstru" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnDeleteInstru" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="btnDeleteInstru" max="32767" attributes="0"/>
+                              <Component id="btnSaveInstru" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btnCleanInstru" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="313" max="32767" attributes="0"/>
+                          <EmptySpace pref="344" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -758,9 +758,9 @@
                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtSearchInstru" pref="418" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="325" max="-2" attributes="0"/>
-                          <Component id="btnSearchInstru" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtSearchInstru" pref="435" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="293" max="-2" attributes="0"/>
+                          <Component id="btnSearchInstru" min="-2" pref="83" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnReport" min="-2" pref="168" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -1445,8 +1445,8 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="txtNumberSearch" min="-2" pref="272" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnSearchCalibration" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="274" max="32767" attributes="0"/>
+                          <Component id="btnSearchCalibration" min="-2" pref="89" max="-2" attributes="0"/>
+                          <EmptySpace pref="236" max="32767" attributes="0"/>
                           <Component id="btnPDFCalibration" min="-2" pref="145" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
                       </Group>
