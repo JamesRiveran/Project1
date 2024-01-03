@@ -35,6 +35,10 @@ public class Modulo extends javax.swing.JFrame {
         tblMeasurement.getColumnModel().getColumn(3).setMaxWidth(0);
         tblMeasurement.getColumnModel().getColumn(3).setWidth(0);
 
+        tbInstru.getColumnModel().getColumn(5).setMinWidth(0);
+        tbInstru.getColumnModel().getColumn(5).setMaxWidth(0);
+        tbInstru.getColumnModel().getColumn(5).setWidth(0);
+
     }
 
     /**
@@ -594,14 +598,14 @@ public class Modulo extends javax.swing.JFrame {
 
             },
             new String [] {
-                "No. Serie", "Descripción", "Mínimo", "Máximo", "Tolerancia"
+                "No. Serie", "Descripción", "Mínimo", "Máximo", "Tolerancia", "Instrumento"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -687,7 +691,7 @@ public class Modulo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel19)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 252, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 258, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

@@ -185,7 +185,7 @@ public class IntrumentsController extends Controller implements ActionListener {
 
             for (int i = ListOfXml.size() - 1; i >= 0; i--) {
                 InstrumentModulo2 newInstrument = ListOfXml.get(i);
-                tableModel.insertRow(0, new Object[]{newInstrument.getSerie(), newInstrument.getDescri(), newInstrument.getMini(), newInstrument.getMaxi(), newInstrument.getTole()});
+                tableModel.insertRow(0, new Object[]{newInstrument.getSerie(), newInstrument.getDescri(), newInstrument.getMini(), newInstrument.getMaxi(), newInstrument.getTole(), newInstrument.getType()});
             }
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -215,6 +215,9 @@ public class IntrumentsController extends Controller implements ActionListener {
             String mini = view.getTbInstru().getValueAt(selectedRow, 2).toString();
             String maxi = view.getTbInstru().getValueAt(selectedRow, 3).toString();
             String tole = view.getTbInstru().getValueAt(selectedRow, 4).toString();
+            String instru = view.getTbInstru().getValueAt(selectedRow, 5).toString();
+
+            System.out.println(instru);
 
             // Asigna los valores a los campos correspondientes
             view.getTxtSerie().setText(serie);
@@ -222,6 +225,7 @@ public class IntrumentsController extends Controller implements ActionListener {
             view.getTxtMini().setText(mini);
             view.getTxtMaxi().setText(maxi);
             view.getTxtTole().setText(tole);
+            view.getCmbType().setSelectedItem(instru);
 
             view.getBtnDeleteInstru().setEnabled(true);
             if (instruSelectionListener != null) {
