@@ -341,8 +341,6 @@ public class XMLLoader {
                 DOMSource source = new DOMSource((Node) doc);
                 StreamResult result = new StreamResult(new File(filePath));
                 transformer.transform(source, result);
-
-                System.out.println("Archivo XML guardado correctamente con codificación UTF-8.");
             } else {
                 ViewController.showMessage(view,"El archivo no existe.", "error");
             }
