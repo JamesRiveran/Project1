@@ -341,8 +341,6 @@ public class XMLLoader {
                 DOMSource source = new DOMSource((Node) doc);
                 StreamResult result = new StreamResult(new File(filePath));
                 transformer.transform(source, result);
-
-                System.out.println("Archivo XML guardado correctamente con codificación UTF-8.");
             } else {
                 ViewController.showMessage(view,"El archivo no existe.", "error");
             }
@@ -555,6 +553,35 @@ public class XMLLoader {
         throw new RuntimeException("Error al parsear el archivo XML: " + e.getMessage(), e);
     }
 }
+    
+    public static String getNameOfInstrument(String filePath, String codigoBuscar) {
+        try {
+            File xmlFile = new File(filePath);
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+
+            Document document = builder.parse(xmlFile);
+
+            NodeList tipoInstrumentos = document.getElementsByTagName("Tipo_de_instrumento");
+
+            for (int i = 0; i < tipoInstrumentos.getLength(); i++) {
+                Node tipoInstrumentoNode = tipoInstrumentos.item(i);
+                if (tipoInstrumentoNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element tipoInstrumentoElement = (Element) tipoInstrumentoNode;
+                    String codigo = tipoInstrumentoElement.getElementsByTagName("Codigo").item(0).getTextContent();
+                    String nombre = tipoInstrumentoElement.getElementsByTagName("Nombre").item(0).getTextContent();
+
+                    if (codigo.equals(codigoBuscar)) {
+                        return nombre;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     
     public static void ensureIdMedicionExists(String filePath) {
