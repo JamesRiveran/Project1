@@ -153,6 +153,19 @@ public class CalibrationController extends Controller implements ActionListener,
         }
     }
 
+    public static boolean isNumeric(String str) {
+        if (str == null || str.trim().isEmpty()) {
+            return false;
+        }
+        try {
+            Double.parseDouble(str);
+            System.out.println(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     public void saveMeasurement() {
 
         int columna2 = 2;  // Columna 2
@@ -162,20 +175,20 @@ public class CalibrationController extends Controller implements ActionListener,
         int rowCount = modelo.getRowCount();
         List<String> datosColumna = new ArrayList<>();
 
-        double tolerance = Double.parseDouble(tolerancia);
+        int tolerance = Integer.parseInt(tolerancia);
         for (int fila = 0; fila < rowCount; fila++) {
 
             Object valorCelda = modelo.getValueAt(fila, columna2);
             Object valueReference = modelo.getValueAt(fila, columnaReference);
             String textoCelda = (valorCelda != null) ? valorCelda.toString() : "";
-            if (!textoCelda.isEmpty()) {
-                Double integerObject = (double) valueReference;
-                int reference = integerObject.intValue();
 
-                double validation = (double) reference + tolerance;
-                double validationFew = (double) reference - tolerance;
+            if (!textoCelda.trim().isEmpty()  && isNumeric(textoCelda)) {
+                int reference = (int) valueReference;
 
-                double intTextoCelda = Double.parseDouble(textoCelda);
+                int validation = (int) reference + tolerance;
+                int validationFew = (int) reference - tolerance;
+
+                int intTextoCelda = Integer.parseInt(textoCelda);
                 Object valorCelda3 = modelo.getValueAt(fila, columna3);
                 String textoCelda3 = (valorCelda3 != null) ? valorCelda3.toString() : "";
 
@@ -184,7 +197,7 @@ public class CalibrationController extends Controller implements ActionListener,
 
                     final int finalFila = fila;
 
-                    final ColorCelda colorCelda = new ColorCelda(columna2, finalFila, tolerance, integerObject);
+                    final ColorCelda colorCelda = new ColorCelda(columna2, finalFila, tolerance, reference);
 
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
@@ -209,9 +222,10 @@ public class CalibrationController extends Controller implements ActionListener,
                 }
 
             } else {
-                if ((rowCount - 1) == fila) {
+                if ((rowCount - 1) == fila || (rowCount - 2) == fila || (rowCount - 3) == fila) {
                     viewController.showMessage(view, "Sin lecturas registradas", "error");
                 }
+                break;
             }
         }
 
@@ -224,7 +238,7 @@ public class CalibrationController extends Controller implements ActionListener,
         int rowCount = modelo.getRowCount();
 
         for (int fila = 0; fila < rowCount; fila++) {
-            modelo.setValueAt(0.0, fila, columna); // Establece un valor vacío en la celda
+            modelo.setValueAt(0, fila, columna); // Establece un valor vacío en la celda
         }
     }
 
@@ -249,19 +263,19 @@ public class CalibrationController extends Controller implements ActionListener,
 
     }
 
-    public List<Measurement> generateMeasurements(int numMeasurements, double maxValue) throws IOException, SAXException, ParserConfigurationException, TransformerException {
+    public List<Measurement> generateMeasurements(int numMeasurements, int maxValue) throws IOException, SAXException, ParserConfigurationException, TransformerException {
         if (numMeasurements <= 0 || maxValue <= 0) {
             throw new IllegalArgumentException("La cantidad de mediciones y el valor máximo deben ser mayores que cero.");
         }
 
         List<Measurement> measurements = new ArrayList<>();
-        double step = maxValue / numMeasurements;
-        double currentReference = 0.0;
+        int step = maxValue / numMeasurements;
+        int currentReference = 0;
         int newIdMedicion = 0;
         for (int i = 1; i <= numMeasurements; i++) {
             double medida = i;
-            double referencia = currentReference;
-            String lectura =""; // Inicializar lectura como 0
+            int referencia = currentReference;
+            String lectura = ""; // Inicializar lectura como 0
             newIdMedicion = idMedicion();
 
             Measurement measurement = new Measurement(view.getCalibrationTxtNumber().getText(), medida, referencia, lectura, newIdMedicion);

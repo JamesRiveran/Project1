@@ -17,11 +17,11 @@ import javax.swing.table.TableCellRenderer;
 public class ColorCelda extends DefaultTableCellRenderer {
 
     private int columnIndex; // Índice de la columna que se va a personalizar
-    private double tolerance; // Tolerancia para la comparación
-    private double reference;
+    private int tolerance; // Tolerancia para la comparación
+    private int reference;
     private int rows;
 
-    public ColorCelda(int columnIndex, int rows, double tolerance, double reference) {
+    public ColorCelda(int columnIndex, int rows, int tolerance, int reference) {
         this.columnIndex = columnIndex;
         this.tolerance = tolerance;
         this.reference = reference;
@@ -33,9 +33,9 @@ public class ColorCelda extends DefaultTableCellRenderer {
         Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
         if (col == columnIndex && row == rows) {
-            double cellValue = Double.parseDouble(value.toString());
-            double validationValue = reference + tolerance;
-            double validationFew = reference - tolerance;
+            int cellValue = Integer.parseInt(value.toString());
+            int validationValue = reference + tolerance;
+            int validationFew = reference - tolerance;
 
             if (cellValue > validationValue || cellValue < validationFew) {
                 component.setBackground(Color.RED);

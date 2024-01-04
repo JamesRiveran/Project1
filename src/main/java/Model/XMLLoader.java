@@ -740,7 +740,7 @@ public class XMLLoader {
                 medidaElement.setTextContent(Double.toString(measurement.getId()));
 
                 Element referenciaElement = doc.createElement("Referencia");
-                referenciaElement.setTextContent(Double.toString(measurement.getReference()));
+                referenciaElement.setTextContent(Integer.toString(measurement.getReference()));
 
                 Element lecturaElement = doc.createElement("Lectura");
                 lecturaElement.setTextContent(measurement.getReading());
@@ -783,7 +783,7 @@ public class XMLLoader {
             int idMedi = Integer.parseInt(measurementElement.getElementsByTagName("IdMedicion").item(0).getTextContent());
             String code = measurementElement.getElementsByTagName("Numero").item(0).getTextContent();
             double id = Double.parseDouble(measurementElement.getElementsByTagName("Medida").item(0).getTextContent());
-            double measurement = Double.parseDouble(measurementElement.getElementsByTagName("Referencia").item(0).getTextContent());
+            int measurement = Integer.parseInt(measurementElement.getElementsByTagName("Referencia").item(0).getTextContent());
             String reading = measurementElement.getElementsByTagName("Lectura").item(0).getTextContent();
 
             Measurement measurements = new Measurement(code, id, measurement, reading, idMedi);
@@ -804,13 +804,12 @@ public class XMLLoader {
 
             ArrayList<Measurement> listM = loadFromMeasurement(filePath);
 
-            System.out.println("Esti es en el xml " + list);
             NodeList elementosMedicion = raiz.getElementsByTagName("Medicion");
             if (list.size() <= elementosMedicion.getLength()) {
                 for (int i = 0; i < list.size(); i++) {
                     for (int j = 0; j < listM.size(); j++) {
                         Measurement m = listM.get(j);
-                        if (m.getIdMeasure() == Double.valueOf(list.get(i))) {
+                        if (m.getIdMeasure() == Integer.valueOf(list.get(i))) {
                             Element elementoMedicion = (Element) elementosMedicion.item(j);
                             Element elementoLectura = (Element) elementoMedicion.getElementsByTagName("Lectura").item(0);
                             elementoLectura.setTextContent(list.get(0));
@@ -825,7 +824,6 @@ public class XMLLoader {
                 DOMSource source = new DOMSource(documento);
                 StreamResult result = new StreamResult(new File(filePath));
                 transformer.transform(source, result);
-                System.out.println("Valores de Lectura actualizados con éxito.");
                 list.clear();
             } else {
                 System.err.println("La cantidad de elementos en la lista no coincide con la cantidad de elementos en el XML.");
