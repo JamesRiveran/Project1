@@ -61,6 +61,8 @@ public class IntrumentsController extends Controller implements ActionListener {
             // Verifica si el número de serie ya existe en la lista
             if (view.getTxtSerie().getText().isEmpty() || view.getTxtDescri().getText().isEmpty() || view.getTxtMaxi().getText().isEmpty()) {
                 viewController.showMessage(view, "Debe llenar todos los campos", "error");
+            } else if (view.getCmbType().getItemCount()==0) {
+                viewController.showMessage(view, "Debe primero inscribir un tipo de instrumento", "error");
             } else if (serieExists(serie, ListOfXml)) {
                 if (updateInstruments == true) {
                     if (Integer.parseInt(view.getTxtMini().getText()) > Integer.parseInt(view.getTxtMaxi().getText())) {
@@ -216,9 +218,6 @@ public class IntrumentsController extends Controller implements ActionListener {
             String maxi = view.getTbInstru().getValueAt(selectedRow, 3).toString();
             String tole = view.getTbInstru().getValueAt(selectedRow, 4).toString();
             String instru = view.getTbInstru().getValueAt(selectedRow, 5).toString();
-
-            System.out.println(instru);
-
             // Asigna los valores a los campos correspondientes
             view.getTxtSerie().setText(serie);
             view.getTxtDescri().setText(descri);
