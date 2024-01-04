@@ -10,19 +10,19 @@ package Model;
  */
 public class Measurement {
 
-    private double id, reference, reading;
-    private String code;
+    private double id, reference;
+    private String code,reading;
     private int idMeasure;
 
     public Measurement() {
         this.code = "";
         this.id = 0;
         this.reference = 0;
-        this.reading = 0;
+        this.reading = "";
         this.idMeasure = 0;
     }
 
-    public Measurement(String code, double id, double reference, double reading, int idMeasure) {
+    public Measurement(String code, double id, double reference, String reading, int idMeasure) {
         this.code = code;
         this.id = id;
         this.reference = reference;
@@ -62,11 +62,11 @@ public class Measurement {
         this.reference = reference;
     }
 
-    public double getReading() {
+    public String getReading() {
         return reading;
     }
 
-    public void setReading(double reading) {
+    public void setReading(String reading) {
         this.reading = reading;
     }
 

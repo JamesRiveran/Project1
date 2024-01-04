@@ -168,45 +168,51 @@ public class CalibrationController extends Controller implements ActionListener,
             Object valorCelda = modelo.getValueAt(fila, columna2);
             Object valueReference = modelo.getValueAt(fila, columnaReference);
             String textoCelda = (valorCelda != null) ? valorCelda.toString() : "";
-            Double integerObject = (double) valueReference;
-            int reference = integerObject.intValue();
+            if (!textoCelda.isEmpty()) {
+                Double integerObject = (double) valueReference;
+                int reference = integerObject.intValue();
 
-            double validation = (double) reference + tolerance;
-            double validationFew = (double) reference - tolerance;
+                double validation = (double) reference + tolerance;
+                double validationFew = (double) reference - tolerance;
 
-            double intTextoCelda = Double.parseDouble(textoCelda);
-            Object valorCelda3 = modelo.getValueAt(fila, columna3);
-            String textoCelda3 = (valorCelda3 != null) ? valorCelda3.toString() : "";
+                double intTextoCelda = Double.parseDouble(textoCelda);
+                Object valorCelda3 = modelo.getValueAt(fila, columna3);
+                String textoCelda3 = (valorCelda3 != null) ? valorCelda3.toString() : "";
 
-            if (intTextoCelda > validation || intTextoCelda < validationFew) {
-                viewController.showMessage(view, "Lectura fuera de rango, ingrese otra lectura", "error");
+                if (intTextoCelda > validation || intTextoCelda < validationFew) {
+                    viewController.showMessage(view, "Lectura fuera de rango, ingrese otra lectura", "error");
 
-                final int finalFila = fila;
+                    final int finalFila = fila;
 
-                final ColorCelda colorCelda = new ColorCelda(columna2, finalFila, tolerance, integerObject);
+                    final ColorCelda colorCelda = new ColorCelda(columna2, finalFila, tolerance, integerObject);
 
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(colorCelda);
-                        modelo.fireTableCellUpdated(finalFila, columna2);
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(colorCelda);
+                            modelo.fireTableCellUpdated(finalFila, columna2);
+                        }
+                    });
+
+                    break;
+                } else {
+                    DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
+                    datosColumna.add(textoCelda);
+                    datosColumna.add(textoCelda3);
+                    XMLLoader.updateMeasurement(filePath, datosColumna);
+                    view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
+
+                    if ((rowCount - 1) == fila) {
+                        viewController.showMessage(view, "Guardados con exito", "success");
                     }
-                });
 
-                break;
-            } else {
-                DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
-                datosColumna.add(textoCelda);
-                datosColumna.add(textoCelda3);
-                XMLLoader.updateMeasurement(filePath, datosColumna);
-                view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
-
-                if ((rowCount - 1) == fila) {
-                    viewController.showMessage(view, "Guardados con exito", "success");
                 }
 
+            } else {
+                if ((rowCount - 1) == fila) {
+                    viewController.showMessage(view, "Sin lecturas registradas", "error");
+                }
             }
-
         }
 
     }
@@ -255,7 +261,7 @@ public class CalibrationController extends Controller implements ActionListener,
         for (int i = 1; i <= numMeasurements; i++) {
             double medida = i;
             double referencia = currentReference;
-            double lectura = 0.0; // Inicializar lectura como 0
+            String lectura =""; // Inicializar lectura como 0
             newIdMedicion = idMedicion();
 
             Measurement measurement = new Measurement(view.getCalibrationTxtNumber().getText(), medida, referencia, lectura, newIdMedicion);
@@ -322,10 +328,14 @@ public class CalibrationController extends Controller implements ActionListener,
 
         } catch (IOException ex) {
             ex.printStackTrace();
+
         } catch (SAXException ex) {
-            Logger.getLogger(CalibrationController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CalibrationController.class
+                    .getName()).log(Level.SEVERE, null, ex);
+
         } catch (ParserConfigurationException ex) {
-            Logger.getLogger(CalibrationController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CalibrationController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -375,7 +385,6 @@ public class CalibrationController extends Controller implements ActionListener,
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
         XMLLoader.deleteDataMensu(filePath, getNumber());
         XMLLoader.deleteData(filePath, getNumber());
-        System.out.println(getNumber());
         viewController.showMessage(view, "Eliminado con exito", "success");
         updateTable();
         clearTable(tableModel);
@@ -383,7 +392,7 @@ public class CalibrationController extends Controller implements ActionListener,
 
     @Override
     public void onInstruSelected(String serie, String tolerancia, String descri, String mini, String max, boolean pass) {
-        view.getLbNombreInstru().setText(serie + " - " + descri + " ("+ mini + "-" + max +") - "+"Tolerancia: " + tolerancia);
+        view.getLbNombreInstru().setText(serie + " - " + descri + " (" + mini + "-" + max + ") - " + "Tolerancia: " + tolerancia);
         this.serie = serie;
         this.tolerancia = tolerancia;
         this.max = max;
