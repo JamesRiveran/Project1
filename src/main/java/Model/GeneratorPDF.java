@@ -4,6 +4,9 @@
  */
 package Model;
 
+import Controller.ViewController;
+import static Controller.ViewController.showMessage;
+import View.Modulo;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -15,8 +18,12 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -29,7 +36,7 @@ import java.util.List;
  */
 public class GeneratorPDF {
 
-    public static <T> void generatePDFReport(List<T> itemList, String filePath, String modulo)
+  public static <T> void generatePDFReport(List<T> itemList, String filePath, String modulo)
         throws DocumentException, FileNotFoundException {
         try{
         Document document = new Document();
@@ -56,8 +63,6 @@ public class GeneratorPDF {
             ex.printStackTrace();
         }
     }
-
-   
 
     private static void addHeader(Document document, String modulo) throws DocumentException {
         //try {

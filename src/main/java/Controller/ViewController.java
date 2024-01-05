@@ -23,6 +23,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -42,6 +43,7 @@ public class ViewController extends Controller implements ActionListener {
     IntrumentsController intrumentsController;
     static Modulo view;
     protected Modulo viewError;
+    ArrayList<InstrumentType> instrumentList = new ArrayList<>();
     
     public ViewController() throws ParserConfigurationException, SAXException {
         this.listInstrument = new InstrumentsList();
@@ -227,21 +229,39 @@ public class ViewController extends Controller implements ActionListener {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public ArrayList<InstrumentType> loadData(JTable jTable) {
+        instrumentList.clear();
+        int rowCount = jTable.getRowCount();
 
+        for (int i = 0; i < rowCount; i++) {
+            // Supongamos que tu JTable tiene tres columnas: nombre, tipo y precio
+            String code = (String) jTable.getValueAt(i, 0);
+            String name = (String) jTable.getValueAt(i, 1);
+            String unit = String.valueOf(jTable.getValueAt(i, 2).toString());
+
+            // Crea un nuevo objeto InstrumentType con los datos de la fila y agrégalo al ArrayList
+            InstrumentType instrumento = new InstrumentType(code, unit, name);
+            instrumentList.add(instrumento);
+        }
+        return instrumentList;
+    }
+
+    /**
+     *
+     */
     @Override
     public void reportPdf() {
         try {
-            ArrayList<InstrumentType> instrumentList = XMLLoader.loadFromXML(filePath);
+            ArrayList<InstrumentType> list = new ArrayList<>();
+            list.clear();
+            list = loadData(view.getTblListInstruments());
             String pdfFilePath = "Reporte_TiposDeInstrumentos.pdf";
-            GeneratorPDF.generatePDFReport(instrumentList, pdfFilePath, "modulo_1");
+            GeneratorPDF.generatePDFReport(list, pdfFilePath, "modulo_1");
             showMessage(viewError,"Generado con exito", "success");
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

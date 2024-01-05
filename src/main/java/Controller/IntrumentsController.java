@@ -112,8 +112,8 @@ public class IntrumentsController extends Controller implements ActionListener {
         view.getTxtSerie().setEnabled(true);
         view.getBtnDeleteInstru().setEnabled(false);
         view.getTxtSerie().setText("");
-        view.getTxtMini().setText("0");
-        view.getTxtTole().setText("0");
+        view.getTxtMini().setText("");
+        view.getTxtTole().setText("");
         view.getTxtMaxi().setText("");
         view.getTxtDescri().setText("");
     }
