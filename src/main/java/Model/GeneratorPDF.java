@@ -228,27 +228,26 @@ public class GeneratorPDF {
     private static void addInstrumentListForInstrument(Document document, ArrayList<InstrumentModulo2> instrumentList)
             throws DocumentException {
         // Crea una tabla con tres columnas
-        PdfPTable table = new PdfPTable(6);
+        PdfPTable table = new PdfPTable(5);
         table.setWidthPercentage(100); // La tabla ocupa el 100% del ancho disponible
 
         // Encabezados de columna con fondo de color #911414
         PdfPCell headerCell1 = new PdfPCell(new Phrase("Serie", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
         headerCell1.setBackgroundColor(new BaseColor(145, 20, 20));
 
-        PdfPCell headerCell2 = new PdfPCell(new Phrase("Minimo", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
+        PdfPCell headerCell2 = new PdfPCell(new Phrase("Descripción", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
         headerCell2.setBackgroundColor(new BaseColor(145, 20, 20));
 
-        PdfPCell headerCell3 = new PdfPCell(new Phrase("Tolerancia", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
+        PdfPCell headerCell3 = new PdfPCell(new Phrase("Minímo", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
         headerCell3.setBackgroundColor(new BaseColor(145, 20, 20));
 
-        PdfPCell headerCell4 = new PdfPCell(new Phrase("Descripcion", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
+        PdfPCell headerCell4 = new PdfPCell(new Phrase("Máximo", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
         headerCell4.setBackgroundColor(new BaseColor(145, 20, 20));
 
-        PdfPCell headerCell5 = new PdfPCell(new Phrase("Maximo", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
+        PdfPCell headerCell5 = new PdfPCell(new Phrase("Tolerancia", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
         headerCell5.setBackgroundColor(new BaseColor(145, 20, 20));
 
-        PdfPCell headerCell6 = new PdfPCell(new Phrase("Tipo de Instrumento", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
-        headerCell6.setBackgroundColor(new BaseColor(145, 20, 20));
+        
 
         // Alineación de los encabezados de columna
         headerCell1.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -256,7 +255,7 @@ public class GeneratorPDF {
         headerCell3.setHorizontalAlignment(Element.ALIGN_CENTER);
         headerCell4.setHorizontalAlignment(Element.ALIGN_CENTER);
         headerCell5.setHorizontalAlignment(Element.ALIGN_CENTER);
-        headerCell6.setHorizontalAlignment(Element.ALIGN_CENTER);
+        
 
         // Agrega los encabezados a la tabla
         table.addCell(headerCell1);
@@ -264,27 +263,26 @@ public class GeneratorPDF {
         table.addCell(headerCell3);
         table.addCell(headerCell4);
         table.addCell(headerCell5);
-        table.addCell(headerCell6);
+       
 
         // Agrega la lista de instrumentos a la tabla con fondo de color #c88989
         for (InstrumentModulo2 instrument : instrumentList) {
             PdfPCell seriCell = new PdfPCell(new Phrase(instrument.getSerie(), FontFactory.getFont(FontFactory.HELVETICA, 12)));
             seriCell.setBackgroundColor(new BaseColor(200, 137, 137));
 
-            PdfPCell minCell = new PdfPCell(new Phrase(instrument.getMini(), FontFactory.getFont(FontFactory.HELVETICA, 12)));
+            PdfPCell minCell = new PdfPCell(new Phrase(instrument.getDescri(), FontFactory.getFont(FontFactory.HELVETICA, 12)));
             minCell.setBackgroundColor(new BaseColor(200, 137, 137));
 
-            PdfPCell toleCell = new PdfPCell(new Phrase(instrument.getTole(), FontFactory.getFont(FontFactory.HELVETICA, 12)));
+            PdfPCell toleCell = new PdfPCell(new Phrase(instrument.getMini(), FontFactory.getFont(FontFactory.HELVETICA, 12)));
             toleCell.setBackgroundColor(new BaseColor(200, 137, 137));
 
-            PdfPCell desCell = new PdfPCell(new Phrase(instrument.getDescri(), FontFactory.getFont(FontFactory.HELVETICA, 12)));
+            PdfPCell desCell = new PdfPCell(new Phrase(instrument.getMaxi(), FontFactory.getFont(FontFactory.HELVETICA, 12)));
             desCell.setBackgroundColor(new BaseColor(200, 137, 137));
 
-            PdfPCell maxCell = new PdfPCell(new Phrase(instrument.getMaxi(), FontFactory.getFont(FontFactory.HELVETICA, 12)));
+            PdfPCell maxCell = new PdfPCell(new Phrase(instrument.getTole(), FontFactory.getFont(FontFactory.HELVETICA, 12)));
             maxCell.setBackgroundColor(new BaseColor(200, 137, 137));
 
-            PdfPCell typeCell = new PdfPCell(new Phrase(instrument.getType(), FontFactory.getFont(FontFactory.HELVETICA, 12)));
-            typeCell.setBackgroundColor(new BaseColor(200, 137, 137));
+            
 
             // Añade celdas con la información de cada instrumento
             table.addCell(seriCell);
@@ -292,7 +290,6 @@ public class GeneratorPDF {
             table.addCell(toleCell);
             table.addCell(desCell);
             table.addCell(maxCell);
-            table.addCell(typeCell);
         }
 
         // Agrega la tabla al documento
