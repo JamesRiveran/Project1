@@ -9,6 +9,7 @@ import Model.Calibration;
 import Model.CalibrationList;
 import Model.ColorCelda;
 import Model.GeneratorPDF;
+import static Model.GeneratorPDF.loadCalibration;
 import Model.Measurement;
 import Model.XMLLoader;
 import View.Modulo;
@@ -142,7 +143,9 @@ public class CalibrationController extends Controller implements ActionListener,
     @Override
     public void reportPdf() {
         try {
-            ArrayList<Calibration> calibrationList = XMLLoader.loadFromCalibrations(filePath);
+            ArrayList<Calibration> calibrationList = new ArrayList<>();
+            calibrationList.clear();
+            calibrationList = loadCalibration(view.getTblCalibrations());
             String pdfFilePath = "Reporte_Calibraciones.pdf";
             GeneratorPDF.generatePDFReport(calibrationList, pdfFilePath, "modulo_3");
             viewController.showMessage(view, "Generado con exito", "success");

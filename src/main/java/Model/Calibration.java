@@ -12,7 +12,7 @@ public class Calibration {
 
     private String date;
     private String number;
-    private int id, measuring;
+    private int id, measuring,measurement,numberId;
 
     public Calibration(String number, int id, String date, int measuring) {
         this.date = date;
@@ -21,6 +21,30 @@ public class Calibration {
         this.measuring = measuring;
     }
 
+    public Calibration(String date, int measurement, int numberId) {
+        this.date = date;
+        this.measurement = measurement;
+        this.numberId = numberId;
+    }
+
+    public int getMeasurement() {
+        return measurement;
+    }
+
+    public void setMeasurement(int measurement) {
+        this.measurement = measurement;
+    }
+
+    public int getNumberId() {
+        return numberId;
+    }
+
+    public void setNumberId(int numberId) {
+        this.numberId = numberId;
+    }
+
+    
+    
     public Calibration() {
         this.date = "";
         this.number = "";
