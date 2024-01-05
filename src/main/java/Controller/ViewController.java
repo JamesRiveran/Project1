@@ -8,6 +8,7 @@ package Controller;
 import Model.GeneratorPDF;
 import Model.InstrumentType;
 import Model.InstrumentsList;
+import Model.XMLCreator;
 import Model.XMLLoader;
 import View.Modulo;
 import com.itextpdf.text.DocumentException;
@@ -84,7 +85,10 @@ public class ViewController extends Controller implements ActionListener {
         view.getCalibrationTxtNumber().setText(String.valueOf(idCounter));
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
-
+        
+        
+        XMLCreator xmlCreator = new XMLCreator();
+        xmlCreator.createLaboratorioXML();
     }
 
     private int idCounter() throws IOException, SAXException, ParserConfigurationException {
