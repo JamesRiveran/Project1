@@ -45,7 +45,7 @@ public class ViewController extends Controller implements ActionListener {
     static Modulo view;
     protected Modulo viewError;
     ArrayList<InstrumentType> instrumentList = new ArrayList<>();
-    
+
     public ViewController() throws ParserConfigurationException, SAXException {
         this.listInstrument = new InstrumentsList();
         this.view = new Modulo();
@@ -54,11 +54,11 @@ public class ViewController extends Controller implements ActionListener {
         intrumentsController.setInstruSelectionListener(calibrationController);
         clickTable();
         updateTable();
-        updateComboBoxModel();
         this.view.setViewController(this);
     }
 
     public void start() throws IOException, SAXException, ParserConfigurationException {
+     
         view.getBtnClean().addActionListener(e -> clean());
         view.getBtnDelete().addActionListener(e -> delete());
         view.getBtnPDF().addActionListener(e -> reportPdf());
@@ -88,16 +88,14 @@ public class ViewController extends Controller implements ActionListener {
         view.getCalibrationTxtNumber().setText(String.valueOf(idCounter));
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
-        
-        
-        XMLCreator xmlCreator = new XMLCreator();
-        xmlCreator.createLaboratorioXML();
+
     }
 
     private int idCounter() throws IOException, SAXException, ParserConfigurationException {
         int idCounter = XMLLoader.getIdCounterFromXML(filePath);
         return idCounter;
     }
+
     public static void showMessage(JFrame parent, String message, String info) {
         if (info == "error") {
             JOptionPane.showMessageDialog(parent, message, "Validación", JOptionPane.ERROR_MESSAGE);
@@ -128,11 +126,11 @@ public class ViewController extends Controller implements ActionListener {
     public void save() {
         try {
             if (view.getTxtCode().getText().trim().isEmpty()) {
-                showMessage(viewError,"Debe ingresar el código del instrumento", "error");
+                showMessage(viewError, "Debe ingresar el código del instrumento", "error");
             } else if (view.getTxtName().getText().trim().isEmpty()) {
-                showMessage(viewError,"Debe ingresar todos los espacios", "error");
+                showMessage(viewError, "Debe ingresar todos los espacios", "error");
             } else if (view.getTxtUnit().getText().trim().isEmpty()) {
-                showMessage(viewError,"Debe ingresar la unidad de medida del instrumento", "error");
+                showMessage(viewError, "Debe ingresar la unidad de medida del instrumento", "error");
             } else {
                 try {
                     // Actualizar <Instrumento>
@@ -145,43 +143,17 @@ public class ViewController extends Controller implements ActionListener {
                     XMLLoader.saveToXML(filePath, listInstrument.getList());
                     listInstrument.getList().clear();
                     updateTable();
-                    updateComboBoxModel();
-                    XMLLoader.updateInstrument(filePath, oldName,  newName);
-                    showMessage(viewError,"Se guardó exitosamente", "success");
+                    intrumentsController.updateComboBoxModel();
+                    XMLLoader.updateInstrument(filePath, oldName, newName);
+                    showMessage(viewError, "Se guardó exitosamente", "success");
                 } catch (Exception ex) {
-                    showMessage(viewError,"Error al guardar en el archivo XML: " + ex.getMessage(), "error");
+                    showMessage(viewError, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
                 }
             }
         } catch (NullPointerException ex) {
-            showMessage(viewError,ex.getMessage(), "error");
+            showMessage(viewError, ex.getMessage(), "error");
         } catch (Exception ex) {
-            showMessage(viewError,ex.getMessage(), "error");
-        }
-    }
-    
-
-    /*Metodo para rellenar el comboBox*/
-    public void updateComboBoxModel() throws ParserConfigurationException, SAXException {
-        try {
-            listName = XMLLoader.loadFromXML(filePath);
-
-            if (view != null) {
-                JComboBox<String> cmbType = view.getCmbType();
-
-                if (cmbType != null) {
-                    DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
-
-                    // Agrega los elementos de listName al modelo del JComboBox
-                    for (InstrumentType name : listName) {
-                        comboBoxModel.addElement(name.getName());
-                    }
-
-                    // Establece el modelo en el JComboBox cmbType
-                    cmbType.setModel(comboBoxModel);
-                }
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+            showMessage(viewError, ex.getMessage(), "error");
         }
     }
 
@@ -190,7 +162,7 @@ public class ViewController extends Controller implements ActionListener {
         try {
             ArrayList<InstrumentType> loadedList = XMLLoader.loadFromXML(filePath);
             if (loadedList.isEmpty()) {
-                showMessage(viewError,"No hay tipos de instrumentos registrados", "error");
+                showMessage(viewError, "No hay tipos de instrumentos registrados", "error");
             }
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -218,7 +190,7 @@ public class ViewController extends Controller implements ActionListener {
         try {
             XMLLoader.deleteFromXML(filePath, instrumentToDelete);
             updateTable();
-            updateComboBoxModel();
+            intrumentsController.updateComboBoxModel();
             clean();
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -230,8 +202,6 @@ public class ViewController extends Controller implements ActionListener {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
 
     /**
      *
@@ -244,7 +214,7 @@ public class ViewController extends Controller implements ActionListener {
             list = loadTypeOfInstrument(view.getTblListInstruments());
             String pdfFilePath = "Reporte_TiposDeInstrumentos.pdf";
             GeneratorPDF.generatePDFReport(list, pdfFilePath, "modulo_1");
-            showMessage(viewError,"Generado con exito", "success");
+            showMessage(viewError, "Generado con exito", "success");
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
@@ -259,12 +229,12 @@ public class ViewController extends Controller implements ActionListener {
 
     public void editRegister(MouseEvent evt) {
         int rowSelected = view.getTblListInstruments().getSelectedRow();
-        
+
         if (rowSelected != -1) {
             String codeName = view.getTblListInstruments().getValueAt(rowSelected, 0).toString();
             String instrumentName = view.getTblListInstruments().getValueAt(rowSelected, 1).toString();
             String unitName = view.getTblListInstruments().getValueAt(rowSelected, 2).toString();
-           
+
             view.getTxtCode().setText(codeName);
             view.getTxtName().setText(instrumentName);
             view.getTxtUnit().setText(unitName);

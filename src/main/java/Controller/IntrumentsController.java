@@ -4,21 +4,27 @@
  */
 package Controller;
 
+import static Controller.ViewController.view;
 import Model.GeneratorPDF;
 import static Model.GeneratorPDF.loadInstrument;
 import Model.InstrumentModulo2;
+import Model.InstrumentType;
 import Model.IntrumentListModulo2;
 import Model.XMLLoader;
 import View.Modulo;
 import com.itextpdf.text.DocumentException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
@@ -28,21 +34,26 @@ import org.xml.sax.SAXException;
  *
  * @author 50686
  */
-public class IntrumentsController extends Controller implements ActionListener {
+public class IntrumentsController extends Controller implements ItemListener {
 
     ViewController viewController;
     IntrumentListModulo2 listModulo2;
     String filePath = "Laboratorio.xml";
     private ArrayList<InstrumentModulo2> ListOfXml;
+    private ArrayList<InstrumentType> listName;
     CalibrationController calibrationController;
     private InstruSelectionListener instruSelectionListener;
     static Modulo view;
     boolean updateInstruments = false;
+    private String selecItem;
+    boolean permisson = true;
 
     public IntrumentsController(Modulo view) throws ParserConfigurationException, SAXException {
         this.listModulo2 = new IntrumentListModulo2();
         this.view = view;
         this.calibrationController = new CalibrationController(this.view);
+        updateComboBoxModel();
+        clickCmbox();
         clickTable();
         updateTable();
         this.view.setIntrumentsController(this);
@@ -59,9 +70,9 @@ public class IntrumentsController extends Controller implements ActionListener {
             String serie = view.getTxtSerie().getText();
 
             // Verifica si el número de serie ya existe en la lista
-            if (view.getTxtSerie().getText().isEmpty() || view.getTxtDescri().getText().isEmpty() || view.getTxtMaxi().getText().isEmpty()) {
+            if (view.getTxtSerie().getText().isEmpty() || view.getTxtDescri().getText().isEmpty() || view.getTxtMaxi().getText().isEmpty() || view.getTxtMini().getText().isEmpty() || view.getTxtTole().getText().isEmpty()) {
                 viewController.showMessage(view, "Debe llenar todos los campos", "error");
-            } else if (view.getCmbType().getItemCount()==0) {
+            } else if (view.getCmbType().getSelectedItem()=="Todos los instrumentos") {
                 viewController.showMessage(view, "Debe primero inscribir un tipo de instrumento", "error");
             } else if (serieExists(serie, ListOfXml)) {
                 if (updateInstruments == true) {
@@ -108,17 +119,25 @@ public class IntrumentsController extends Controller implements ActionListener {
 
     @Override
     public void clean() {
-        view.getBtnDelete().setEnabled(false);
-        view.getTxtSerie().setEnabled(true);
-        view.getBtnDeleteInstru().setEnabled(false);
-        view.getTxtSerie().setText("");
-        view.getTxtMini().setText("");
-        view.getTxtTole().setText("");
-        view.getTxtMaxi().setText("");
-        view.getTxtDescri().setText("");
+        try {
+            view.getBtnDelete().setEnabled(false);
+            view.getTxtSerie().setEnabled(true);
+            view.getBtnDeleteInstru().setEnabled(false);
+            view.getTxtSerie().setText("");
+            view.getTxtMini().setText("");
+            view.getTxtTole().setText("");
+            view.getTxtMaxi().setText("");
+            view.getTxtDescri().setText("");
+            updateComboBoxModel();
+            selecItem="Todos los instrumentos";
+            updateTable();
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
-    
-    
 
     @Override
     public void reportPdf() {
@@ -187,7 +206,39 @@ public class IntrumentsController extends Controller implements ActionListener {
 
             for (int i = ListOfXml.size() - 1; i >= 0; i--) {
                 InstrumentModulo2 newInstrument = ListOfXml.get(i);
-                tableModel.insertRow(0, new Object[]{newInstrument.getSerie(), newInstrument.getDescri(), newInstrument.getMini(), newInstrument.getMaxi(), newInstrument.getTole(), newInstrument.getType()});
+                if (newInstrument.getType().equals(selecItem)) {
+                    tableModel.insertRow(0, new Object[]{newInstrument.getSerie(), newInstrument.getDescri(), newInstrument.getMini(), newInstrument.getMaxi(), newInstrument.getTole(), newInstrument.getType()});
+                } else if (selecItem == "Todos los instrumentos" || selecItem == null) {
+                    tableModel.insertRow(0, new Object[]{newInstrument.getSerie(), newInstrument.getDescri(), newInstrument.getMini(), newInstrument.getMaxi(), newInstrument.getTole(), newInstrument.getType()});
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /* Método para rellenar el comboBox */
+    public void updateComboBoxModel() throws ParserConfigurationException, SAXException {
+        try {
+            listName = XMLLoader.loadFromXML(filePath);
+
+            if (view != null) {
+                JComboBox<String> cmbType = view.getCmbType();
+
+                if (cmbType != null) {
+                    DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+
+                    // Agrega la opción predeterminada al modelo del JComboBox
+                    comboBoxModel.addElement("Todos los instrumentos");
+
+                    // Agrega los elementos de listName al modelo del JComboBox
+                    for (InstrumentType name : listName) {
+                        comboBoxModel.addElement(name.getName());
+                    }
+
+                    // Establece el modelo en el JComboBox cmbType
+                    cmbType.setModel(comboBoxModel);
+                }
             }
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -204,6 +255,32 @@ public class IntrumentsController extends Controller implements ActionListener {
 
         });
         return true;
+    }
+
+    public boolean clickCmbox() {
+        view.getCmbType().addItemListener((ItemListener) this);
+        return false;
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            // Se ha seleccionado un nuevo elemento en el JComboBox
+
+            selecItem = (String) e.getItem();
+            try {
+                if (permisson || view.getTxtSearchInstru().getText().isEmpty()) {
+                    updateTable();
+                }
+            } catch (ParserConfigurationException ex) {
+                Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SAXException ex) {
+                Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Elemento seleccionado: " + selecItem);
+
+            // Realiza las operaciones que necesites con el nuevo elemento seleccionado
+        }
     }
 
     public void tbInstruMouseClicked(MouseEvent evt) {
@@ -259,10 +336,10 @@ public class IntrumentsController extends Controller implements ActionListener {
 
         // Si la cadena de búsqueda está vacía, muestra todos los elementos
         if (searchLetter.isEmpty()) {
-            for (InstrumentModulo2 instrument : ListOfXml) {
-                tableModel.addRow(new Object[]{instrument.getSerie(), instrument.getDescri(), instrument.getMini(), instrument.getMaxi(), instrument.getTole()});
-            }
+            permisson = true;
+            updateTable();
         } else {
+            permisson = false;
             // Itera sobre la lista de instrumentos y agrega las coincidencias al modelo de la tabla
             for (InstrumentModulo2 instrument : ListOfXml) {
                 // Convierte la descripción a minúsculas para hacer la búsqueda insensible a mayúsculas y minúsculas
@@ -270,15 +347,9 @@ public class IntrumentsController extends Controller implements ActionListener {
 
                 // Verifica si la descripción contiene la letra ingresada
                 if (description.contains(searchLetter.toLowerCase())) {
-                    tableModel.addRow(new Object[]{instrument.getSerie(), instrument.getDescri(), instrument.getMini(), instrument.getMaxi(), instrument.getTole()});
+                    tableModel.addRow(new Object[]{instrument.getSerie(), instrument.getDescri(), instrument.getMini(), instrument.getMaxi(), instrument.getTole(), instrument.getType()});
                 }
             }
         }
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        clickTable();
-    }
-
 }

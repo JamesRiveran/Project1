@@ -420,7 +420,6 @@ public class Modulo extends javax.swing.JFrame {
             }
         });
 
-        txtMini.setText("0");
         txtMini.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMiniActionPerformed(evt);
@@ -432,7 +431,11 @@ public class Modulo extends javax.swing.JFrame {
             }
         });
 
-        txtTole.setText("0");
+        txtTole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtToleActionPerformed(evt);
+            }
+        });
         txtTole.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtToleKeyTyped(evt);
@@ -1333,6 +1336,10 @@ public class Modulo extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         this.viewController.close();
     }//GEN-LAST:event_formWindowClosing
+
+    private void txtToleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtToleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtToleActionPerformed
 
     public ViewController getViewController() {
         return viewController;

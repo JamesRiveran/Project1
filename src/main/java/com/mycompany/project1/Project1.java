@@ -16,9 +16,10 @@ import org.xml.sax.SAXException;
 public class Project1 {
 
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
-        
-            Controller.ViewController view = new ViewController();
-            view.start();
-        
+        XMLCreator xmlCreator = new XMLCreator();
+        xmlCreator.createLaboratorioXML();
+        Controller.ViewController view = new ViewController();
+        view.start();
+
     }
 }
