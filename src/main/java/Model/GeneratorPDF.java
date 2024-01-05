@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.List;
+import javax.swing.JTable;
 
 
 /**
@@ -35,6 +36,24 @@ import java.util.List;
  * @author 50686
  */
 public class GeneratorPDF {
+    static ArrayList<InstrumentType> instrumentList = new ArrayList<>();
+    
+     public static ArrayList<InstrumentType> loadTypeOfInstrument(JTable jTable) {
+        instrumentList.clear();
+        int rowCount = jTable.getRowCount();
+
+        for (int i = 0; i < rowCount; i++) {
+            // Supongamos que tu JTable tiene tres columnas: nombre, tipo y precio
+            String code = (String) jTable.getValueAt(i, 0);
+            String name = (String) jTable.getValueAt(i, 1);
+            String unit = String.valueOf(jTable.getValueAt(i, 2).toString());
+
+            // Crea un nuevo objeto InstrumentType con los datos de la fila y agrégalo al ArrayList
+            InstrumentType instrumento = new InstrumentType(code, unit, name);
+            instrumentList.add(instrumento);
+        }
+        return instrumentList;
+    }
 
   public static <T> void generatePDFReport(List<T> itemList, String filePath, String modulo)
         throws DocumentException, FileNotFoundException {

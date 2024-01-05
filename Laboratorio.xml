@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Laboratorio>
-                                                            
+                                                                
+    
     
     
     
@@ -14,7 +15,8 @@
     
     
     <IdMedicionCounter>11</IdMedicionCounter>
-                                                            
+                                                                
+    
     
     
     
@@ -29,7 +31,8 @@
     
     
     <Tipo_de_instrumento>
-                                                                                                                        
+                                                                                                                                
+        
         
         
         
@@ -44,7 +47,8 @@
         
         
         <Codigo>TER</Codigo>
-                                                                                                                        
+                                                                                                                                
+        
         
         
         
@@ -59,7 +63,8 @@
         
         
         <Nombre>Termómetro</Nombre>
-                                                                                                                        
+                                                                                                                                
+        
         
         
         
@@ -74,7 +79,8 @@
         
         
         <Unidad>PSI</Unidad>
-                                                                                                                    
+                                                                                                                            
+    
     
     
     
@@ -89,7 +95,8 @@
     
     
     </Tipo_de_instrumento>
-                                                            
+                                                                
+    
     
     
     
@@ -104,7 +111,8 @@
     
     
     <idCounter>3</idCounter>
-                                                        
+                                                            
+    
     
     
     
@@ -119,7 +127,8 @@
     
     
     <Instrumento>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -133,7 +142,8 @@
         
         
         <Serie>23342</Serie>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -147,7 +157,8 @@
         
         
         <Minimo>0</Minimo>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -161,7 +172,8 @@
         
         
         <Tolerancia>0</Tolerancia>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -175,7 +187,8 @@
         
         
         <Descripcion>djsbjhsdbhbshjbsjdbvhbdhjvbsdjvbjsdbd</Descripcion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -189,7 +202,8 @@
         
         
         <Maximo>90</Maximo>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -203,7 +217,8 @@
         
         
         <Tipo>Termómetro</Tipo>
-                                                                                                            
+                                                                                                                    
+    
     
     
     
@@ -217,7 +232,8 @@
     
     
     </Instrumento>
-                                                        
+                                                            
+    
     
     
     
@@ -231,7 +247,8 @@
     
     
     <Calibracion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -245,7 +262,8 @@
         
         
         <Serie>23342</Serie>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -259,7 +277,8 @@
         
         
         <Fecha>2024/01/01</Fecha>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -273,7 +292,8 @@
         
         
         <Numero>1</Numero>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -287,7 +307,8 @@
         
         
         <Mediciones>3</Mediciones>
-                                                                                                            
+                                                                                                                    
+    
     
     
     
@@ -301,7 +322,8 @@
     
     
     </Calibracion>
-                                                        
+                                                            
+    
     
     
     
@@ -315,7 +337,8 @@
     
     
     <Medicion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -329,7 +352,8 @@
         
         
         <IdMedicion>2</IdMedicion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -343,7 +367,8 @@
         
         
         <Numero>1</Numero>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -357,7 +382,8 @@
         
         
         <Medida>1.0</Medida>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -371,7 +397,8 @@
         
         
         <Referencia>0</Referencia>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -385,7 +412,8 @@
         
         
         <Lectura/>
-                                                                                                            
+                                                                                                                    
+    
     
     
     
@@ -399,7 +427,8 @@
     
     
     </Medicion>
-                                                        
+                                                            
+    
     
     
     
@@ -413,7 +442,8 @@
     
     
     <Medicion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -427,7 +457,8 @@
         
         
         <IdMedicion>3</IdMedicion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -441,7 +472,8 @@
         
         
         <Numero>1</Numero>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -455,7 +487,8 @@
         
         
         <Medida>2.0</Medida>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -469,7 +502,8 @@
         
         
         <Referencia>30</Referencia>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -483,7 +517,8 @@
         
         
         <Lectura/>
-                                                                                                            
+                                                                                                                    
+    
     
     
     
@@ -497,7 +532,8 @@
     
     
     </Medicion>
-                                                        
+                                                            
+    
     
     
     
@@ -511,7 +547,8 @@
     
     
     <Medicion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -525,7 +562,8 @@
         
         
         <IdMedicion>4</IdMedicion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -539,7 +577,8 @@
         
         
         <Numero>1</Numero>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -553,7 +592,8 @@
         
         
         <Medida>3.0</Medida>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -567,7 +607,8 @@
         
         
         <Referencia>60</Referencia>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -581,7 +622,8 @@
         
         
         <Lectura/>
-                                                                                                            
+                                                                                                                    
+    
     
     
     
@@ -595,7 +637,8 @@
     
     
     </Medicion>
-                                                        
+                                                            
+    
     
     
     
@@ -609,7 +652,8 @@
     
     
     <Calibracion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -623,7 +667,8 @@
         
         
         <Serie>23342</Serie>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -637,7 +682,8 @@
         
         
         <Fecha>2024/01/01</Fecha>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -651,7 +697,8 @@
         
         
         <Numero>2</Numero>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -665,7 +712,8 @@
         
         
         <Mediciones>5</Mediciones>
-                                                                                                            
+                                                                                                                    
+    
     
     
     
@@ -679,7 +727,8 @@
     
     
     </Calibracion>
-                                                        
+                                                            
+    
     
     
     
@@ -693,7 +742,8 @@
     
     
     <Medicion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -707,7 +757,8 @@
         
         
         <IdMedicion>6</IdMedicion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -721,7 +772,8 @@
         
         
         <Numero>2</Numero>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -735,7 +787,8 @@
         
         
         <Medida>1.0</Medida>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -749,7 +802,8 @@
         
         
         <Referencia>0</Referencia>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -763,7 +817,8 @@
         
         
         <Lectura/>
-                                                                                                            
+                                                                                                                    
+    
     
     
     
@@ -777,7 +832,8 @@
     
     
     </Medicion>
-                                                        
+                                                            
+    
     
     
     
@@ -791,7 +847,8 @@
     
     
     <Medicion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -805,7 +862,8 @@
         
         
         <IdMedicion>7</IdMedicion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -819,7 +877,8 @@
         
         
         <Numero>2</Numero>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -833,7 +892,8 @@
         
         
         <Medida>2.0</Medida>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -847,7 +907,8 @@
         
         
         <Referencia>18</Referencia>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -861,7 +922,8 @@
         
         
         <Lectura/>
-                                                                                                            
+                                                                                                                    
+    
     
     
     
@@ -875,7 +937,8 @@
     
     
     </Medicion>
-                                                        
+                                                            
+    
     
     
     
@@ -889,7 +952,8 @@
     
     
     <Medicion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -903,7 +967,8 @@
         
         
         <IdMedicion>8</IdMedicion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -917,7 +982,8 @@
         
         
         <Numero>2</Numero>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -931,7 +997,8 @@
         
         
         <Medida>3.0</Medida>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -945,7 +1012,8 @@
         
         
         <Referencia>36</Referencia>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -959,7 +1027,8 @@
         
         
         <Lectura/>
-                                                                                                            
+                                                                                                                    
+    
     
     
     
@@ -973,7 +1042,8 @@
     
     
     </Medicion>
-                                                        
+                                                            
+    
     
     
     
@@ -987,7 +1057,8 @@
     
     
     <Medicion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -1001,7 +1072,8 @@
         
         
         <IdMedicion>9</IdMedicion>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -1015,7 +1087,8 @@
         
         
         <Numero>2</Numero>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -1029,7 +1102,8 @@
         
         
         <Medida>4.0</Medida>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -1043,7 +1117,8 @@
         
         
         <Referencia>54</Referencia>
-                                                                                                                
+                                                                                                                        
+        
         
         
         
@@ -1057,7 +1132,113 @@
         
         
         <Lectura/>
-                                                                                                            
+                                                                                                                    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </Medicion>
+                                                            
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <Medicion>
+                                                                                                                        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <IdMedicion>10</IdMedicion>
+                                                                                                                        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <Numero>2</Numero>
+                                                                                                                        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <Medida>5.0</Medida>
+                                                                                                                        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <Referencia>72</Referencia>
+                                                                                                                        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <Lectura/>
+                                                                                                                    
+    
     
     
     
@@ -1084,7 +1265,8 @@
     
     
     
-    <Medicion>
+    
+    <Tipo_de_instrumento>
                                                                                                                 
         
         
@@ -1098,7 +1280,7 @@
         
         
         
-        <IdMedicion>10</IdMedicion>
+        <Codigo>BAR</Codigo>
                                                                                                                 
         
         
@@ -1112,7 +1294,7 @@
         
         
         
-        <Numero>2</Numero>
+        <Nombre>Barómetro</Nombre>
                                                                                                                 
         
         
@@ -1126,35 +1308,7 @@
         
         
         
-        <Medida>5.0</Medida>
-                                                                                                                
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <Referencia>72</Referencia>
-                                                                                                                
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <Lectura/>
+        <Unidad>PSI</Unidad>
                                                                                                             
     
     
@@ -1168,74 +1322,9 @@
     
     
     
-    </Medicion>
-                                                    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <Tipo_de_instrumento>
-                                                                                                        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <Codigo>BAR</Codigo>
-                                                                                                        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <Nombre>Barómetro</Nombre>
-                                                                                                        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <Unidad>PSI</Unidad>
-                                                                                                    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     </Tipo_de_instrumento>
-                                                
+                                                    
+
 
 
 

@@ -54,7 +54,6 @@ public class IntrumentsController extends Controller implements ActionListener {
 
     @Override
     public void save() {
-
         try {
             String serie = view.getTxtSerie().getText();
 
@@ -117,11 +116,15 @@ public class IntrumentsController extends Controller implements ActionListener {
         view.getTxtMaxi().setText("");
         view.getTxtDescri().setText("");
     }
+    
+    
 
     @Override
     public void reportPdf() {
         try {
-            ArrayList<InstrumentModulo2> instrumentListModulo2 = XMLLoader.loadFromXMLS(filePath);
+            ArrayList<InstrumentModulo2> instrumentListModulo2 = new ArrayList<>();
+            instrumentListModulo2.clear();
+            //instrumentListModulo2 = 
             String pdfFilePath = "Reporte_Instrumentos.pdf";
             GeneratorPDF.generatePDFReport(instrumentListModulo2, pdfFilePath, "modulo_2");
             viewController.showMessage(view, "Generado con exito", "success");
@@ -129,10 +132,6 @@ public class IntrumentsController extends Controller implements ActionListener {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DocumentException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

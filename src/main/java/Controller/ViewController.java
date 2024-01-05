@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.GeneratorPDF;
+import static Model.GeneratorPDF.loadTypeOfInstrument;
 import Model.InstrumentType;
 import Model.InstrumentsList;
 import Model.XMLCreator;
@@ -230,22 +231,7 @@ public class ViewController extends Controller implements ActionListener {
         }
     }
     
-    public ArrayList<InstrumentType> loadData(JTable jTable) {
-        instrumentList.clear();
-        int rowCount = jTable.getRowCount();
-
-        for (int i = 0; i < rowCount; i++) {
-            // Supongamos que tu JTable tiene tres columnas: nombre, tipo y precio
-            String code = (String) jTable.getValueAt(i, 0);
-            String name = (String) jTable.getValueAt(i, 1);
-            String unit = String.valueOf(jTable.getValueAt(i, 2).toString());
-
-            // Crea un nuevo objeto InstrumentType con los datos de la fila y agrégalo al ArrayList
-            InstrumentType instrumento = new InstrumentType(code, unit, name);
-            instrumentList.add(instrumento);
-        }
-        return instrumentList;
-    }
+    
 
     /**
      *
@@ -255,7 +241,7 @@ public class ViewController extends Controller implements ActionListener {
         try {
             ArrayList<InstrumentType> list = new ArrayList<>();
             list.clear();
-            list = loadData(view.getTblListInstruments());
+            list = loadTypeOfInstrument(view.getTblListInstruments());
             String pdfFilePath = "Reporte_TiposDeInstrumentos.pdf";
             GeneratorPDF.generatePDFReport(list, pdfFilePath, "modulo_1");
             showMessage(viewError,"Generado con exito", "success");
