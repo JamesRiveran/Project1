@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Laboratorio>
-        
+                    
+    
+    
+    
     <idCounter>1</idCounter>
+                
+    
+    
     
     <IdMedicionCounter>1</IdMedicionCounter>
+            
+
+    
+    <Tipo_de_instrumento>
+                
+        <Codigo>Te</Codigo>
+                
+        <Nombre>Termómetro</Nombre>
+                
+        <Unidad>Grados Celcius</Unidad>
+            
+    </Tipo_de_instrumento>
+    
+    <Instrumento>
+        <Serie>1</Serie>
+        <Minimo>0</Minimo>
+        <Tolerancia>0</Tolerancia>
+        <Descripcion>Prueba Exitosa</Descripcion>
+        <Maximo>90</Maximo>
+        <Tipo>Termómetro</Tipo>
+    </Instrumento>
 </Laboratorio>

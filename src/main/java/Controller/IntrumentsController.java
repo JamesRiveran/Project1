@@ -86,7 +86,7 @@ public class IntrumentsController extends Controller implements ItemListener {
                     }
                 } else {
 
-                    viewController.showMessage(view, "Ya ese numero de serie existe", "error");
+                    viewController.showMessage(view, "Ya ese numero de serie existe  o debe seleccionar algun listado para actualizar", "error");
                 }
             } else if (Integer.parseInt(view.getTxtMini().getText()) > Integer.parseInt(view.getTxtMaxi().getText())) {
                 viewController.showMessage(view, "El minimo es mayor que el maximo", "error");
