@@ -5,6 +5,7 @@
 package Controller;
 
 import Model.GeneratorPDF;
+import static Model.GeneratorPDF.loadInstrument;
 import Model.InstrumentModulo2;
 import Model.IntrumentListModulo2;
 import Model.XMLLoader;
@@ -124,7 +125,7 @@ public class IntrumentsController extends Controller implements ActionListener {
         try {
             ArrayList<InstrumentModulo2> instrumentListModulo2 = new ArrayList<>();
             instrumentListModulo2.clear();
-            //instrumentListModulo2 = 
+            instrumentListModulo2 = loadInstrument(view.getTbInstru());
             String pdfFilePath = "Reporte_Instrumentos.pdf";
             GeneratorPDF.generatePDFReport(instrumentListModulo2, pdfFilePath, "modulo_2");
             viewController.showMessage(view, "Generado con exito", "success");

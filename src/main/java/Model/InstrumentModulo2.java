@@ -20,6 +20,13 @@ public class InstrumentModulo2 {
         this.maxi = maxi;
         this.type = type;
     }
+    public InstrumentModulo2(String serie, String mini, String tole, String descri, String maxi) {
+        this.serie = serie;
+        this.mini = mini;
+        this.tole = tole;
+        this.descri = descri;
+        this.maxi = maxi;
+    }
 
     public InstrumentModulo2() {
         this.serie = "";
