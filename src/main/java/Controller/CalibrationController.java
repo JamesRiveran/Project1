@@ -320,6 +320,7 @@ public class CalibrationController extends Controller implements ActionListener,
                         }
 
                         view.getCalibrationTxtMeasurement().setText(measurement.toString());
+                        view.getCalibrationTxtNumber().setText(String.valueOf(id));
                         view.getCalibrationTxtNumber().setEnabled(false);
                         view.getCalibrationDateChooser().setEnabled(false);
                         view.getCalibrationTxtMeasurement().setEnabled(false);
@@ -379,6 +380,16 @@ public class CalibrationController extends Controller implements ActionListener,
         clickTable();
     }
 
+    public String getSerieInstrument() {
+        return serieInstrument;
+    }
+
+    public void setSerieInstrument(String serieInstrument) {
+        this.serieInstrument = serieInstrument;
+    }
+    
+    
+
     private void filterByNumber(String searchNumber) {
         listCalibrations = XMLLoader.loadFromCalibrations(filePath);
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
@@ -401,8 +412,9 @@ public class CalibrationController extends Controller implements ActionListener,
     @Override
     public void delete() {
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
-        XMLLoader.deleteDataMensu(filePath, getNumber());
-        XMLLoader.deleteData(filePath, getNumber());
+        String serie = getSerieInstrument();
+        int number = Integer.parseInt(view.getCalibrationTxtNumber().getText());
+        XMLLoader.delete(filePath,serie,number);
         viewController.showMessage(view, "Eliminado con exito", "success");
         updateTable();
         clearTable(tableModel);
@@ -415,8 +427,8 @@ public class CalibrationController extends Controller implements ActionListener,
         this.tolerancia = tolerancia;
         this.max = max;
         this.pass = true;
-
-        serieInstrument=serie;
+        
+        setSerieInstrument(serie);
         
         CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
         List<org.w3c.dom.Element> calibracionesEncontradas = XMLLoader.findCalibrationsByNumber(filePath, serie);

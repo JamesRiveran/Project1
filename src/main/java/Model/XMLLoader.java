@@ -839,74 +839,8 @@ public static void saveToXMLMeasurement(String filePath, List<Measurement> measu
         }
     }
 
-    // Método para eliminar mediciones del archivo XML
-    public static void deleteDataMensu(String filePath, String serie) {
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(new File(filePath));
 
-            Element rootElement = document.getDocumentElement();
-            NodeList instrumentElements = rootElement.getElementsByTagName("Medicion");
-
-            // Almacena las mediciones que se eliminarán
-            List<Element> elementsToRemove = new ArrayList<>();
-
-            for (int i = 0; i < instrumentElements.getLength(); i++) {
-                Element instrumentElement = (Element) instrumentElements.item(i);
-                String code = instrumentElement.getElementsByTagName("Numero").item(0).getTextContent();
-
-                if (code.equals(serie)) {
-                    elementsToRemove.add(instrumentElement);
-                }
-            }
-
-            // Elimina las mediciones después de completar la iteración
-            for (Element elementToRemove : elementsToRemove) {
-                rootElement.removeChild(elementToRemove);
-            }
-
-            // Guarda los cambios en el archivo XML
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(document);
-            StreamResult result = new StreamResult(new File(filePath));
-            transformer.transform(source, result);
-        } catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Método para eliminar registros de calibraciones del archivo XML
-    public static void deleteData(String filePath, String serie) {
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(new File(filePath));
-
-            Element rootElement = document.getDocumentElement();
-            NodeList instrumentElements = rootElement.getElementsByTagName("Calibracion");
-
-            for (int i = 0; i < instrumentElements.getLength(); i++) {
-                Element instrumentElement = (Element) instrumentElements.item(i);
-                String code = instrumentElement.getElementsByTagName("Numero").item(0).getTextContent();
-
-                if (code.equals(serie)) {
-                    rootElement.removeChild(instrumentElement);
-                }
-            }
-
-            // Guardar los cambios en el archivo XML
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(document);
-            StreamResult result = new StreamResult(new File(filePath));
-            transformer.transform(source, result);
-        } catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
-            e.printStackTrace();
-        }
-    }
-
+   
     // Método para buscar calibraciones por número en el archivo XML
     public static List<Element> findCalibrationsByNumber(String filePath, String numero) {
         List<Element> calibracionesEncontradas = new ArrayList<>();
@@ -934,5 +868,60 @@ public static void saveToXMLMeasurement(String filePath, List<Measurement> measu
 
         return calibracionesEncontradas;
     }
+    
+    public static void delete(String filePath, String instrumentCode, int calibrationNumber) {
+    try {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+        Document doc;
+        File file = new File(filePath);
+        doc = dBuilder.parse(file);
+
+        Element laboratorio = doc.getDocumentElement();
+        NodeList tipoInstrumentoList = laboratorio.getElementsByTagName("Tipo_de_instrumento");
+
+        for (int i = 0; i < tipoInstrumentoList.getLength(); i++) {
+            Element tipoDeInstrumento = (Element) tipoInstrumentoList.item(i);
+            NodeList instrumentoList = tipoDeInstrumento.getElementsByTagName("Instrumento");
+
+            for (int j = 0; j < instrumentoList.getLength(); j++) {
+                Element instrumento = (Element) instrumentoList.item(j);
+                String code = instrumento.getElementsByTagName("Serie").item(0).getTextContent();
+
+                if (code.equals(instrumentCode)) {
+                    NodeList calibracionList = instrumento.getElementsByTagName("Calibracion");
+
+                    for (int k = 0; k < calibracionList.getLength(); k++) {
+                        Element calibracion = (Element) calibracionList.item(k);
+                        Element numero = (Element) calibracion.getElementsByTagName("Numero").item(0);
+
+                        // Verifica si el número de calibración coincide con el número especificado
+                        if (Integer.parseInt(numero.getTextContent()) == calibrationNumber) {
+                            // Elimina la calibración
+                            instrumento.removeChild(calibracion);
+
+                            // Guarda los cambios en el archivo XML
+                            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                            Transformer transformer = transformerFactory.newTransformer();
+                            DOMSource source = new DOMSource(doc);
+                            StreamResult result = new StreamResult(file);
+                            transformer.transform(source, result);
+
+                            System.out.println("Calibración eliminada correctamente del instrumento con código: " + instrumentCode);
+                            return; // Salir después de eliminar la calibración
+                        }
+                    }
+                }
+            }
+        }
+
+        // Si llegamos aquí, significa que no se encontró el instrumento con el código especificado
+        System.out.println("No se encontró el instrumento con código: " + instrumentCode);
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }
+}
+
 
 }
