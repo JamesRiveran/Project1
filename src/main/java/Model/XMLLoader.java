@@ -511,30 +511,54 @@ public class XMLLoader {
 
         return updatedIdMedicion;
     }
+    
+    
 
     // Método para obtener el valor de idCounter desde XML
-    public static int getIdCounterFromXML(String filePath) {
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
+   public static int getIdCounterFromXML(String filePath) throws ParserConfigurationException {
+       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+       DocumentBuilder builder = factory.newDocumentBuilder();
+       try (InputStream inputStream = new FileInputStream(filePath)) {
+           Document document = builder.parse(inputStream);
+           
+           Element rootElement = document.getDocumentElement();
+           Element idCounterElement = (Element) rootElement.getElementsByTagName("idCounter").item(0);
+           
+           int updatedIdCounter;
+           if (idCounterElement == null) {
+               // Si la etiqueta <idCounter> no existe, crear una nueva con valor 1
+               idCounterElement = document.createElement("idCounter");
+               idCounterElement.setTextContent("1"); // Valor predeterminado
+               rootElement.appendChild(idCounterElement);
+               updatedIdCounter = 1;
+               
+               // Guardar los cambios en el archivo XML
+               TransformerFactory transformerFactory = TransformerFactory.newInstance();
+               Transformer transformer = transformerFactory.newTransformer();
+               DOMSource source = new DOMSource(document);
+               StreamResult result = new StreamResult(new File(filePath));
+               transformer.transform(source, result);
+           } else {
+               // Si la etiqueta <idCounter> existe, obtener el valor actual y aumentarlo en 1
+               int currentIdCounter = Integer.parseInt(idCounterElement.getTextContent());
+               updatedIdCounter = currentIdCounter + 1;
+               // Actualizar el valor del contador
+               idCounterElement.setTextContent(Integer.toString(updatedIdCounter));
+               
+               // Guardar los cambios en el archivo XML
+               TransformerFactory transformerFactory = TransformerFactory.newInstance();
+               Transformer transformer = transformerFactory.newTransformer();
+               DOMSource source = new DOMSource(document);
+               StreamResult result = new StreamResult(new File(filePath));
+               transformer.transform(source, result);
+           }
+           
+           return updatedIdCounter;
+       } catch (IOException | SAXException | TransformerException e) {
+           throw new RuntimeException("Error al parsear el archivo XML: " + e.getMessage(), e);
+       }
+}
 
-            try (InputStream inputStream = new FileInputStream(filePath)) {
-                Document document = builder.parse(inputStream);
-
-                Element rootElement = document.getDocumentElement();
-                Element idCounterElement = (Element) rootElement.getElementsByTagName("idCounter").item(0);
-
-                if (idCounterElement != null) {
-                    String idCounterText = idCounterElement.getTextContent();
-                    return Integer.parseInt(idCounterText);
-                } else {
-                    throw new RuntimeException("La etiqueta <idCounter> no está presente en el archivo XML.");
-                }
-            }
-        } catch (IOException | SAXException | ParserConfigurationException e) {
-            throw new RuntimeException("Error al parsear el archivo XML: " + e.getMessage(), e);
-        }
-    }
 
     public static String getNameOfInstrument(String filePath, String codigoBuscar) {
         try {
