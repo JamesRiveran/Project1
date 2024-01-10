@@ -83,18 +83,8 @@ public class XMLLoader {
             File file = new File(filePath);
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-
-            if (file.exists()) {
-                // Si el archivo existe, cargar el contenido existente
-                doc = (Document) builder.parse(file);
-            } else {
-                // Si el archivo no existe, crear uno nuevo
-                DocumentBuilderFactory newFactory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder newBuilder = newFactory.newDocumentBuilder();
-                doc = (Document) newBuilder.newDocument();
-                doc.appendChild(doc.createElement("Instrumentos"));
-            }
-
+            doc = (Document) builder.parse(file);
+            
             Element instruments = doc.getDocumentElement();
 
             // Agregar los nuevos instrumentos
@@ -228,83 +218,90 @@ public class XMLLoader {
         return null;
     }
 
-    public static void addToXML(String filePath, List<InstrumentModulo2> instrumentList) {
-        if (instrumentList == null || instrumentList.isEmpty()) {
-            throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacía");
-        }
-
-        try {
-            Document doc;
-
-            // Verificar si el archivo ya existe
-            File file = new File(filePath);
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-
-            if (file.exists()) {
-                // Si el archivo existe, cargar el contenido existente
-                doc = (Document) builder.parse(file);
-            } else {
-                // Si el archivo no existe, crear uno nuevo
-                doc = (Document) builder.newDocument();
-                Element rootElement = doc.createElement("Instrumentos");
-                doc.appendChild(rootElement);
-            }
-
-            Element instruments = doc.getDocumentElement();
-
-            // Agregar los nuevos instrumentos
-            for (InstrumentModulo2 instrument : instrumentList) {
-                // Verificar si el tipo de instrumento ya existe en el archivo
-                Element existingInstrument = findInstrumentBySerie(instruments, instrument.getSerie());
-
-                if (existingInstrument == null) {
-                    // Si no existe, crear uno nuevo y agregarlo al elemento raíz
-                    Element typeInstrument = doc.createElement("Instrumento");
-                    Element serie = doc.createElement("Serie");
-                    serie.setTextContent(instrument.getSerie());
-                    Element min = doc.createElement("Minimo");
-                    min.setTextContent(instrument.getMini());
-                    Element tole = doc.createElement("Tolerancia");
-                    tole.setTextContent(instrument.getTole());
-                    Element descrip = doc.createElement("Descripcion");
-                    descrip.setTextContent(instrument.getDescri());
-                    Element max = doc.createElement("Maximo");
-                    max.setTextContent(instrument.getMaxi());
-                    Element type = doc.createElement("Tipo");
-                    type.setTextContent(instrument.getType().toString());
-
-                    typeInstrument.appendChild(serie);
-                    typeInstrument.appendChild(min);
-                    typeInstrument.appendChild(tole);
-                    typeInstrument.appendChild(descrip);
-                    typeInstrument.appendChild(max);
-                    typeInstrument.appendChild(type);
-
-                    instruments.appendChild(typeInstrument);
-                } else {
-                    // Si ya existe, actualizar sus datos según sea necesario
-                    existingInstrument.getElementsByTagName("Serie").item(0).setTextContent(instrument.getSerie());
-                    existingInstrument.getElementsByTagName("Minimo").item(0).setTextContent(instrument.getMini());
-                    existingInstrument.getElementsByTagName("Tolerancia").item(0).setTextContent(instrument.getTole());
-                    existingInstrument.getElementsByTagName("Descripcion").item(0).setTextContent(instrument.getDescri());
-                    existingInstrument.getElementsByTagName("Maximo").item(0).setTextContent(instrument.getMaxi());
-                    existingInstrument.getElementsByTagName("Tipo").item(0).setTextContent(instrument.getType().toString());
-                }
-            }
-
-            // Guardar los cambios en el archivo
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource((Node) doc);
-            StreamResult result = new StreamResult(new File(filePath));
-            transformer.transform(source, result);
-
-            System.out.println("Archivo XML guardado correctamente con codificación UTF-8.");
-        } catch (ParserConfigurationException | IOException | SAXException | TransformerException e) {
-            e.printStackTrace();
-        }
+ public static void addToXML(String filePath, List<InstrumentModulo2> instrumentList, String tipoInstrumentoSeleccionado) {
+    if (instrumentList == null || instrumentList.isEmpty()) {
+        throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacía");
     }
+
+    try {
+        Document doc;
+
+        // Verificar si el archivo ya existe
+        File file = new File(filePath);
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+
+        if (file.exists()) {
+            // Si el archivo existe, cargar el contenido existente
+            doc = builder.parse(file);
+        } else {
+            // Si el archivo no existe, crear uno nuevo
+            doc = builder.newDocument();
+            Element rootElement = doc.createElement("Laboratorio");
+            doc.appendChild(rootElement);
+        }
+
+        Element laboratorio = doc.getDocumentElement();
+
+        // Buscar el elemento <Tipo_de_instrumento> correspondiente al tipo seleccionado
+        Element tipoInstrumento = null;
+        NodeList tipoInstrumentoList = laboratorio.getElementsByTagName("Tipo_de_instrumento");
+        for (int i = 0; i < tipoInstrumentoList.getLength(); i++) {
+            Element tipo = (Element) tipoInstrumentoList.item(i);
+            if (tipoInstrumentoSeleccionado.equals(tipo.getElementsByTagName("Nombre").item(0).getTextContent())) {
+                tipoInstrumento = tipo;
+                break;
+            }
+        }
+
+        // Verificar si el elemento <Tipo_de_instrumento> existe, si no, crear uno nuevo
+        if (tipoInstrumento == null) {
+            tipoInstrumento = doc.createElement("Tipo_de_instrumento");
+            Element nombre = doc.createElement("Nombre");
+            nombre.setTextContent(tipoInstrumentoSeleccionado);
+            tipoInstrumento.appendChild(nombre);
+            laboratorio.appendChild(tipoInstrumento);
+        }
+
+        // Agregar los nuevos instrumentos dentro del tipo de instrumento correspondiente
+        for (InstrumentModulo2 instrument : instrumentList) {
+            Element instrumentElement = doc.createElement("Instrumento");
+            Element serie = doc.createElement("Serie");
+            serie.setTextContent(instrument.getSerie());
+            Element min = doc.createElement("Minimo");
+            min.setTextContent(instrument.getMini());
+            Element tole = doc.createElement("Tolerancia");
+            tole.setTextContent(instrument.getTole());
+            Element descrip = doc.createElement("Descripcion");
+            descrip.setTextContent(instrument.getDescri());
+            Element max = doc.createElement("Maximo");
+            max.setTextContent(instrument.getMaxi());
+            Element type = doc.createElement("Tipo");
+            type.setTextContent(instrument.getType());
+
+            instrumentElement.appendChild(serie);
+            instrumentElement.appendChild(min);
+            instrumentElement.appendChild(tole);
+            instrumentElement.appendChild(descrip);
+            instrumentElement.appendChild(max);
+            instrumentElement.appendChild(type);
+
+            tipoInstrumento.appendChild(instrumentElement);
+        }
+
+        // Guardar los cambios en el archivo
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(new File(filePath));
+        transformer.transform(source, result);
+
+        System.out.println("Archivo XML guardado correctamente con codificación UTF-8.");
+    } catch (ParserConfigurationException | IOException | SAXException | TransformerException e) {
+        e.printStackTrace();
+    }
+}
+
 
     public static void updateInstrument(String filePath, String name, String newName) {
         try {
@@ -347,124 +344,113 @@ public class XMLLoader {
         }
     }
 
-    public static void saveToXMLCalibration(String filePath, List<Calibration> calibrationList) {
-        if (calibrationList == null || calibrationList.isEmpty()) {
-            throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacía");
-        }
-
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-
-            Document doc;
-            File file = new File(filePath);
-
-            if (file.exists()) {
-                // Si el archivo existe, cargar el contenido existente
-                doc = builder.parse(file);
-            } else {
-                // Si el archivo no existe, crear uno nuevo
-                doc = builder.newDocument();
-                Element instrumentos = doc.createElement("Instrumentos");
-                doc.appendChild(instrumentos);
-            }
-
-            Element instruments = doc.getDocumentElement();
-            // Agregar los nuevos instrumentos
-            for (Calibration calibration : calibrationList) {
-                Element calibracion = doc.createElement("Calibracion");
-                Element serie = doc.createElement("Serie");
-                serie.setTextContent(calibration.getNumber());
-                Element fecha = doc.createElement("Fecha");
-                fecha.setTextContent(calibration.getDate());
-                Element numero = doc.createElement("Numero");
-                numero.setTextContent(Integer.toString(calibration.getId()));
-                Element mediciones = doc.createElement("Mediciones");
-                mediciones.setTextContent(Integer.toString(calibration.getMeasuring()));
-
-                calibracion.appendChild(serie);
-                calibracion.appendChild(fecha);
-                calibracion.appendChild(numero);
-                calibracion.appendChild(mediciones);
-
-                instruments.appendChild(calibracion);
-            }
-
-            // Buscar la etiqueta <idCounter>
-            Element idCounterElement = (Element) doc.getDocumentElement().getElementsByTagName("idCounter").item(0);
-            int updatedIdCounter;
-            if (idCounterElement == null) {
-                // Si la etiqueta <idCounter> no existe, crear una nueva con valor 1
-                idCounterElement = doc.createElement("idCounter");
-                updatedIdCounter = 1;
-                doc.getDocumentElement().appendChild(idCounterElement);
-            } else {
-                // Si la etiqueta <idCounter> existe, obtener el valor actual y aumentarlo en 1
-                int currentIdCounter = Integer.parseInt(idCounterElement.getTextContent());
-                updatedIdCounter = currentIdCounter + 1;
-            }
-
-            // Actualizar el valor del contador
-            idCounterElement.setTextContent(Integer.toString(updatedIdCounter));
-
-            // Guardar los cambios en el archivo XML
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(file);
-            transformer.transform(source, result);
-
-            System.out.println("Archivo XML guardado correctamente con codificación UTF-8.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+   public static void saveToXMLCalibration(String filePath, List<Calibration> calibrationList, String serieInstrumento) {
+    if (calibrationList == null || calibrationList.isEmpty()) {
+        throw new IllegalArgumentException("La lista de calibraciones no puede ser nula ni estar vacía");
     }
 
-    public static void deleteInstrumentsFromXML(String filePath, InstrumentModulo2 instrumentToDelete) {
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(new File(filePath));
+    try {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = builder.parse(new File(filePath));
 
-            Element rootElement = doc.getDocumentElement();
-            NodeList instrumentElements = rootElement.getElementsByTagName("Instrumento");
+        Element laboratorio = doc.getDocumentElement();
+        NodeList tipoInstrumentoList = laboratorio.getElementsByTagName("Tipo_de_instrumento");
 
-            for (int i = 0; i < instrumentElements.getLength(); i++) {
-                Element instrumentElement = (Element) instrumentElements.item(i);
-                String code = instrumentElement.getElementsByTagName("Serie").item(0).getTextContent();
+        for (int i = 0; i < tipoInstrumentoList.getLength(); i++) {
+            Element tipoDeInstrumento = (Element) tipoInstrumentoList.item(i);
+            NodeList instrumentoList = tipoDeInstrumento.getElementsByTagName("Instrumento");
+
+            for (int j = 0; j < instrumentoList.getLength(); j++) {
+                Element instrumento = (Element) instrumentoList.item(j);
+                String serie = instrumento.getElementsByTagName("Serie").item(0).getTextContent();
+
+                if (serie.equals(serieInstrumento)) {
+                    // Encontramos el instrumento correcto, ahora agregamos las calibraciones
+                    for (Calibration calibration : calibrationList) {
+                        Element calibracion = doc.createElement("Calibracion");
+                        Element serieCalibracion = doc.createElement("Serie");
+                        serieCalibracion.setTextContent(calibration.getNumber());
+                        Element fecha = doc.createElement("Fecha");
+                        fecha.setTextContent(calibration.getDate());
+                        Element numero = doc.createElement("Numero");
+                        numero.setTextContent(Integer.toString(calibration.getId()));
+                        Element mediciones = doc.createElement("Mediciones");
+                        mediciones.setTextContent(Integer.toString(calibration.getMeasuring()));
+
+                        calibracion.appendChild(serieCalibracion);
+                        calibracion.appendChild(fecha);
+                        calibracion.appendChild(numero);
+                        calibracion.appendChild(mediciones);
+
+                        instrumento.appendChild(calibracion);
+                    }
+
+                    // Guardar los cambios en el archivo XML
+                    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                    Transformer transformer = transformerFactory.newTransformer();
+                    DOMSource source = new DOMSource(doc);
+                    StreamResult result = new StreamResult(new File(filePath));
+                    transformer.transform(source, result);
+
+                    System.out.println("Calibraciones guardadas correctamente en el instrumento con serie: " + serieInstrumento);
+                    return; // Salir después de guardar las calibraciones en el instrumento correcto
+                }
+            }
+        }
+
+        // Si llegamos aquí, significa que no se encontró el instrumento con la serie especificada
+        System.out.println("No se encontró el instrumento con serie: " + serieInstrumento);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+
+
+    public static void deleteInstrumentFromXML(String filePath, String serieToDelete) {
+    try {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = builder.parse(new File(filePath));
+
+        Element rootElement = doc.getDocumentElement();
+        NodeList tipoInstrumentoList = rootElement.getElementsByTagName("Tipo_de_instrumento");
+
+        for (int i = 0; i < tipoInstrumentoList.getLength(); i++) {
+            Element tipoInstrumento = (Element) tipoInstrumentoList.item(i);
+            NodeList instrumentElements = tipoInstrumento.getElementsByTagName("Instrumento");
+
+            for (int j = 0; j < instrumentElements.getLength(); j++) {
+                Element instrumentElement = (Element) instrumentElements.item(j);
+                String serie = instrumentElement.getElementsByTagName("Serie").item(0).getTextContent();
 
                 // Verifica si el código coincide con el que se quiere eliminar
-                if (code.equals(instrumentToDelete.getSerie())) {
+                if (serie.equals(serieToDelete)) {
                     // Elimina el elemento del XML
-                    rootElement.removeChild(instrumentElement);
-                    break;  // Puedes salir del bucle si se elimina el elemento
+                    tipoInstrumento.removeChild(instrumentElement);
+                    break; // Puedes salir del bucle si se elimina el elemento
                 }
             }
 
-            // Guarda los cambios en el archivo XML
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(filePath));
-            transformer.transform(source, result);
-        } catch (ParserConfigurationException | IOException | SAXException | TransformerException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Método para buscar un instrumento por serie
-    private static Element findInstrumentBySerie(Element instruments, String serie) {
-        NodeList instrumentElements = instruments.getElementsByTagName("Instrumento");
-        for (int i = 0; i < instrumentElements.getLength(); i++) {
-            Element instrumentElement = (Element) instrumentElements.item(i);
-            String code = instrumentElement.getElementsByTagName("Serie").item(0).getTextContent();
-            if (code.equals(serie)) {
-                return instrumentElement;
+            // Si no quedan más instrumentos en ese tipo de instrumento, elimina también el tipo de instrumento
+            if (instrumentElements.getLength() == 0) {
+                rootElement.removeChild(tipoInstrumento);
             }
         }
-        return null;
-    }
 
+        // Guarda los cambios en el archivo XML
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(new File(filePath));
+        transformer.transform(source, result);
+    } catch (ParserConfigurationException | IOException | SAXException | TransformerException e) {
+        e.printStackTrace();
+    }
+}
+
+    
     // Método para cargar instrumentos desde XML
     public static ArrayList<InstrumentModulo2> loadFromXMLS(String filePath) throws ParserConfigurationException, SAXException, IOException {
         ArrayList<InstrumentModulo2> instruments = new ArrayList<>();
@@ -525,30 +511,54 @@ public class XMLLoader {
 
         return updatedIdMedicion;
     }
+    
+    
 
     // Método para obtener el valor de idCounter desde XML
-    public static int getIdCounterFromXML(String filePath) {
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
+   public static int getIdCounterFromXML(String filePath) throws ParserConfigurationException {
+       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+       DocumentBuilder builder = factory.newDocumentBuilder();
+       try (InputStream inputStream = new FileInputStream(filePath)) {
+           Document document = builder.parse(inputStream);
+           
+           Element rootElement = document.getDocumentElement();
+           Element idCounterElement = (Element) rootElement.getElementsByTagName("idCounter").item(0);
+           
+           int updatedIdCounter;
+           if (idCounterElement == null) {
+               // Si la etiqueta <idCounter> no existe, crear una nueva con valor 1
+               idCounterElement = document.createElement("idCounter");
+               idCounterElement.setTextContent("1"); // Valor predeterminado
+               rootElement.appendChild(idCounterElement);
+               updatedIdCounter = 1;
+               
+               // Guardar los cambios en el archivo XML
+               TransformerFactory transformerFactory = TransformerFactory.newInstance();
+               Transformer transformer = transformerFactory.newTransformer();
+               DOMSource source = new DOMSource(document);
+               StreamResult result = new StreamResult(new File(filePath));
+               transformer.transform(source, result);
+           } else {
+               // Si la etiqueta <idCounter> existe, obtener el valor actual y aumentarlo en 1
+               int currentIdCounter = Integer.parseInt(idCounterElement.getTextContent());
+               updatedIdCounter = currentIdCounter + 1;
+               // Actualizar el valor del contador
+               idCounterElement.setTextContent(Integer.toString(updatedIdCounter));
+               
+               // Guardar los cambios en el archivo XML
+               TransformerFactory transformerFactory = TransformerFactory.newInstance();
+               Transformer transformer = transformerFactory.newTransformer();
+               DOMSource source = new DOMSource(document);
+               StreamResult result = new StreamResult(new File(filePath));
+               transformer.transform(source, result);
+           }
+           
+           return updatedIdCounter;
+       } catch (IOException | SAXException | TransformerException e) {
+           throw new RuntimeException("Error al parsear el archivo XML: " + e.getMessage(), e);
+       }
+}
 
-            try (InputStream inputStream = new FileInputStream(filePath)) {
-                Document document = builder.parse(inputStream);
-
-                Element rootElement = document.getDocumentElement();
-                Element idCounterElement = (Element) rootElement.getElementsByTagName("idCounter").item(0);
-
-                if (idCounterElement != null) {
-                    String idCounterText = idCounterElement.getTextContent();
-                    return Integer.parseInt(idCounterText);
-                } else {
-                    throw new RuntimeException("La etiqueta <idCounter> no está presente en el archivo XML.");
-                }
-            }
-        } catch (IOException | SAXException | ParserConfigurationException e) {
-            throw new RuntimeException("Error al parsear el archivo XML: " + e.getMessage(), e);
-        }
-    }
 
     public static String getNameOfInstrument(String filePath, String codigoBuscar) {
         try {
@@ -684,88 +694,83 @@ public class XMLLoader {
         return calibrationList;
     }
 
-    public static void saveToXMLMeasurement(String filePath, List<Measurement> measurementList) {
-        if (measurementList == null || measurementList.isEmpty()) {
-            throw new IllegalArgumentException("La lista de mediciones no puede ser nula ni estar vacía");
-        }
-
-        try {
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-
-            Document doc;
-            File file = new File(filePath);
-
-            if (file.exists()) {
-                // Si el archivo existe, cargar el contenido existente
-                doc = dBuilder.parse(file);
-            } else {
-                // Si el archivo no existe, crear uno nuevo
-                doc = dBuilder.newDocument();
-                Element medicionesElement = doc.createElement("Mediciones");
-                doc.appendChild(medicionesElement);
-            }
-
-            // Buscar el elemento <IdMedicionCounter>
-            Element idMedicionElement = (Element) doc.getElementsByTagName("IdMedicionCounter").item(0);
-            int updatedIdMedicion;
-
-            if (idMedicionElement == null) {
-                // Si el elemento <IdMedicionCounter> no existe, crear uno nuevo con valor 1
-                idMedicionElement = doc.createElement("IdMedicionCounter");
-                updatedIdMedicion = 1;
-                doc.getDocumentElement().appendChild(idMedicionElement);
-            } else {
-                // Si el elemento <IdMedicionCounter> existe, obtener el valor actual y aumentarlo en 1
-                int currentIdMedicion = Integer.parseInt(idMedicionElement.getTextContent());
-                updatedIdMedicion = currentIdMedicion + 1;
-            }
-
-            // Actualizar el valor del contador
-            idMedicionElement.setTextContent(Integer.toString(updatedIdMedicion));
-
-            Element mediciones = doc.getDocumentElement();
-
-            // Agregar las nuevas mediciones
-            for (Measurement measurement : measurementList) {
-                Element measurementElement = doc.createElement("Medicion");
-
-                Element idMedi = doc.createElement("IdMedicion");
-                idMedi.setTextContent(String.valueOf(measurement.getIdMeasure()));
-
-                Element number = doc.createElement("Numero");
-                number.setTextContent(measurement.getCode());
-
-                Element medidaElement = doc.createElement("Medida");
-                medidaElement.setTextContent(Double.toString(measurement.getId()));
-
-                Element referenciaElement = doc.createElement("Referencia");
-                referenciaElement.setTextContent(Integer.toString(measurement.getReference()));
-
-                Element lecturaElement = doc.createElement("Lectura");
-                lecturaElement.setTextContent(measurement.getReading());
-
-                measurementElement.appendChild(idMedi);
-                measurementElement.appendChild(number);
-                measurementElement.appendChild(medidaElement);
-                measurementElement.appendChild(referenciaElement);
-                measurementElement.appendChild(lecturaElement);
-
-                mediciones.appendChild(measurementElement);
-            }
-
-            // Guardar los cambios en el archivo XML
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(file);
-            transformer.transform(source, result);
-
-            System.out.println("Se ha guardado el archivo XML de mediciones.");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+public static void saveToXMLMeasurement(String filePath, List<Measurement> measurementList, int calibracionId) throws SAXException, IOException {
+    if (measurementList == null || measurementList.isEmpty()) {
+        throw new IllegalArgumentException("La lista de mediciones no puede ser nula ni estar vacía");
     }
+
+    try {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+        Document doc;
+        File file = new File(filePath);
+        doc = dBuilder.parse(file);
+
+        Element laboratorio = doc.getDocumentElement();
+        NodeList tipoInstrumentoList = laboratorio.getElementsByTagName("Tipo_de_instrumento");
+
+        for (int i = 0; i < tipoInstrumentoList.getLength(); i++) {
+            Element tipoDeInstrumento = (Element) tipoInstrumentoList.item(i);
+            NodeList instrumentoList = tipoDeInstrumento.getElementsByTagName("Instrumento");
+
+            for (int j = 0; j < instrumentoList.getLength(); j++) {
+                Element instrumento = (Element) instrumentoList.item(j);
+                NodeList calibracionList = instrumento.getElementsByTagName("Calibracion");
+
+                for (int k = 0; k < calibracionList.getLength(); k++) {
+                    Element calibracion = (Element) calibracionList.item(k);
+                    Element numero = (Element) calibracion.getElementsByTagName("Numero").item(0);
+
+                    // Verifica si el número de calibración coincide con el identificador de la calibración deseada
+                    if (Integer.parseInt(numero.getTextContent()) == calibracionId) {
+                        for (Measurement measurement : measurementList) {
+                            Element measurementElement = doc.createElement("Medicion");
+
+                            Element idMedi = doc.createElement("IdMedicion");
+                            idMedi.setTextContent(String.valueOf(measurement.getIdMeasure()));
+
+                            Element number = doc.createElement("Numero");
+                            number.setTextContent(measurement.getCode());
+
+                            Element medidaElement = doc.createElement("Medida");
+                            medidaElement.setTextContent(Double.toString(measurement.getId()));
+
+                            Element referenciaElement = doc.createElement("Referencia");
+                            referenciaElement.setTextContent(Integer.toString(measurement.getReference()));
+
+                            Element lecturaElement = doc.createElement("Lectura");
+                            lecturaElement.setTextContent(measurement.getReading());
+
+                            measurementElement.appendChild(idMedi);
+                            measurementElement.appendChild(number);
+                            measurementElement.appendChild(medidaElement);
+                            measurementElement.appendChild(referenciaElement);
+                            measurementElement.appendChild(lecturaElement);
+
+                            calibracion.appendChild(measurementElement);
+
+                            // Guardar los cambios en el archivo XML
+                            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                            Transformer transformer = transformerFactory.newTransformer();
+                            DOMSource source = new DOMSource(doc);
+                            StreamResult result = new StreamResult(file);
+                            transformer.transform(source, result);
+
+                        }
+                        return; // Salir después de guardar las mediciones en la calibración correcta
+                    }
+                }
+            }
+        }
+
+        // Si llegamos aquí, significa que no se encontró la calibración con el identificador especificado
+        System.out.println("No se encontró la calibración con número: " + calibracionId);
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }
+}
+
 
     // Método para cargar mediciones desde XML
     public static ArrayList<Measurement> loadFromMeasurement(String filePath) throws IOException, SAXException, ParserConfigurationException {
@@ -834,74 +839,8 @@ public class XMLLoader {
         }
     }
 
-    // Método para eliminar mediciones del archivo XML
-    public static void deleteDataMensu(String filePath, String serie) {
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(new File(filePath));
 
-            Element rootElement = document.getDocumentElement();
-            NodeList instrumentElements = rootElement.getElementsByTagName("Medicion");
-
-            // Almacena las mediciones que se eliminarán
-            List<Element> elementsToRemove = new ArrayList<>();
-
-            for (int i = 0; i < instrumentElements.getLength(); i++) {
-                Element instrumentElement = (Element) instrumentElements.item(i);
-                String code = instrumentElement.getElementsByTagName("Numero").item(0).getTextContent();
-
-                if (code.equals(serie)) {
-                    elementsToRemove.add(instrumentElement);
-                }
-            }
-
-            // Elimina las mediciones después de completar la iteración
-            for (Element elementToRemove : elementsToRemove) {
-                rootElement.removeChild(elementToRemove);
-            }
-
-            // Guarda los cambios en el archivo XML
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(document);
-            StreamResult result = new StreamResult(new File(filePath));
-            transformer.transform(source, result);
-        } catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Método para eliminar registros de calibraciones del archivo XML
-    public static void deleteData(String filePath, String serie) {
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(new File(filePath));
-
-            Element rootElement = document.getDocumentElement();
-            NodeList instrumentElements = rootElement.getElementsByTagName("Calibracion");
-
-            for (int i = 0; i < instrumentElements.getLength(); i++) {
-                Element instrumentElement = (Element) instrumentElements.item(i);
-                String code = instrumentElement.getElementsByTagName("Numero").item(0).getTextContent();
-
-                if (code.equals(serie)) {
-                    rootElement.removeChild(instrumentElement);
-                }
-            }
-
-            // Guardar los cambios en el archivo XML
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(document);
-            StreamResult result = new StreamResult(new File(filePath));
-            transformer.transform(source, result);
-        } catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
-            e.printStackTrace();
-        }
-    }
-
+   
     // Método para buscar calibraciones por número en el archivo XML
     public static List<Element> findCalibrationsByNumber(String filePath, String numero) {
         List<Element> calibracionesEncontradas = new ArrayList<>();
@@ -929,5 +868,60 @@ public class XMLLoader {
 
         return calibracionesEncontradas;
     }
+    
+    public static void delete(String filePath, String instrumentCode, int calibrationNumber) {
+    try {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+        Document doc;
+        File file = new File(filePath);
+        doc = dBuilder.parse(file);
+
+        Element laboratorio = doc.getDocumentElement();
+        NodeList tipoInstrumentoList = laboratorio.getElementsByTagName("Tipo_de_instrumento");
+
+        for (int i = 0; i < tipoInstrumentoList.getLength(); i++) {
+            Element tipoDeInstrumento = (Element) tipoInstrumentoList.item(i);
+            NodeList instrumentoList = tipoDeInstrumento.getElementsByTagName("Instrumento");
+
+            for (int j = 0; j < instrumentoList.getLength(); j++) {
+                Element instrumento = (Element) instrumentoList.item(j);
+                String code = instrumento.getElementsByTagName("Serie").item(0).getTextContent();
+
+                if (code.equals(instrumentCode)) {
+                    NodeList calibracionList = instrumento.getElementsByTagName("Calibracion");
+
+                    for (int k = 0; k < calibracionList.getLength(); k++) {
+                        Element calibracion = (Element) calibracionList.item(k);
+                        Element numero = (Element) calibracion.getElementsByTagName("Numero").item(0);
+
+                        // Verifica si el número de calibración coincide con el número especificado
+                        if (Integer.parseInt(numero.getTextContent()) == calibrationNumber) {
+                            // Elimina la calibración
+                            instrumento.removeChild(calibracion);
+
+                            // Guarda los cambios en el archivo XML
+                            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                            Transformer transformer = transformerFactory.newTransformer();
+                            DOMSource source = new DOMSource(doc);
+                            StreamResult result = new StreamResult(file);
+                            transformer.transform(source, result);
+
+                            System.out.println("Calibración eliminada correctamente del instrumento con código: " + instrumentCode);
+                            return; // Salir después de eliminar la calibración
+                        }
+                    }
+                }
+            }
+        }
+
+        // Si llegamos aquí, significa que no se encontró el instrumento con el código especificado
+        System.out.println("No se encontró el instrumento con código: " + instrumentCode);
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }
+}
+
 
 }

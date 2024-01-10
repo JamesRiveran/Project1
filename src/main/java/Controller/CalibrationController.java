@@ -54,6 +54,7 @@ public class CalibrationController extends Controller implements ActionListener,
     boolean updateInstruments = false;
     boolean pass = false;
     private String number;
+    public String serieInstrument="";
 
     public CalibrationController(Modulo view) {
         this.view = view;
@@ -108,11 +109,11 @@ public class CalibrationController extends Controller implements ActionListener,
                             date,
                             Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                     calibrationList.getList().add(newCalibration);
-                    XMLLoader.saveToXMLCalibration(filePath, calibrationList.getList());
+                    XMLLoader.saveToXMLCalibration(filePath, calibrationList.getList(),serie);
                     DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
                     tableModel.insertRow(0, new Object[]{newCalibration.getId(), newCalibration.getDate(), newCalibration.getMeasuring()});
                     List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max));
-                    XMLLoader.saveToXMLMeasurement(filePath, measurements);
+                    XMLLoader.saveToXMLMeasurement(filePath, measurements,Integer.parseInt(view.getCalibrationTxtNumber().getText()));
                     newIdNumber = idCounter();
                     view.getCalibrationTxtNumber().setText(String.valueOf(newIdNumber));
                     updateTableMeasurement();
@@ -319,6 +320,7 @@ public class CalibrationController extends Controller implements ActionListener,
                         }
 
                         view.getCalibrationTxtMeasurement().setText(measurement.toString());
+                        view.getCalibrationTxtNumber().setText(String.valueOf(id));
                         view.getCalibrationTxtNumber().setEnabled(false);
                         view.getCalibrationDateChooser().setEnabled(false);
                         view.getCalibrationTxtMeasurement().setEnabled(false);
@@ -378,6 +380,16 @@ public class CalibrationController extends Controller implements ActionListener,
         clickTable();
     }
 
+    public String getSerieInstrument() {
+        return serieInstrument;
+    }
+
+    public void setSerieInstrument(String serieInstrument) {
+        this.serieInstrument = serieInstrument;
+    }
+    
+    
+
     private void filterByNumber(String searchNumber) {
         listCalibrations = XMLLoader.loadFromCalibrations(filePath);
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
@@ -400,8 +412,9 @@ public class CalibrationController extends Controller implements ActionListener,
     @Override
     public void delete() {
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
-        XMLLoader.deleteDataMensu(filePath, getNumber());
-        XMLLoader.deleteData(filePath, getNumber());
+        String serie = getSerieInstrument();
+        int number = Integer.parseInt(view.getCalibrationTxtNumber().getText());
+        XMLLoader.delete(filePath,serie,number);
         viewController.showMessage(view, "Eliminado con exito", "success");
         updateTable();
         clearTable(tableModel);
@@ -414,7 +427,9 @@ public class CalibrationController extends Controller implements ActionListener,
         this.tolerancia = tolerancia;
         this.max = max;
         this.pass = true;
-
+        
+        setSerieInstrument(serie);
+        
         CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
         List<org.w3c.dom.Element> calibracionesEncontradas = XMLLoader.findCalibrationsByNumber(filePath, serie);
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();

@@ -168,7 +168,7 @@ public class IntrumentsController extends Controller implements ItemListener {
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
         if (calibracionesEncontradas.isEmpty()) {
-            XMLLoader.deleteInstrumentsFromXML(filePath, instrumentToDelete);
+            XMLLoader.deleteInstrumentFromXML(filePath, instrumentToDelete.getSerie());
             viewController.showMessage(view, "Se borro exitosamente", "success");
             clean();
             try {
@@ -194,7 +194,7 @@ public class IntrumentsController extends Controller implements ItemListener {
         );
 
         listModulo2.getList().add(newInstrument);
-        XMLLoader.addToXML(filePath, listModulo2.getList());
+        XMLLoader.addToXML(filePath, listModulo2.getList(),view.getCmbType().getSelectedItem().toString());
         listModulo2.getList().clear();
     }
 
