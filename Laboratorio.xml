@@ -12,7 +12,7 @@
     
     
     
-    <IdMedicionCounter>13</IdMedicionCounter>
+    <IdMedicionCounter>16</IdMedicionCounter>
                                                         
     
     
@@ -26,7 +26,7 @@
     
     
     
-    <idCounter>19</idCounter>
+    <idCounter>20</idCounter>
                                                     
     
     
@@ -378,7 +378,7 @@
         
         
             
-        </Instrumento>
+        <Calibracion><Serie>1234</Serie><Fecha>2024/01/05</Fecha><Numero>3</Numero><Mediciones>3</Mediciones><Medicion><IdMedicion>14</IdMedicion><Numero>3</Numero><Medida>1.0</Medida><Referencia>0</Referencia><Lectura>0</Lectura></Medicion><Medicion><IdMedicion>15</IdMedicion><Numero>3</Numero><Medida>2.0</Medida><Referencia>33</Referencia><Lectura>33</Lectura></Medicion><Medicion><IdMedicion>16</IdMedicion><Numero>3</Numero><Medida>3.0</Medida><Referencia>66</Referencia><Lectura>66</Lectura></Medicion></Calibracion></Instrumento>
                                                                                                     
     
     
