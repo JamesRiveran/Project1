@@ -136,10 +136,8 @@ public class Modulo extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         pAcercaDe = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        miscTxtTitle = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         miscTxtSubtitle = new javax.swing.JLabel();
-        miscTxtVersion = new javax.swing.JLabel();
         miscTxtTeam = new javax.swing.JLabel();
         miscTxtNameJ = new javax.swing.JLabel();
         miscTxtNameG = new javax.swing.JLabel();
@@ -148,7 +146,10 @@ public class Modulo extends javax.swing.JFrame {
         miscTxtInstitution = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         logoImageIcon = new javax.swing.JLabel();
+        miscTxtTitle = new javax.swing.JLabel();
         unaImageIcon = new javax.swing.JLabel();
+        miscTxtInstitution1 = new javax.swing.JLabel();
+        miscTxtVersion = new javax.swing.JLabel();
 
         jRadioButton1.setText("jRadioButton1");
 
@@ -305,7 +306,7 @@ public class Modulo extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 1006, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(207, Short.MAX_VALUE))
+                .addContainerGap(228, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -368,7 +369,7 @@ public class Modulo extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(jLabel5)
                             .addComponent(jLabel7))))
-                .addContainerGap(331, Short.MAX_VALUE))
+                .addContainerGap(354, Short.MAX_VALUE))
         );
         pTipoInstrumentoLayout.setVerticalGroup(
             pTipoInstrumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -573,7 +574,7 @@ public class Modulo extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
-                .addComponent(txtSearchInstru, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                .addComponent(txtSearchInstru, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
                 .addGap(276, 276, 276)
                 .addComponent(btnSearchInstru, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -1011,7 +1012,7 @@ public class Modulo extends javax.swing.JFrame {
                         .addGroup(pCalibracionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnSaveMeasurement, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
                             .addComponent(btnCleanMeasurement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(187, Short.MAX_VALUE))
+                        .addContainerGap(209, Short.MAX_VALUE))
                     .addGroup(pCalibracionesLayout.createSequentialGroup()
                         .addGroup(pCalibracionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1023,7 +1024,7 @@ public class Modulo extends javax.swing.JFrame {
                             .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel24)
                             .addComponent(jLabel26))
-                        .addContainerGap(179, Short.MAX_VALUE))))
+                        .addContainerGap(200, Short.MAX_VALUE))))
         );
         pCalibracionesLayout.setVerticalGroup(
             pCalibracionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1070,14 +1071,8 @@ public class Modulo extends javax.swing.JFrame {
             .addGap(0, 105, Short.MAX_VALUE)
         );
 
-        miscTxtTitle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        miscTxtTitle.setText("Proyecto 1");
-
         miscTxtSubtitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         miscTxtSubtitle.setText("Sistema de Instrumentos para Laboratorio");
-
-        miscTxtVersion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        miscTxtVersion.setText("Versión: 1.0");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -1087,18 +1082,12 @@ public class Modulo extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(miscTxtSubtitle)
                 .addGap(15, 15, 15))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(miscTxtVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(miscTxtSubtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(miscTxtVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1118,28 +1107,37 @@ public class Modulo extends javax.swing.JFrame {
         miscTxtCareer.setText("EIF206 - Programación III");
 
         miscTxtInstitution.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        miscTxtInstitution.setText("Universidad Nacional - Escuela de Informática");
+        miscTxtInstitution.setText("Escuela de Informática");
 
         ImageIcon imageLogo = new ImageIcon("src/main/resources/images/Logo.png");
         logoImageIcon.setIcon(imageLogo);
         logoImageIcon.setText(null);
 
+        miscTxtTitle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        miscTxtTitle.setText("Proyecto 1");
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 708, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(182, 182, 182)
+                .addComponent(miscTxtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel10Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(logoImageIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                    .addContainerGap(133, Short.MAX_VALUE)
+                    .addComponent(logoImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(miscTxtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addGroup(jPanel10Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(logoImageIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
                     .addContainerGap()))
@@ -1148,6 +1146,12 @@ public class Modulo extends javax.swing.JFrame {
         ImageIcon imageUna = new ImageIcon("src/main/resources/images/Una.png");
         unaImageIcon.setIcon(imageUna);
 
+        miscTxtInstitution1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        miscTxtInstitution1.setText("Universidad Nacional de Costa Rica");
+
+        miscTxtVersion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        miscTxtVersion.setText("Versión: 1.0");
+
         javax.swing.GroupLayout pAcercaDeLayout = new javax.swing.GroupLayout(pAcercaDe);
         pAcercaDe.setLayout(pAcercaDeLayout);
         pAcercaDeLayout.setHorizontalGroup(
@@ -1155,43 +1159,43 @@ public class Modulo extends javax.swing.JFrame {
             .addGroup(pAcercaDeLayout.createSequentialGroup()
                 .addGroup(pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pAcercaDeLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pAcercaDeLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(unaImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(miscTxtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pAcercaDeLayout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addGroup(pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(miscTxtTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(miscTxtNameJ)
-                            .addComponent(miscTxtNameG)
-                            .addComponent(miscTxtNameK)))
-                    .addGroup(pAcercaDeLayout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(miscTxtCareer))
-                    .addGroup(pAcercaDeLayout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addComponent(miscTxtInstitution)))
-                .addGap(67, 67, 67)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(810, 810, 810))
+            .addGroup(pAcercaDeLayout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addGroup(pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(miscTxtVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(miscTxtCareer)
+                    .addComponent(miscTxtInstitution)
+                    .addComponent(miscTxtInstitution1)
+                    .addComponent(miscTxtNameK)
+                    .addComponent(miscTxtNameG)
+                    .addComponent(miscTxtNameJ)
+                    .addComponent(miscTxtTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
                 .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pAcercaDeLayout.setVerticalGroup(
             pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pAcercaDeLayout.createSequentialGroup()
+                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(pAcercaDeLayout.createSequentialGroup()
                 .addGroup(pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pAcercaDeLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(miscTxtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(unaImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(unaImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(47, 47, 47)
                 .addComponent(miscTxtTeam)
                 .addGap(18, 18, 18)
                 .addComponent(miscTxtNameJ)
@@ -1199,14 +1203,15 @@ public class Modulo extends javax.swing.JFrame {
                 .addComponent(miscTxtNameG, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addComponent(miscTxtNameK)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addComponent(miscTxtInstitution1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(miscTxtInstitution, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(miscTxtCareer)
-                .addGap(24, 24, 24))
-            .addGroup(pAcercaDeLayout.createSequentialGroup()
-                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(miscTxtVersion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
 
         pTipoDeInstrumento.addTab("Acerca de", pAcercaDe);
@@ -1733,6 +1738,7 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JLabel logoImageIcon;
     private javax.swing.JLabel miscTxtCareer;
     private javax.swing.JLabel miscTxtInstitution;
+    private javax.swing.JLabel miscTxtInstitution1;
     private javax.swing.JLabel miscTxtNameG;
     private javax.swing.JLabel miscTxtNameJ;
     private javax.swing.JLabel miscTxtNameK;
