@@ -134,6 +134,9 @@ public class CalibrationController extends Controller implements ActionListener,
         view.getCalibrationTxtMeasurement().setText("");
         view.getCalibrationDateChooser().setEnabled(true);
         view.getCalibrationTxtMeasurement().setEnabled(true);
+        String id = null;
+        id = String.valueOf(XMLLoader.getIdCounter(filePath));
+        view.getCalibrationTxtNumber().setText(id);
     }
 
     @Override
@@ -217,7 +220,8 @@ public class CalibrationController extends Controller implements ActionListener,
                     DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
                     datosColumna.add(textoCelda);
                     datosColumna.add(textoCelda3);
-                    XMLLoader.updateMeasurement(filePath, datosColumna);
+                    int id = Integer.parseInt(view.getCalibrationTxtNumber().getText());
+                    XMLLoader.updateMeasurement(filePath, datosColumna,id);
                     view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
 
                     if ((rowCount - 1) == fila) {
@@ -338,7 +342,8 @@ public class CalibrationController extends Controller implements ActionListener,
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
         tableModel.setRowCount(0); // Limpia la tabla antes de cargar los datos
         try {
-            ArrayList<Measurement> loadedMeasurements = XMLLoader.loadFromMeasurement(filePath);
+            int id = Integer.parseInt(view.getCalibrationTxtNumber().getText());
+            ArrayList<Measurement> loadedMeasurements = XMLLoader.loadFromMeasurement(filePath,id);
             for (Measurement measurement : loadedMeasurements) {
                 if (Integer.parseInt(measurement.getCode()) == Integer.parseInt(getNumber())) {
                     Object[] rowData = {measurement.getId(), measurement.getReference(), measurement.getReading(), measurement.getIdMeasure()};

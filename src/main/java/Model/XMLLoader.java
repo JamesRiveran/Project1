@@ -517,7 +517,24 @@ public class XMLLoader {
         return updatedIdMedicion;
     }
     
-    
+    public static int getIdCounter(String filePath) {
+    try {
+        File xmlFile = new File(filePath);
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        
+        Document document;
+        document = builder.parse(xmlFile);
+       
+        // Obtenemos el valor actual de <idCounter>
+        Element rootElement = document.getDocumentElement();
+        Element idCounterElement = (Element) rootElement.getElementsByTagName("idCounter").item(0);
+        int currentIdCounter = Integer.parseInt(idCounterElement.getTextContent());
+        return currentIdCounter;
+    } catch (ParserConfigurationException | SAXException | IOException  e) {
+        throw new RuntimeException("Error al procesar el archivo XML: " + e.getMessage(), e);
+    }
+}
 
     // Método para obtener el valor de idCounter desde XML
    public static int getIdCounterFromXML(String filePath) throws ParserConfigurationException {
@@ -529,21 +546,8 @@ public class XMLLoader {
            Element rootElement = document.getDocumentElement();
            Element idCounterElement = (Element) rootElement.getElementsByTagName("idCounter").item(0);
            
-           int updatedIdCounter;
-           if (idCounterElement == null) {
-               // Si la etiqueta <idCounter> no existe, crear una nueva con valor 1
-               idCounterElement = document.createElement("idCounter");
-               idCounterElement.setTextContent("1"); // Valor predeterminado
-               rootElement.appendChild(idCounterElement);
-               updatedIdCounter = 1;
-               
-               // Guardar los cambios en el archivo XML
-               TransformerFactory transformerFactory = TransformerFactory.newInstance();
-               Transformer transformer = transformerFactory.newTransformer();
-               DOMSource source = new DOMSource(document);
-               StreamResult result = new StreamResult(new File(filePath));
-               transformer.transform(source, result);
-           } else {
+           int updatedIdCounter = 0;
+           if (idCounterElement != null) {
                // Si la etiqueta <idCounter> existe, obtener el valor actual y aumentarlo en 1
                int currentIdCounter = Integer.parseInt(idCounterElement.getTextContent());
                updatedIdCounter = currentIdCounter + 1;
@@ -601,16 +605,8 @@ public class XMLLoader {
 
             Document doc;
             File file = new File(filePath);
-
-            if (file.exists()) {
-                // Si el archivo existe, cargar el contenido existente
-                doc = builder.parse(file);
-            } else {
-                // Si el archivo no existe, crear uno nuevo
-                doc = builder.newDocument();
-                Element laboratorio = doc.createElement("Laboratorio");
-                doc.appendChild(laboratorio);
-            }
+            doc = builder.parse(file);
+            
 
             // Buscar la etiqueta <IdMedicionCounter>
             Element idMedicionCounterElement = (Element) doc.getDocumentElement().getElementsByTagName("IdMedicionCounter").item(0);
@@ -648,7 +644,7 @@ public class XMLLoader {
             if (idCounterList.getLength() == 0) {
                 // Si la etiqueta <idCounter> no existe, crear una nueva y asignarle el valor predeterminado
                 Element newIdCounterElement = doc.createElement("idCounter");
-                newIdCounterElement.appendChild(doc.createTextNode("1")); // Valor predeterminado
+                newIdCounterElement.appendChild(doc.createTextNode("0")); // Valor predeterminado
                 rootElement.appendChild(newIdCounterElement);
             }
 
@@ -778,33 +774,44 @@ public static void saveToXMLMeasurement(String filePath, List<Measurement> measu
 
 
     // Método para cargar mediciones desde XML
-    public static ArrayList<Measurement> loadFromMeasurement(String filePath) throws IOException, SAXException, ParserConfigurationException {
-        ArrayList<Measurement> measurementList = new ArrayList<>();
+   public static ArrayList<Measurement> loadFromMeasurement(String filePath, int calibrationNumber) throws IOException, SAXException, ParserConfigurationException {
+    ArrayList<Measurement> measurementList = new ArrayList<>();
 
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(new File(filePath));
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder builder = factory.newDocumentBuilder();
+    Document document = builder.parse(new File(filePath));
 
-        Element rootElement = document.getDocumentElement();
-        NodeList measurementElements = rootElement.getElementsByTagName("Medicion");
+    Element rootElement = document.getDocumentElement();
+    NodeList calibrationElements = rootElement.getElementsByTagName("Calibracion");
 
-        for (int i = 0; i < measurementElements.getLength(); i++) {
-            Element measurementElement = (Element) measurementElements.item(i);
-            int idMedi = Integer.parseInt(measurementElement.getElementsByTagName("IdMedicion").item(0).getTextContent());
-            String code = measurementElement.getElementsByTagName("Numero").item(0).getTextContent();
-            double id = Double.parseDouble(measurementElement.getElementsByTagName("Medida").item(0).getTextContent());
-            int measurement = Integer.parseInt(measurementElement.getElementsByTagName("Referencia").item(0).getTextContent());
-            String reading = measurementElement.getElementsByTagName("Lectura").item(0).getTextContent();
+    for (int i = 0; i < calibrationElements.getLength(); i++) {
+        Element calibrationElement = (Element) calibrationElements.item(i);
+        int calibNumber = Integer.parseInt(calibrationElement.getElementsByTagName("Numero").item(0).getTextContent());
 
-            Measurement measurements = new Measurement(code, id, measurement, reading, idMedi);
-            measurementList.add(measurements);
+        // Verificar si el número de calibración coincide con el número deseado
+        if (calibNumber == calibrationNumber) {
+            NodeList measurementElements = calibrationElement.getElementsByTagName("Medicion");
+
+            for (int j = 0; j < measurementElements.getLength(); j++) {
+                Element measurementElement = (Element) measurementElements.item(j);
+                int idMedi = Integer.parseInt(measurementElement.getElementsByTagName("IdMedicion").item(0).getTextContent());
+                String code = measurementElement.getElementsByTagName("Numero").item(0).getTextContent();
+                double id = Double.parseDouble(measurementElement.getElementsByTagName("Medida").item(0).getTextContent());
+                int measurement = Integer.parseInt(measurementElement.getElementsByTagName("Referencia").item(0).getTextContent());
+                String reading = measurementElement.getElementsByTagName("Lectura").item(0).getTextContent();
+
+                Measurement measurements = new Measurement(code, id, measurement, reading, idMedi);
+                measurementList.add(measurements);
+            }
         }
-
-        return measurementList;
     }
 
+    return measurementList;
+}
+
+
     // Método para actualizar mediciones en XML
-    public static void updateMeasurement(String filePath, List<String> list) {
+    public static void updateMeasurement(String filePath, List<String> list, int calibrationNumber) {
         try {
             File archivoXML = new File(filePath);
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -812,7 +819,7 @@ public static void saveToXMLMeasurement(String filePath, List<Measurement> measu
             Document documento = builder.parse(archivoXML);
             Element raiz = documento.getDocumentElement();
 
-            ArrayList<Measurement> listM = loadFromMeasurement(filePath);
+            ArrayList<Measurement> listM = loadFromMeasurement(filePath,calibrationNumber);
 
             NodeList elementosMedicion = raiz.getElementsByTagName("Medicion");
             if (list.size() <= elementosMedicion.getLength()) {
