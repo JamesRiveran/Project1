@@ -70,8 +70,6 @@ public class IntrumentsController extends Controller {
             // Verifica si el número de serie ya existe en la lista
             if (view.getTxtSerie().getText().isEmpty() || view.getTxtDescri().getText().isEmpty() || view.getTxtMaxi().getText().isEmpty() || view.getTxtMini().getText().isEmpty() || view.getTxtTole().getText().isEmpty()) {
                 viewController.showMessage(view, "Debe llenar todos los campos", "error");
-            } else if (view.getCmbType().getSelectedItem()=="Todos los instrumentos") {
-                viewController.showMessage(view, "Debe primero inscribir un tipo de instrumento", "error");
             } else if (serieExists(serie, ListOfXml)) {
                 if (updateInstruments == true) {
                     if (Integer.parseInt(view.getTxtMini().getText()) > Integer.parseInt(view.getTxtMaxi().getText())) {
@@ -129,8 +127,8 @@ public class IntrumentsController extends Controller {
             view.getTxtMaxi().setText("");
             view.getTxtDescri().setText("");
             updateComboBoxModel();
-            selecItem="Todos los instrumentos";
             updateTable();
+            view.getCmbType().setSelectedIndex(0);
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
@@ -227,8 +225,6 @@ public class IntrumentsController extends Controller {
                 if (cmbType != null) {
                     DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
 
-                    // Agrega la opción predeterminada al modelo del JComboBox
-                    comboBoxModel.addElement("Todos los instrumentos");
 
                     // Agrega los elementos de listName al modelo del JComboBox
                     for (InstrumentType name : listName) {

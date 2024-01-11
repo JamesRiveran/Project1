@@ -616,6 +616,7 @@ public class XMLLoader {
                 idMedicionCounterElement = doc.createElement("IdMedicionCounter");
                 idMedicionCounterElement.setTextContent("1"); // Valor predeterminado
                 doc.getDocumentElement().appendChild(idMedicionCounterElement);
+                System.out.println("Se ha añadido el valor de <IdMedicionCounter> en el archivo XML.");
             }
 
             // Guardar los cambios en el archivo XML
@@ -625,7 +626,7 @@ public class XMLLoader {
             StreamResult result = new StreamResult(file);
             transformer.transform(source, result);
 
-            System.out.println("Se ha actualizado el valor de <IdMedicionCounter> en el archivo XML.");
+            
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -646,6 +647,8 @@ public class XMLLoader {
                 Element newIdCounterElement = doc.createElement("idCounter");
                 newIdCounterElement.appendChild(doc.createTextNode("0")); // Valor predeterminado
                 rootElement.appendChild(newIdCounterElement);
+
+                System.out.println("Se ha añadido el valor de <idCounter> en el archivo XML.");
             }
 
             // Guardar los cambios en el archivo XML
@@ -656,7 +659,6 @@ public class XMLLoader {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.transform(source, result);
 
-            System.out.println("Se ha actualizado el valor de <idCounter> en el archivo XML.");
         } catch (Exception e) {
             e.printStackTrace();
         }

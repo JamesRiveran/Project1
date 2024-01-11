@@ -32,7 +32,6 @@ private static final String NOMBRE_ARCHIVO = "Laboratorio.xml";
         try {
             // Verificar si el archivo ya existe
             if (archivoExiste()) {
-                System.out.println("El archivo '" + NOMBRE_ARCHIVO + "' ya existe. No se sobrescribirá.");
                 return;
             }
 
