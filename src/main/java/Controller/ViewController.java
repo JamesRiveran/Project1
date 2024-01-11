@@ -146,6 +146,7 @@ public class ViewController extends Controller implements ActionListener {
                     intrumentsController.updateComboBoxModel();
                     XMLLoader.updateInstrument(filePath, oldName, newName);
                     showMessage(viewError, "Se guardó exitosamente", "success");
+                    clean();
                 } catch (Exception ex) {
                     showMessage(viewError, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
                 }

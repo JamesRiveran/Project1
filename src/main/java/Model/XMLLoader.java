@@ -5,6 +5,7 @@
 package Model;
 
 import Controller.ViewController;
+import static Controller.ViewController.showMessage;
 import View.Modulo;
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +29,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.w3c.dom.*;
 
 /**
@@ -218,89 +221,83 @@ public class XMLLoader {
         return null;
     }
 
- public static void addToXML(String filePath, List<InstrumentModulo2> instrumentList, String tipoInstrumentoSeleccionado) {
-    if (instrumentList == null || instrumentList.isEmpty()) {
-        throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacía");
-    }
+    public static void addToXML(String filePath, List<InstrumentModulo2> instrumentList, String tipoInstrumentoSeleccionado) {
+        if (instrumentList == null || instrumentList.isEmpty()) {
+            throw new IllegalArgumentException("La lista de instrumentos no puede ser nula ni estar vacía");
+        }
 
-    try {
-        Document doc;
+        try {
+            Document doc;
 
-        // Verificar si el archivo ya existe
-        File file = new File(filePath);
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
+            // Verificar si el archivo ya existe
+            File file = new File(filePath);
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
 
-        if (file.exists()) {
-            // Si el archivo existe, cargar el contenido existente
             doc = builder.parse(file);
-        } else {
-            // Si el archivo no existe, crear uno nuevo
-            doc = builder.newDocument();
-            Element rootElement = doc.createElement("Laboratorio");
-            doc.appendChild(rootElement);
-        }
 
-        Element laboratorio = doc.getDocumentElement();
+            Element laboratorio = doc.getDocumentElement();
 
-        // Buscar el elemento <Tipo_de_instrumento> correspondiente al tipo seleccionado
-        Element tipoInstrumento = null;
-        NodeList tipoInstrumentoList = laboratorio.getElementsByTagName("Tipo_de_instrumento");
-        for (int i = 0; i < tipoInstrumentoList.getLength(); i++) {
-            Element tipo = (Element) tipoInstrumentoList.item(i);
-            if (tipoInstrumentoSeleccionado.equals(tipo.getElementsByTagName("Nombre").item(0).getTextContent())) {
-                tipoInstrumento = tipo;
-                break;
+            // Buscar el elemento <Tipo_de_instrumento> correspondiente al tipo seleccionado
+            Element tipoInstrumento = null;
+            NodeList tipoInstrumentoList = laboratorio.getElementsByTagName("Tipo_de_instrumento");
+            for (int i = 0; i < tipoInstrumentoList.getLength(); i++) {
+                Element tipo = (Element) tipoInstrumentoList.item(i);
+                if (tipoInstrumentoSeleccionado.equals(tipo.getElementsByTagName("Nombre").item(0).getTextContent())) {
+                    tipoInstrumento = tipo;
+                    break;
+                }
             }
+
+            // Agregar los nuevos instrumentos dentro del tipo de instrumento correspondiente
+            for (InstrumentModulo2 instrument : instrumentList) {
+                Element existInstrument = findInstrumentBySerie(laboratorio, instrument.getSerie());
+                if (existInstrument == null) {
+                    Element instrumentElement = doc.createElement("Instrumento");
+                    Element serie = doc.createElement("Serie");
+                    serie.setTextContent(instrument.getSerie());
+                    Element min = doc.createElement("Minimo");
+                    min.setTextContent(instrument.getMini());
+                    Element tole = doc.createElement("Tolerancia");
+                    tole.setTextContent(instrument.getTole());
+                    Element descrip = doc.createElement("Descripcion");
+                    descrip.setTextContent(instrument.getDescri());
+                    Element max = doc.createElement("Maximo");
+                    max.setTextContent(instrument.getMaxi());
+                    Element type = doc.createElement("Tipo");
+                    type.setTextContent(instrument.getType());
+
+                    instrumentElement.appendChild(serie);
+                    instrumentElement.appendChild(min);
+                    instrumentElement.appendChild(tole);
+                    instrumentElement.appendChild(descrip);
+                    instrumentElement.appendChild(max);
+                    instrumentElement.appendChild(type);
+
+                    tipoInstrumento.appendChild(instrumentElement);
+                } else {
+                    // Si ya existe, actualizar sus datos según sea necesario
+                    existInstrument.getElementsByTagName("Serie").item(0).setTextContent(instrument.getSerie());
+                    existInstrument.getElementsByTagName("Minimo").item(0).setTextContent(instrument.getMini());
+                    existInstrument.getElementsByTagName("Tolerancia").item(0).setTextContent(instrument.getTole());
+                    existInstrument.getElementsByTagName("Descripcion").item(0).setTextContent(instrument.getDescri());
+                    existInstrument.getElementsByTagName("Maximo").item(0).setTextContent(instrument.getMaxi());
+                    existInstrument.getElementsByTagName("Tipo").item(0).setTextContent(instrument.getType());
+                }
+
+                // Guardar los cambios en el archivo
+                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                Transformer transformer = transformerFactory.newTransformer();
+                DOMSource source = new DOMSource(doc);
+                StreamResult result = new StreamResult(new File(filePath));
+                transformer.transform(source, result);
+
+                System.out.println("Archivo XML guardado correctamente con codificación UTF-8.");
+            }
+        } catch (ParserConfigurationException | IOException | SAXException | TransformerException e) {
+            e.printStackTrace();
         }
-
-        // Verificar si el elemento <Tipo_de_instrumento> existe, si no, crear uno nuevo
-        if (tipoInstrumento == null) {
-            tipoInstrumento = doc.createElement("Tipo_de_instrumento");
-            Element nombre = doc.createElement("Nombre");
-            nombre.setTextContent(tipoInstrumentoSeleccionado);
-            tipoInstrumento.appendChild(nombre);
-            laboratorio.appendChild(tipoInstrumento);
-        }
-
-        // Agregar los nuevos instrumentos dentro del tipo de instrumento correspondiente
-        for (InstrumentModulo2 instrument : instrumentList) {
-            Element instrumentElement = doc.createElement("Instrumento");
-            Element serie = doc.createElement("Serie");
-            serie.setTextContent(instrument.getSerie());
-            Element min = doc.createElement("Minimo");
-            min.setTextContent(instrument.getMini());
-            Element tole = doc.createElement("Tolerancia");
-            tole.setTextContent(instrument.getTole());
-            Element descrip = doc.createElement("Descripcion");
-            descrip.setTextContent(instrument.getDescri());
-            Element max = doc.createElement("Maximo");
-            max.setTextContent(instrument.getMaxi());
-            Element type = doc.createElement("Tipo");
-            type.setTextContent(instrument.getType());
-
-            instrumentElement.appendChild(serie);
-            instrumentElement.appendChild(min);
-            instrumentElement.appendChild(tole);
-            instrumentElement.appendChild(descrip);
-            instrumentElement.appendChild(max);
-            instrumentElement.appendChild(type);
-
-            tipoInstrumento.appendChild(instrumentElement);
-        }
-
-        // Guardar los cambios en el archivo
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        DOMSource source = new DOMSource(doc);
-        StreamResult result = new StreamResult(new File(filePath));
-        transformer.transform(source, result);
-
-        System.out.println("Archivo XML guardado correctamente con codificación UTF-8.");
-    } catch (ParserConfigurationException | IOException | SAXException | TransformerException e) {
-        e.printStackTrace();
     }
-}
 
 
     public static void updateInstrument(String filePath, String name, String newName) {
@@ -444,6 +441,19 @@ public class XMLLoader {
         e.printStackTrace();
     }
 }
+    
+    // Método para buscar un instrumento por serie
+    private static Element findInstrumentBySerie(Element instruments, String serie) {
+        NodeList instrumentElements = instruments.getElementsByTagName("Instrumento");
+        for (int i = 0; i < instrumentElements.getLength(); i++) {
+            Element instrumentElement = (Element) instrumentElements.item(i);
+            String code = instrumentElement.getElementsByTagName("Serie").item(0).getTextContent();
+            if (code.equals(serie)) {
+                return instrumentElement;
+            }
+        }
+        return null;
+    }
 
     
     // Método para cargar instrumentos desde XML

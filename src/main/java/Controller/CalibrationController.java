@@ -118,6 +118,7 @@ public class CalibrationController extends Controller implements ActionListener,
                     view.getCalibrationTxtNumber().setText(String.valueOf(newIdNumber));
                     updateTableMeasurement();
                     viewController.showMessage(view, "Se guardo con exito", "success");
+                    clean();
                 } catch (Exception ex) {
                     viewController.showMessage(view, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
                 }

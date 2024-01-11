@@ -1,20 +1,129 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Laboratorio>
-            
+                                        
     
-    <idCounter>4</idCounter>
-        
     
-    <IdMedicionCounter>1</IdMedicionCounter>
-        
+    
+    
+    
+    
+    
+    
+    <idCounter>12</idCounter>
+                                    
+    
+    
+    
+    
+    
+    
+    
+    
+    <IdMedicionCounter>4</IdMedicionCounter>
+                                    
+    
+    
+    
+    
+    
+    
+    
     
     <Tipo_de_instrumento>
-                
+                                                                        
+        
+        
+        
+        
+        
+        
+        
         <Codigo>BAR</Codigo>
-                
+                                                                        
+        
+        
+        
+        
+        
+        
+        
         <Nombre>Barómetro</Nombre>
-                
+                                                                        
+        
+        
+        
+        
+        
+        
+        
         <Unidad>PSU</Unidad>
+                                                                    
+    
+    
+    
+        
+        
+        
+        
+        
+                                        
+        
+        
+        
+        
+                                    
+    
+        
+        
+        
+                    
+    
+    </Tipo_de_instrumento>
+                                
+
+
+
+    
+    
+    
+    
+    <Tipo_de_instrumento>
+                                        
+        
+        
+        
+        <Codigo>TER</Codigo>
+                                        
+        
+        
+        
+        <Nombre>Termómetro</Nombre>
+                                        
+        
+        
+        
+        <Unidad>PSI</Unidad>
+                                        
+        
+        
+        
+        
+                                        
+        
+        
+        
+        
+                                    
+    
+        
+        
+        
+                    
+        
+        
             
     </Tipo_de_instrumento>
-    
+                
+
+
+
 </Laboratorio>

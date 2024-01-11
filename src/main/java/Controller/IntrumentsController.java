@@ -34,7 +34,7 @@ import org.xml.sax.SAXException;
  *
  * @author 50686
  */
-public class IntrumentsController extends Controller implements ItemListener {
+public class IntrumentsController extends Controller {
 
     ViewController viewController;
     IntrumentListModulo2 listModulo2;
@@ -46,14 +46,12 @@ public class IntrumentsController extends Controller implements ItemListener {
     static Modulo view;
     boolean updateInstruments = false;
     private String selecItem;
-    boolean permisson = true;
 
     public IntrumentsController(Modulo view) throws ParserConfigurationException, SAXException {
         this.listModulo2 = new IntrumentListModulo2();
         this.view = view;
         this.calibrationController = new CalibrationController(this.view);
         updateComboBoxModel();
-        clickCmbox();
         clickTable();
         updateTable();
         this.view.setIntrumentsController(this);
@@ -83,10 +81,10 @@ public class IntrumentsController extends Controller implements ItemListener {
                         updateTable();
                         viewController.showMessage(view, "Datos Actualizados", "success");
                         updateInstruments = false;
+                        clean();
                     }
                 } else {
-
-                    viewController.showMessage(view, "Ya ese numero de serie existe  o debe seleccionar algun listado para actualizar", "error");
+                    viewController.showMessage(view, "Ya ese numero de serie existe  o debe seleccionar algún listado para actualizar", "error");
                 }
             } else if (Integer.parseInt(view.getTxtMini().getText()) > Integer.parseInt(view.getTxtMaxi().getText())) {
                 viewController.showMessage(view, "El minimo es mayor que el maximo", "error");
@@ -96,6 +94,7 @@ public class IntrumentsController extends Controller implements ItemListener {
                 updateTable();
                 updateInstruments = false;
                 viewController.showMessage(view, "Datos registrados", "success");
+                clean();
             }
         } catch (Exception ex) {
             // Manejar la excepción (puedes imprimir el mensaje o realizar otras acciones)
@@ -120,6 +119,7 @@ public class IntrumentsController extends Controller implements ItemListener {
     @Override
     public void clean() {
         try {
+            updateInstruments = false;
             view.getBtnDelete().setEnabled(false);
             view.getTxtSerie().setEnabled(true);
             view.getBtnDeleteInstru().setEnabled(false);
@@ -192,7 +192,6 @@ public class IntrumentsController extends Controller implements ItemListener {
                 view.getTxtMaxi().getText(),
                 view.getCmbType().getSelectedItem().toString()
         );
-
         listModulo2.getList().add(newInstrument);
         XMLLoader.addToXML(filePath, listModulo2.getList(),view.getCmbType().getSelectedItem().toString());
         listModulo2.getList().clear();
@@ -257,31 +256,7 @@ public class IntrumentsController extends Controller implements ItemListener {
         return true;
     }
 
-    public boolean clickCmbox() {
-        view.getCmbType().addItemListener((ItemListener) this);
-        return false;
-    }
-
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-        if (e.getStateChange() == ItemEvent.SELECTED) {
-            // Se ha seleccionado un nuevo elemento en el JComboBox
-
-            selecItem = (String) e.getItem();
-            try {
-                if (permisson || view.getTxtSearchInstru().getText().isEmpty()) {
-                    updateTable();
-                }
-            } catch (ParserConfigurationException ex) {
-                Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SAXException ex) {
-                Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println("Elemento seleccionado: " + selecItem);
-
-            // Realiza las operaciones que necesites con el nuevo elemento seleccionado
-        }
-    }
+   
 
     public void tbInstruMouseClicked(MouseEvent evt) {
         int selectedRow = view.getTbInstru().getSelectedRow();
@@ -336,10 +311,8 @@ public class IntrumentsController extends Controller implements ItemListener {
 
         // Si la cadena de búsqueda está vacía, muestra todos los elementos
         if (searchLetter.isEmpty()) {
-            permisson = true;
             updateTable();
         } else {
-            permisson = false;
             // Itera sobre la lista de instrumentos y agrega las coincidencias al modelo de la tabla
             for (InstrumentModulo2 instrument : ListOfXml) {
                 // Convierte la descripción a minúsculas para hacer la búsqueda insensible a mayúsculas y minúsculas
