@@ -191,7 +191,7 @@ public class IntrumentsController extends Controller {
                 view.getCmbType().getSelectedItem().toString()
         );
         listModulo2.getList().add(newInstrument);
-        XMLLoader.addToXML(filePath, listModulo2.getList(),view.getCmbType().getSelectedItem().toString());
+        XMLLoader.addToXML(filePath, listModulo2.getList(), view.getCmbType().getSelectedItem().toString());
         listModulo2.getList().clear();
     }
 
@@ -203,11 +203,7 @@ public class IntrumentsController extends Controller {
 
             for (int i = ListOfXml.size() - 1; i >= 0; i--) {
                 InstrumentModulo2 newInstrument = ListOfXml.get(i);
-                if (newInstrument.getType().equals(selecItem)) {
-                    tableModel.insertRow(0, new Object[]{newInstrument.getSerie(), newInstrument.getDescri(), newInstrument.getMini(), newInstrument.getMaxi(), newInstrument.getTole(), newInstrument.getType()});
-                } else if (selecItem == "Todos los instrumentos" || selecItem == null) {
-                    tableModel.insertRow(0, new Object[]{newInstrument.getSerie(), newInstrument.getDescri(), newInstrument.getMini(), newInstrument.getMaxi(), newInstrument.getTole(), newInstrument.getType()});
-                }
+                tableModel.insertRow(0, new Object[]{newInstrument.getSerie(), newInstrument.getDescri(), newInstrument.getMini(), newInstrument.getMaxi(), newInstrument.getTole(), newInstrument.getType()});
             }
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -224,7 +220,6 @@ public class IntrumentsController extends Controller {
 
                 if (cmbType != null) {
                     DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
-
 
                     // Agrega los elementos de listName al modelo del JComboBox
                     for (InstrumentType name : listName) {
@@ -251,8 +246,6 @@ public class IntrumentsController extends Controller {
         });
         return true;
     }
-
-   
 
     public void tbInstruMouseClicked(MouseEvent evt) {
         int selectedRow = view.getTbInstru().getSelectedRow();
