@@ -432,11 +432,6 @@ public class XMLLoader {
                     break; // Puedes salir del bucle si se elimina el elemento
                 }
             }
-
-            // Si no quedan más instrumentos en ese tipo de instrumento, elimina también el tipo de instrumento
-            if (instrumentElements.getLength() == 0) {
-                rootElement.removeChild(tipoInstrumento);
-            }
         }
 
         // Guarda los cambios en el archivo XML

@@ -1,36 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Laboratorio>
-                                                
+            
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <idCounter>13</idCounter>
-                                            
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    <idCounter>4</idCounter>
+        
     
     <IdMedicionCounter>1</IdMedicionCounter>
-                                        
-
-
-
-
-
-
-
-
-
+        
+    
+    <Tipo_de_instrumento>
+                
+        <Codigo>BAR</Codigo>
+                
+        <Nombre>Barómetro</Nombre>
+                
+        <Unidad>PSU</Unidad>
+            
+    </Tipo_de_instrumento>
+    
 </Laboratorio>
