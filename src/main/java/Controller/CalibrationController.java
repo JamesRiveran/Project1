@@ -247,7 +247,7 @@ public class CalibrationController extends Controller implements ActionListener,
         int rowCount = modelo.getRowCount();
 
         for (int fila = 0; fila < rowCount; fila++) {
-            modelo.setValueAt(0, fila, columna); // Establece un valor vacío en la celda
+            modelo.setValueAt("", fila, columna); // Establece un valor vacío en la celda
         }
     }
 

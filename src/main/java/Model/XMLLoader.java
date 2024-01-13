@@ -936,6 +936,4 @@ public static void saveToXMLMeasurement(String filePath, List<Measurement> measu
         ex.printStackTrace();
     }
 }
-
-
 }
