@@ -3,7 +3,6 @@
  */
 package com.mycompany.project1;
 
-import Controller.DataBaseConnection;
 import Controller.ViewController;
 import Model.XMLCreator;
 import java.io.IOException;
@@ -20,10 +19,6 @@ public class Project1 {
         XMLCreator xmlCreator = new XMLCreator();
         xmlCreator.createLaboratorioXML();
         Controller.ViewController view = new ViewController();
-        DataBaseConnection dbConnection = new DataBaseConnection();
-        String UserName = "root";
-        String Password = "R#m4B@!p8$Dw2%";
-        dbConnection.connect("jdbc:mysql://127.0.0.1:3306/bd_laboratorio",UserName,Password);
         view.start();
         
 //        String UserName = "root";
