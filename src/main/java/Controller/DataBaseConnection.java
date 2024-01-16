@@ -105,20 +105,16 @@ public class DataBaseConnection {
         }
     }
     
-    public void deleteRecord(){
+    public void deleteRecord(String code){
         //sql statement for inserting record
         String sql = "DELETE FROM InstrumentType WHERE code=?";
 
-        //getting input from user
-        Scanner input=new Scanner(System.in);
-        System.out.println("Codigo del tipo de instrumento que quiere borrar: ");
-        String id=input.nextLine();
 
         try {
             //creating and executing our statement
             PreparedStatement statement = connection.prepareStatement(sql);
             //setting parameter values
-            statement.setString(1, id);
+            statement.setString(1, code);
 
             int rowsDeleted = statement.executeUpdate();
             //if rowInserted is greater then 0 mean rows are inserted

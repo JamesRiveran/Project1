@@ -197,17 +197,20 @@ public class ViewController extends Controller implements ActionListener {
         InstrumentType instrumentToDelete = new InstrumentType(
                 view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
         try {
-            XMLLoader.deleteFromXML(filePath, instrumentToDelete);
+            //XMLLoader.deleteFromXML(filePath, instrumentToDelete);
+            dbConnection.deleteRecord(view.getTxtCode().getText());
             updateTable();
             intrumentsController.updateComboBoxModel();
             clean();
-        } catch (IOException ex) {
+        }
+//        catch (IOException ex) {
+//            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);}
+        catch (SAXException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (TransformerException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParserConfigurationException ex) {
+        }
+//         catch (TransformerException ex) {
+//            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);}
+        catch (ParserConfigurationException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
