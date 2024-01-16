@@ -81,46 +81,4 @@ public class BDCalibration {
             error.printStackTrace();
         }
     }
-
-    public void saveOrUpdateCalibration(int number, String date, int measurement) {
-        try {
-            conexion.setConexion();
-            conexion.setConsulta("SELECT * FROM calibration WHERE id=?");
-            conexion.getConsulta().setString(1, String.valueOf(number));
-            ResultSet resultSet = conexion.getConsulta().executeQuery();
-
-            if (resultSet.next()) {
-                // El registro existe, entonces actualiza los valores
-                updateCalibration(number, date, measurement);
-            } else {
-                // El registro no existe, entonces crea un nuevo registro
-                saveCalibration(number, date, measurement);
-            }
-        } catch (SQLException error) {
-            error.printStackTrace();
-        }
-    }
-
-   public void updateCalibration(int number, String date, int measurement) {
-    try {
-        conexion.setConexion();
-        conexion.setConsulta("UPDATE calibration SET date=?, measuring=? WHERE number=?");
-        
-        
-
-        conexion.getConsulta().setInt(1, number);
-        conexion.getConsulta().setString(2, date);
-        conexion.getConsulta().setInt(3, measurement);
-
-        if (conexion.getConsulta().executeUpdate() > 0) {
-            // Respuesta positiva
-            System.out.println("Se actualizó la calibración!");
-        } else {
-            System.out.println("Error en la actualización de la calibración!");
-        }
-    } catch (SQLException error) {
-        error.printStackTrace();
-    }
-}
-
 }
