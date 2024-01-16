@@ -24,11 +24,11 @@ public class Project1 {
         
         view.start();
         
-        String UserName = "root";
-        String Password = "R#m4B@!p8$Dw2%";
-
-        
-        dbConnection.connect("jdbc:mysql://127.0.0.1:3306/bd_laboratorio",UserName,Password);
+//        String UserName = "root";
+//        String Password = "R#m4B@!p8$Dw2%";
+//
+//        
+//        dbConnection.connect("jdbc:mysql://127.0.0.1:3306/bd_laboratorio",UserName,Password);
         //dbConnection.getAllRecords();
         //dbConnection.saveTypeOfInstrument(Password, UserName, UserName); implementado con lo visual
         //dbConnection.deleteRecord();

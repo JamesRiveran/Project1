@@ -24,22 +24,23 @@ import org.apache.logging.log4j.Logger;
 public class DataBaseConnection {
     Connection connection;
     private static final Logger logger = LogManager.getLogger();
+    
 
     
     public void connect(String dbUrl,String userName,String password){
-        try {
-            
-            connection= (Connection) DriverManager.getConnection(dbUrl,userName,password);
+        try { 
+            connection = DriverManager.getConnection(dbUrl, userName, password);
             if(connection!=null){
                 logger.debug("Database Connection Successful");
                 logger.info("Entering application.");
 
             }
-        }catch (SQLException ex){
-            //showing exception in log
-            logger.error("Exception in connection: "+ ex.toString());
-
+         }catch (SQLException ex) {
+            // Manejo de excepción si hay un error en la conexión
+            logger.error("Error en la conexión a la base de datos: " + ex.toString());
         }
+        // Manejo de excepción si no se encuentra el controlador JDBC
+        
     }
     public void getAllRecords(){
         //sql statement for inserting record

@@ -45,12 +45,14 @@ public class ViewController extends Controller implements ActionListener {
     static Modulo view;
     protected Modulo viewError;
     ArrayList<InstrumentType> instrumentList = new ArrayList<>();
-    DataBaseConnection databaseConn = new DataBaseConnection();
-
+    DataBaseConnection dbConnection = new DataBaseConnection();
+    String UserName = "root";
+    String Password = "R#m4B@!p8$Dw2%";
+    
     public ViewController() throws ParserConfigurationException, SAXException {
         this.listInstrument = new InstrumentsList();
         this.view = new Modulo();
-        this.databaseConn = new DataBaseConnection();
+        this.dbConnection = new DataBaseConnection();
         this.calibrationController = new CalibrationController(this.view);
         this.intrumentsController = new IntrumentsController(this.view);
         intrumentsController.setInstruSelectionListener(calibrationController);
@@ -90,6 +92,8 @@ public class ViewController extends Controller implements ActionListener {
         view.getCalibrationTxtNumber().setText(String.valueOf(idCounter));
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
+        
+        dbConnection.connect("jdbc:mysql://127.0.0.1:3306/bd_laboratorio",UserName,Password);
 
     }
 
@@ -143,7 +147,8 @@ public class ViewController extends Controller implements ActionListener {
                             view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
                     listInstrument.getList().add(newInstrumentForSave);
                     //XMLLoader.saveToXML(filePath, listInstrument.getList());
-                    databaseConn.saveTypeOfInstrument(code, view.getTxtUnit().getText(), newName);
+                    
+                    dbConnection.saveTypeOfInstrument(code, view.getTxtUnit().getText(), newName);
                     listInstrument.getList().clear();
                     updateTable();
                     intrumentsController.updateComboBoxModel();
