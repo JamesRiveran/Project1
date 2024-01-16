@@ -744,6 +744,8 @@ public static void saveToXMLMeasurement(String filePath, List<Measurement> measu
 
                             Element lecturaElement = doc.createElement("Lectura");
                             lecturaElement.setTextContent(measurement.getReading());
+                            
+                            
 
                             measurementElement.appendChild(idMedi);
                             measurementElement.appendChild(number);

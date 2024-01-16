@@ -1,240 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Laboratorio>
-                                                                    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <idCounter>25</idCounter>
-                                                                
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <IdMedicionCounter>29</IdMedicionCounter>
-                                                                
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <Tipo_de_instrumento>
-                                                                                                                                
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <Codigo>UUU</Codigo>
-                                                                                                                                
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <Nombre>JAMES</Nombre>
-                                                                                                                                
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <Unidad>UWU</Unidad>
-                                                                                                                                
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <Instrumento>
-                                                                                                                                                                                                
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            <Serie>232</Serie>
-                                                                                                                                                                                                
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            <Minimo>0</Minimo>
-                                                                                                                                                                                                
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            <Tolerancia>1</Tolerancia>
-                                                                                                                                                                                                
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            <Descripcion>SAD</Descripcion>
-                                                                                                                                                                                                
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            <Maximo>90</Maximo>
-                                                                                                                                                                                                
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            <Tipo>JAMES</Tipo>
-                                                                                                                                                                                            
-            
-        
-        
-            
-        
-        
-        
-            
-            
-                    
-            
-            
-                    
-        
-        
-        
-            
-        
-            
-        
-            
-            
-                    
-        
-        </Instrumento>
                                                                                                                             
     
     
@@ -250,8 +14,1067 @@
     
     
     
-    </Tipo_de_instrumento>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <idCounter>45</idCounter>
+                                                                                                                        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <IdMedicionCounter>53</IdMedicionCounter>
+                                                                                                                        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <Tipo_de_instrumento>
+                                                                                                                                                                                                                                                
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <Codigo>UUU</Codigo>
+                                                                                                                                                                                                                                                
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <Nombre>JAMES</Nombre>
+                                                                                                                                                                                                                                                
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <Unidad>UWU</Unidad>
+                                                                                                                                                                                                                                                
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <Instrumento>
+                                                                                                                                                                                                                                                                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <Serie>232</Serie>
+                                                                                                                                                                                                                                                                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <Minimo>0</Minimo>
+                                                                                                                                                                                                                                                                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <Tolerancia>1</Tolerancia>
+                                                                                                                                                                                                                                                                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <Descripcion>SAD</Descripcion>
+                                                                                                                                                                                                                                                                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <Maximo>90</Maximo>
+                                                                                                                                                                                                                                                                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <Tipo>JAMES</Tipo>
+                                                                                                                                                                                                                                                                                                                                                                    
+            
+        
+        
+            
+        
+        
+        
+            
+            
+                    
+            
+            
+                    
+        
+        
+        
+            
+        
+            
+        
+            
+            
+                    
+        
+        
+        
+            
+            
+                    
+        
+        
+        
+        
+        
+            
+            
+            
+            
+            
+            
+            <Calibracion>
+                                                                                                                
+                
+                
+                
+                
+                
+                <Serie>232</Serie>
+                                                                                                                
+                
+                
+                
+                
+                
+                <Fecha>2024-01-01</Fecha>
+                                                                                                                
+                
+                
+                
+                
+                
+                <Numero>33</Numero>
+                                                                                                                
+                
+                
+                
+                
+                
+                <Mediciones>3</Mediciones>
+                                                                                                                
+                
+                
+                
+                
+                
+                <Medicion>
+                                                                                                                                            
+                    
+                    
+                    
+                    
+                    
+                    <IdMedicion>33</IdMedicion>
+                                                                                                                                            
+                    
+                    
+                    
+                    
+                    
+                    <Numero>33</Numero>
+                                                                                                                                            
+                    
+                    
+                    
+                    
+                    
+                    <Medida>1.0</Medida>
+                                                                                                                                            
+                    
+                    
+                    
+                    
+                    
+                    <Referencia>0</Referencia>
+                                                                                                                                            
+                    
+                    
+                    
+                    
+                    
+                    <Lectura/>
+                                                                                                                                        
+                
+                
+                
+                
+                
+                </Medicion>
+                                                                                                                
+                
+                
+                
+                
+                
+                <Medicion>
+                                                                                                                                            
+                    
+                    
+                    
+                    
+                    
+                    <IdMedicion>34</IdMedicion>
+                                                                                                                                            
+                    
+                    
+                    
+                    
+                    
+                    <Numero>33</Numero>
+                                                                                                                                            
+                    
+                    
+                    
+                    
+                    
+                    <Medida>2.0</Medida>
+                                                                                                                                            
+                    
+                    
+                    
+                    
+                    
+                    <Referencia>30</Referencia>
+                                                                                                                                            
+                    
+                    
+                    
+                    
+                    
+                    <Lectura/>
+                                                                                                                                        
+                
+                
+                
+                
+                
+                </Medicion>
+                                                                                                                
+                
+                
+                
+                
+                
+                <Medicion>
+                                                                                                                                            
+                    
+                    
+                    
+                    
+                    
+                    <IdMedicion>35</IdMedicion>
+                                                                                                                                            
+                    
+                    
+                    
+                    
+                    
+                    <Numero>33</Numero>
+                                                                                                                                            
+                    
+                    
+                    
+                    
+                    
+                    <Medida>3.0</Medida>
+                                                                                                                                            
+                    
+                    
+                    
+                    
+                    
+                    <Referencia>60</Referencia>
+                                                                                                                                            
+                    
+                    
+                    
+                    
+                    
+                    <Lectura/>
+                                                                                                                                        
+                
+                
+                
+                
+                
+                </Medicion>
+                                                                                                            
+            
+            
+            
+            
+            
+            </Calibracion>
+                                                                                
+        
+            
+            
+            
+            
+            <Calibracion>
+                                                                                
+                
+                
+                
+                <Serie>232</Serie>
+                                                                                
+                
+                
+                
+                <Fecha>2024-01-02</Fecha>
+                                                                                
+                
+                
+                
+                <Numero>36</Numero>
+                                                                                
+                
+                
+                
+                <Mediciones>4</Mediciones>
+                                                                                
+                
+                
+                
+                <Medicion>
+                                                                                                    
+                    
+                    
+                    
+                    <IdMedicion>36</IdMedicion>
+                                                                                                    
+                    
+                    
+                    
+                    <Numero>36</Numero>
+                                                                                                    
+                    
+                    
+                    
+                    <Medida>1.0</Medida>
+                                                                                                    
+                    
+                    
+                    
+                    <Referencia>0</Referencia>
+                                                                                                    
+                    
+                    
+                    
+                    <Lectura/>
+                                                                                                
+                
+                
+                
+                </Medicion>
+                                                                                
+                
+                
+                
+                <Medicion>
+                                                                                                    
+                    
+                    
+                    
+                    <IdMedicion>37</IdMedicion>
+                                                                                                    
+                    
+                    
+                    
+                    <Numero>36</Numero>
+                                                                                                    
+                    
+                    
+                    
+                    <Medida>2.0</Medida>
+                                                                                                    
+                    
+                    
+                    
+                    <Referencia>22</Referencia>
+                                                                                                    
+                    
+                    
+                    
+                    <Lectura/>
+                                                                                                
+                
+                
+                
+                </Medicion>
+                                                                                
+                
+                
+                
+                <Medicion>
+                                                                                                    
+                    
+                    
+                    
+                    <IdMedicion>38</IdMedicion>
+                                                                                                    
+                    
+                    
+                    
+                    <Numero>36</Numero>
+                                                                                                    
+                    
+                    
+                    
+                    <Medida>3.0</Medida>
+                                                                                                    
+                    
+                    
+                    
+                    <Referencia>44</Referencia>
+                                                                                                    
+                    
+                    
+                    
+                    <Lectura/>
+                                                                                                
+                
+                
+                
+                </Medicion>
+                                                                                
+                
+                
+                
+                <Medicion>
+                                                                                                    
+                    
+                    
+                    
+                    <IdMedicion>39</IdMedicion>
+                                                                                                    
+                    
+                    
+                    
+                    <Numero>36</Numero>
+                                                                                                    
+                    
+                    
+                    
+                    <Medida>4.0</Medida>
+                                                                                                    
+                    
+                    
+                    
+                    <Referencia>66</Referencia>
+                                                                                                    
+                    
+                    
+                    
+                    <Lectura/>
+                                                                                                
+                
+                
+                
+                </Medicion>
+                                                                            
+            
+            
+            
+            </Calibracion>
+                                                        
+            
+            
+            
+            <Calibracion>
+                                                                
+                
+                
+                <Serie>232</Serie>
+                                                                
+                
+                
+                <Fecha>2024-01-02</Fecha>
+                                                                
+                
+                
+                <Numero>38</Numero>
+                                                                
+                
+                
+                <Mediciones>3</Mediciones>
+                                                                
+                
+                
+                <Medicion>
+                                                                                
+                    
+                    
+                    <IdMedicion>40</IdMedicion>
+                                                                                
+                    
+                    
+                    <Numero>38</Numero>
+                                                                                
+                    
+                    
+                    <Medida>1.0</Medida>
+                                                                                
+                    
+                    
+                    <Referencia>0</Referencia>
+                                                                                
+                    
+                    
+                    <Lectura/>
+                                                                            
+                
+                
+                </Medicion>
+                                                                
+                
+                
+                <Medicion>
+                                                                                
+                    
+                    
+                    <IdMedicion>41</IdMedicion>
+                                                                                
+                    
+                    
+                    <Numero>38</Numero>
+                                                                                
+                    
+                    
+                    <Medida>2.0</Medida>
+                                                                                
+                    
+                    
+                    <Referencia>30</Referencia>
+                                                                                
+                    
+                    
+                    <Lectura/>
+                                                                            
+                
+                
+                </Medicion>
+                                                                
+                
+                
+                <Medicion>
+                                                                                
+                    
+                    
+                    <IdMedicion>42</IdMedicion>
+                                                                                
+                    
+                    
+                    <Numero>38</Numero>
+                                                                                
+                    
+                    
+                    <Medida>3.0</Medida>
+                                                                                
+                    
+                    
+                    <Referencia>60</Referencia>
+                                                                                
+                    
+                    
+                    <Lectura/>
+                                                                            
+                
+                
+                </Medicion>
                                                             
+            
+            
+            </Calibracion>
+                                            
+        
+            
+            <Calibracion>
+                                
+                <Serie>232</Serie>
+                                
+                <Fecha>2024-01-05</Fecha>
+                                
+                <Numero>41</Numero>
+                                
+                <Mediciones>5</Mediciones>
+                                
+                <Medicion>
+                                        
+                    <IdMedicion>43</IdMedicion>
+                                        
+                    <Numero>41</Numero>
+                                        
+                    <Medida>1.0</Medida>
+                                        
+                    <Referencia>0</Referencia>
+                                        
+                    <Lectura/>
+                                    
+                </Medicion>
+                                
+                <Medicion>
+                                        
+                    <IdMedicion>44</IdMedicion>
+                                        
+                    <Numero>41</Numero>
+                                        
+                    <Medida>2.0</Medida>
+                                        
+                    <Referencia>18</Referencia>
+                                        
+                    <Lectura/>
+                                    
+                </Medicion>
+                                
+                <Medicion>
+                                        
+                    <IdMedicion>45</IdMedicion>
+                                        
+                    <Numero>41</Numero>
+                                        
+                    <Medida>3.0</Medida>
+                                        
+                    <Referencia>36</Referencia>
+                                        
+                    <Lectura/>
+                                    
+                </Medicion>
+                                
+                <Medicion>
+                                        
+                    <IdMedicion>46</IdMedicion>
+                                        
+                    <Numero>41</Numero>
+                                        
+                    <Medida>4.0</Medida>
+                                        
+                    <Referencia>54</Referencia>
+                                        
+                    <Lectura/>
+                                    
+                </Medicion>
+                                
+                <Medicion>
+                                        
+                    <IdMedicion>47</IdMedicion>
+                                        
+                    <Numero>41</Numero>
+                                        
+                    <Medida>5.0</Medida>
+                                        
+                    <Referencia>72</Referencia>
+                                        
+                    <Lectura/>
+                                    
+                </Medicion>
+                            
+            </Calibracion>
+                    
+            <Calibracion>
+                <Serie>232</Serie>
+                <Fecha>2024-01-09</Fecha>
+                <Numero>43</Numero>
+                <Mediciones>6</Mediciones>
+                <Medicion>
+                    <IdMedicion>48</IdMedicion>
+                    <Numero>43</Numero>
+                    <Medida>1.0</Medida>
+                    <Referencia>0</Referencia>
+                    <Lectura/>
+                </Medicion>
+                <Medicion>
+                    <IdMedicion>49</IdMedicion>
+                    <Numero>43</Numero>
+                    <Medida>2.0</Medida>
+                    <Referencia>15</Referencia>
+                    <Lectura/>
+                </Medicion>
+                <Medicion>
+                    <IdMedicion>50</IdMedicion>
+                    <Numero>43</Numero>
+                    <Medida>3.0</Medida>
+                    <Referencia>30</Referencia>
+                    <Lectura/>
+                </Medicion>
+                <Medicion>
+                    <IdMedicion>51</IdMedicion>
+                    <Numero>43</Numero>
+                    <Medida>4.0</Medida>
+                    <Referencia>45</Referencia>
+                    <Lectura/>
+                </Medicion>
+                <Medicion>
+                    <IdMedicion>52</IdMedicion>
+                    <Numero>43</Numero>
+                    <Medida>5.0</Medida>
+                    <Referencia>60</Referencia>
+                    <Lectura/>
+                </Medicion>
+                <Medicion>
+                    <IdMedicion>53</IdMedicion>
+                    <Numero>43</Numero>
+                    <Medida>6.0</Medida>
+                    <Referencia>75</Referencia>
+                    <Lectura/>
+                </Medicion>
+            </Calibracion>
+        </Instrumento>
+                                                                                                                                                                                                                                            
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </Tipo_de_instrumento>
+                                                                                                                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -6,6 +6,7 @@
 package Controller;
 
 import Controller.sqlServer.BDCalibration;
+import Controller.sqlServer.BDMeasurement;
 import Model.Calibration;
 import Model.CalibrationList;
 import Model.ColorCelda;
@@ -57,12 +58,14 @@ public class CalibrationController extends Controller implements ActionListener,
     private String number;
     public String serieInstrument="";
     BDCalibration calibration = new BDCalibration();
+    BDMeasurement measurement = new BDMeasurement();
 
     public CalibrationController(Modulo view) {
         this.view = view;
         this.calibration = new BDCalibration();
         this.view.setCalibrationController(this);
         this.calibrationList = new CalibrationList();
+        this.measurement = new BDMeasurement();
         this.number = "0";
         updateTable();
 
@@ -91,14 +94,14 @@ public class CalibrationController extends Controller implements ActionListener,
     @Override
     public void save() {
         try {
-            int measurement = Integer.parseInt(view.getCalibrationTxtMeasurement().getText());
+            int measurementNumber = Integer.parseInt(view.getCalibrationTxtMeasurement().getText());
             if (view.getCalibrationDateChooser().getDate() == null) {
                 viewController.showMessage(view, "Debe ingresar la fecha del instrumento", "error");
             } else if (view.getCalibrationTxtMeasurement().getText().trim().isEmpty()) {
                 viewController.showMessage(view, "Debe ingresar la calibración del instrumento", "error");
             } else if (Integer.parseInt(view.getCalibrationTxtMeasurement().getText()) < 2) {
                 viewController.showMessage(view, "La cantidad minima de mediciones que se permite ingresar es de 2", "error");
-            } else if (measurement > Integer.parseInt(max) + 1) {
+            } else if (measurementNumber > Integer.parseInt(max) + 1) {
                 viewController.showMessage(view, "La cantidad de mediciones es mayor a la cantidad de enteros que hay en el rango del instrumento", "error");
             } else {
                 try {
@@ -117,6 +120,7 @@ public class CalibrationController extends Controller implements ActionListener,
                     updateTable();
                     List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max));
                     XMLLoader.saveToXMLMeasurement(filePath, measurements,Integer.parseInt(view.getCalibrationTxtNumber().getText()));
+                    measurement.saveMeasurement(measurements);
                     newIdNumber = idCounter();
                     view.getCalibrationTxtNumber().setText(String.valueOf(newIdNumber));
                     updateTableMeasurement();
@@ -344,26 +348,16 @@ public class CalibrationController extends Controller implements ActionListener,
     public void updateTableMeasurement() {
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
         tableModel.setRowCount(0); // Limpia la tabla antes de cargar los datos
-        try {
-            int id = Integer.parseInt(view.getCalibrationTxtNumber().getText());
-            ArrayList<Measurement> loadedMeasurements = XMLLoader.loadFromMeasurement(filePath,id);
-            for (Measurement measurement : loadedMeasurements) {
-                if (Integer.parseInt(measurement.getCode()) == Integer.parseInt(getNumber())) {
-                    Object[] rowData = {measurement.getId(), measurement.getReference(), measurement.getReading(), measurement.getIdMeasure()};
-                    tableModel.addRow(rowData);
-                }
-            }
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-
-        } catch (SAXException ex) {
-            Logger.getLogger(CalibrationController.class
-                    .getName()).log(Level.SEVERE, null, ex);
-
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(CalibrationController.class
-                    .getName()).log(Level.SEVERE, null, ex);
+        int id = Integer.parseInt(view.getCalibrationTxtNumber().getText());
+        //            ArrayList<Measurement> loadedMeasurements = XMLLoader.loadFromMeasurement(filePath,id);
+        ArrayList<Measurement> loadedMeasurements = measurement.getAllMeasurement();
+        for (Measurement measurements : loadedMeasurements) {
+            Object[] rowData = {measurements.getId(), measurements.getReference(), measurements.getReading(),0};
+            tableModel.addRow(rowData);
+//            if (Integer.parseInt(measurements.getCode()) == Integer.parseInt(getNumber())) {
+//                Object[] rowData = {measurements.getId(), measurements.getReference(), measurements.getReading(),0};
+//                tableModel.addRow(rowData);
+//            }
         }
     }
 

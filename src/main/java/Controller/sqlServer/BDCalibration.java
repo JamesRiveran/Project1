@@ -39,9 +39,7 @@ public class BDCalibration {
         } catch (SQLException error) {
             error.printStackTrace();
         }
-        for (Calibration instrument : calibrationList) {
-            System.out.println(instrument);
-        }
+        
         return calibrationList;
     }
 
