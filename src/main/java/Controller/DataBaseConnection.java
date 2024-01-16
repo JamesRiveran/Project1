@@ -7,10 +7,13 @@ package Controller;
 import Model.InstrumentType;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.logging.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,9 +24,11 @@ import org.apache.logging.log4j.Logger;
 public class DataBaseConnection {
     Connection connection;
     private static final Logger logger = LogManager.getLogger();
+
+    
     public void connect(String dbUrl,String userName,String password){
         try {
-//            DOMConfigurator.configure("log4j2.xml");
+            
             connection= (Connection) DriverManager.getConnection(dbUrl,userName,password);
             if(connection!=null){
                 logger.debug("Database Connection Successful");
@@ -76,6 +81,87 @@ public class DataBaseConnection {
         }
     }
     
+    public void saveTypeOfInstrument(String code, String unit, String name){
+
+        //sql statement for inserting record
+        String sql = "INSERT INTO InstrumentType (code, unit, name) VALUES (?, ?,?)";
+        
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            //setting parameter values
+            statement.setString(1, code);
+            statement.setString(2, unit);
+            statement.setString(3, name);
+            //executing query which will return an integer value
+            int rowsInserted = statement.executeUpdate();
+            //if rowInserted is greater then 0 mean rows are inserted
+            if (rowsInserted > 0) {
+                logger.debug("Tipo de instrumento guardado con éxito!");
+            }
+        }catch (Exception e){
+            logger.error("Error en la conección: "+ e.toString());
+
+        }
+    }
+    
+    public void deleteRecord(){
+        //sql statement for inserting record
+        String sql = "DELETE FROM InstrumentType WHERE code=?";
+
+        //getting input from user
+        Scanner input=new Scanner(System.in);
+        System.out.println("Codigo del tipo de instrumento que quiere borrar: ");
+        String id=input.nextLine();
+
+        try {
+            //creating and executing our statement
+            PreparedStatement statement = connection.prepareStatement(sql);
+            //setting parameter values
+            statement.setString(1, id);
+
+            int rowsDeleted = statement.executeUpdate();
+            //if rowInserted is greater then 0 mean rows are inserted
+            if (rowsDeleted > 0) {
+                logger.debug("Tipo de instrumento eliminado con éxito!");
+            }else {
+                logger.debug("Tipo de instrumento no encontrado.");
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void updateRecord(){
+        //sql statement for inserting record
+        String sql = "UPDATE instrumenttype SET unit=?, name=? WHERE code=?";
+        //getting input from user
+        Scanner input=new Scanner(System.in);
+        System.out.println("Enter code of instrument to update");
+        String code=input.nextLine();
+        System.out.println("Enter name");
+        String name=input.nextLine();
+        System.out.println("Enter unit");
+        String unit=input.nextLine();
+        
+
+        try {
+            //creating and executing our statement
+            PreparedStatement statement = connection.prepareStatement(sql);
+            //setting parameter values
+            statement.setString(1, unit);
+            statement.setString(2, name);
+            statement.setString(3, code);
+
+            int rowsUpdated = statement.executeUpdate();
+            //if rowInserted is greater then 0 mean rows are inserted
+            if (rowsUpdated > 0) {
+                logger.debug("Tipo de instrumento actualizado con éxito!");
+            }
+        }catch (Exception e){
+            logger.error("ERROR en la conexión: "+ e.toString());
+
+        }
+    }
     public void closeConnection(){
         try {
             if(connection!=null) {

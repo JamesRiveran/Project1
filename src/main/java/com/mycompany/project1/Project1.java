@@ -20,7 +20,7 @@ public class Project1 {
         XMLCreator xmlCreator = new XMLCreator();
         xmlCreator.createLaboratorioXML();
         Controller.ViewController view = new ViewController();
-        DataBaseConnection databaseConn = new DataBaseConnection();
+        DataBaseConnection dbConnection = new DataBaseConnection();
         
         view.start();
         
@@ -28,7 +28,10 @@ public class Project1 {
         String Password = "R#m4B@!p8$Dw2%";
 
         
-        databaseConn.connect("jdbc:mysql://127.0.0.1:3306/bd_laboratorio",UserName,Password);
-        databaseConn.getAllRecords();
+        dbConnection.connect("jdbc:mysql://127.0.0.1:3306/bd_laboratorio",UserName,Password);
+        //dbConnection.getAllRecords();
+        //dbConnection.saveTypeOfInstrument(Password, UserName, UserName); implementado con lo visual
+        //dbConnection.deleteRecord();
+        //dbConnection.updateRecord();
     }
 }

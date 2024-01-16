@@ -45,10 +45,12 @@ public class ViewController extends Controller implements ActionListener {
     static Modulo view;
     protected Modulo viewError;
     ArrayList<InstrumentType> instrumentList = new ArrayList<>();
+    DataBaseConnection databaseConn = new DataBaseConnection();
 
     public ViewController() throws ParserConfigurationException, SAXException {
         this.listInstrument = new InstrumentsList();
         this.view = new Modulo();
+        this.databaseConn = new DataBaseConnection();
         this.calibrationController = new CalibrationController(this.view);
         this.intrumentsController = new IntrumentsController(this.view);
         intrumentsController.setInstruSelectionListener(calibrationController);
@@ -140,7 +142,8 @@ public class ViewController extends Controller implements ActionListener {
                     InstrumentType newInstrumentForSave = new InstrumentType(
                             view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
                     listInstrument.getList().add(newInstrumentForSave);
-                    XMLLoader.saveToXML(filePath, listInstrument.getList());
+                    //XMLLoader.saveToXML(filePath, listInstrument.getList());
+                    databaseConn.saveTypeOfInstrument(code, view.getTxtUnit().getText(), newName);
                     listInstrument.getList().clear();
                     updateTable();
                     intrumentsController.updateComboBoxModel();
