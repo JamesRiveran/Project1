@@ -45,14 +45,14 @@ public class ViewController extends Controller implements ActionListener {
     static Modulo view;
     protected Modulo viewError;
     ArrayList<InstrumentType> instrumentList = new ArrayList<>();
-    DataBaseConnection dbConnection = new DataBaseConnection();
-    String UserName = "root";
-    String Password = "R#m4B@!p8$Dw2%";
+    BDTypeInstrument dbConnection = new BDTypeInstrument();
+    
     
     public ViewController() throws ParserConfigurationException, SAXException {
+        
         this.listInstrument = new InstrumentsList();
         this.view = new Modulo();
-        this.dbConnection = new DataBaseConnection();
+        this.dbConnection = new BDTypeInstrument();
         this.calibrationController = new CalibrationController(this.view);
         this.intrumentsController = new IntrumentsController(this.view);
         intrumentsController.setInstruSelectionListener(calibrationController);
@@ -93,7 +93,7 @@ public class ViewController extends Controller implements ActionListener {
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
         
-        dbConnection.connect("jdbc:mysql://127.0.0.1:3306/bd_laboratorio",UserName,Password);
+        
 
     }
 
@@ -148,7 +148,7 @@ public class ViewController extends Controller implements ActionListener {
                     listInstrument.getList().add(newInstrumentForSave);
                     //XMLLoader.saveToXML(filePath, listInstrument.getList());
                     
-                    dbConnection.saveTypeOfInstrument(code, view.getTxtUnit().getText(), newName);
+                    dbConnection.saveOrUpdateInstrument(code, view.getTxtUnit().getText(), newName);
                     listInstrument.getList().clear();
                     updateTable();
                     intrumentsController.updateComboBoxModel();
@@ -278,18 +278,13 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {
-        try {
-            ListOfIModu1o1 = XMLLoader.loadFromXML(filePath);
-            DefaultTableModel tableModule1 = (DefaultTableModel) view.getTblListInstruments().getModel();
-            tableModule1.setRowCount(0);
-
-            for (int i = ListOfIModu1o1.size() - 1; i >= 0; i--) {
-                InstrumentType module1 = ListOfIModu1o1.get(i);
-                tableModule1.insertRow(0, new Object[]{module1.getCode(), module1.getName(), module1.getUnit()});
-            }
-
-        } catch (IOException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        //ListOfIModu1o1 = XMLLoader.loadFromXML(filePath);
+        ListOfIModu1o1 = dbConnection.getAllRecords();
+        DefaultTableModel tableModule1 = (DefaultTableModel) view.getTblListInstruments().getModel();
+        tableModule1.setRowCount(0);
+        for (int i = ListOfIModu1o1.size() - 1; i >= 0; i--) {
+            InstrumentType module1 = ListOfIModu1o1.get(i);
+            tableModule1.insertRow(0, new Object[]{module1.getCode(), module1.getName(), module1.getUnit()});
         }
     }
 

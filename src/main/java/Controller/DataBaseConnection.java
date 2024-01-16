@@ -24,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 public class DataBaseConnection {
     Connection connection;
     private static final Logger logger = LogManager.getLogger();
+
     
 
     
@@ -42,36 +43,32 @@ public class DataBaseConnection {
         // Manejo de excepción si no se encuentra el controlador JDBC
         
     }
-    public void getAllRecords(){
-        //sql statement for inserting record
+
+    public ArrayList<InstrumentType> getAllRecords() {
+        // sql statement for retrieving records
         String sql = "SELECT * FROM instrumenttype";
-        //Creating a collection form employee list for storing all employee record
-        ArrayList<InstrumentType> employeeList=new ArrayList<InstrumentType>();
+        ArrayList<InstrumentType> instrumentList = new ArrayList<InstrumentType>();
 
         try {
-
-            //creating and executing our statement
+            // create and execute our statement
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(sql);
-            //iterating over the rows in the result
-            while (result.next()) {
 
-                //storing single result in employee object
-                InstrumentType instrumentType=new InstrumentType();
+            // iterate over the rows in the result
+            while (result.next()) {
+                InstrumentType instrumentType = new InstrumentType();
                 instrumentType.setCode(String.valueOf(result.getString(1)));
                 instrumentType.setUnit(result.getString(2));
                 instrumentType.setName(result.getString(3));
-
-                //adding employee in employee list
-                employeeList.add(instrumentType);
+                instrumentList.add(instrumentType);
             }
-            //caalling function to display all record
-            displayRecord(employeeList);
-        }catch (Exception e){
-            logger.error("Exception in connection: "+ e.toString());
-
+        } catch (Exception e) {
+            logger.error("Exception in connection: " + e.toString());
         }
+
+        return instrumentList; // return the list of InstrumentType objects
     }
+
     public void displayRecord(ArrayList<InstrumentType> instrument){
         //iterating over employee list and displaying all employees data
         for(int i=0;i<instrument.size();i++){

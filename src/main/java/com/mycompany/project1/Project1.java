@@ -21,7 +21,9 @@ public class Project1 {
         xmlCreator.createLaboratorioXML();
         Controller.ViewController view = new ViewController();
         DataBaseConnection dbConnection = new DataBaseConnection();
-        
+        String UserName = "root";
+        String Password = "R#m4B@!p8$Dw2%";
+        dbConnection.connect("jdbc:mysql://127.0.0.1:3306/bd_laboratorio",UserName,Password);
         view.start();
         
 //        String UserName = "root";
