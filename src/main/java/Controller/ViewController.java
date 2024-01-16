@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Controller.sqlServer.BDTypeInstrument;
 import Model.GeneratorPDF;
 import static Model.GeneratorPDF.loadTypeOfInstrument;
 import Model.InstrumentType;
@@ -146,7 +147,7 @@ public class ViewController extends Controller implements ActionListener {
                     InstrumentType newInstrumentForSave = new InstrumentType(
                             view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
                     listInstrument.getList().add(newInstrumentForSave);
-                    //XMLLoader.saveToXML(filePath, listInstrument.getList());
+                    XMLLoader.saveToXML(filePath, listInstrument.getList());
                     
                     dbConnection.saveOrUpdateInstrument(code, view.getTxtUnit().getText(), newName);
                     listInstrument.getList().clear();
@@ -197,19 +198,19 @@ public class ViewController extends Controller implements ActionListener {
         InstrumentType instrumentToDelete = new InstrumentType(
                 view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
         try {
-            //XMLLoader.deleteFromXML(filePath, instrumentToDelete);
+            XMLLoader.deleteFromXML(filePath, instrumentToDelete);
             dbConnection.deleteRecord(view.getTxtCode().getText());
             updateTable();
             intrumentsController.updateComboBoxModel();
             clean();
         }
-//        catch (IOException ex) {
-//            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);}
+        catch (IOException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);}
         catch (SAXException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-//         catch (TransformerException ex) {
-//            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);}
+         catch (TransformerException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);}
         catch (ParserConfigurationException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -278,13 +279,17 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {
-        //ListOfIModu1o1 = XMLLoader.loadFromXML(filePath);
-        ListOfIModu1o1 = dbConnection.getAllRecords();
-        DefaultTableModel tableModule1 = (DefaultTableModel) view.getTblListInstruments().getModel();
-        tableModule1.setRowCount(0);
-        for (int i = ListOfIModu1o1.size() - 1; i >= 0; i--) {
-            InstrumentType module1 = ListOfIModu1o1.get(i);
-            tableModule1.insertRow(0, new Object[]{module1.getCode(), module1.getName(), module1.getUnit()});
+        try {
+            ListOfIModu1o1 = XMLLoader.loadFromXML(filePath);
+            ListOfIModu1o1 = dbConnection.getAllRecords();
+            DefaultTableModel tableModule1 = (DefaultTableModel) view.getTblListInstruments().getModel();
+            tableModule1.setRowCount(0);
+            for (int i = ListOfIModu1o1.size() - 1; i >= 0; i--) {
+                InstrumentType module1 = ListOfIModu1o1.get(i);
+                tableModule1.insertRow(0, new Object[]{module1.getCode(), module1.getName(), module1.getUnit()});
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

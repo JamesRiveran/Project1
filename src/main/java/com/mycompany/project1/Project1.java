@@ -4,6 +4,7 @@
 package com.mycompany.project1;
 
 import Controller.ViewController;
+import Controller.sqlServer.BDCalibration;
 import Model.XMLCreator;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,6 +21,9 @@ public class Project1 {
         xmlCreator.createLaboratorioXML();
         Controller.ViewController view = new ViewController();
         view.start();
+        
+        BDCalibration calibration = new BDCalibration();
+        calibration.getAllCalibration();
         
 //        String UserName = "root";
 //        String Password = "R#m4B@!p8$Dw2%";

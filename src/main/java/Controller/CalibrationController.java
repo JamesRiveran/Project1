@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Controller.sqlServer.BDCalibration;
 import Model.Calibration;
 import Model.CalibrationList;
 import Model.ColorCelda;
@@ -55,9 +56,11 @@ public class CalibrationController extends Controller implements ActionListener,
     boolean pass = false;
     private String number;
     public String serieInstrument="";
+    BDCalibration calibration = new BDCalibration();
 
     public CalibrationController(Modulo view) {
         this.view = view;
+        this.calibration = new BDCalibration();
         this.view.setCalibrationController(this);
         this.calibrationList = new CalibrationList();
         this.number = "0";
@@ -110,8 +113,7 @@ public class CalibrationController extends Controller implements ActionListener,
                             Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                     calibrationList.getList().add(newCalibration);
                     XMLLoader.saveToXMLCalibration(filePath, calibrationList.getList(),serie);
-                    DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
-                    tableModel.insertRow(0, new Object[]{newCalibration.getId(), newCalibration.getDate(), newCalibration.getMeasuring()});
+                    updateTable();
                     List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max));
                     XMLLoader.saveToXMLMeasurement(filePath, measurements,Integer.parseInt(view.getCalibrationTxtNumber().getText()));
                     newIdNumber = idCounter();
@@ -253,7 +255,7 @@ public class CalibrationController extends Controller implements ActionListener,
 
     private static String dateToString(JDateChooser dateChooser) {
         Date fechaSeleccionada = dateChooser.getDate();
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         return formatoFecha.format(fechaSeleccionada);
     }
 
@@ -311,7 +313,7 @@ public class CalibrationController extends Controller implements ActionListener,
                         setNumber(id.toString());
                         if (dateObject instanceof String) {
                             String dateString = (String) dateObject;
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                             try {
                                 Date date = dateFormat.parse(dateString);
                                 Calendar calendar = Calendar.getInstance();
@@ -374,14 +376,16 @@ public class CalibrationController extends Controller implements ActionListener,
     }
 
     public void updateTable() {
-        listCalibrations = XMLLoader.loadFromCalibrations(filePath);
+        //listCalibrations = XMLLoader.loadFromCalibrations(filePath);
+        listCalibrations = calibration.getAllCalibration();
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
         for (int i = listCalibrations.size() - 1; i >= 0; i--) {
             Calibration newCalibration = listCalibrations.get(i);
-            if (newCalibration.getNumber().equals(serie)) {
-                tableModel.insertRow(0, new Object[]{newCalibration.getId(), newCalibration.getDate(), newCalibration.getMeasuring()});
-            }
+            tableModel.insertRow(0, new Object[]{newCalibration.getId(), newCalibration.getDate(), newCalibration.getMeasuring()});
+//            if (newCalibration.getNumber().equals(serie)) {
+//                tableModel.insertRow(0, new Object[]{newCalibration.getId(), newCalibration.getDate(), newCalibration.getMeasuring()});
+//            }
         }
         clickTable();
     }
@@ -397,7 +401,8 @@ public class CalibrationController extends Controller implements ActionListener,
     
 
     private void filterByNumber(String searchNumber) {
-        listCalibrations = XMLLoader.loadFromCalibrations(filePath);
+//        listCalibrations = XMLLoader.loadFromCalibrations(filePath);
+        listCalibrations = calibration.getAllCalibration();
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
         // Si la cadena de búsqueda está vacía, muestra todos los elementos
