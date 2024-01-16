@@ -113,6 +113,7 @@ public class CalibrationController extends Controller implements ActionListener,
                             Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                     calibrationList.getList().add(newCalibration);
                     XMLLoader.saveToXMLCalibration(filePath, calibrationList.getList(),serie);
+                    calibration.saveOrUpdateCalibration(Integer.parseInt(view.getCalibrationTxtNumber().getText()), date, Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                     updateTable();
                     List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max));
                     XMLLoader.saveToXMLMeasurement(filePath, measurements,Integer.parseInt(view.getCalibrationTxtNumber().getText()));
@@ -426,6 +427,7 @@ public class CalibrationController extends Controller implements ActionListener,
         String serie = getSerieInstrument();
         int number = Integer.parseInt(view.getCalibrationTxtNumber().getText());
         XMLLoader.delete(filePath,serie,number);
+        calibration.deleteCalibration(number);
         viewController.showMessage(view, "Eliminado con exito", "success");
         updateTable();
         clearTable(tableModel);

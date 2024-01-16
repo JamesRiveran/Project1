@@ -67,7 +67,7 @@ public class BDTypeInstrument {
 
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva
-                System.out.println("Se insertó el tipo de instrumento!");
+                System.out.println("Se eliminó el tipo de instrumento!");
             } else {
                 System.out.println("Error en la inserción de tipo de instrumento!");
             }

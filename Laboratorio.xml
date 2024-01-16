@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Laboratorio>
-                                            
+                                                            
     
     
     
@@ -9,8 +9,12 @@
     
     
     
-    <idCounter>15</idCounter>
-                                        
+    
+    
+    
+    
+    <idCounter>22</idCounter>
+                                                        
     
     
     
@@ -20,8 +24,16 @@
     
     
     
-    <IdMedicionCounter>13</IdMedicionCounter>
-                                        
+    
+    
+    
+    
+    <IdMedicionCounter>25</IdMedicionCounter>
+                                                        
+    
+    
+    
+    
     
     
     
@@ -31,7 +43,11 @@
     
     
     <Tipo_de_instrumento>
-                                                                                
+                                                                                                                
+        
+        
+        
+        
         
         
         
@@ -41,7 +57,11 @@
         
         
         <Codigo>UUU</Codigo>
-                                                                                
+                                                                                                                
+        
+        
+        
+        
         
         
         
@@ -51,7 +71,11 @@
         
         
         <Nombre>JAMES</Nombre>
-                                                                                
+                                                                                                                
+        
+        
+        
+        
         
         
         
@@ -61,7 +85,11 @@
         
         
         <Unidad>UWU</Unidad>
-                                                                                
+                                                                                                                
+        
+        
+        
+        
         
         
         
@@ -71,7 +99,11 @@
         
         
         <Instrumento>
-                                                                                                                        
+                                                                                                                                                                        
+            
+            
+            
+            
             
             
             
@@ -81,7 +113,11 @@
             
             
             <Serie>232</Serie>
-                                                                                                                        
+                                                                                                                                                                        
+            
+            
+            
+            
             
             
             
@@ -91,7 +127,11 @@
             
             
             <Minimo>0</Minimo>
-                                                                                                                        
+                                                                                                                                                                        
+            
+            
+            
+            
             
             
             
@@ -101,7 +141,11 @@
             
             
             <Tolerancia>1</Tolerancia>
-                                                                                                                        
+                                                                                                                                                                        
+            
+            
+            
+            
             
             
             
@@ -111,7 +155,11 @@
             
             
             <Descripcion>SAD</Descripcion>
-                                                                                                                        
+                                                                                                                                                                        
+            
+            
+            
+            
             
             
             
@@ -121,7 +169,11 @@
             
             
             <Maximo>90</Maximo>
-                                                                                                                        
+                                                                                                                                                                        
+            
+            
+            
+            
             
             
             
@@ -131,7 +183,7 @@
             
             
             <Tipo>JAMES</Tipo>
-                                                                                                                    
+                                                                                                                                                                    
             
         
         
@@ -146,8 +198,52 @@
             
                     
         
+        
+        
+            
+        
+            
+        
+            <Calibracion>
+                <Serie>232</Serie>
+                <Fecha>2024-01-07</Fecha>
+                <Numero>20</Numero>
+                <Mediciones>4</Mediciones>
+                <Medicion>
+                    <IdMedicion>22</IdMedicion>
+                    <Numero>20</Numero>
+                    <Medida>1.0</Medida>
+                    <Referencia>0</Referencia>
+                    <Lectura/>
+                </Medicion>
+                <Medicion>
+                    <IdMedicion>23</IdMedicion>
+                    <Numero>20</Numero>
+                    <Medida>2.0</Medida>
+                    <Referencia>22</Referencia>
+                    <Lectura/>
+                </Medicion>
+                <Medicion>
+                    <IdMedicion>24</IdMedicion>
+                    <Numero>20</Numero>
+                    <Medida>3.0</Medida>
+                    <Referencia>44</Referencia>
+                    <Lectura/>
+                </Medicion>
+                <Medicion>
+                    <IdMedicion>25</IdMedicion>
+                    <Numero>20</Numero>
+                    <Medida>4.0</Medida>
+                    <Referencia>66</Referencia>
+                    <Lectura/>
+                </Medicion>
+            </Calibracion>
         </Instrumento>
-                                                                            
+                                                                                                            
+    
+    
+    
+    
     
     
     
@@ -157,7 +253,11 @@
     
     
     </Tipo_de_instrumento>
-                                    
+                                                    
+
+
+
+
 
 
 
