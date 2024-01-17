@@ -6,6 +6,7 @@ package Controller;
 
 import static Controller.ViewController.view;
 import Controller.sqlServer.BDInstrument;
+import Controller.sqlServer.BDTypeInstrument;
 import Model.GeneratorPDF;
 import static Model.GeneratorPDF.loadInstrument;
 import Model.InstrumentModulo2;
@@ -48,11 +49,13 @@ public class IntrumentsController extends Controller {
     boolean updateInstruments = false;
     private String selecItem;
     BDInstrument bd_instrument = new BDInstrument();
+    BDTypeInstrument typeInstrument = new BDTypeInstrument();
 
     public IntrumentsController(Modulo view) throws ParserConfigurationException, SAXException {
         this.listModulo2 = new IntrumentListModulo2();
         this.view = view;
         this.bd_instrument = new BDInstrument();
+        this.typeInstrument = new BDTypeInstrument();
         this.calibrationController = new CalibrationController(this.view);
         updateComboBoxModel();
         clickTable();
@@ -221,26 +224,22 @@ public class IntrumentsController extends Controller {
 
     /* Método para rellenar el comboBox */
     public void updateComboBoxModel() throws ParserConfigurationException, SAXException {
-        try {
-            listName = XMLLoader.loadFromXML(filePath);
-
-            if (view != null) {
-                JComboBox<String> cmbType = view.getCmbType();
-
-                if (cmbType != null) {
-                    DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
-
-                    // Agrega los elementos de listName al modelo del JComboBox
-                    for (InstrumentType name : listName) {
-                        comboBoxModel.addElement(name.getName());
-                    }
-
-                    // Establece el modelo en el JComboBox cmbType
-                    cmbType.setModel(comboBoxModel);
+        //            listName = XMLLoader.loadFromXML(filePath);
+        listName = typeInstrument.getAllRecords();
+        if (view != null) {
+            JComboBox<String> cmbType = view.getCmbType();
+            
+            if (cmbType != null) {
+                DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+                
+                // Agrega los elementos de listName al modelo del JComboBox
+                for (InstrumentType name : listName) {
+                    comboBoxModel.addElement(name.getName());
                 }
+                
+                // Establece el modelo en el JComboBox cmbType
+                cmbType.setModel(comboBoxModel);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
