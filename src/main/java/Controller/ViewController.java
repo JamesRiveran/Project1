@@ -84,8 +84,7 @@ public class ViewController extends Controller implements ActionListener {
         view.getBtnSearchCalibration().addActionListener(e -> calibrationController.search());
         view.getBtnSaveMeasurement().addActionListener(e -> calibrationController.saveMeasurement());
         view.getBtnCleanMeasurement().addActionListener(e -> calibrationController.cleanMeasurement());
-        XMLLoader.ensureIdCounterExists(filePath);
-        XMLLoader.ensureIdMedicionExists(filePath);
+       
         int idCounter = idCounter();
         view.getCalibrationTxtNumber().setText(String.valueOf(idCounter));
         view.getCalibrationTxtNumber().setEnabled(false);
@@ -139,17 +138,12 @@ public class ViewController extends Controller implements ActionListener {
                 try {
                     // Actualizar <Instrumento>
                     String code = view.getTxtCode().getText();
-                    String oldName = XMLLoader.getNameOfInstrument(filePath, code);
+                    String unit =view.getTxtUnit().getText();
                     String newName = view.getTxtName().getText();
-                    InstrumentType newInstrumentForSave = new InstrumentType(
-                            view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
-                    listInstrument.getList().add(newInstrumentForSave);
-                    
-                    dbConnection.saveOrUpdateInstrument(code, view.getTxtUnit().getText(), newName,view);
+                    dbConnection.saveOrUpdateInstrument(code, unit, newName,view);
                     listInstrument.getList().clear();
                     updateTable();
                     intrumentsController.updateComboBoxModel();
-                    
                     clean();
                 } catch (Exception ex) {
                     showMessage(viewError, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
@@ -182,7 +176,6 @@ public class ViewController extends Controller implements ActionListener {
 
     @Override
     public void delete() {
-        
         try {
             dbConnection.deleteRecord(view.getTxtCode().getText(),view);
             updateTable();

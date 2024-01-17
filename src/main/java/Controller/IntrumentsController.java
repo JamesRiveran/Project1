@@ -8,19 +8,16 @@ import static Controller.ViewController.showMessage;
 import Controller.sqlServer.BDCalibration;
 import Controller.sqlServer.BDInstrument;
 import Controller.sqlServer.BDTypeInstrument;
-import Model.Calibration;
 import Model.GeneratorPDF;
 import static Model.GeneratorPDF.loadInstrument;
 import Model.InstrumentModulo2;
 import Model.InstrumentType;
 import Model.IntrumentListModulo2;
-import Model.XMLLoader;
 import View.Modulo;
 import com.itextpdf.text.DocumentException;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -161,7 +158,7 @@ public class IntrumentsController extends Controller {
     }
 
     @Override
-    public void delete() {
+    public void delete() {//Falta la verificación de relación con mediciones registradas
         InstrumentModulo2 instrumentToDelete = new InstrumentModulo2(
                 view.getTxtSerie().getText(),
                 view.getTxtMini().getText(),
@@ -169,7 +166,7 @@ public class IntrumentsController extends Controller {
                 view.getTxtDescri().getText(),
                 view.getTxtMaxi().getText(),
                 view.getCmbType().getSelectedItem().toString());
-        //List<Calibration> calibracionesEncontradas = calibration.getAllCalibration();//XMLLoader.findCalibrationsByNumber(filePath, instrumentToDelete.getSerie());
+        //XMLLoader.findCalibrationsByNumber(filePath, instrumentToDelete.getSerie());
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
 //        if (calibracionesEncontradas.isEmpty()) {
@@ -198,7 +195,6 @@ public class IntrumentsController extends Controller {
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {
-        //            ListOfXml = XMLLoader.loadFromXMLS(filePath);
         ListOfXml = bd_instrument.getInstrument();
         DefaultTableModel tableModel = (DefaultTableModel) view.getTbInstru().getModel();
         tableModel.setRowCount(0);
@@ -210,7 +206,6 @@ public class IntrumentsController extends Controller {
 
     /* Método para rellenar el comboBox */
     public void updateComboBoxModel() throws ParserConfigurationException, SAXException {
-        //            listName = XMLLoader.loadFromXML(filePath);
         listName = typeInstrument.getAllRecords();
         if (view != null) {
             JComboBox<String> cmbType = view.getCmbType();
