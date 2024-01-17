@@ -171,6 +171,7 @@ public class IntrumentsController extends Controller {
         tableModel.setRowCount(0);
         if (calibracionesEncontradas.isEmpty()) {
             XMLLoader.deleteInstrumentFromXML(filePath, instrumentToDelete.getSerie());
+            bd_instrument.deleteInstrument(instrumentToDelete.getSerie());
             viewController.showMessage(view, "Se borro exitosamente", "success");
             clean();
             try {

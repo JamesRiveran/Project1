@@ -66,11 +66,11 @@ public class BDInstrument {
         }
     }
 
-    public void deleteInstrument(String code) {
+    public void deleteInstrument(String serie) {
         try {
             conexion.setConexion();
-            conexion.setConsulta("DELETE FROM InstrumentType WHERE code=?");
-            conexion.getConsulta().setString(1, code);
+            conexion.setConsulta("DELETE FROM instrument WHERE serie=?");
+            conexion.getConsulta().setString(1, serie);
 
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva
