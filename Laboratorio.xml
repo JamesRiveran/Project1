@@ -1,69 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Laboratorio>
-                        
-    
-    
-    
-    
-    <idCounter>6</idCounter>
                     
     
     
     
-    
-    <IdMedicionCounter>1</IdMedicionCounter>
+    <idCounter>5</idCounter>
                 
     
     
     
-    <Tipo_de_instrumento>
-                                
-        
-        
-        <Codigo>BAR</Codigo>
-                                
-        
-        
-        <Nombre>Barómetro</Nombre>
-                                
-        
-        
-        <Unidad>PSI</Unidad>
-                                
-        
-        
-        <Instrumento>
-                                                
-            
-            
-            <Serie>666</Serie>
-                                                
-            
-            
-            <Minimo>0</Minimo>
-                                                
-            
-            
-            <Tolerancia>1</Tolerancia>
-                                                
-            
-            
-            <Descripcion>Barómetro</Descripcion>
-                                                
-            
-            
-            <Maximo>90</Maximo>
-                                                
-            
-            
-            <Tipo>Barómetro</Tipo>
-                                            
-        
-        
-        </Instrumento>
-                            
-    
-    
-    </Tipo_de_instrumento>
+    <IdMedicionCounter>1</IdMedicionCounter>
             
 
 
