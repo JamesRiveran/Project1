@@ -23,9 +23,6 @@ public class Project1 {
         Controller.ViewController view = new ViewController();
         view.start();
         
-        BDMeasurement measurement = new BDMeasurement();
-        measurement.getAllMeasurement();
-        
 //        String UserName = "root";
 //        String Password = "R#m4B@!p8$Dw2%";
 //

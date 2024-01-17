@@ -80,6 +80,7 @@ public class IntrumentsController extends Controller {
                     } else {
                         informationForXml();
                         updateTable();
+                        
                         viewController.showMessage(view, "Datos Actualizados", "success");
                         updateInstruments = false;
                         clean();
@@ -196,6 +197,14 @@ public class IntrumentsController extends Controller {
         listModulo2.getList().add(newInstrument);
         XMLLoader.addToXML(filePath, listModulo2.getList(), view.getCmbType().getSelectedItem().toString());
         listModulo2.getList().clear();
+        
+        
+        bd_instrument.saveOrUpdateInstrument(view.getTxtSerie().getText(),
+                view.getTxtMini().getText(),
+                view.getTxtTole().getText(),
+                view.getTxtDescri().getText(),
+                view.getTxtMaxi().getText(),
+                view.getCmbType().getSelectedItem().toString());
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {

@@ -44,13 +44,16 @@ public class BDInstrument {
         return instrumentList;
     }
 
-    public void saveInstrument(String code, String unit, String name) {
+    public void saveInstrument(String serie, String mini, String tole,String descri, String maxi, String type) {
         try {
             conexion.setConexion();
-            conexion.setConsulta("INSERT INTO InstrumentType (code, unit, name) VALUES (?, ?,?)");
-            conexion.getConsulta().setString(1, code);
-            conexion.getConsulta().setString(2, unit);
-            conexion.getConsulta().setString(3, name);
+            conexion.setConsulta("INSERT INTO instrument (serie, mini, tole,descri,maxi,type) VALUES (?, ?,?,?, ?,?)");
+            conexion.getConsulta().setString(1, serie);
+            conexion.getConsulta().setString(2, mini);
+            conexion.getConsulta().setString(3, tole);
+            conexion.getConsulta().setString(4, descri);
+            conexion.getConsulta().setString(5, maxi);
+            conexion.getConsulta().setString(6, type);
 
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva
@@ -80,42 +83,46 @@ public class BDInstrument {
         }
     }
 
-    public void saveOrUpdateInstrument(String code, String unit, String name) {
+    public void saveOrUpdateInstrument(String serie, String mini, String tole,String descri, String maxi, String type) {
         try {
             conexion.setConexion();
-            conexion.setConsulta("SELECT * FROM InstrumentType WHERE code=?");
-            conexion.getConsulta().setString(1, code);
+            conexion.setConsulta("SELECT * FROM instrument WHERE serie=?");
+            conexion.getConsulta().setString(1, serie);
             ResultSet resultSet = conexion.getConsulta().executeQuery();
 
             if (resultSet.next()) {
                 // El registro existe, entonces actualiza los valores
-                updateInstrument(code, unit, name);
+                updateInstrument(serie,  mini,  tole, descri,  maxi,  type);
             } else {
                 // El registro no existe, entonces crea un nuevo registro
-                saveInstrument(code, unit, name);
+                saveInstrument( serie,  mini,  tole, descri,  maxi,  type);
             }
         } catch (SQLException error) {
             error.printStackTrace();
         }
     }
 
-    public void updateInstrument(String code, String unit, String name) {
-        try {
-            conexion.setConexion();
-            conexion.setConsulta("UPDATE instrumenttype SET unit=?, name=? WHERE code=?");
-            conexion.getConsulta().setString(1, unit);
-            conexion.getConsulta().setString(2, name);
-            conexion.getConsulta().setString(3, code);
+    public void updateInstrument(String serie, String mini, String tole, String descri, String maxi, String type) {
+    try {
+        conexion.setConexion();
+        conexion.setConsulta("UPDATE instrument SET mini=?, tole=?, descri=?, maxi=?, type=? WHERE serie=?");
+        conexion.getConsulta().setString(1, mini);
+        conexion.getConsulta().setString(2, tole);
+        conexion.getConsulta().setString(3, descri);
+        conexion.getConsulta().setString(4, maxi);
+        conexion.getConsulta().setString(5, type);
+        conexion.getConsulta().setString(6, serie);
 
-            if (conexion.getConsulta().executeUpdate() > 0) {
-                //Respuesta positiva
-                System.out.println("Se actualizó el tipo de instrumento!");
-            } else {
-                System.out.println("Error en la actualización de tipo de instrumento!");
-            }
-        } catch (SQLException error) {
-            error.printStackTrace();
+        if (conexion.getConsulta().executeUpdate() > 0) {
+            // Respuesta positiva
+            System.out.println("Se actualizó el instrumento con serie " + serie + "!");
+        } else {
+            System.out.println("Error en la actualización del instrumento con serie " + serie + "!");
         }
+    } catch (SQLException error) {
+        error.printStackTrace();
     }
+}
+
 
 }
