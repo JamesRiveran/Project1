@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Controller.sqlServer.BDCalibration;
 import Controller.sqlServer.BDTypeInstrument;
 import Model.GeneratorPDF;
 import static Model.GeneratorPDF.loadTypeOfInstrument;
@@ -43,6 +44,7 @@ public class ViewController extends Controller implements ActionListener {
     static Modulo view;
     protected Modulo viewError;
     ArrayList<InstrumentType> instrumentList = new ArrayList<>();
+    BDCalibration dbCalibration = new BDCalibration();
     BDTypeInstrument dbConnection = new BDTypeInstrument();
     
     
@@ -50,6 +52,7 @@ public class ViewController extends Controller implements ActionListener {
         
         this.listInstrument = new InstrumentsList();
         this.view = new Modulo();
+        this.dbCalibration=new BDCalibration();
         this.dbConnection = new BDTypeInstrument();
         this.calibrationController = new CalibrationController(this.view);
         this.intrumentsController = new IntrumentsController(this.view);
@@ -85,8 +88,7 @@ public class ViewController extends Controller implements ActionListener {
         view.getBtnSaveMeasurement().addActionListener(e -> calibrationController.saveMeasurement());
         view.getBtnCleanMeasurement().addActionListener(e -> calibrationController.cleanMeasurement());
        
-        int idCounter = idCounter();
-        view.getCalibrationTxtNumber().setText(String.valueOf(idCounter));
+        view.getCalibrationTxtNumber().setText(String.valueOf(dbCalibration.getId()));
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
         
@@ -94,10 +96,7 @@ public class ViewController extends Controller implements ActionListener {
 
     }
 
-    private int idCounter() throws IOException, SAXException, ParserConfigurationException {
-        int idCounter = XMLLoader.getIdCounterFromXML(filePath);
-        return idCounter;
-    }
+    
 
     public static void showMessage(JFrame parent, String message, String info) {
         if (info == "error") {
