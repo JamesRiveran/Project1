@@ -5,6 +5,7 @@
 package Controller;
 
 import static Controller.ViewController.view;
+import Controller.sqlServer.BDInstrument;
 import Model.GeneratorPDF;
 import static Model.GeneratorPDF.loadInstrument;
 import Model.InstrumentModulo2;
@@ -46,10 +47,12 @@ public class IntrumentsController extends Controller {
     static Modulo view;
     boolean updateInstruments = false;
     private String selecItem;
+    BDInstrument bd_instrument = new BDInstrument();
 
     public IntrumentsController(Modulo view) throws ParserConfigurationException, SAXException {
         this.listModulo2 = new IntrumentListModulo2();
         this.view = view;
+        this.bd_instrument = new BDInstrument();
         this.calibrationController = new CalibrationController(this.view);
         updateComboBoxModel();
         clickTable();
@@ -196,17 +199,13 @@ public class IntrumentsController extends Controller {
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {
-        try {
-            ListOfXml = XMLLoader.loadFromXMLS(filePath);
-            DefaultTableModel tableModel = (DefaultTableModel) view.getTbInstru().getModel();
-            tableModel.setRowCount(0);
-
-            for (int i = ListOfXml.size() - 1; i >= 0; i--) {
-                InstrumentModulo2 newInstrument = ListOfXml.get(i);
-                tableModel.insertRow(0, new Object[]{newInstrument.getSerie(), newInstrument.getDescri(), newInstrument.getMini(), newInstrument.getMaxi(), newInstrument.getTole(), newInstrument.getType()});
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        //            ListOfXml = XMLLoader.loadFromXMLS(filePath);
+        ListOfXml = bd_instrument.getInstrument();
+        DefaultTableModel tableModel = (DefaultTableModel) view.getTbInstru().getModel();
+        tableModel.setRowCount(0);
+        for (int i = ListOfXml.size() - 1; i >= 0; i--) {
+            InstrumentModulo2 newInstrument = ListOfXml.get(i);
+            tableModel.insertRow(0, new Object[]{newInstrument.getSerie(), newInstrument.getDescri(), newInstrument.getMini(), newInstrument.getMaxi(), newInstrument.getTole(), newInstrument.getType()});
         }
     }
 

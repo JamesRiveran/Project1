@@ -74,55 +74,17 @@ public class BDMeasurement {
     }
 }
 
-    public void deleteMeasurement(String code) {
+    public void deleteMeasurement(String id) {//Borrar todos los registros de esas calibración
         try {
             conexion.setConexion();
-            conexion.setConsulta("DELETE FROM InstrumentType WHERE code=?");
-            conexion.getConsulta().setString(1, code);
+            conexion.setConsulta("DELETE FROM measurement WHERE id=?");
+            conexion.getConsulta().setString(1, id);
 
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva
-                System.out.println("Se eliminó el tipo de instrumento!");
+                System.out.println("Se eliminó la medición!");
             } else {
-                System.out.println("Error en la inserción de tipo de instrumento!");
-            }
-        } catch (SQLException error) {
-            error.printStackTrace();
-        }
-    }
-
-    public void saveOrUpdateMeasurement(String code, String unit, String name, List measurement ) {
-        try {
-            conexion.setConexion();
-            conexion.setConsulta("SELECT * FROM InstrumentType WHERE code=?");
-            conexion.getConsulta().setString(1, code);
-            ResultSet resultSet = conexion.getConsulta().executeQuery();
-
-            if (resultSet.next()) {
-                // El registro existe, entonces actualiza los valores
-                updateMeasurement(code, unit, name);
-            } else {
-                // El registro no existe, entonces crea un nuevo registro
-                saveMeasurement(measurement);
-            }
-        } catch (SQLException error) {
-            error.printStackTrace();
-        }
-    }
-
-    public void updateMeasurement(String code, String unit, String name) {
-        try {
-            conexion.setConexion();
-            conexion.setConsulta("UPDATE instrumenttype SET unit=?, name=? WHERE code=?");
-            conexion.getConsulta().setString(1, unit);
-            conexion.getConsulta().setString(2, name);
-            conexion.getConsulta().setString(3, code);
-
-            if (conexion.getConsulta().executeUpdate() > 0) {
-                //Respuesta positiva
-                System.out.println("Se actualizó el tipo de instrumento!");
-            } else {
-                System.out.println("Error en la actualización de tipo de instrumento!");
+                System.out.println("Error en la inserción de la medición!");
             }
         } catch (SQLException error) {
             error.printStackTrace();

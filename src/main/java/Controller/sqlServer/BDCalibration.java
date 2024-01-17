@@ -68,7 +68,7 @@ public class BDCalibration {
             conexion.setConexion();
             conexion.setConsulta("DELETE FROM calibration WHERE id=?");
             conexion.getConsulta().setInt(1, id);
-
+            
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva
                 System.out.println("Se eliminó la calibración!");
