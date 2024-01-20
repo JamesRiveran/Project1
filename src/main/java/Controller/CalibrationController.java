@@ -13,7 +13,6 @@ import Model.ColorCelda;
 import Model.GeneratorPDF;
 import static Model.GeneratorPDF.loadCalibration;
 import Model.Measurement;
-import Model.XMLLoader;
 import View.Modulo;
 import com.itextpdf.text.DocumentException;
 import com.toedter.calendar.JDateChooser;
@@ -118,11 +117,10 @@ public class CalibrationController extends Controller implements ActionListener,
                     calibrationList.getList().add(newCalibration);
 
                     //XMLLoader.saveToXMLCalibration(filePath, calibrationList.getList(),serie);
-                    calibration.saveCalibration(Integer.parseInt(view.getCalibrationTxtNumber().getText()), date, Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
+                    calibration.saveCalibration(Integer.parseInt(view.getCalibrationTxtNumber().getText()), date, Integer.parseInt(view.getCalibrationTxtMeasurement().getText()),serie);
 
                     updateTable();
                     List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max));
-                    XMLLoader.saveToXMLMeasurement(filePath, measurements, Integer.parseInt(view.getCalibrationTxtNumber().getText()));
                     measurement.saveMeasurement(measurements);
 
                     
@@ -237,10 +235,6 @@ public class CalibrationController extends Controller implements ActionListener,
                     DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
                     datosColumna.add(textoCelda);
                     datosColumnaId.add(textoCelda0);
-                    System.out.println(textoCelda3);
-                    System.out.println(textoCelda3);
-                    System.out.println(textoCelda);
-
                     measurement.updateReading(datosColumna, datosColumnaId, textoCelda3);
                     view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
 
@@ -280,8 +274,7 @@ public class CalibrationController extends Controller implements ActionListener,
     
 
     private int idMedicion() throws SAXException, ParserConfigurationException, TransformerException, IOException {
-        int idMedicion = XMLLoader.getIdMedicionFromXML(filePath);
-        return idMedicion;
+        return 1;//Esto debemos arreglarlo
     }
 
     @Override
@@ -423,7 +416,6 @@ public class CalibrationController extends Controller implements ActionListener,
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
         String serie = getSerieInstrument();
         int number = Integer.parseInt(view.getCalibrationTxtNumber().getText());
-        XMLLoader.delete(filePath, serie, number);
         calibration.deleteCalibration(number);
         viewController.showMessage(view, "Eliminado con exito", "success");
         updateTable();
@@ -441,19 +433,18 @@ public class CalibrationController extends Controller implements ActionListener,
         setSerieInstrument(serie);
 
         CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
-        List<org.w3c.dom.Element> calibracionesEncontradas = XMLLoader.findCalibrationsByNumber(filePath, serie);
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
 
-        for (org.w3c.dom.Element calibracion : calibracionesEncontradas) {
-            String id = calibracion.getElementsByTagName("Numero").item(0).getTextContent(); // Cambia "Id" al nombre correcto
-            String date = calibracion.getElementsByTagName("Fecha").item(0).getTextContent(); // Cambia "Referencia" al nombre correcto
-            String measurement = calibracion.getElementsByTagName("Mediciones").item(0).getTextContent();
-            Object[] rowData = {id, date, measurement};
-            tableModel.addRow(rowData);
-        }
-        DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
-        clearTable(tableModels);
+//        for (org.w3c.dom.Element calibracion : calibracionesEncontradas) {
+//            String id = calibracion.getElementsByTagName("Numero").item(0).getTextContent(); // Cambia "Id" al nombre correcto
+//            String date = calibracion.getElementsByTagName("Fecha").item(0).getTextContent(); // Cambia "Referencia" al nombre correcto
+//            String measurement = calibracion.getElementsByTagName("Mediciones").item(0).getTextContent();
+//            Object[] rowData = {id, date, measurement};
+//            tableModel.addRow(rowData);
+//        }
+//        DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
+//        clearTable(tableModels);
     }
 
 }

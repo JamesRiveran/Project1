@@ -11,8 +11,6 @@ import Model.GeneratorPDF;
 import static Model.GeneratorPDF.loadTypeOfInstrument;
 import Model.InstrumentType;
 import Model.InstrumentsList;
-import Model.XMLCreator;
-import Model.XMLLoader;
 import View.Modulo;
 import com.itextpdf.text.DocumentException;
 import java.awt.event.ActionEvent;

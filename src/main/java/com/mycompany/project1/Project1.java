@@ -6,7 +6,6 @@ package com.mycompany.project1;
 import Controller.ViewController;
 import Controller.sqlServer.BDCalibration;
 import Controller.sqlServer.BDMeasurement;
-import Model.XMLCreator;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
@@ -18,8 +17,6 @@ import org.xml.sax.SAXException;
 public class Project1 {
 
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
-        XMLCreator xmlCreator = new XMLCreator();
-        xmlCreator.createLaboratorioXML();
         Controller.ViewController view = new ViewController();
         view.start();
         
