@@ -50,6 +50,7 @@ public class BDCalibration {
             conexion.setConsulta("INSERT INTO calibration (id, date, measuring,serieForeing) VALUES (?, ?,?,?)");
             conexion.getConsulta().setInt(1, number);
 
+
             conexion.getConsulta().setString(2, date);
             conexion.getConsulta().setInt(3, measurement);
             conexion.getConsulta().setString(4, serieForeing);
@@ -60,10 +61,13 @@ public class BDCalibration {
             } else {
                 System.out.println("Error en la inserción de la calibración!");
             }
+
         } catch (SQLException error) {
             error.printStackTrace();
         }
     }
+
+
 
     public void deleteCalibration(int id) {
         try {
@@ -80,5 +84,20 @@ public class BDCalibration {
         } catch (SQLException error) {
             error.printStackTrace();
         }
+    }
+    public int getId() {
+        int nextID  = 0;
+        try {
+            conexion.setConexion();
+            conexion.setConsulta("SELECT MAX(id) AS ultimo_id FROM calibration");
+            resultado = conexion.getResultado();
+            if (resultado.next()) {
+                int ultimoID = resultado.getInt("ultimo_id");
+                nextID = ultimoID + 1;
+            } 
+        } catch (SQLException error) {
+            error.printStackTrace();
+        }
+        return nextID;
     }
 }

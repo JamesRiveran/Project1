@@ -1,3 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Laboratorio>
-    <idCounter>3</idCounter>
-<IdMedicionCounter>8</IdMedicionCounter><Tipo_de_instrumento><Codigo>TER</Codigo><Nombre>Termometro</Nombre><Unidad>Grados</Unidad><Instrumento><Serie>1</Serie><Minimo>0</Minimo><Tolerancia>3</Tolerancia><Descripcion>Prueba</Descripcion><Maximo>90</Maximo><Tipo>Termometro</Tipo><Calibracion><Serie>1</Serie><Fecha>2024-01-15</Fecha><Numero>2</Numero><Mediciones>4</Mediciones><Medicion><IdMedicion>5</IdMedicion><Numero>2</Numero><Medida>1.0</Medida><Referencia>0</Referencia><Lectura/></Medicion><Medicion><IdMedicion>6</IdMedicion><Numero>2</Numero><Medida>2.0</Medida><Referencia>22</Referencia><Lectura/></Medicion><Medicion><IdMedicion>7</IdMedicion><Numero>2</Numero><Medida>3.0</Medida><Referencia>44</Referencia><Lectura/></Medicion><Medicion><IdMedicion>8</IdMedicion><Numero>2</Numero><Medida>4.0</Medida><Referencia>66</Referencia><Lectura/></Medicion></Calibracion></Instrumento></Tipo_de_instrumento></Laboratorio>
+
+                    
+    
+    
+    
+    <idCounter>2</idCounter>
+                
+    
+    
+    
+    <IdMedicionCounter>38</IdMedicionCounter>
+            
+
+
+</Laboratorio>
+

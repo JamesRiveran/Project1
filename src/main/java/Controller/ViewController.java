@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Controller.sqlServer.BDCalibration;
 import Controller.sqlServer.BDTypeInstrument;
 import Model.GeneratorPDF;
 import static Model.GeneratorPDF.loadTypeOfInstrument;
@@ -21,11 +22,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -46,6 +44,7 @@ public class ViewController extends Controller implements ActionListener {
     static Modulo view;
     protected Modulo viewError;
     ArrayList<InstrumentType> instrumentList = new ArrayList<>();
+    BDCalibration dbCalibration = new BDCalibration();
     BDTypeInstrument dbConnection = new BDTypeInstrument();
     
     
@@ -53,6 +52,7 @@ public class ViewController extends Controller implements ActionListener {
         
         this.listInstrument = new InstrumentsList();
         this.view = new Modulo();
+        this.dbCalibration=new BDCalibration();
         this.dbConnection = new BDTypeInstrument();
         this.calibrationController = new CalibrationController(this.view);
         this.intrumentsController = new IntrumentsController(this.view);
@@ -87,10 +87,8 @@ public class ViewController extends Controller implements ActionListener {
         view.getBtnSearchCalibration().addActionListener(e -> calibrationController.search());
         view.getBtnSaveMeasurement().addActionListener(e -> calibrationController.saveMeasurement());
         view.getBtnCleanMeasurement().addActionListener(e -> calibrationController.cleanMeasurement());
-        XMLLoader.ensureIdCounterExists(filePath);
-        XMLLoader.ensureIdMedicionExists(filePath);
-        int idCounter = idCounter();
-        view.getCalibrationTxtNumber().setText(String.valueOf(idCounter));
+       
+        view.getCalibrationTxtNumber().setText(String.valueOf(dbCalibration.getId()));
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
         
@@ -98,10 +96,7 @@ public class ViewController extends Controller implements ActionListener {
 
     }
 
-    private int idCounter() throws IOException, SAXException, ParserConfigurationException {
-        int idCounter = XMLLoader.getIdCounterFromXML(filePath);
-        return idCounter;
-    }
+    
 
     public static void showMessage(JFrame parent, String message, String info) {
         if (info == "error") {
@@ -142,19 +137,12 @@ public class ViewController extends Controller implements ActionListener {
                 try {
                     // Actualizar <Instrumento>
                     String code = view.getTxtCode().getText();
-                    String oldName = XMLLoader.getNameOfInstrument(filePath, code);
+                    String unit =view.getTxtUnit().getText();
                     String newName = view.getTxtName().getText();
-                    InstrumentType newInstrumentForSave = new InstrumentType(
-                            view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
-                    listInstrument.getList().add(newInstrumentForSave);
-                    XMLLoader.saveToXML(filePath, listInstrument.getList());
-                    
-                    dbConnection.saveOrUpdateInstrument(code, view.getTxtUnit().getText(), newName);
+                    dbConnection.saveOrUpdateInstrument(code, unit, newName,view);
                     listInstrument.getList().clear();
                     updateTable();
                     intrumentsController.updateComboBoxModel();
-                    XMLLoader.updateInstrument(filePath, oldName, newName);
-                    showMessage(viewError, "Se guardó exitosamente", "success");
                     clean();
                 } catch (Exception ex) {
                     showMessage(viewError, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
@@ -169,17 +157,9 @@ public class ViewController extends Controller implements ActionListener {
 
     @Override
     public void search() {
-        try {
-            ArrayList<InstrumentType> loadedList = XMLLoader.loadFromXML(filePath);
-            if (loadedList.isEmpty()) {
-                showMessage(viewError, "No hay tipos de instrumentos registrados", "error");
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        ArrayList<InstrumentType> loadedList = dbConnection.getAllRecords();
+        if (loadedList.isEmpty()) {
+            showMessage(viewError, "No hay tipos de instrumentos registrados", "error");
         }
         String letterSearch = view.getTxtNameForSearch().getText();
         try {
@@ -195,23 +175,13 @@ public class ViewController extends Controller implements ActionListener {
 
     @Override
     public void delete() {
-        InstrumentType instrumentToDelete = new InstrumentType(
-                view.getTxtCode().getText(), view.getTxtUnit().getText(), view.getTxtName().getText());
         try {
-            XMLLoader.deleteFromXML(filePath, instrumentToDelete);
-            dbConnection.deleteRecord(view.getTxtCode().getText());
+            dbConnection.deleteRecord(view.getTxtCode().getText(),view);
             updateTable();
             intrumentsController.updateComboBoxModel();
             clean();
         }
-        catch (IOException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);}
-        catch (SAXException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         catch (TransformerException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);}
-        catch (ParserConfigurationException ex) {
+        catch (SAXException | ParserConfigurationException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -228,9 +198,7 @@ public class ViewController extends Controller implements ActionListener {
             String pdfFilePath = "Reporte_TiposDeInstrumentos.pdf";
             GeneratorPDF.generatePDFReport(list, pdfFilePath, "modulo_1");
             showMessage(viewError, "Generado con exito", "success");
-        } catch (IOException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DocumentException ex) {
+        } catch (IOException | DocumentException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -257,39 +225,30 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     private void filterByName(String letterSearch) throws IOException, ParserConfigurationException, SAXException {
-        try {
-            ArrayList<InstrumentType> loadedList = XMLLoader.loadFromXML(filePath);
-            DefaultTableModel template = (DefaultTableModel) view.getTblListInstruments().getModel();
-            template.setRowCount(0);
-            if (letterSearch.isEmpty()) {
-                for (InstrumentType instrument : loadedList) {
+        ArrayList<InstrumentType> loadedList = dbConnection.getAllRecords();
+        DefaultTableModel template = (DefaultTableModel) view.getTblListInstruments().getModel();
+        template.setRowCount(0);
+        if (letterSearch.isEmpty()) {
+            for (InstrumentType instrument : loadedList) {
+                template.addRow(new Object[]{instrument.getCode(), instrument.getName(), instrument.getUnit()});
+            }
+        } else {
+            for (InstrumentType instrument : loadedList) {
+                String nameInstrumentForSearch = instrument.getName().toLowerCase();
+                if (nameInstrumentForSearch.contains(letterSearch.toLowerCase())) {
                     template.addRow(new Object[]{instrument.getCode(), instrument.getName(), instrument.getUnit()});
                 }
-            } else {
-                for (InstrumentType instrument : loadedList) {
-                    String nameInstrumentForSearch = instrument.getName().toLowerCase();
-                    if (nameInstrumentForSearch.contains(letterSearch.toLowerCase())) {
-                        template.addRow(new Object[]{instrument.getCode(), instrument.getName(), instrument.getUnit()});
-                    }
-                }
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {
-        try {
-            ListOfIModu1o1 = XMLLoader.loadFromXML(filePath);
-            ListOfIModu1o1 = dbConnection.getAllRecords();
-            DefaultTableModel tableModule1 = (DefaultTableModel) view.getTblListInstruments().getModel();
-            tableModule1.setRowCount(0);
-            for (int i = ListOfIModu1o1.size() - 1; i >= 0; i--) {
-                InstrumentType module1 = ListOfIModu1o1.get(i);
-                tableModule1.insertRow(0, new Object[]{module1.getCode(), module1.getName(), module1.getUnit()});
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        ListOfIModu1o1 = dbConnection.getAllRecords();
+        DefaultTableModel tableModule1 = (DefaultTableModel) view.getTblListInstruments().getModel();
+        tableModule1.setRowCount(0);
+        for (int i = ListOfIModu1o1.size() - 1; i >= 0; i--) {
+            InstrumentType module1 = ListOfIModu1o1.get(i);
+            tableModule1.insertRow(0, new Object[]{module1.getCode(), module1.getName(), module1.getUnit()});
         }
     }
 

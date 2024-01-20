@@ -4,10 +4,12 @@
  */
 package Controller.sqlServer;
 
+import static Controller.ViewController.showMessage;
 import Model.InstrumentType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 
 /**
  *
@@ -59,7 +61,7 @@ public class BDTypeInstrument {
         }
     }
 
-    public void deleteRecord(String code) {
+    public void deleteRecord(String code,JFrame parent) {
         try {
             conexion.setConexion();
             conexion.setConsulta("DELETE FROM InstrumentType WHERE code=?");
@@ -68,15 +70,17 @@ public class BDTypeInstrument {
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva
                 System.out.println("Se eliminó el tipo de instrumento!");
+                showMessage(parent, "Elimanado exitosamente", "success");
             } else {
-                System.out.println("Error en la inserción de tipo de instrumento!");
+                System.out.println("Error en la eliminación de tipo de instrumento!");
+                showMessage(parent, "Error en la eliminación de tipo de instrumento", "success");
             }
         } catch (SQLException error) {
             error.printStackTrace();
         }
     }
 
-    public void saveOrUpdateInstrument(String code, String unit, String name) {
+    public void saveOrUpdateInstrument(String code, String unit, String name,JFrame parent) {
         try {
             conexion.setConexion();
             conexion.setConsulta("SELECT * FROM InstrumentType WHERE code=?");
@@ -86,9 +90,11 @@ public class BDTypeInstrument {
             if (resultSet.next()) {
                 // El registro existe, entonces actualiza los valores
                 updateRecord(code, unit, name);
+                showMessage(parent, "Se actualizó exitosamente", "success");
             } else {
                 // El registro no existe, entonces crea un nuevo registro
                 saveTypeOfInstrument(code, unit, name);
+                showMessage(parent, "Se guardó exitosamente", "success");
             }
         } catch (SQLException error) {
             error.printStackTrace();

@@ -59,6 +59,7 @@ public class CalibrationController extends Controller implements ActionListener,
     public String serieInstrument = "";
     BDCalibration calibration = new BDCalibration();
     BDMeasurement measurement = new BDMeasurement();
+    
 
     public CalibrationController(Modulo view) {
         this.view = view;
@@ -115,14 +116,19 @@ public class CalibrationController extends Controller implements ActionListener,
                             date,
                             Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                     calibrationList.getList().add(newCalibration);
-                    XMLLoader.saveToXMLCalibration(filePath, calibrationList.getList(), serie);
-                    calibration.saveCalibration(Integer.parseInt(view.getCalibrationTxtNumber().getText()), date, Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), serie);
+
+                    //XMLLoader.saveToXMLCalibration(filePath, calibrationList.getList(),serie);
+                    calibration.saveCalibration(Integer.parseInt(view.getCalibrationTxtNumber().getText()), date, Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
+
                     updateTable();
                     List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max));
                     XMLLoader.saveToXMLMeasurement(filePath, measurements, Integer.parseInt(view.getCalibrationTxtNumber().getText()));
                     measurement.saveMeasurement(measurements);
-                    newIdNumber = idCounter();
-                    view.getCalibrationTxtNumber().setText(String.valueOf(newIdNumber));
+
+                    
+                    view.getCalibrationTxtNumber().setText(String.valueOf(calibration.getId()));
+                    updateTableMeasurement();
+
                     viewController.showMessage(view, "Se guardo con exito", "success");
                     clean();
                 } catch (Exception ex) {
@@ -140,8 +146,8 @@ public class CalibrationController extends Controller implements ActionListener,
         view.getCalibrationTxtMeasurement().setText("");
         view.getCalibrationDateChooser().setEnabled(true);
         view.getCalibrationTxtMeasurement().setEnabled(true);
-        String id = null;
-        id = String.valueOf(XMLLoader.getIdCounter(filePath));
+        String id ="";
+        id = String.valueOf(calibration.getId());
         view.getCalibrationTxtNumber().setText(id);
     }
 
@@ -271,10 +277,7 @@ public class CalibrationController extends Controller implements ActionListener,
         return formatoFecha.format(fechaSeleccionada);
     }
 
-    private int idCounter() throws IOException, SAXException, ParserConfigurationException {
-        int idCounter = XMLLoader.getIdCounterFromXML(filePath);
-        return idCounter;
-    }
+    
 
     private int idMedicion() throws SAXException, ParserConfigurationException, TransformerException, IOException {
         int idMedicion = XMLLoader.getIdMedicionFromXML(filePath);

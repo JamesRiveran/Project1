@@ -4,7 +4,8 @@
  */
 package Controller;
 
-import static Controller.ViewController.view;
+import static Controller.ViewController.showMessage;
+import Controller.sqlServer.BDCalibration;
 import Controller.sqlServer.BDInstrument;
 import Controller.sqlServer.BDTypeInstrument;
 import Model.GeneratorPDF;
@@ -12,17 +13,11 @@ import static Model.GeneratorPDF.loadInstrument;
 import Model.InstrumentModulo2;
 import Model.InstrumentType;
 import Model.IntrumentListModulo2;
-import Model.XMLLoader;
 import View.Modulo;
 import com.itextpdf.text.DocumentException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -50,10 +45,12 @@ public class IntrumentsController extends Controller {
     private String selecItem;
     BDInstrument bd_instrument = new BDInstrument();
     BDTypeInstrument typeInstrument = new BDTypeInstrument();
+    BDCalibration calibration = new BDCalibration();
 
     public IntrumentsController(Modulo view) throws ParserConfigurationException, SAXException {
         this.listModulo2 = new IntrumentListModulo2();
         this.view = view;
+        this.calibration = new BDCalibration();
         this.bd_instrument = new BDInstrument();
         this.typeInstrument = new BDTypeInstrument();
         this.calibrationController = new CalibrationController(this.view);
@@ -161,7 +158,7 @@ public class IntrumentsController extends Controller {
     }
 
     @Override
-    public void delete() {
+    public void delete() {//Falta la verificación de relación con mediciones registradas
         InstrumentModulo2 instrumentToDelete = new InstrumentModulo2(
                 view.getTxtSerie().getText(),
                 view.getTxtMini().getText(),
@@ -169,38 +166,27 @@ public class IntrumentsController extends Controller {
                 view.getTxtDescri().getText(),
                 view.getTxtMaxi().getText(),
                 view.getCmbType().getSelectedItem().toString());
-        List<org.w3c.dom.Element> calibracionesEncontradas = XMLLoader.findCalibrationsByNumber(filePath, instrumentToDelete.getSerie());
+        //XMLLoader.findCalibrationsByNumber(filePath, instrumentToDelete.getSerie());
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
-        if (calibracionesEncontradas.isEmpty()) {
-            XMLLoader.deleteInstrumentFromXML(filePath, instrumentToDelete.getSerie());
+//        if (calibracionesEncontradas.isEmpty()) {
+            //XMLLoader.deleteInstrumentFromXML(filePath, instrumentToDelete.getSerie());
             bd_instrument.deleteInstrument(instrumentToDelete.getSerie());
-            viewController.showMessage(view, "Se borro exitosamente", "success");
+            showMessage(view, "Se borró exitosamente", "success");
             clean();
             try {
                 updateTable();
-            } catch (ParserConfigurationException ex) {
-                Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SAXException ex) {
+            } catch (ParserConfigurationException | SAXException ex) {
                 Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            viewController.showMessage(view, "Error no se puede eliminar porque el instrumento tiene calibraciones registradas", "error");
-        }
+//        } else {
+//            showMessage(view, "Error no se puede eliminar porque el instrumento tiene calibraciones registradas", "error");
+//        }
     }
 
     public void informationForXml() {
-        InstrumentModulo2 newInstrument = new InstrumentModulo2(
-                view.getTxtSerie().getText(),
-                view.getTxtMini().getText(),
-                view.getTxtTole().getText(),
-                view.getTxtDescri().getText(),
-                view.getTxtMaxi().getText(),
-                view.getCmbType().getSelectedItem().toString()
-        );
-        listModulo2.getList().add(newInstrument);
-        XMLLoader.addToXML(filePath, listModulo2.getList(), view.getCmbType().getSelectedItem().toString());
         listModulo2.getList().clear();
+
 
         listName = typeInstrument.getAllRecords();
         String code = "";
@@ -210,6 +196,7 @@ public class IntrumentsController extends Controller {
             }
         }
         System.out.println(code);
+
         bd_instrument.saveOrUpdateInstrument(view.getTxtSerie().getText(),
                 view.getTxtMini().getText(),
                 view.getTxtTole().getText(),
@@ -220,7 +207,6 @@ public class IntrumentsController extends Controller {
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {
-        //            ListOfXml = XMLLoader.loadFromXMLS(filePath);
         ListOfXml = bd_instrument.getInstrument();
         DefaultTableModel tableModel = (DefaultTableModel) view.getTbInstru().getModel();
         tableModel.setRowCount(0);
@@ -232,7 +218,6 @@ public class IntrumentsController extends Controller {
 
     /* Método para rellenar el comboBox */
     public void updateComboBoxModel() throws ParserConfigurationException, SAXException {
-        //            listName = XMLLoader.loadFromXML(filePath);
         listName = typeInstrument.getAllRecords();
         if (view != null) {
             JComboBox<String> cmbType = view.getCmbType();
