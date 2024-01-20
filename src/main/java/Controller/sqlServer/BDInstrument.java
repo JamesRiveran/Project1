@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author james
  */
 public class BDInstrument {
-    
+
     ConexionBD conexion = new ConexionBD();
     ResultSet resultado = null;
 
@@ -44,16 +44,18 @@ public class BDInstrument {
         return instrumentList;
     }
 
-    public void saveInstrument(String serie, String mini, String tole,String descri, String maxi, String type) {
+    public void saveInstrument(String serie, String mini, String tole, String descri, String maxi, String type, String idIntrymentType) {
         try {
+
             conexion.setConexion();
-            conexion.setConsulta("INSERT INTO instrument (serie, mini, tole,descri,maxi,type) VALUES (?, ?,?,?, ?,?)");
+            conexion.setConsulta("INSERT INTO instrument (serie, mini, tole,descri,maxi,type,idTypeInstrument) VALUES (?, ?,?,?, ?,?,?)");
             conexion.getConsulta().setString(1, serie);
             conexion.getConsulta().setString(2, mini);
             conexion.getConsulta().setString(3, tole);
             conexion.getConsulta().setString(4, descri);
             conexion.getConsulta().setString(5, maxi);
             conexion.getConsulta().setString(6, type);
+            conexion.getConsulta().setString(7, idIntrymentType);
 
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva
@@ -83,7 +85,7 @@ public class BDInstrument {
         }
     }
 
-    public void saveOrUpdateInstrument(String serie, String mini, String tole,String descri, String maxi, String type) {
+    public void saveOrUpdateInstrument(String serie, String mini, String tole, String descri, String maxi, String type, String idIntrymentType) {
         try {
             conexion.setConexion();
             conexion.setConsulta("SELECT * FROM instrument WHERE serie=?");
@@ -91,11 +93,15 @@ public class BDInstrument {
             ResultSet resultSet = conexion.getConsulta().executeQuery();
 
             if (resultSet.next()) {
+
+                System.out.println("Entre al if");
                 // El registro existe, entonces actualiza los valores
-                updateInstrument(serie,  mini,  tole, descri,  maxi,  type);
+                updateInstrument(serie, mini, tole, descri, maxi, type);
             } else {
+                System.out.println("Entre al else");
+
                 // El registro no existe, entonces crea un nuevo registro
-                saveInstrument( serie,  mini,  tole, descri,  maxi,  type);
+                saveInstrument(serie, mini, tole, descri, maxi, type, idIntrymentType);
             }
         } catch (SQLException error) {
             error.printStackTrace();
@@ -103,26 +109,25 @@ public class BDInstrument {
     }
 
     public void updateInstrument(String serie, String mini, String tole, String descri, String maxi, String type) {
-    try {
-        conexion.setConexion();
-        conexion.setConsulta("UPDATE instrument SET mini=?, tole=?, descri=?, maxi=?, type=? WHERE serie=?");
-        conexion.getConsulta().setString(1, mini);
-        conexion.getConsulta().setString(2, tole);
-        conexion.getConsulta().setString(3, descri);
-        conexion.getConsulta().setString(4, maxi);
-        conexion.getConsulta().setString(5, type);
-        conexion.getConsulta().setString(6, serie);
+        try {
+            conexion.setConexion();
+            conexion.setConsulta("UPDATE instrument SET mini=?, tole=?, descri=?, maxi=?, type=? WHERE serie=?");
+            conexion.getConsulta().setString(1, mini);
+            conexion.getConsulta().setString(2, tole);
+            conexion.getConsulta().setString(3, descri);
+            conexion.getConsulta().setString(4, maxi);
+            conexion.getConsulta().setString(5, type);
+            conexion.getConsulta().setString(6, serie);
 
-        if (conexion.getConsulta().executeUpdate() > 0) {
-            // Respuesta positiva
-            System.out.println("Se actualizó el instrumento con serie " + serie + "!");
-        } else {
-            System.out.println("Error en la actualización del instrumento con serie " + serie + "!");
+            if (conexion.getConsulta().executeUpdate() > 0) {
+                // Respuesta positiva
+                System.out.println("Se actualizó el instrumento con serie " + serie + "!");
+            } else {
+                System.out.println("Error en la actualización del instrumento con serie " + serie + "!");
+            }
+        } catch (SQLException error) {
+            error.printStackTrace();
         }
-    } catch (SQLException error) {
-        error.printStackTrace();
     }
-}
-
 
 }

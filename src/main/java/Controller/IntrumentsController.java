@@ -80,7 +80,7 @@ public class IntrumentsController extends Controller {
                     } else {
                         informationForXml();
                         updateTable();
-                        
+
                         viewController.showMessage(view, "Datos Actualizados", "success");
                         updateInstruments = false;
                         clean();
@@ -186,12 +186,24 @@ public class IntrumentsController extends Controller {
 
     public void informationForXml() {
         listModulo2.getList().clear();
+
+
+        listName = typeInstrument.getAllRecords();
+        String code = "";
+        for (InstrumentType name : listName) {
+            if (view.getCmbType().getSelectedItem().toString().equals(name.getName())) {
+                code = name.getCode();
+            }
+        }
+        System.out.println(code);
+
         bd_instrument.saveOrUpdateInstrument(view.getTxtSerie().getText(),
                 view.getTxtMini().getText(),
                 view.getTxtTole().getText(),
                 view.getTxtDescri().getText(),
                 view.getTxtMaxi().getText(),
-                view.getCmbType().getSelectedItem().toString());
+                view.getCmbType().getSelectedItem().toString(),
+                code);
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {
@@ -209,15 +221,15 @@ public class IntrumentsController extends Controller {
         listName = typeInstrument.getAllRecords();
         if (view != null) {
             JComboBox<String> cmbType = view.getCmbType();
-            
+
             if (cmbType != null) {
                 DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
-                
+
                 // Agrega los elementos de listName al modelo del JComboBox
                 for (InstrumentType name : listName) {
                     comboBoxModel.addElement(name.getName());
                 }
-                
+
                 // Establece el modelo en el JComboBox cmbType
                 cmbType.setModel(comboBoxModel);
             }

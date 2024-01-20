@@ -17,6 +17,7 @@ import java.util.Date;
  * @author james
  */
 public class BDCalibration {
+
     ConexionBD conexion = new ConexionBD();
     ResultSet resultado = null;
 
@@ -39,24 +40,28 @@ public class BDCalibration {
         } catch (SQLException error) {
             error.printStackTrace();
         }
-        
+
         return calibrationList;
     }
 
-    public void saveCalibration(int number, String date, int measurement) {
+    public void saveCalibration(int number, String date, int measurement,String serieForeing) {
         try {
             conexion.setConexion();
-            conexion.setConsulta("INSERT INTO calibration (id, date, measuring) VALUES (?, ?,?)");
+            conexion.setConsulta("INSERT INTO calibration (id, date, measuring,serieForeing) VALUES (?, ?,?,?)");
             conexion.getConsulta().setInt(1, number);
-            conexion.getConsulta().setString(2,date);
+
+
+            conexion.getConsulta().setString(2, date);
             conexion.getConsulta().setInt(3, measurement);
-        
-        if (conexion.getConsulta().executeUpdate() > 0) {
-            //Respuesta positiva
-            System.out.println("Se insertó la calibración!");
-        } else {
-            System.out.println("Error en la inserción de la calibración!");
-        }
+            conexion.getConsulta().setString(4, serieForeing);
+
+            if (conexion.getConsulta().executeUpdate() > 0) {
+                //Respuesta positiva
+                System.out.println("Se insertó la calibración!");
+            } else {
+                System.out.println("Error en la inserción de la calibración!");
+            }
+
         } catch (SQLException error) {
             error.printStackTrace();
         }
@@ -69,7 +74,7 @@ public class BDCalibration {
             conexion.setConexion();
             conexion.setConsulta("DELETE FROM calibration WHERE id=?");
             conexion.getConsulta().setInt(1, id);
-            
+
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva
                 System.out.println("Se eliminó la calibración!");
