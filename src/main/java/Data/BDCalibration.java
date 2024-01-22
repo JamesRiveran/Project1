@@ -34,6 +34,8 @@ public class BDCalibration {
                 calibration.setId(Integer.parseInt(resultado.getString(1)));
                 calibration.setDate(resultado.getString(2));
                 calibration.setMeasuring(Integer.parseInt(resultado.getString(3)));
+                calibration.setNumber(String.valueOf(resultado.getString(4)));
+
                 calibrationList.add(calibration);
             }
 

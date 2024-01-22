@@ -47,10 +47,10 @@ public class BDMeasurement {
         return measurementList;
     }
 
-    public void saveMeasurement(List<Measurement> measurements) {
+    public String saveMeasurement(List<Measurement> measurements) {
         if (measurements == null || measurements.isEmpty()) {
             System.out.println("La lista de mediciones no puede ser nula o estar vacía");
-            return;
+            return "La lista de mediciones no puede ser nula o estar vacía";
         }
         System.out.println(measurements);
 
@@ -67,24 +67,28 @@ public class BDMeasurement {
                 if (conexion.getConsulta().executeUpdate() > 0) {
                     // Respuesta positiva
                     System.out.println("Se insertó la medición con id " + measurement.getIdMeasure());
+                    return "Se insertó la medición con id ";
+
                 } else {
                     System.out.println("Error en la inserción de la medición con id " + measurement.getIdMeasure());
+                    return "Error en la inserción de la medición ";
                 }
             }
         } catch (SQLException error) {
             error.printStackTrace();
+            return "Error en sistema";
         } finally {
             conexion.cerrarConexion(); // Asegúrate de cerrar la conexión después de usarla
+            return "Cerrando";
         }
     }
 
-    public void updateReading(List<String> readings, List<String> id, String idToUpdate) {
+    public String updateReading(List<String> readings, List<String> id, String idToUpdate) {
         System.out.println(readings);
         System.out.println(id);
 
         if (readings == null || readings.isEmpty()) {
-            System.out.println("La lista de lecturas no puede ser nula o estar vacía");
-            return;
+            return "La lista de lecturas no puede ser nula o estar vacía";
         }
 
         try {
@@ -106,22 +110,26 @@ public class BDMeasurement {
                 if (conexion.getConsulta().executeUpdate() > 0) {
                     // Respuesta positiva
                     System.out.println("Se actualizó la medición con idCalibration " + idToUpdate + " y reading " + readings.get(i));
+                    return "Se actualizó la medición con idCalibration " + idToUpdate + " y reading " + readings.get(i);
                 } else {
                     System.out.println("Error en la actualización de la medición con idCalibration " + idToUpdate);
+                    return "Error en la actualización de la medición con idCalibration " + idToUpdate;
                 }
             }
         } catch (SQLException error) {
             error.printStackTrace();
+            return "Error en el la implementacion";
         } finally {
             conexion.cerrarConexion();
+            return "Finalización de conexión";
         }
     }
 
-    public void deleteMeasurement(String id) {//Borrar todos los registros de esas calibración
+    public void deleteMeasurement(String idCalibration) {//Borrar todos los registros de esas calibración
         try {
             conexion.setConexion();
-            conexion.setConsulta("DELETE FROM measurement WHERE id=?");
-            conexion.getConsulta().setString(1, id);
+            conexion.setConsulta("DELETE FROM measurement WHERE idCalibration=? ");
+            conexion.getConsulta().setString(1, idCalibration);
 
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva

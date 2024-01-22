@@ -6,6 +6,7 @@ package Logic;
 
 import Data.BDCalibration;
 import Data.BDInstrument;
+import Data.BDMeasurement;
 import Data.BDTypeInstrument;
 import static Presentation.Controller.ViewController.showMessage;
 import java.util.ArrayList;
@@ -21,10 +22,12 @@ public class Data_logic {
     BDTypeInstrument dbConnection = new BDTypeInstrument();
     BDInstrument InstrumentsModulo2 = new BDInstrument();
     BDCalibration calibration = new BDCalibration();
+    BDMeasurement measurement = new BDMeasurement();
 
     public Data_logic() {
         this.dbConnection = new BDTypeInstrument();
         this.InstrumentsModulo2 = new BDInstrument();
+        this.calibration = new BDCalibration();
     }
 
     public void saveOrUpdateInstruments(List<InstrumentType> instrumentList, JFrame parent, boolean update) {
@@ -90,9 +93,9 @@ public class Data_logic {
 
     public void saveCali(List<Calibration> calibrations, String serieInstrument, JFrame parent, boolean update) {
         try {
-            for(Calibration cali: calibrations){
-                    String response=calibration.saveCalibration(cali.getId(), cali.getDate(), cali.getMeasuring(), serieInstrument);
-                    showMessage(parent, response, "success");
+            for (Calibration cali : calibrations) {
+                String response = calibration.saveCalibration(cali.getId(), cali.getDate(), cali.getMeasuring(), serieInstrument);
+                showMessage(parent, response, "success");
             }
         } catch (Exception ex) {
             throw new BusinessException("Error en la lógica de negocio: " + ex.getMessage());
@@ -116,5 +119,40 @@ public class Data_logic {
 
     public ArrayList<Calibration> getAllRecordsCalibration() {
         return calibration.getAllCalibration();
+    }
+
+    public void saveMeasure(List<Measurement> measurements, JFrame parent) {
+        try {
+            String response = measurement.saveMeasurement(measurements);
+            showMessage(parent, response, "success");
+        } catch (Exception ex) {
+            throw new BusinessException("Error en la lógica de negocio: " + ex.getMessage());
+        }
+    }
+
+    public void updateReading(List<String> readings, List<String> id, String idToUpdate, JFrame parent) {
+        try {
+            String response = measurement.updateReading(readings, id, idToUpdate);
+            showMessage(parent, response, "success");
+
+        } catch (Exception ex) {
+            throw new BusinessException("Error en la lógica de negocio: " + ex.getMessage());
+        }
+    }
+
+    public void deleted(String id) {
+        try {
+            measurement.deleteMeasurement(id);
+        } catch (Exception ex) {
+            throw new BusinessException("Error en la lógica de negocio: " + ex.getMessage());
+        }
+    }
+
+    public ArrayList<Measurement> getAllMeasurement() {
+        try {
+            return measurement.getAllMeasurement();
+        } catch (Exception ex) {
+            throw new BusinessException("Error en la lógica de negocio: " + ex.getMessage());
+        }
     }
 }
