@@ -4,6 +4,7 @@
  */
 package Server;
 
+import Protocol.IService;
 import Protocol.Message;
 import Protocol.User;
 
@@ -11,11 +12,11 @@ import Protocol.User;
  *
  * @author james
  */
-public class Service {
+public class Service implements IService{
     
-    
+    private Data data;
     public Service() {
-        
+        data =  new Data();
     }
     
     public void post(Message m){

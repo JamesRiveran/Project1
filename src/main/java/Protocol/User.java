@@ -4,13 +4,14 @@
  */
 package Protocol;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author james
  */
-public class User {
+public class User  implements Serializable{
     String id;
     String clave;
     String nombre;

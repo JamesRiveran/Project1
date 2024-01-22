@@ -37,7 +37,7 @@ public class Server {
     }
     
     public void run(){
-        IService service = null;// CAMBIAR
+        IService service = new Service();
 
         boolean continuar = true;
         ObjectInputStream in=null;

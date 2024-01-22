@@ -4,6 +4,7 @@
  */
 package Logic;
 
+import Presentation.Controller.ControllerSocket;
 import Presentation.Controller.ViewController;
 import Protocol.IService;
 import Protocol.Message;
@@ -30,12 +31,12 @@ public class ServiceProxy implements Protocol.IService {
 
     ObjectInputStream in;
     ObjectOutputStream out;
-    ViewController controller;
+    ControllerSocket controller;
 
     public ServiceProxy() {           
     }
 
-    public void setController(ViewController controller) {
+    public void setController(ControllerSocket controller) {
         this.controller = controller;
     }
 

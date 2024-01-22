@@ -6,8 +6,10 @@ package Presentation.View;
 
 import Presentation.Controller.ViewController;
 import Presentation.Controller.CalibrationController;
+import Presentation.Controller.ControllerSocket;
 import Presentation.Controller.IntrumentsController;
 import Presentation_Model.MaterialTabbed;
+import Presentation_Model.SocketModel;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -1219,8 +1221,30 @@ public class Modulo extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     ViewController viewController;
+    ControllerSocket controllerSocket;
     CalibrationController calibrationController;
     IntrumentsController intrumentsController;
+    SocketModel socketModel;
+
+    public ControllerSocket getControllerSocket() {
+        return controllerSocket;
+    }
+
+    public void setControllerSocket(ControllerSocket controllerSocket) {
+        this.controllerSocket = controllerSocket;
+    }
+
+    public SocketModel getSocketModel() {
+        return socketModel;
+    }
+
+    public void setSocketModel(SocketModel socketModel) {
+        this.socketModel = socketModel;
+    }
+    
+    
+    
+    
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         viewController.actionPerformed(evt);
     }//GEN-LAST:event_btnSaveActionPerformed
