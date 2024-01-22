@@ -39,14 +39,12 @@ public class ViewController extends Controller implements ActionListener {
     static Modulo view;
     protected Modulo viewError;
     Data_logic data_logic;
-    BDCalibration dbCalibration = new BDCalibration();
     boolean update = false;
 
     public ViewController() throws ParserConfigurationException, SAXException {
 
         this.listInstrument = new InstrumentsList();
         this.view = new Modulo();
-        this.dbCalibration = new BDCalibration();
         this.calibrationController = new CalibrationController(this.view);
         this.intrumentsController = new IntrumentsController(this.view);
         intrumentsController.setInstruSelectionListener(calibrationController);
@@ -82,7 +80,7 @@ public class ViewController extends Controller implements ActionListener {
         view.getBtnSaveMeasurement().addActionListener(e -> calibrationController.saveMeasurement());
         view.getBtnCleanMeasurement().addActionListener(e -> calibrationController.cleanMeasurement());
 
-        view.getCalibrationTxtNumber().setText(String.valueOf(dbCalibration.getId()));
+        view.getCalibrationTxtNumber().setText(String.valueOf(data_logic.getId()));
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
 

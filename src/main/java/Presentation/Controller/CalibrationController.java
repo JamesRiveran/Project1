@@ -110,7 +110,6 @@ public class CalibrationController extends Controller implements ActionListener,
                             date,
                             Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                     calibrationList.getList().add(newCalibration);
-
                     data_logic.saveCali(calibrationList.getList(), serie, view, update);
                     updateTable();
 

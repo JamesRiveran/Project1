@@ -86,7 +86,7 @@ public class BDInstrument {
         } catch (SQLException error) {
             if (error instanceof SQLIntegrityConstraintViolationException) {
                 // Manejo de la excepción específica para clave foránea
-                return "Error al eliminar: Este tipo de instrumento está siendo referenciado por otros registros.";
+                return "Error al eliminar: Este instrumento está siendo referenciado por otros registros.";
             } else {
                 // Manejo de otras excepciones
                 error.printStackTrace();
