@@ -6,7 +6,7 @@ package Server;
 
 import Protocol.IService;
 import Protocol.Message;
-import Protocol.Protocol;
+import Protocol.ProtocolData;
 import Protocol.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -59,14 +59,14 @@ public class Worker {
                 System.out.println("Operacion: "+method);
                 switch(method){
                 //case Protocol.LOGIN: done on accept
-                case Protocol.LOGOUT:
+                case ProtocolData.LOGOUT:
                     try {
                         srv.remove(user);
                         //service.logout(user); //nothing to do
                     } catch (Exception ex) {}
                     stop();
                     break;                 
-                case Protocol.POST:
+                case ProtocolData.POST:
                     Message message=null;
                     try {
                         message = (Message)in.readObject();
@@ -89,7 +89,7 @@ public class Worker {
     //Metodo para entregar solo a su propio cliente, el de arriba entrega a todos.
     public void deliver(Message message){
         try {
-            out.writeInt(Protocol.DELIVER);
+            out.writeInt(ProtocolData.DELIVER);
             out.writeObject(message);
             out.flush();
         } catch (IOException ex) {

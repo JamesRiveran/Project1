@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logic;
+package Presentation_Model;
 
-import Logic.InstrumentModulo2;
+import Presentation_Model.InstrumentModulo2;
 import java.util.ArrayList;
 
 /**

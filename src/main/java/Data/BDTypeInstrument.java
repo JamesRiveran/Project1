@@ -5,7 +5,7 @@
 package Data;
 
 import static Presentation.Controller.ViewController.showMessage;
-import Logic.InstrumentType;
+import Presentation_Model.InstrumentType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;

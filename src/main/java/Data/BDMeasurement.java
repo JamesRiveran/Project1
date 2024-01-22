@@ -4,9 +4,9 @@
  */
 package Data;
 
-import Logic.Calibration;
-import Logic.InstrumentType;
-import Logic.Measurement;
+import Presentation_Model.Calibration;
+import Presentation_Model.InstrumentType;
+import Presentation_Model.Measurement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

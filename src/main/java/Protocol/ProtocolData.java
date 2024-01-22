@@ -8,8 +8,8 @@ package Protocol;
  *
  * @author james
  */
-public class Protocol {
-    public static final String SERVER = "127.0.0.1";//Cambiar por el que tenga el MySQL
+public class ProtocolData {
+     public static final String SERVER = "127.0.0.1";//Cambiar por el que tenga el MySQL
     public static final int PORT = 3306;//Cambiar por el que tenga el MySQL
 
     

@@ -4,8 +4,8 @@
  */
 package Data;
 
-import Logic.InstrumentModulo2;
-import Logic.InstrumentType;
+import Presentation_Model.InstrumentModulo2;
+import Presentation_Model.InstrumentType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;

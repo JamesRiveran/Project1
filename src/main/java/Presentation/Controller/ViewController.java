@@ -6,12 +6,16 @@
 package Presentation.Controller;
 
 import Data.BDCalibration;
-import Logic.Data_logic;
-import Logic.GeneratorPDF;
-import static Logic.GeneratorPDF.loadTypeOfInstrument;
-import Logic.InstrumentType;
-import Logic.InstrumentsList;
+import Logic.ServiceProxy;
+import Presentation_Model.Data_logic;
+import Presentation_Model.GeneratorPDF;
+import static Presentation_Model.GeneratorPDF.loadTypeOfInstrument;
+import Presentation_Model.InstrumentType;
+import Presentation_Model.InstrumentsList;
 import Presentation.View.Modulo;
+import Presentation_Model.SocketModel;
+import Protocol.Message;
+import Protocol.User;
 import com.itextpdf.text.DocumentException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,6 +44,8 @@ public class ViewController extends Controller implements ActionListener {
     protected Modulo viewError;
     Data_logic data_logic;
     boolean update = false;
+    ServiceProxy localService;
+    SocketModel socketModel;
 
     public ViewController() throws ParserConfigurationException, SAXException {
 
@@ -52,6 +58,8 @@ public class ViewController extends Controller implements ActionListener {
         clickTable();
         updateTable();
         this.view.setViewController(this);
+        localService = (ServiceProxy) ServiceProxy.instance();
+        localService.setController(this);
     }
 
     public void start() throws IOException, SAXException, ParserConfigurationException {
@@ -269,4 +277,34 @@ public class ViewController extends Controller implements ActionListener {
 
         }
     }
+    
+     public void login(User u) throws Exception{
+        User logged=ServiceProxy.instance().login(u);
+        socketModel.setCurrentUser(logged);
+        socketModel.commit(socketModel.USER);
+    }
+
+    public void post(String text){
+        Message message = new Message();
+        message.setMessage(text);
+        message.setSender(socketModel.getCurrentUser());
+        ServiceProxy.instance().post(message);
+        socketModel.commit(socketModel.CHAT);
+    }
+
+    public void logout(){
+        try {
+            ServiceProxy.instance().logout(socketModel.getCurrentUser());
+            socketModel.setMessages(new ArrayList<>());
+            socketModel.commit(socketModel.CHAT);
+        } catch (Exception ex) {
+        }
+        socketModel.setCurrentUser(null);
+        socketModel.commit(socketModel.USER+socketModel.CHAT);
+    }
+        
+    public void deliver(Message message){
+        socketModel.messages.add(message);//intento almacenarla
+        socketModel.commit(socketModel.CHAT);//si se pudo almacenar la info es correcta. Por ende puedo guardar sin problema       
+    }    
 }

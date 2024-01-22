@@ -4,8 +4,6 @@
  */
 package Protocol;
 
-import Protocol.Message;
-import Protocol.User;
 
 /**
  *

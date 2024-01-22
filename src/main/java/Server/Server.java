@@ -6,7 +6,7 @@ package Server;
 
 import Protocol.IService;
 import Protocol.Message;
-import Protocol.Protocol;
+import Protocol.ProtocolData;
 import Protocol.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -27,7 +27,7 @@ public class Server {
     
     public Server() {
         try {
-            srv = new ServerSocket(Protocol.PORT);
+            srv = new ServerSocket(ProtocolData.PORT);
             //workers se encarga del cliente, es lo que tengo que atender para atender las solicitudes del cliente. Es un hilo
             workers =  Collections.synchronizedList(new ArrayList<Worker>());
             System.out.println("Servidor iniciado...");//Está listo para atender solicitudes
@@ -58,7 +58,7 @@ public class Server {
             catch (IOException | ClassNotFoundException ex) {}
             catch (Exception ex) {
                 try {
-                    out.writeInt(Protocol.ERROR_LOGIN);
+                    out.writeInt(ProtocolData.ERROR_LOGIN);
                     out.flush();
                     skt.close();
                 } catch (IOException ex1) {}
@@ -69,10 +69,10 @@ public class Server {
     
     private User login(ObjectInputStream in,ObjectOutputStream out,IService service) throws IOException, ClassNotFoundException, Exception{
         int method = in.readInt();
-        if (method!=Protocol.LOGIN) throw new Exception("Should login first");
+        if (method!=ProtocolData.LOGIN) throw new Exception("Should login first");
         User user=(User)in.readObject();                          
         user=service.login(user);
-        out.writeInt(Protocol.ERROR_NO_ERROR);
+        out.writeInt(ProtocolData.ERROR_NO_ERROR);
         out.writeObject(user);
         out.flush();
         return user;

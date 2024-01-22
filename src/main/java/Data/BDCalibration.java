@@ -4,8 +4,8 @@
  */
 package Data;
 
-import Logic.Calibration;
-import Logic.InstrumentType;
+import Presentation_Model.Calibration;
+import Presentation_Model.InstrumentType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;

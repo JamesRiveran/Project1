@@ -7,7 +7,7 @@ package Presentation.View;
 import Presentation.Controller.ViewController;
 import Presentation.Controller.CalibrationController;
 import Presentation.Controller.IntrumentsController;
-import Logic.MaterialTabbed;
+import Presentation_Model.MaterialTabbed;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -52,7 +52,7 @@ public class Modulo extends javax.swing.JFrame {
 
         jRadioButton1 = new javax.swing.JRadioButton();
         jLabel15 = new javax.swing.JLabel();
-        pTipoDeInstrumento = new Logic.MaterialTabbed();
+        pTipoDeInstrumento = new Presentation_Model.MaterialTabbed();
         pTipoInstrumento = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -1731,7 +1731,7 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JPanel pCalibraciones;
     private javax.swing.JPanel pInstrumento;
     private javax.swing.JPanel pMediciones;
-    private Logic.MaterialTabbed pTipoDeInstrumento;
+    private Presentation_Model.MaterialTabbed pTipoDeInstrumento;
     private javax.swing.JPanel pTipoInstrumento;
     private javax.swing.JTable tbInstru;
     private javax.swing.JTable tblCalibrations;
