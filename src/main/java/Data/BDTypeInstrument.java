@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controller.sqlServer;
+package Data;
 
-import static Controller.ViewController.showMessage;
-import Model.InstrumentType;
+import static Presentation.Controller.ViewController.showMessage;
+import Logic.InstrumentType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 
@@ -61,43 +62,50 @@ public class BDTypeInstrument {
         }
     }
 
-    public void deleteRecord(String code,JFrame parent) {
+    public String deleteRecord(String code) {
         try {
             conexion.setConexion();
             conexion.setConsulta("DELETE FROM InstrumentType WHERE code=?");
             conexion.getConsulta().setString(1, code);
 
             if (conexion.getConsulta().executeUpdate() > 0) {
-                //Respuesta positiva
+                // Respuesta positiva
                 System.out.println("Se eliminó el tipo de instrumento!");
-                showMessage(parent, "Elimanado exitosamente", "success");
+                return "Eliminado exitosamente";
             } else {
                 System.out.println("Error en la eliminación de tipo de instrumento!");
-                showMessage(parent, "Error en la eliminación de tipo de instrumento", "success");
+                return "Error al eliminar: Registro no encontrado";
             }
         } catch (SQLException error) {
-            error.printStackTrace();
+            if (error instanceof SQLIntegrityConstraintViolationException) {
+                // Manejo de la excepción específica para clave foránea
+                return "Error al eliminar: Este tipo de instrumento está siendo referenciado por otros registros.";
+            } else {
+                // Manejo de otras excepciones
+                error.printStackTrace();
+                return "Error al procesar la operación: " + error.getMessage();
+            }
         }
     }
 
-    public void saveOrUpdateInstrument(String code, String unit, String name,JFrame parent) {
+    public String saveOrUpdateInstrument(String code, String unit, String name) {
         try {
             conexion.setConexion();
             conexion.setConsulta("SELECT * FROM InstrumentType WHERE code=?");
             conexion.getConsulta().setString(1, code);
             ResultSet resultSet = conexion.getConsulta().executeQuery();
-
             if (resultSet.next()) {
                 // El registro existe, entonces actualiza los valores
                 updateRecord(code, unit, name);
-                showMessage(parent, "Se actualizó exitosamente", "success");
+                return "Actualizado exitosamente";
             } else {
                 // El registro no existe, entonces crea un nuevo registro
                 saveTypeOfInstrument(code, unit, name);
-                showMessage(parent, "Se guardó exitosamente", "success");
+                return "Guardado exitosamente";
             }
         } catch (SQLException error) {
             error.printStackTrace();
+            return "Error al procesar la operación: " + error.getMessage();
         }
     }
 
@@ -120,4 +128,15 @@ public class BDTypeInstrument {
         }
     }
 
+    public boolean instrumentTypeExists(String code) throws SQLException {
+        conexion.setConexion();
+        conexion.setConsulta("SELECT COUNT(*) AS count FROM InstrumentType WHERE code = ?");
+        conexion.getConsulta().setString(1, code);
+
+        ResultSet resultSet = conexion.getConsulta().executeQuery();
+        resultSet.next();
+        int count = resultSet.getInt("count");
+
+        return count > 0;
+    }
 }

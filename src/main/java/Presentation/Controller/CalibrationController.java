@@ -3,17 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controller;
+package Presentation.Controller;
 
-import Controller.sqlServer.BDCalibration;
-import Controller.sqlServer.BDMeasurement;
-import Model.Calibration;
-import Model.CalibrationList;
-import Model.ColorCelda;
-import Model.GeneratorPDF;
-import static Model.GeneratorPDF.loadCalibration;
-import Model.Measurement;
-import View.Modulo;
+import Data.BDMeasurement;
+import Logic.Calibration;
+import Logic.CalibrationList;
+import Logic.ColorCelda;
+import Logic.Data_logic;
+import Logic.GeneratorPDF;
+import static Logic.GeneratorPDF.loadCalibration;
+import Logic.Measurement;
+import Presentation.View.Modulo;
 import com.itextpdf.text.DocumentException;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionEvent;
@@ -27,7 +27,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -47,27 +46,24 @@ public class CalibrationController extends Controller implements ActionListener,
     int min;
     String max;
     String tolerancia;
+    Boolean pass;
     CalibrationList calibrationList;
     ViewController viewController;
     Modulo view;
-    String filePath = "Laboratorio.xml";
     private ArrayList<Calibration> listCalibrations;
-    boolean updateInstruments = false;
-    boolean pass = false;
     private String number;
     public String serieInstrument = "";
-    BDCalibration calibration = new BDCalibration();
     BDMeasurement measurement = new BDMeasurement();
-    
+    Data_logic data_logic;
+    boolean update = false;
 
     public CalibrationController(Modulo view) {
         this.view = view;
-        this.calibration = new BDCalibration();
+        this.data_logic = new Data_logic();
         this.view.setCalibrationController(this);
         this.calibrationList = new CalibrationList();
         this.measurement = new BDMeasurement();
         this.number = "0";
-        updateTable();
 
     }
 
@@ -105,7 +101,6 @@ public class CalibrationController extends Controller implements ActionListener,
                 viewController.showMessage(view, "La cantidad de mediciones es mayor a la cantidad de enteros que hay en el rango del instrumento", "error");
             } else {
                 try {
-                    int newIdNumber = 0;
                     calibrationList.getList().clear();
                     JDateChooser dateChooser = view.getCalibrationDateChooser();
                     String date = dateToString(dateChooser);
@@ -116,18 +111,16 @@ public class CalibrationController extends Controller implements ActionListener,
                             Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                     calibrationList.getList().add(newCalibration);
 
-                    //XMLLoader.saveToXMLCalibration(filePath, calibrationList.getList(),serie);
-                    calibration.saveCalibration(Integer.parseInt(view.getCalibrationTxtNumber().getText()), date, Integer.parseInt(view.getCalibrationTxtMeasurement().getText()),serie);
-
+                    data_logic.saveCali(calibrationList.getList(), serie, view, update);
                     updateTable();
+
+                    //falta realizar
                     List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max));
                     measurement.saveMeasurement(measurements);
 
-                    
-                    view.getCalibrationTxtNumber().setText(String.valueOf(calibration.getId()));
+                    view.getCalibrationTxtNumber().setText(String.valueOf(data_logic.getId()));
                     updateTableMeasurement();
 
-                    viewController.showMessage(view, "Se guardo con exito", "success");
                     clean();
                 } catch (Exception ex) {
                     viewController.showMessage(view, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
@@ -140,12 +133,13 @@ public class CalibrationController extends Controller implements ActionListener,
 
     @Override
     public void clean() {
+        update = false;
         view.getCalibrationDateChooser().setDate(null);
         view.getCalibrationTxtMeasurement().setText("");
         view.getCalibrationDateChooser().setEnabled(true);
         view.getCalibrationTxtMeasurement().setEnabled(true);
-        String id ="";
-        id = String.valueOf(calibration.getId());
+        String id = "";
+        id = String.valueOf(data_logic.getId());
         view.getCalibrationTxtNumber().setText(id);
     }
 
@@ -271,8 +265,6 @@ public class CalibrationController extends Controller implements ActionListener,
         return formatoFecha.format(fechaSeleccionada);
     }
 
-    
-
     private int idMedicion() throws SAXException, ParserConfigurationException, TransformerException, IOException {
         return 1;//Esto debemos arreglarlo
     }
@@ -308,7 +300,7 @@ public class CalibrationController extends Controller implements ActionListener,
     }
 
     public boolean clickTable() {
-
+        update = true;
         view.getTblCalibrations().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -372,8 +364,7 @@ public class CalibrationController extends Controller implements ActionListener,
     }
 
     public void updateTable() {
-        //listCalibrations = XMLLoader.loadFromCalibrations(filePath);
-        listCalibrations = calibration.getAllCalibration();
+        listCalibrations = data_logic.getAllRecordsCalibration();
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
         for (int i = listCalibrations.size() - 1; i >= 0; i--) {
@@ -393,7 +384,7 @@ public class CalibrationController extends Controller implements ActionListener,
 
     private void filterByNumber(String searchNumber) {
 //        listCalibrations = XMLLoader.loadFromCalibrations(filePath);
-        listCalibrations = calibration.getAllCalibration();
+        listCalibrations = data_logic.getAllRecordsCalibration();
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
         // Si la cadena de búsqueda está vacía, muestra todos los elementos
@@ -416,8 +407,7 @@ public class CalibrationController extends Controller implements ActionListener,
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
         String serie = getSerieInstrument();
         int number = Integer.parseInt(view.getCalibrationTxtNumber().getText());
-        calibration.deleteCalibration(number);
-        viewController.showMessage(view, "Eliminado con exito", "success");
+        data_logic.deletedCali(number, view);
         updateTable();
         clearTable(tableModel);
     }

@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Model;
+package Logic;
 
-import Controller.ViewController;
-import static Controller.ViewController.showMessage;
-import View.Modulo;
+import Logic.Calibration;
+import Presentation.Controller.ViewController;
+import static Presentation.Controller.ViewController.showMessage;
+import Presentation.View.Modulo;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;

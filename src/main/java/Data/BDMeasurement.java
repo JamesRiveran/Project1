@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controller.sqlServer;
+package Data;
 
-import Model.Calibration;
-import Model.InstrumentType;
-import Model.Measurement;
+import Logic.Calibration;
+import Logic.InstrumentType;
+import Logic.Measurement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

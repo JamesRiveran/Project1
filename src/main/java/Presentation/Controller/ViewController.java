@@ -3,15 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controller;
+package Presentation.Controller;
 
-import Controller.sqlServer.BDCalibration;
-import Controller.sqlServer.BDTypeInstrument;
-import Model.GeneratorPDF;
-import static Model.GeneratorPDF.loadTypeOfInstrument;
-import Model.InstrumentType;
-import Model.InstrumentsList;
-import View.Modulo;
+import Data.BDCalibration;
+import Logic.Data_logic;
+import Logic.GeneratorPDF;
+import static Logic.GeneratorPDF.loadTypeOfInstrument;
+import Logic.InstrumentType;
+import Logic.InstrumentsList;
+import Presentation.View.Modulo;
 import com.itextpdf.text.DocumentException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +24,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import org.xml.sax.SAXException;
 
 /**
@@ -34,34 +33,31 @@ import org.xml.sax.SAXException;
 public class ViewController extends Controller implements ActionListener {
 
     InstrumentsList listInstrument;
-    private ArrayList<InstrumentType> listName;
-    String filePath = "Laboratorio.xml";
     private ArrayList<InstrumentType> ListOfIModu1o1;
     CalibrationController calibrationController;
     IntrumentsController intrumentsController;
     static Modulo view;
     protected Modulo viewError;
-    ArrayList<InstrumentType> instrumentList = new ArrayList<>();
+    Data_logic data_logic;
     BDCalibration dbCalibration = new BDCalibration();
-    BDTypeInstrument dbConnection = new BDTypeInstrument();
-    
-    
+    boolean update = false;
+
     public ViewController() throws ParserConfigurationException, SAXException {
-        
+
         this.listInstrument = new InstrumentsList();
         this.view = new Modulo();
-        this.dbCalibration=new BDCalibration();
-        this.dbConnection = new BDTypeInstrument();
+        this.dbCalibration = new BDCalibration();
         this.calibrationController = new CalibrationController(this.view);
         this.intrumentsController = new IntrumentsController(this.view);
         intrumentsController.setInstruSelectionListener(calibrationController);
+        this.data_logic = new Data_logic();
         clickTable();
         updateTable();
         this.view.setViewController(this);
     }
 
     public void start() throws IOException, SAXException, ParserConfigurationException {
-     
+
         view.getBtnClean().addActionListener(e -> clean());
         view.getBtnDelete().addActionListener(e -> delete());
         view.getBtnPDF().addActionListener(e -> reportPdf());
@@ -85,16 +81,12 @@ public class ViewController extends Controller implements ActionListener {
         view.getBtnSearchCalibration().addActionListener(e -> calibrationController.search());
         view.getBtnSaveMeasurement().addActionListener(e -> calibrationController.saveMeasurement());
         view.getBtnCleanMeasurement().addActionListener(e -> calibrationController.cleanMeasurement());
-       
+
         view.getCalibrationTxtNumber().setText(String.valueOf(dbCalibration.getId()));
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
-        
-        
 
     }
-
-    
 
     public static void showMessage(JFrame parent, String message, String info) {
         if (info == "error") {
@@ -118,7 +110,6 @@ public class ViewController extends Controller implements ActionListener {
             JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.ERROR_MESSAGE);
         } else if (info == "success") {
             JOptionPane.showMessageDialog(view, errorMessage, "Validación", JOptionPane.INFORMATION_MESSAGE);
-
         }
     }
 
@@ -135,9 +126,11 @@ public class ViewController extends Controller implements ActionListener {
                 try {
                     // Actualizar <Instrumento>
                     String code = view.getTxtCode().getText();
-                    String unit =view.getTxtUnit().getText();
+                    String unit = view.getTxtUnit().getText();
                     String newName = view.getTxtName().getText();
-                    dbConnection.saveOrUpdateInstrument(code, unit, newName,view);
+                    InstrumentType instrument = new InstrumentType(code, unit, newName);
+                    listInstrument.getList().add(instrument);
+                    data_logic.saveOrUpdateInstruments(listInstrument.getList(), view,update);
                     listInstrument.getList().clear();
                     updateTable();
                     intrumentsController.updateComboBoxModel();
@@ -155,7 +148,7 @@ public class ViewController extends Controller implements ActionListener {
 
     @Override
     public void search() {
-        ArrayList<InstrumentType> loadedList = dbConnection.getAllRecords();
+        ArrayList<InstrumentType> loadedList = data_logic.getAllRecordsTypeInstruments();
         if (loadedList.isEmpty()) {
             showMessage(viewError, "No hay tipos de instrumentos registrados", "error");
         }
@@ -174,19 +167,15 @@ public class ViewController extends Controller implements ActionListener {
     @Override
     public void delete() {
         try {
-            dbConnection.deleteRecord(view.getTxtCode().getText(),view);
+            data_logic.deletedTypeInstrument(view.getTxtCode().getText(), view);
             updateTable();
             intrumentsController.updateComboBoxModel();
             clean();
-        }
-        catch (SAXException | ParserConfigurationException ex) {
+        } catch (SAXException | ParserConfigurationException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void reportPdf() {
         try {
@@ -223,7 +212,7 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     private void filterByName(String letterSearch) throws IOException, ParserConfigurationException, SAXException {
-        ArrayList<InstrumentType> loadedList = dbConnection.getAllRecords();
+        ArrayList<InstrumentType> loadedList = data_logic.getAllRecordsTypeInstruments();
         DefaultTableModel template = (DefaultTableModel) view.getTblListInstruments().getModel();
         template.setRowCount(0);
         if (letterSearch.isEmpty()) {
@@ -241,7 +230,7 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {
-        ListOfIModu1o1 = dbConnection.getAllRecords();
+        ListOfIModu1o1 = data_logic.getAllRecordsTypeInstruments();
         DefaultTableModel tableModule1 = (DefaultTableModel) view.getTblListInstruments().getModel();
         tableModule1.setRowCount(0);
         for (int i = ListOfIModu1o1.size() - 1; i >= 0; i--) {
@@ -256,6 +245,7 @@ public class ViewController extends Controller implements ActionListener {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editRegister(evt);
+                update=true;
             }
         });
         return true;
@@ -264,6 +254,7 @@ public class ViewController extends Controller implements ActionListener {
 
     @Override
     public void clean() {
+        update=false;
         view.getBtnDelete().setEnabled(false);
         view.getTxtCode().setEnabled(true);
         view.getTxtCode().setText("");

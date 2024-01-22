@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controller.sqlServer;
+package Data;
 
-import Model.Calibration;
-import Model.InstrumentType;
+import Logic.Calibration;
+import Logic.InstrumentType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,32 +45,29 @@ public class BDCalibration {
         return calibrationList;
     }
 
-    public void saveCalibration(int number, String date, int measurement,String serieForeing) {
+    public String saveCalibration(int id, String date, int measurement, String serieForeing) {
         try {
             conexion.setConexion();
             conexion.setConsulta("INSERT INTO calibration (id, date, measuring,serieForeing) VALUES (?, ?,?,?)");
-            conexion.getConsulta().setInt(1, number);
-
-
+            conexion.getConsulta().setInt(1, id);
             conexion.getConsulta().setString(2, date);
             conexion.getConsulta().setInt(3, measurement);
             conexion.getConsulta().setString(4, serieForeing);
 
             if (conexion.getConsulta().executeUpdate() > 0) {
-                //Respuesta positiva
-                System.out.println("Se insertó la calibración!");
+                return "Se insertó la calibración!";
             } else {
-                System.out.println("Error en la inserción de la calibración!");
+                return "Error en la inserción de la calibración!";
             }
 
         } catch (SQLException error) {
             error.printStackTrace();
+            return "Error al procesar la operación: " + error.getMessage();
+
         }
     }
 
-
-
-    public void deleteCalibration(int id) {
+    public String deleteCalibration(int id) {
         try {
             conexion.setConexion();
             conexion.setConsulta("DELETE FROM calibration WHERE id=?");
@@ -78,15 +76,25 @@ public class BDCalibration {
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva
                 System.out.println("Se eliminó la calibración!");
+                return "Eliminado exitosamente";
             } else {
                 System.out.println("Error en la inserción de la calibración!");
+                return "Error al eliminar: Registro no encontrado";
             }
         } catch (SQLException error) {
-            error.printStackTrace();
+            if (error instanceof SQLIntegrityConstraintViolationException) {
+                // Manejo de la excepción específica para clave foránea
+                return "Error al eliminar: Este tipo de instrumento está siendo referenciado por otros registros.";
+            } else {
+                // Manejo de otras excepciones
+                error.printStackTrace();
+                return "Error al procesar la operación: " + error.getMessage();
+            }
         }
     }
+
     public int getId() {
-        int nextID  = 0;
+        int nextID = 0;
         try {
             conexion.setConexion();
             conexion.setConsulta("SELECT MAX(id) AS ultimo_id FROM calibration");
@@ -94,10 +102,22 @@ public class BDCalibration {
             if (resultado.next()) {
                 int ultimoID = resultado.getInt("ultimo_id");
                 nextID = ultimoID + 1;
-            } 
+            }
         } catch (SQLException error) {
             error.printStackTrace();
         }
         return nextID;
     }
+
+//    public boolean instrumentTypeExists(String id) throws SQLException {
+//        conexion.setConexion();
+//        conexion.setConsulta("SELECT COUNT(*) AS count FROM instrument WHERE serie = ?");
+//        conexion.getConsulta().setString(1, id);
+//
+//        ResultSet resultSet = conexion.getConsulta().executeQuery();
+//        resultSet.next();
+//        int count = resultSet.getInt("count");
+//
+//        return count > 0;
+//    }
 }

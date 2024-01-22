@@ -2,18 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controller;
+package Presentation.Controller;
 
-import static Controller.ViewController.showMessage;
-import Controller.sqlServer.BDCalibration;
-import Controller.sqlServer.BDInstrument;
-import Controller.sqlServer.BDTypeInstrument;
-import Model.GeneratorPDF;
-import static Model.GeneratorPDF.loadInstrument;
-import Model.InstrumentModulo2;
-import Model.InstrumentType;
-import Model.IntrumentListModulo2;
-import View.Modulo;
+import Presentation.Controller.ViewController;
+import static Presentation.Controller.ViewController.showMessage;
+import Data.BDCalibration;
+import Data.BDInstrument;
+import Logic.Data_logic;
+import Logic.GeneratorPDF;
+import static Logic.GeneratorPDF.loadInstrument;
+import Logic.InstrumentModulo2;
+import Logic.InstrumentType;
+import Logic.IntrumentListModulo2;
+import Presentation.View.Modulo;
 import com.itextpdf.text.DocumentException;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -31,29 +32,21 @@ import org.xml.sax.SAXException;
  *
  * @author 50686
  */
-public class IntrumentsController extends Controller {
+public final class IntrumentsController extends Controller {
 
     ViewController viewController;
     IntrumentListModulo2 listModulo2;
-    String filePath = "Laboratorio.xml";
     private ArrayList<InstrumentModulo2> ListOfXml;
     private ArrayList<InstrumentType> listName;
-    CalibrationController calibrationController;
     private InstruSelectionListener instruSelectionListener;
     static Modulo view;
-    boolean updateInstruments = false;
-    private String selecItem;
-    BDInstrument bd_instrument = new BDInstrument();
-    BDTypeInstrument typeInstrument = new BDTypeInstrument();
-    BDCalibration calibration = new BDCalibration();
+    Data_logic data_logic;
+    boolean update = false;
 
     public IntrumentsController(Modulo view) throws ParserConfigurationException, SAXException {
         this.listModulo2 = new IntrumentListModulo2();
         this.view = view;
-        this.calibration = new BDCalibration();
-        this.bd_instrument = new BDInstrument();
-        this.typeInstrument = new BDTypeInstrument();
-        this.calibrationController = new CalibrationController(this.view);
+        this.data_logic = new Data_logic();
         updateComboBoxModel();
         clickTable();
         updateTable();
@@ -73,29 +66,11 @@ public class IntrumentsController extends Controller {
             // Verifica si el número de serie ya existe en la lista
             if (view.getTxtSerie().getText().isEmpty() || view.getTxtDescri().getText().isEmpty() || view.getTxtMaxi().getText().isEmpty() || view.getTxtMini().getText().isEmpty() || view.getTxtTole().getText().isEmpty()) {
                 viewController.showMessage(view, "Debe llenar todos los campos", "error");
-            } else if (serieExists(serie, ListOfXml)) {
-                if (updateInstruments == true) {
-                    if (Integer.parseInt(view.getTxtMini().getText()) > Integer.parseInt(view.getTxtMaxi().getText())) {
-                        viewController.showMessage(view, "El minimo es mayor que el maximo", "error");
-                    } else {
-                        informationForXml();
-                        updateTable();
-
-                        viewController.showMessage(view, "Datos Actualizados", "success");
-                        updateInstruments = false;
-                        clean();
-                    }
-                } else {
-                    viewController.showMessage(view, "Ya ese numero de serie existe  o debe seleccionar algún listado para actualizar", "error");
-                }
-            } else if (Integer.parseInt(view.getTxtMini().getText()) > Integer.parseInt(view.getTxtMaxi().getText())) {
-                viewController.showMessage(view, "El minimo es mayor que el maximo", "error");
+            } else if (Integer.parseInt(view.getTxtMini().getText()) > Integer.parseInt(view.getTxtMaxi().getText()) || Integer.parseInt(view.getTxtMini().getText()) == Integer.parseInt(view.getTxtMaxi().getText())) {
+                viewController.showMessage(view, "El minimo es mayor que el maximo o el tiene el mismo rango", "error");
             } else {
                 informationForXml();
-                // Actualizar la tabla después de agregar el nuevo instrumento
                 updateTable();
-                updateInstruments = false;
-                viewController.showMessage(view, "Datos registrados", "success");
                 clean();
             }
         } catch (Exception ex) {
@@ -121,7 +96,7 @@ public class IntrumentsController extends Controller {
     @Override
     public void clean() {
         try {
-            updateInstruments = false;
+            update = false;
             view.getBtnDelete().setEnabled(false);
             view.getTxtSerie().setEnabled(true);
             view.getBtnDeleteInstru().setEnabled(false);
@@ -158,56 +133,37 @@ public class IntrumentsController extends Controller {
     }
 
     @Override
-    public void delete() {//Falta la verificación de relación con mediciones registradas
-        InstrumentModulo2 instrumentToDelete = new InstrumentModulo2(
-                view.getTxtSerie().getText(),
-                view.getTxtMini().getText(),
-                view.getTxtTole().getText(),
-                view.getTxtDescri().getText(),
-                view.getTxtMaxi().getText(),
-                view.getCmbType().getSelectedItem().toString());
-        //XMLLoader.findCalibrationsByNumber(filePath, instrumentToDelete.getSerie());
-        DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
-        tableModel.setRowCount(0);
-//        if (calibracionesEncontradas.isEmpty()) {
-            //XMLLoader.deleteInstrumentFromXML(filePath, instrumentToDelete.getSerie());
-            bd_instrument.deleteInstrument(instrumentToDelete.getSerie());
-            showMessage(view, "Se borró exitosamente", "success");
+    public void delete() {
+        try {
+            data_logic.deletedInstrument(view.getTxtSerie().getText(), view);
+            updateTable();
             clean();
-            try {
-                updateTable();
-            } catch (ParserConfigurationException | SAXException ex) {
-                Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-//        } else {
-//            showMessage(view, "Error no se puede eliminar porque el instrumento tiene calibraciones registradas", "error");
-//        }
+        } catch (ParserConfigurationException | SAXException ex) {
+            Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void informationForXml() {
         listModulo2.getList().clear();
-
-
-        listName = typeInstrument.getAllRecords();
+        listName = data_logic.getAllRecordsTypeInstruments();
         String code = "";
         for (InstrumentType name : listName) {
             if (view.getCmbType().getSelectedItem().toString().equals(name.getName())) {
                 code = name.getCode();
             }
         }
-        System.out.println(code);
-
-        bd_instrument.saveOrUpdateInstrument(view.getTxtSerie().getText(),
+        InstrumentModulo2 instru = new InstrumentModulo2(view.getTxtSerie().getText(),
                 view.getTxtMini().getText(),
                 view.getTxtTole().getText(),
                 view.getTxtDescri().getText(),
                 view.getTxtMaxi().getText(),
-                view.getCmbType().getSelectedItem().toString(),
-                code);
+                view.getCmbType().getSelectedItem().toString());
+        listModulo2.getList().add(instru);
+        data_logic.saverOrUpadateInstruModulo2(listModulo2.getList(), code, view, update);
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {
-        ListOfXml = bd_instrument.getInstrument();
+        ListOfXml = data_logic.getAllRecordsInstruments();
         DefaultTableModel tableModel = (DefaultTableModel) view.getTbInstru().getModel();
         tableModel.setRowCount(0);
         for (int i = ListOfXml.size() - 1; i >= 0; i--) {
@@ -218,7 +174,7 @@ public class IntrumentsController extends Controller {
 
     /* Método para rellenar el comboBox */
     public void updateComboBoxModel() throws ParserConfigurationException, SAXException {
-        listName = typeInstrument.getAllRecords();
+        listName = data_logic.getAllRecordsTypeInstruments();
         if (view != null) {
             JComboBox<String> cmbType = view.getCmbType();
 
@@ -241,7 +197,7 @@ public class IntrumentsController extends Controller {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbInstruMouseClicked(evt);
-                updateInstruments = true;
+                update = true;
             }
 
         });
@@ -270,9 +226,7 @@ public class IntrumentsController extends Controller {
 
             view.getBtnDeleteInstru().setEnabled(true);
             if (instruSelectionListener != null) {
-
                 instruSelectionListener.onInstruSelected(serie, tole, descri, mini, maxi, true);
-
             }
 
         }
