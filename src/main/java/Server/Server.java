@@ -23,7 +23,7 @@ public class Server {
         try {
             srv = new ServerSocket(ProtocolData.PORT + 1);
             workers = Collections.synchronizedList(new ArrayList<>());
-            System.out.println("Servidor iniciado en el puerto: " + (ProtocolData.PORT + 1)); // Informar el puerto utilizado
+            System.out.println("Servidor iniciado "); // Informar el puerto utilizado
         } catch (IOException ex) {
             ex.printStackTrace(); // Considera imprimir un mensaje más descriptivo o lanzar una excepción
         }

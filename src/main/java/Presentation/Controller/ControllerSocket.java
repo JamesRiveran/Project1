@@ -22,8 +22,8 @@ public class ControllerSocket {
     private ServiceProxy localService;
     
     public ControllerSocket(Modulo view, SocketModel model) {
-        this.view = view;
-        this.model = model;
+        this.view = new Modulo();
+        this.model = new SocketModel();
         localService = (ServiceProxy) ServiceProxy.instance();
         localService.setController(this);
         view.setControllerSocket(this);

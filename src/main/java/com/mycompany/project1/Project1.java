@@ -29,6 +29,19 @@ public class Project1 {
 
             User user = new User("ID_123", "clave_secreta", "NombreDeUsuario");
             String instrumentType = "TipoInstrumentoEjemplo";
+            // Inicio de sesión
+            out.writeInt(ProtocolData.LOGIN); // Código de operación para iniciar sesión
+            out.writeObject(user);
+            out.flush();
+
+// Leer la respuesta del servidor para asegurarse de que el inicio de sesión fue exitoso
+            int loginResponse = in.readInt();
+            if (loginResponse == ProtocolData.ERROR_NO_ERROR) {
+                System.out.println("Inicio de sesión exitoso");
+            } else {
+                System.out.println("Error en el inicio de sesión");
+                return; // Sale del programa si hay un error en el inicio de sesión
+            }
             // Ejemplo: Enviar un mensaje al servidor
             Message message = new Message(user, instrumentType, null);
             out.writeInt(ProtocolData.POST); // Código de operación para un mensaje POST

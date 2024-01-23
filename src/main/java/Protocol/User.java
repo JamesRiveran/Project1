@@ -66,7 +66,7 @@ public class User implements Serializable{
         final User other = (User) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
-        }// es un mensaje pero no es mio, crea un usuario. haga un casteo para buscar el que lo envió, si no es igual  
+        }
         return true;
     }
 
