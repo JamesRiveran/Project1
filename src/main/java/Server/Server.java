@@ -1,4 +1,3 @@
-
 package Server;
 
 import Protocol.IService;
@@ -15,71 +14,71 @@ import java.util.List;
 import java.util.Collections;
 
 public class Server {
-    ServerSocket srv;
-    List<Worker> workers; 
-    
+
+    private ServerSocket srv;
+    private List<Worker> workers;
+
     public Server() {
         try {
-            srv = new ServerSocket(ProtocolData.PORT);
-            //workers se encarga del cliente, es lo que tengo que atender para atender las solicitudes del cliente. Es un hilo
-            workers =  Collections.synchronizedList(new ArrayList<Worker>());
-            System.out.println("Servidor iniciado...");//Está listo para atender solicitudes
+            srv = new ServerSocket(ProtocolData.PORT +1);
+            workers = Collections.synchronizedList(new ArrayList<>());
+            System.out.println("Servidor iniciado..."); // Está listo para atender solicitudes
         } catch (IOException ex) {
-            
+            ex.printStackTrace();
         }
     }
-    
-    public void run(){
+
+    public void run() {
         IService service = new Service();
 
-        boolean continuar = true;
-        ObjectInputStream in=null;
-        ObjectOutputStream out=null;
-        Socket skt=null;
-        while (continuar) { //Se enclicla esperan a que llegue Datos, garantiza que el hilo escuche siempre
-            try {
-                skt = srv.accept();
-                //Limpiar entrada y salida del socket
-                in = new ObjectInputStream(skt.getInputStream());
-                out = new ObjectOutputStream(skt.getOutputStream() );
-                System.out.println("Conexion Establecida...");//Alguien que quiere comunicación
-                User user=this.login(in,out,service);                          
-                Worker worker = new Worker(this,in,out,user, service); 
-                workers.add(worker);                      
-                worker.start();                                                
-            }
-            catch (IOException | ClassNotFoundException ex) {}
-            catch (Exception ex) {
-                try {
-                    out.writeInt(ProtocolData.ERROR_LOGIN);
-                    out.flush();
-                    skt.close();
-                } catch (IOException ex1) {}
-               System.out.println("Conexion cerrada...");
+        while (!srv.isClosed()) {
+            try (Socket skt = srv.accept(); ObjectInputStream in = new ObjectInputStream(skt.getInputStream()); ObjectOutputStream out = new ObjectOutputStream(skt.getOutputStream())) {
+
+                System.out.println("Conexion Establecida..."); // Alguien que quiere comunicación
+                User user = this.login(in, out, service);
+                Worker worker = new Worker(this, in, out, user, service);
+                workers.add(worker);
+                worker.start();
+
+            } catch (IOException | ClassNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
     }
-    
-    private User login(ObjectInputStream in,ObjectOutputStream out,IService service) throws IOException, ClassNotFoundException, Exception{
+
+    private User login(ObjectInputStream in, ObjectOutputStream out, IService service) throws IOException, ClassNotFoundException, Exception {
         int method = in.readInt();
-        if (method!=ProtocolData.LOGIN) throw new Exception("Should login first");
-        User user=(User)in.readObject();                          
-        user=service.login(user);
+        if (method != ProtocolData.LOGIN) {
+            throw new Exception("Should login first");
+        }
+        User user = (User) in.readObject();
+        user = service.login(user);
         out.writeInt(ProtocolData.ERROR_NO_ERROR);
         out.writeObject(user);
         out.flush();
         return user;
     }
-    
-    public void deliver(Message message){//Como receta, no se modifica.
-        for(Worker wk:workers){
-            wk.deliver(message);
-        }        
-    } 
-    
-    public void remove(User u){
-        for(Worker wk:workers) if(wk.user.equals(u)){workers.remove(wk);break;}
+
+    public void deliver(Message message) {
+        synchronized (workers) {
+            workers.forEach(wk -> wk.deliver(message));
+        }
+    }
+
+    public void remove(User u) {
+        synchronized (workers) {
+            workers.removeIf(wk -> wk.user.equals(u));
+        }
         System.out.println("Quedan: " + workers.size());
     }
-    
+
+    public void stop() {
+        try {
+            srv.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
