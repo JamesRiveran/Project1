@@ -8,6 +8,8 @@ import Data.BDCalibration;
 import Data.BDInstrument;
 import Data.BDTypeInstrument;
 import static Presentation.Controller.ViewController.showMessage;
+import Protocol.Message;
+import Protocol.User;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;

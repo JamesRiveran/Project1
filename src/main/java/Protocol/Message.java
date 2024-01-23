@@ -1,17 +1,20 @@
 package Protocol;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
-public class Message implements Serializable{
-    User sender;
-    String message;
+public class Message implements Serializable {
+    private User sender;
+    private String message;
+    private String[] data;
 
     public Message() {
     }
 
-    public Message(User sender,String message) {
+    public Message(User sender, String message, String[] data) {
         this.sender = sender;
         this.message = message;
+        this.data = data;
     }
 
     public User getSender() {
@@ -29,5 +32,21 @@ public class Message implements Serializable{
     public void setMessage(String message) {
         this.message = message;
     }
-    
+
+    public String[] getData() {
+        return data;
+    }
+
+    public void setData(String[] data) {
+        this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "sender=" + sender +
+                ", message='" + message + '\'' +
+                ", data=" + Arrays.toString(data) +
+                '}';
+    }
 }

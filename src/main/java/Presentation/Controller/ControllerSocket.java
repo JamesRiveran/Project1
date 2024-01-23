@@ -19,12 +19,12 @@ public class ControllerSocket {
     Modulo view;
     SocketModel model;
     
-    ServiceProxy localService;
+    private ServiceProxy localService;
     
     public ControllerSocket(Modulo view, SocketModel model) {
         this.view = view;
         this.model = model;
-        localService = (ServiceProxy)ServiceProxy.instance();
+        localService = (ServiceProxy) ServiceProxy.instance();
         localService.setController(this);
         view.setControllerSocket(this);
         view.setSocketModel(model);

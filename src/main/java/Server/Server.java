@@ -27,7 +27,7 @@ public class Server {
             ex.printStackTrace();
         }
     }
-
+    
     public void run() {
         IService service = new Service();
 

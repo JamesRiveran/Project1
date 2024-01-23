@@ -15,12 +15,16 @@ import Presentation_Model.InstrumentsList;
 import Presentation.View.Modulo;
 import Presentation_Model.SocketModel;
 import Protocol.Message;
+import Protocol.ProtocolData;
 import Protocol.User;
 import com.itextpdf.text.DocumentException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -151,7 +155,7 @@ public class ViewController extends Controller implements ActionListener {
             showMessage(viewError, ex.getMessage(), "error");
         }
     }
-
+ 
     @Override
     public void search() {
         ArrayList<InstrumentType> loadedList = data_logic.getAllRecordsTypeInstruments();
