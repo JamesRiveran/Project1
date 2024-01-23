@@ -9,26 +9,15 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Application {
-    
+
     public static void main(String[] args) {
-        try (
-            Socket socket = new Socket("127.0.0.1", ProtocolData.PORT + 1);
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-            ObjectInputStream in = new ObjectInputStream(socket.getInputStream())
-    ) {
-        // Crear un mensaje con tipo de instrumento y usuario
-        User user = new User("001", "001", "Juan");
-        String instrumentType = "TipoInstrumentoEjemplo";
-        Message message = new Message(user, instrumentType, null);
-
-        // Enviar el mensaje al servidor
-        out.writeObject(message);
-
-        // Recibir la respuesta del servidor
-        String response = (String) in.readObject();
-        System.out.println("Respuesta del servidor: " + response);
-    } catch (IOException | ClassNotFoundException e) {
-        e.printStackTrace();
-    }
+        try {
+            Server server = new Server();
+            server.run();
+        } catch (Exception e) {
+            // Manejo de excepciones
+            System.err.println("Error al iniciar el servidor: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
