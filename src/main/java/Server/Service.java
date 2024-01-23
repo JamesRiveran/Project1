@@ -1,20 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Server;
 
+import Presentation_Model.Data;
 import Protocol.IService;
 import Protocol.Message;
 import Protocol.User;
 
-/**
- *
- * @author james
- */
+
 public class Service implements IService{
-    
+
     private Data data;
+    
     public Service() {
         data =  new Data();
     }

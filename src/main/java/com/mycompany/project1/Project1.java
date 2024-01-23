@@ -19,7 +19,5 @@ public class Project1 {
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
         Presentation.Controller.ViewController view = new ViewController();
         view.start();
-        
-
     }
 }

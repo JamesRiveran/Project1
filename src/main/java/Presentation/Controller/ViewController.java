@@ -44,12 +44,13 @@ public class ViewController extends Controller implements ActionListener {
     protected Modulo viewError;
     Data_logic data_logic;
     boolean update = false;
-    
+    SocketModel socketModel;
 
     public ViewController() throws ParserConfigurationException, SAXException {
 
         this.listInstrument = new InstrumentsList();
         this.view = new Modulo();
+        this.socketModel = new SocketModel();
         this.calibrationController = new CalibrationController(this.view);
         this.intrumentsController = new IntrumentsController(this.view);
         intrumentsController.setInstruSelectionListener(calibrationController);
@@ -57,6 +58,7 @@ public class ViewController extends Controller implements ActionListener {
         clickTable();
         updateTable();
         this.view.setViewController(this);
+        ControllerSocket controller =new ControllerSocket(view, socketModel);
        
     }
 

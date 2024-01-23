@@ -1,19 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package Server;
+package Presentation_Model;
+
 
 import Protocol.User;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author james
- */
 public class Data {
-      private List<User> users;
+    private List<User> users;
 
     public Data() {
         users = new ArrayList<>();

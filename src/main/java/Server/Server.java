@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Server;
 
 import Protocol.IService;
@@ -14,13 +11,9 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Collections;
 
-/**
- *
- * @author james
- */
 public class Server {
     ServerSocket srv;
     List<Worker> workers; 

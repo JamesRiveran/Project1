@@ -1,15 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Protocol;
 
-/**
- *
- * @author james
- */
-public class Message {
-     User sender;
+import java.io.Serializable;
+
+public class Message implements Serializable{
+    User sender;
     String message;
 
     public Message() {
@@ -35,4 +29,5 @@ public class Message {
     public void setMessage(String message) {
         this.message = message;
     }
+    
 }
