@@ -146,7 +146,7 @@ public final class IntrumentsController extends Controller {
     public void informationForXml() {
         listModulo2.getList().clear();
         listName = data_logic.getAllRecordsTypeInstruments();
-        String code = "";
+        String code = "";   
         for (InstrumentType name : listName) {
             if (view.getCmbType().getSelectedItem().toString().equals(name.getName())) {
                 code = name.getCode();

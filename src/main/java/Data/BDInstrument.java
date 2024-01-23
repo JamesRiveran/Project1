@@ -24,7 +24,7 @@ public class BDInstrument {
         ArrayList<InstrumentModulo2> instrumentList = new ArrayList<>();
         try {
             conexion.setConexion();
-            conexion.setConsulta("SELECT * FROM instrument");
+            conexion.setConsulta("SELECT *,name FROM bd_laboratorio.instrument JOIN bd_laboratorio.instrumenttype ON instrument.idTypeInstrument = instrumenttype.code");
             resultado = conexion.getResultado();
 
             while (resultado.next()) {
@@ -34,7 +34,7 @@ public class BDInstrument {
                 instrumentType.setTole(resultado.getString(3));
                 instrumentType.setDescri(resultado.getString(4));
                 instrumentType.setMaxi(resultado.getString(5));
-                instrumentType.setType(resultado.getString(6));
+                instrumentType.setType(resultado.getString("name"));
                 instrumentList.add(instrumentType);
             }
 
@@ -45,18 +45,17 @@ public class BDInstrument {
         return instrumentList;
     }
 
-    public void saveInstrument(String serie, String mini, String tole, String descri, String maxi, String type, String idIntrymentType) {
+    public void saveInstrument(String serie, String mini, String tole, String descri, String maxi, String idIntrymentType) {
         try {
 
             conexion.setConexion();
-            conexion.setConsulta("INSERT INTO instrument (serie, mini, tole,descri,maxi,type,idTypeInstrument) VALUES (?, ?,?,?, ?,?,?)");
+            conexion.setConsulta("INSERT INTO instrument (serie, mini, tole,descri,maxi,idTypeInstrument) VALUES (?, ?,?,?, ?,?)");
             conexion.getConsulta().setString(1, serie);
             conexion.getConsulta().setString(2, mini);
             conexion.getConsulta().setString(3, tole);
             conexion.getConsulta().setString(4, descri);
             conexion.getConsulta().setString(5, maxi);
-            conexion.getConsulta().setString(6, type);
-            conexion.getConsulta().setString(7, idIntrymentType);
+            conexion.getConsulta().setString(6, idIntrymentType);
 
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva
@@ -95,7 +94,7 @@ public class BDInstrument {
         }
     }
 
-    public String saveOrUpdateInstrument(String serie, String mini, String tole, String descri, String maxi, String type, String idIntrymentType) {
+    public String saveOrUpdateInstrument(String serie, String mini, String tole, String descri, String maxi, String idIntrymentType) {
         try {
             conexion.setConexion();
             conexion.setConsulta("SELECT * FROM instrument WHERE serie=?");
@@ -104,12 +103,12 @@ public class BDInstrument {
 
             if (resultSet.next()) {
                 // El registro existe, entonces actualiza los valores
-                updateInstrument(serie, mini, tole, descri, maxi, type);
+                updateInstrument(serie, mini, tole, descri, maxi,idIntrymentType);
                 return "Actualizado exitosamente";
             } else {
 
                 // El registro no existe, entonces crea un nuevo registro
-                saveInstrument(serie, mini, tole, descri, maxi, type, idIntrymentType);
+                saveInstrument(serie, mini, tole, descri, maxi, idIntrymentType);
                 return "Guardado exitosamente";
 
             }
@@ -120,15 +119,15 @@ public class BDInstrument {
         }
     }
 
-    public void updateInstrument(String serie, String mini, String tole, String descri, String maxi, String type) {
+    public void updateInstrument(String serie, String mini, String tole, String descri, String maxi,String idType) {
         try {
             conexion.setConexion();
-            conexion.setConsulta("UPDATE instrument SET mini=?, tole=?, descri=?, maxi=?, type=? WHERE serie=?");
+            conexion.setConsulta("UPDATE instrument SET mini=?, tole=?, descri=?, maxi=?,idTypeInstrument=? WHERE serie=?");
             conexion.getConsulta().setString(1, mini);
             conexion.getConsulta().setString(2, tole);
             conexion.getConsulta().setString(3, descri);
             conexion.getConsulta().setString(4, maxi);
-            conexion.getConsulta().setString(5, type);
+            conexion.getConsulta().setString(5, idType);
             conexion.getConsulta().setString(6, serie);
 
             if (conexion.getConsulta().executeUpdate() > 0) {

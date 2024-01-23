@@ -66,7 +66,7 @@ public class Data_logic {
         try {
             for (InstrumentModulo2 instru : instrumentListModulo2) {
                 if (!InstrumentsModulo2.instrumentTypeExists(instru.getSerie()) || update) {
-                    String response = InstrumentsModulo2.saveOrUpdateInstrument(instru.getSerie(), instru.getMini(), instru.getTole(), instru.getDescri(), instru.getMaxi(), instru.getType(), idIntrymentType);
+                    String response = InstrumentsModulo2.saveOrUpdateInstrument(instru.getSerie(), instru.getMini(), instru.getTole(), instru.getDescri(), instru.getMaxi(), idIntrymentType);
                     showMessage(parent, response, "success");
                 } else {
                     showMessage(parent, "Ya existe esa serie", "error");
