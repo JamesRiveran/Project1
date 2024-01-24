@@ -6,6 +6,7 @@ package Data;
 
 import static Presentation.Controller.ViewController.showMessage;
 import Logic.InstrumentType;
+import Logic.UnidsType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -21,17 +22,42 @@ public class BDTypeInstrument {
     ConexionBD conexion = new ConexionBD();
     ResultSet resultado = null;
 
+    public ArrayList<UnidsType> getAllRecordsOfUnits() {
+        ArrayList<UnidsType> unids = new ArrayList<>();
+        try {
+            conexion.setConexion();
+            conexion.setConsulta("SELECT * FROM unidadmedida");
+            resultado = conexion.getResultado();
+
+            while (resultado.next()) {
+                UnidsType unidsType = new UnidsType();
+                unidsType.setIdUnid(Integer.parseInt(resultado.getString(1)));
+                unidsType.setName(resultado.getString(2));
+                unidsType.setSimbol(resultado.getString(3));
+                unids.add(unidsType);
+            }
+
+            conexion.cerrarConexion();
+        } catch (SQLException error) {
+            error.printStackTrace();
+        }
+        return unids;
+    }
+
     public ArrayList<InstrumentType> getAllRecords() {
         ArrayList<InstrumentType> instrumentList = new ArrayList<>();
         try {
             conexion.setConexion();
-            conexion.setConsulta("SELECT * FROM instrumenttype");
+            conexion.setConsulta("   SELECT instrumenttype.*,unidadmedida.name,unidadmedida.simbol FROM bd_laboratorio.instrumenttype JOIN bd_laboratorio.unidadmedida ON instrumenttype.idUnidadMedida = unidadmedida.idUnidadMedida");
+
             resultado = conexion.getResultado();
 
             while (resultado.next()) {
                 InstrumentType instrumentType = new InstrumentType();
                 instrumentType.setCode(String.valueOf(resultado.getString(1)));
-                instrumentType.setUnit(resultado.getString(2));
+                String unitName = resultado.getString("unidadmedida.name");
+                String unitSymbol = resultado.getString("simbol");
+                instrumentType.setUnit(unitName + " " + "("+unitSymbol+")");
                 instrumentType.setName(resultado.getString(3));
                 instrumentList.add(instrumentType);
             }
@@ -43,12 +69,12 @@ public class BDTypeInstrument {
         return instrumentList;
     }
 
-    public void saveTypeOfInstrument(String code, String unit, String name) {
+    public void saveTypeOfInstrument(String code, String idUnidadMedida, String name) {
         try {
             conexion.setConexion();
-            conexion.setConsulta("INSERT INTO InstrumentType (code, unit, name) VALUES (?, ?,?)");
+            conexion.setConsulta("INSERT INTO InstrumentType (code, idUnidadMedida, name) VALUES (?, ?,?)");
             conexion.getConsulta().setString(1, code);
-            conexion.getConsulta().setString(2, unit);
+            conexion.getConsulta().setString(2, idUnidadMedida);
             conexion.getConsulta().setString(3, name);
 
             if (conexion.getConsulta().executeUpdate() > 0) {
@@ -109,11 +135,11 @@ public class BDTypeInstrument {
         }
     }
 
-    public void updateRecord(String code, String unit, String name) {
+    public void updateRecord(String code, String idUnidadMedida, String name) {
         try {
             conexion.setConexion();
-            conexion.setConsulta("UPDATE instrumenttype SET unit=?, name=? WHERE code=?");
-            conexion.getConsulta().setString(1, unit);
+            conexion.setConsulta("UPDATE instrumenttype SET idUnidadMedida=?, name=? WHERE code=?");
+            conexion.getConsulta().setString(1, idUnidadMedida);
             conexion.getConsulta().setString(2, name);
             conexion.getConsulta().setString(3, code);
 

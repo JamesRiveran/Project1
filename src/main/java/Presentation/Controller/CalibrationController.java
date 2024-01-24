@@ -5,7 +5,6 @@
  */
 package Presentation.Controller;
 
-import Data.BDMeasurement;
 import Logic.Calibration;
 import Logic.CalibrationList;
 import Logic.ColorCelda;
@@ -16,6 +15,7 @@ import Logic.Measurement;
 import Presentation.View.Modulo;
 import com.itextpdf.text.DocumentException;
 import com.toedter.calendar.JDateChooser;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -40,7 +41,7 @@ import org.xml.sax.SAXException;
  *
  * @author james
  */
-public class CalibrationController extends Controller implements ActionListener, InstruSelectionListener {
+public class CalibrationController extends Controller implements InstruSelectionListener {
 
     String serie;
     String min;
@@ -55,13 +56,20 @@ public class CalibrationController extends Controller implements ActionListener,
     public String serieInstrument = "";
     Data_logic data_logic;
     boolean update = false;
+    Color colorOriginal;
+    String default_label;
+    int confirmResult;
 
-    public CalibrationController(Modulo view) {
-        this.view = view;
+    public CalibrationController(Modulo views) {
+        this.view = views;
         this.data_logic = new Data_logic();
+        view.getCalibrationBtnDelete().setEnabled(false);
+        colorOriginal = view.getCalibrationBtnDelete().getBackground();
         this.view.setCalibrationController(this);
         this.calibrationList = new CalibrationList();
         this.number = "0";
+        default_label = view.getLbNombreInstru().getText();
+        clickTable();
 
     }
 
@@ -112,12 +120,11 @@ public class CalibrationController extends Controller implements ActionListener,
                     calibrationList.getList().add(newCalibration);
                     data_logic.saveCali(calibrationList.getList(), serie, view, update);
                     updateTable();
-
                     List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max), Integer.parseInt(min));
+
                     data_logic.saveMeasure(measurements, view);
 
                     view.getCalibrationTxtNumber().setText(String.valueOf(data_logic.getId()));
-                    updateTableMeasurement();
 
                     clean();
                 } catch (Exception ex) {
@@ -132,6 +139,9 @@ public class CalibrationController extends Controller implements ActionListener,
     @Override
     public void clean() {
         update = false;
+        DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
+        view.getCalibrationBtnDelete().setEnabled(false);
+        view.getCalibrationBtnDelete().setBackground(colorOriginal);
         view.getCalibrationDateChooser().setDate(null);
         view.getCalibrationTxtMeasurement().setText("");
         view.getCalibrationDateChooser().setEnabled(true);
@@ -139,12 +149,17 @@ public class CalibrationController extends Controller implements ActionListener,
         String id = "";
         id = String.valueOf(data_logic.getId());
         view.getCalibrationTxtNumber().setText(id);
+        clearTable(tableModel);
+
     }
 
     @Override
     public void search() {
-        String searchNumber = view.getTxtNumberSearch().getText();
-        filterByNumber(searchNumber);
+        if (pass == true) {
+            String searchNumber = view.getTxtNumberSearch().getText();
+            filterByNumber(searchNumber);
+        }
+
     }
 
     @Override
@@ -182,12 +197,21 @@ public class CalibrationController extends Controller implements ActionListener,
         int columna2 = 2;  // Columna 2
         int columna3 = 3;  // Columna 3
         int columnaReference = 1;
+        int contadorFilasEnColumna = 0;
+        int tolerance = Integer.parseInt(tolerancia);
+
         DefaultTableModel modelo = (DefaultTableModel) view.getTblMeasurement().getModel();
         int rowCount = modelo.getRowCount();
         List<String> datosColumna = new ArrayList<>();
         List<String> datosColumnaId = new ArrayList<>();
 
-        int tolerance = Integer.parseInt(tolerancia);
+        for (int i = 0; i < rowCount; i++) {
+            Object valorCelda = modelo.getValueAt(i, columna2);
+            if (valorCelda != null) {
+                contadorFilasEnColumna++;
+            }
+        }
+
         for (int fila = 0; fila < rowCount; fila++) {
 
             Object valorCelda0 = modelo.getValueAt(fila, columna0);
@@ -208,7 +232,9 @@ public class CalibrationController extends Controller implements ActionListener,
                 String textoCelda3 = (valorCelda3 != null) ? valorCelda3.toString() : "";
 
                 if (intTextoCelda > validation || intTextoCelda < validationFew) {
-                    viewController.showMessage(view, "Lectura fuera de rango, ingrese otra lectura", "error");
+                    if ((rowCount - 1) == fila) {
+                        viewController.showMessage(view, "Lectura fuera de rango, ingrese otra lectura", "error");
+                    }
 
                     final int finalFila = fila;
 
@@ -221,23 +247,19 @@ public class CalibrationController extends Controller implements ActionListener,
                             modelo.fireTableCellUpdated(finalFila, columna2);
                         }
                     });
+                }
+                DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
+                datosColumna.add(textoCelda);
+                datosColumnaId.add(textoCelda0);
+                data_logic.updateReading(datosColumna, datosColumnaId, textoCelda3, view);
+                view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
 
-                    break;
-                } else {
-                    DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
-                    datosColumna.add(textoCelda);
-                    datosColumnaId.add(textoCelda0);
-                    data_logic.updateReading(datosColumna, datosColumnaId, textoCelda3, view);
-                    view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
-
-                    if ((rowCount - 1) == fila) {
-                        viewController.showMessage(view, "Guardados con exito", "success");
-                    }
-
+                if ((rowCount - 1) == fila) {
+                    viewController.showMessage(view, "Guardados con exito", "success");
                 }
 
             } else {
-                if ((rowCount - 1) == fila || (rowCount - 2) == fila || (rowCount - 3) == fila) {
+                if (fila >= (rowCount - contadorFilasEnColumna) && fila < rowCount) {
                     viewController.showMessage(view, "Sin lecturas registradas", "error");
                 }
                 break;
@@ -263,29 +285,19 @@ public class CalibrationController extends Controller implements ActionListener,
         return formatoFecha.format(fechaSeleccionada);
     }
 
-    private int idMedicion() throws SAXException, ParserConfigurationException, TransformerException, IOException {
-        return 1;//Esto debemos arreglarlo
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
-
     public List<Measurement> generateMeasurements(int numMeasurements, int maxValue, int minValue) throws IOException, SAXException, ParserConfigurationException, TransformerException {
         if (numMeasurements <= 0 || maxValue <= 0) {
             throw new IllegalArgumentException("La cantidad de mediciones y el valor máximo deben ser mayores que cero.");
         }
-
         List<Measurement> measurements = new ArrayList<>();
         int step = maxValue / numMeasurements;
         int currentReference = minValue;
         int newIdMedicion = 0;
         for (int i = 1; i <= numMeasurements; i++) {
-            double medida = i;
+            int medida = i;
             int referencia = currentReference;
             String lectura = ""; // Inicializar lectura como 0
-            newIdMedicion = idMedicion();
+            newIdMedicion += 1;
 
             Measurement measurement = new Measurement(view.getCalibrationTxtNumber().getText(), medida, referencia, lectura, newIdMedicion);
             measurements.add(measurement);
@@ -329,6 +341,9 @@ public class CalibrationController extends Controller implements ActionListener,
                         view.getCalibrationTxtNumber().setEnabled(false);
                         view.getCalibrationDateChooser().setEnabled(false);
                         view.getCalibrationTxtMeasurement().setEnabled(false);
+                        view.getCalibrationBtnDelete().setEnabled(true);
+                        view.getCalibrationBtnDelete().setBackground(Color.RED);
+
                         updateTableMeasurement();
 
                     }
@@ -403,38 +418,52 @@ public class CalibrationController extends Controller implements ActionListener,
 
     @Override
     public void delete() {
-        DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
-        String serie = getSerieInstrument();
-        int number = Integer.parseInt(view.getCalibrationTxtNumber().getText());
-        data_logic.deleted(String.valueOf(number));
-        data_logic.deletedCali(number, view);
-        updateTable();
-        clearTable(tableModel);
+
+        confirmResult = JOptionPane.showConfirmDialog(view, "Corrabora si no hay mediciones importantes hechas!\nSe borrarán las mediciones de esta calibración.\n¿Deseas continuar?", "Confirmar", JOptionPane.YES_NO_OPTION);
+
+        if (confirmResult == JOptionPane.YES_OPTION) {
+            DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
+            String serie = getSerieInstrument();
+            int number = Integer.parseInt(view.getCalibrationTxtNumber().getText());
+            data_logic.deleted(String.valueOf(number));
+            data_logic.deletedCali(number, view);
+            updateTable();
+            clearTable(tableModel);
+        }
+
     }
 
     @Override
     public void onInstruSelected(String serie, String tolerancia, String descri, String mini, String max, boolean pass) {
-        view.getLbNombreInstru().setText(serie + " - " + descri + " (" + mini + "-" + max + ") - " + "Tolerancia: " + tolerancia);
-        this.serie = serie;
-        this.tolerancia = tolerancia;
-        this.max = max;
-        this.pass = true;
+        this.pass = pass;
+        if (pass == false) {
+            view.getLbNombreInstru().setText(default_label);
+            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+            tableModel.setRowCount(0);
+        } else {
+            view.getLbNombreInstru().setText(serie + " - " + descri + " (" + mini + " a " + max + "),  " + "Tolerancia: " + tolerancia);
+            this.serie = serie;
+            this.tolerancia = tolerancia;
+            this.max = max;
+            this.min = mini;
 
-        setSerieInstrument(serie);
+            setSerieInstrument(serie);
 
-        CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
-        DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
-        tableModel.setRowCount(0);
-        listCalibrations = data_logic.getAllRecordsCalibration();
+            CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
+            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+            tableModel.setRowCount(0);
+            listCalibrations = data_logic.getAllRecordsCalibration();
 
-        for (Calibration calibracion : listCalibrations) {
-            if (String.valueOf(calibracion.getNumber()).equals(serie)) {
-                Object[] rowData = {calibracion.getId(), calibracion.getDate(), calibracion.getMeasurement()};
-                tableModel.addRow(rowData);
+            for (Calibration calibracion : listCalibrations) {
+                if (String.valueOf(calibracion.getNumber()).equals(serie)) {
+                    Object[] rowData = {calibracion.getId(), calibracion.getDate(), calibracion.getMeasurement()};
+                    tableModel.addRow(rowData);
+                }
             }
+            DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
+            clearTable(tableModels);
         }
-        DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
-        clearTable(tableModels);
+
     }
 
 }

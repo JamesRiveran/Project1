@@ -10,7 +10,7 @@ package Logic;
  */
 public class Measurement {
 
-    private double id;
+    private int id;
     private String code,reading;
     private int idMeasure, reference;
 
@@ -22,7 +22,7 @@ public class Measurement {
         this.idMeasure = 0;
     }
 
-    public Measurement(String code, double id, int reference, String reading, int idMeasure) {
+    public Measurement(String code, int id, int reference, String reading, int idMeasure) {
         this.code = code;
         this.id = id;
         this.reference = reference;
@@ -46,11 +46,11 @@ public class Measurement {
         return code;
     }
 
-    public double getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(double id) {
+    public void setId(int id) {
         this.id = id;
     }
 

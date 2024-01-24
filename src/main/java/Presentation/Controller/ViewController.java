@@ -5,14 +5,15 @@
  */
 package Presentation.Controller;
 
-import Data.BDCalibration;
 import Logic.Data_logic;
 import Logic.GeneratorPDF;
 import static Logic.GeneratorPDF.loadTypeOfInstrument;
 import Logic.InstrumentType;
 import Logic.InstrumentsList;
+import Logic.UnidsType;
 import Presentation.View.Modulo;
 import com.itextpdf.text.DocumentException;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -20,6 +21,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -34,21 +37,27 @@ public class ViewController extends Controller implements ActionListener {
 
     InstrumentsList listInstrument;
     private ArrayList<InstrumentType> ListOfIModu1o1;
+    private ArrayList<UnidsType> ListOfUnids;
     CalibrationController calibrationController;
     IntrumentsController intrumentsController;
     static Modulo view;
     protected Modulo viewError;
     Data_logic data_logic;
     boolean update = false;
+    int confirmResult;
+    Color colorOriginal;
 
     public ViewController() throws ParserConfigurationException, SAXException {
-
         this.listInstrument = new InstrumentsList();
         this.view = new Modulo();
+        colorOriginal = view.getBtnDelete().getBackground();
+        view.getBtnDelete().setEnabled(false);
+
         this.calibrationController = new CalibrationController(this.view);
         this.intrumentsController = new IntrumentsController(this.view);
         intrumentsController.setInstruSelectionListener(calibrationController);
         this.data_logic = new Data_logic();
+        updateComboBoxModelUnids();
         clickTable();
         updateTable();
         this.view.setViewController(this);
@@ -86,6 +95,25 @@ public class ViewController extends Controller implements ActionListener {
 
     }
 
+    public void updateComboBoxModelUnids() throws ParserConfigurationException, SAXException {
+        ListOfUnids = data_logic.getAllRecordsTypeUnids();
+        if (view != null) {
+            JComboBox<String> cmbUnid = view.getCmbUnit();
+
+            if (cmbUnid != null) {
+                DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+
+                // Agrega los elementos de listName al modelo del JComboBox
+                for (UnidsType name : ListOfUnids) {
+                    comboBoxModel.addElement(name.getName() + " " + "(" + name.getSimbol() + ")");
+                }
+
+                // Establece el modelo en el JComboBox cmbUnids
+                cmbUnid.setModel(comboBoxModel);
+            }
+        }
+    }
+
     public static void showMessage(JFrame parent, String message, String info) {
         if (info == "error") {
             JOptionPane.showMessageDialog(parent, message, "Validación", JOptionPane.ERROR_MESSAGE);
@@ -111,6 +139,16 @@ public class ViewController extends Controller implements ActionListener {
         }
     }
 
+    public static String getContentOutsideParentheses(String texto) {
+        int inicioParentesis = texto.indexOf('(');
+
+        if (inicioParentesis != -1) {
+            return texto.substring(0, inicioParentesis).trim();
+        } else {
+            return texto.trim(); // Si no hay paréntesis, se devuelve el texto original
+        }
+    }
+
     @Override
     public void save() {
         try {
@@ -118,23 +156,33 @@ public class ViewController extends Controller implements ActionListener {
                 showMessage(viewError, "Debe ingresar el código del instrumento", "error");
             } else if (view.getTxtName().getText().trim().isEmpty()) {
                 showMessage(viewError, "Debe ingresar todos los espacios", "error");
-            } else if (view.getTxtUnit().getText().trim().isEmpty()) {
-                showMessage(viewError, "Debe ingresar la unidad de medida del instrumento", "error");
             } else {
-                try {
-                    // Actualizar <Instrumento>
-                    String code = view.getTxtCode().getText();
-                    String unit = view.getTxtUnit().getText();
-                    String newName = view.getTxtName().getText();
-                    InstrumentType instrument = new InstrumentType(code, unit, newName);
-                    listInstrument.getList().add(instrument);
-                    data_logic.saveOrUpdateInstruments(listInstrument.getList(), view,update);
-                    listInstrument.getList().clear();
-                    updateTable();
-                    intrumentsController.updateComboBoxModel();
-                    clean();
-                } catch (Exception ex) {
-                    showMessage(viewError, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
+                if (!update) {
+                    confirmResult = JOptionPane.showConfirmDialog(view, "¿Estas seguro que la unidad es la correcta para el instrumento?", "Confirmar", JOptionPane.YES_NO_OPTION);
+
+                } else {
+                    confirmResult = JOptionPane.showConfirmDialog(view, "Si cambia los datos debe revisar si se hicieron calibraciones y medciones ya que se cambiara la informacion y los datos hechos ya no serán confiables,¿Deseas continuar?", "Confirmar", JOptionPane.YES_NO_OPTION);
+                }
+
+                if (confirmResult == JOptionPane.YES_OPTION) {
+                    try {
+                        // Actualizar <Instrumento>
+                        String code = view.getTxtCode().getText();
+                        int unit = view.getCmbUnit().getSelectedIndex();
+                        String newName = view.getTxtName().getText();
+                        InstrumentType instrument = new InstrumentType(code, String.valueOf(unit + 1), newName);
+                        listInstrument.getList().add(instrument);
+                        data_logic.saveOrUpdateInstruments(listInstrument.getList(), view, update);
+                        listInstrument.getList().clear();
+                        updateTable();
+                        intrumentsController.updateComboBoxModel();
+                        clean();
+                    } catch (Exception ex) {
+                        showMessage(viewError, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
+                    }
+                } else {
+                    // El usuario seleccionó "No"
+                    // Puedes realizar alguna acción adicional o simplemente no hacer nada
                 }
             }
         } catch (NullPointerException ex) {
@@ -201,11 +249,25 @@ public class ViewController extends Controller implements ActionListener {
             String instrumentName = view.getTblListInstruments().getValueAt(rowSelected, 1).toString();
             String unitName = view.getTblListInstruments().getValueAt(rowSelected, 2).toString();
 
+            int selectedIndex = -1;
+
+            for (int i = 0; i < view.getCmbUnit().getItemCount(); i++) {
+                String comboBoxItem = view.getCmbUnit().getItemAt(i).toString();
+
+                if (unitName.equalsIgnoreCase(getContentOutsideParentheses(comboBoxItem))) {
+                    selectedIndex = i;
+                    view.getCmbUnit().setSelectedIndex(i);
+                    break;
+                }
+            }
+
             view.getTxtCode().setText(codeName);
             view.getTxtName().setText(instrumentName);
-            view.getTxtUnit().setText(unitName);
+            view.getCmbUnit().setSelectedItem(unitName);
             view.getTxtCode().setEnabled(false);
             view.getBtnDelete().setEnabled(true);
+            view.getBtnDelete().setBackground(Color.RED);
+
         }
     }
 
@@ -243,7 +305,7 @@ public class ViewController extends Controller implements ActionListener {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editRegister(evt);
-                update=true;
+                update = true;
             }
         });
         return true;
@@ -252,12 +314,19 @@ public class ViewController extends Controller implements ActionListener {
 
     @Override
     public void clean() {
-        update=false;
-        view.getBtnDelete().setEnabled(false);
-        view.getTxtCode().setEnabled(true);
-        view.getTxtCode().setText("");
-        view.getTxtName().setText("");
-        view.getTxtUnit().setText("");
+        try {
+            update = false;
+            view.getBtnDelete().setEnabled(false);
+            view.getBtnDelete().setBackground(colorOriginal);
+            view.getTxtCode().setEnabled(true);
+            view.getTxtCode().setText("");
+            view.getTxtName().setText("");
+            updateComboBoxModelUnids();
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void close() {

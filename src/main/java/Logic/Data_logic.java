@@ -34,7 +34,7 @@ public class Data_logic {
         try {
             for (InstrumentType instru : instrumentList) {
                 if (!dbConnection.instrumentTypeExists(instru.getCode()) || update) {
-                    String response = dbConnection.saveOrUpdateInstrument(instru.getCode(), instru.getUnit(), instru.getName());
+                    String response = dbConnection.saveOrUpdateInstrument(instru.getCode(), String.valueOf(instru.getUnit()), instru.getName());
                     showMessage(parent, response, "success");
                 } else {
                     showMessage(parent, "Ya existe ese codigo", "error");
@@ -60,6 +60,11 @@ public class Data_logic {
 
     public ArrayList<InstrumentType> getAllRecordsTypeInstruments() {
         return dbConnection.getAllRecords();
+    }
+    
+    
+       public ArrayList<UnidsType> getAllRecordsTypeUnids() {
+        return dbConnection.getAllRecordsOfUnits();
     }
 
     public void saverOrUpadateInstruModulo2(List<InstrumentModulo2> instrumentListModulo2, String idIntrymentType, JFrame parent, boolean update) {
@@ -124,7 +129,6 @@ public class Data_logic {
     public void saveMeasure(List<Measurement> measurements, JFrame parent) {
         try {
             String response = measurement.saveMeasurement(measurements);
-            showMessage(parent, response, "success");
         } catch (Exception ex) {
             throw new BusinessException("Error en la lógica de negocio: " + ex.getMessage());
         }
@@ -133,7 +137,6 @@ public class Data_logic {
     public void updateReading(List<String> readings, List<String> id, String idToUpdate, JFrame parent) {
         try {
             String response = measurement.updateReading(readings, id, idToUpdate);
-            showMessage(parent, response, "success");
 
         } catch (Exception ex) {
             throw new BusinessException("Error en la lógica de negocio: " + ex.getMessage());

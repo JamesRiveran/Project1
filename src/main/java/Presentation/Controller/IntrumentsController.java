@@ -4,10 +4,6 @@
  */
 package Presentation.Controller;
 
-import Presentation.Controller.ViewController;
-import static Presentation.Controller.ViewController.showMessage;
-import Data.BDCalibration;
-import Data.BDInstrument;
 import Logic.Data_logic;
 import Logic.GeneratorPDF;
 import static Logic.GeneratorPDF.loadInstrument;
@@ -16,6 +12,7 @@ import Logic.InstrumentType;
 import Logic.IntrumentListModulo2;
 import Presentation.View.Modulo;
 import com.itextpdf.text.DocumentException;
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,11 +39,16 @@ public final class IntrumentsController extends Controller {
     static Modulo view;
     Data_logic data_logic;
     boolean update = false;
+    int confirmResult;
+    Color colorOriginal;
 
-    public IntrumentsController(Modulo view) throws ParserConfigurationException, SAXException {
+    public IntrumentsController(Modulo views) throws ParserConfigurationException, SAXException {
         this.listModulo2 = new IntrumentListModulo2();
-        this.view = view;
+        this.view = views;
         this.data_logic = new Data_logic();
+        colorOriginal = view.getBtnDeleteInstru().getBackground();
+        view.getBtnDeleteInstru().setEnabled(false);
+
         updateComboBoxModel();
         clickTable();
         updateTable();
@@ -69,9 +71,18 @@ public final class IntrumentsController extends Controller {
             } else if (Integer.parseInt(view.getTxtMini().getText()) > Integer.parseInt(view.getTxtMaxi().getText()) || Integer.parseInt(view.getTxtMini().getText()) == Integer.parseInt(view.getTxtMaxi().getText())) {
                 viewController.showMessage(view, "El minimo es mayor que el maximo o el tiene el mismo rango", "error");
             } else {
-                informationForXml();
-                updateTable();
-                clean();
+                if (!update) {
+                    confirmResult = JOptionPane.showConfirmDialog(view, "¿Esta seguro que la infromación ingresada sea la correcta?", "Confirmar", JOptionPane.YES_NO_OPTION);
+
+                } else {
+                    confirmResult = JOptionPane.showConfirmDialog(view, "Si cambia los datos debe revisar si se hicieron calibraciones y medciones ya que se cambiara la informacion y los datos hechos ya no serán confiables,¿Deseas continuar?", "Confirmar", JOptionPane.YES_NO_OPTION);
+                }
+
+                if (confirmResult == JOptionPane.YES_OPTION) {
+                    informationForXml();
+                    updateTable();
+                    clean();
+                }
             }
         } catch (Exception ex) {
             // Manejar la excepción (puedes imprimir el mensaje o realizar otras acciones)
@@ -100,6 +111,7 @@ public final class IntrumentsController extends Controller {
             view.getBtnDelete().setEnabled(false);
             view.getTxtSerie().setEnabled(true);
             view.getBtnDeleteInstru().setEnabled(false);
+            view.getBtnDeleteInstru().setBackground(colorOriginal);
             view.getTxtSerie().setText("");
             view.getTxtMini().setText("");
             view.getTxtTole().setText("");
@@ -108,6 +120,11 @@ public final class IntrumentsController extends Controller {
             updateComboBoxModel();
             updateTable();
             view.getCmbType().setSelectedIndex(0);
+            
+               if (instruSelectionListener != null) {
+                instruSelectionListener.onInstruSelected("", "", "", "", "", false);
+                
+            }
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
@@ -146,7 +163,7 @@ public final class IntrumentsController extends Controller {
     public void informationForXml() {
         listModulo2.getList().clear();
         listName = data_logic.getAllRecordsTypeInstruments();
-        String code = "";   
+        String code = "";
         for (InstrumentType name : listName) {
             if (view.getCmbType().getSelectedItem().toString().equals(name.getName())) {
                 code = name.getCode();
@@ -225,6 +242,7 @@ public final class IntrumentsController extends Controller {
             view.getCmbType().setSelectedItem(instru);
 
             view.getBtnDeleteInstru().setEnabled(true);
+            view.getBtnDeleteInstru().setBackground(Color.RED);
             if (instruSelectionListener != null) {
                 instruSelectionListener.onInstruSelected(serie, tole, descri, mini, maxi, true);
             }
