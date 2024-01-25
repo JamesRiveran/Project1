@@ -232,9 +232,6 @@ public class CalibrationController extends Controller implements InstruSelection
                 String textoCelda3 = (valorCelda3 != null) ? valorCelda3.toString() : "";
 
                 if (intTextoCelda > validation || intTextoCelda < validationFew) {
-                    if ((rowCount - 1) == fila) {
-                        viewController.showMessage(view, "Lectura fuera de rango, ingrese otra lectura", "error");
-                    }
 
                     final int finalFila = fila;
 
@@ -256,6 +253,8 @@ public class CalibrationController extends Controller implements InstruSelection
 
                 if ((rowCount - 1) == fila) {
                     viewController.showMessage(view, "Guardados con exito", "success");
+                    viewController.showMessage(view, "Lectura fuera de rango, ingrese otra lectura", "error");
+
                 }
 
             } else {
@@ -383,8 +382,8 @@ public class CalibrationController extends Controller implements InstruSelection
         for (int i = listCalibrations.size() - 1; i >= 0; i--) {
             Calibration newCalibration = listCalibrations.get(i);
             if (newCalibration.getNumber().equals(serie)) {
+                tableModel.insertRow(0, new Object[]{newCalibration.getId(), newCalibration.getDate(), newCalibration.getMeasuring()});
             }
-            tableModel.insertRow(0, new Object[]{newCalibration.getId(), newCalibration.getDate(), newCalibration.getMeasuring()});
         }
         clickTable();
     }
@@ -434,14 +433,14 @@ public class CalibrationController extends Controller implements InstruSelection
     }
 
     @Override
-    public void onInstruSelected(String serie, String tolerancia, String descri, String mini, String max, boolean pass) {
+    public void onInstruSelected(String serie, String tolerancia, String descri, String mini, String max, String simbol, boolean pass) {
         this.pass = pass;
         if (pass == false) {
             view.getLbNombreInstru().setText(default_label);
             DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
             tableModel.setRowCount(0);
         } else {
-            view.getLbNombreInstru().setText(serie + " - " + descri + " (" + mini + " a " + max + "),  " + "Tolerancia: " + tolerancia);
+            view.getLbNombreInstru().setText(serie + " - " + descri + " (" + mini + " " + simbol + " a " + max + " " + simbol + "),  " + "Tolerancia: " + tolerancia);
             this.serie = serie;
             this.tolerancia = tolerancia;
             this.max = max;
@@ -456,7 +455,8 @@ public class CalibrationController extends Controller implements InstruSelection
 
             for (Calibration calibracion : listCalibrations) {
                 if (String.valueOf(calibracion.getNumber()).equals(serie)) {
-                    Object[] rowData = {calibracion.getId(), calibracion.getDate(), calibracion.getMeasurement()};
+                    System.out.println(calibracion.toString());
+                    Object[] rowData = {calibracion.getId(), calibracion.getDate(), calibracion.getMeasuring()};
                     tableModel.addRow(rowData);
                 }
             }

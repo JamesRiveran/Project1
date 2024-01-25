@@ -13,6 +13,8 @@ import Logic.IntrumentListModulo2;
 import Presentation.View.Modulo;
 import com.itextpdf.text.DocumentException;
 import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,6 +43,7 @@ public final class IntrumentsController extends Controller {
     boolean update = false;
     int confirmResult;
     Color colorOriginal;
+    String simbol="";
 
     public IntrumentsController(Modulo views) throws ParserConfigurationException, SAXException {
         this.listModulo2 = new IntrumentListModulo2();
@@ -70,6 +73,8 @@ public final class IntrumentsController extends Controller {
                 viewController.showMessage(view, "Debe llenar todos los campos", "error");
             } else if (Integer.parseInt(view.getTxtMini().getText()) > Integer.parseInt(view.getTxtMaxi().getText()) || Integer.parseInt(view.getTxtMini().getText()) == Integer.parseInt(view.getTxtMaxi().getText())) {
                 viewController.showMessage(view, "El minimo es mayor que el maximo o el tiene el mismo rango", "error");
+            } else if (view.getCmbType().getSelectedItem().toString().equals("Tipos de instrumentos")) {
+                viewController.showMessage(view, "Seleccione un instrumento", "error");
             } else {
                 if (!update) {
                     confirmResult = JOptionPane.showConfirmDialog(view, "¿Esta seguro que la infromación ingresada sea la correcta?", "Confirmar", JOptionPane.YES_NO_OPTION);
@@ -120,10 +125,10 @@ public final class IntrumentsController extends Controller {
             updateComboBoxModel();
             updateTable();
             view.getCmbType().setSelectedIndex(0);
-            
-               if (instruSelectionListener != null) {
-                instruSelectionListener.onInstruSelected("", "", "", "", "", false);
-                
+
+            if (instruSelectionListener != null) {
+                instruSelectionListener.onInstruSelected("", "", "", "", "", "",false);
+
             }
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
@@ -189,24 +194,57 @@ public final class IntrumentsController extends Controller {
         }
     }
 
-    /* Método para rellenar el comboBox */
     public void updateComboBoxModel() throws ParserConfigurationException, SAXException {
         listName = data_logic.getAllRecordsTypeInstruments();
+
         if (view != null) {
             JComboBox<String> cmbType = view.getCmbType();
 
             if (cmbType != null) {
                 DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+                comboBoxModel.addElement("Tipos de instrumentos");
 
                 // Agrega los elementos de listName al modelo del JComboBox
                 for (InstrumentType name : listName) {
+                    String symbol = extractSymbol(name.getUnit());
                     comboBoxModel.addElement(name.getName());
                 }
 
                 // Establece el modelo en el JComboBox cmbType
                 cmbType.setModel(comboBoxModel);
+
+                // Agrega un listener al JComboBox para actualizar las etiquetas cuando se selecciona un elemento
+                cmbType.addItemListener(new ItemListener() {
+                    @Override
+                    public void itemStateChanged(ItemEvent e) {
+                        if (e.getStateChange() == ItemEvent.SELECTED) {
+                            int selectedIndex = cmbType.getSelectedIndex();
+
+                            // Ignora el índice 0 (elemento "Tipos de instrumentos")
+                            if (selectedIndex != 0) {
+                                InstrumentType selectedInstrument = listName.get(selectedIndex - 1);
+                                String symbol = extractSymbol(selectedInstrument.getUnit());
+                                view.getLbSimbol().setText(symbol);
+                                view.getLbSimbol1().setText(symbol);
+                                simbol=symbol;
+                            } else {
+                                view.getLbSimbol().setText("");
+                                view.getLbSimbol1().setText("");
+                            }
+                        }
+                    }
+                });
             }
         }
+    }
+
+    private String extractSymbol(String input) {
+        int startIndex = input.indexOf("(");
+        int endIndex = input.indexOf(")");
+        if (startIndex != -1 && endIndex != -1) {
+            return input.substring(startIndex + 1, endIndex);
+        }
+        return ""; // Retorna una cadena vacía si no se encuentra el contenido entre paréntesis
     }
 
     public boolean clickTable() {
@@ -244,7 +282,7 @@ public final class IntrumentsController extends Controller {
             view.getBtnDeleteInstru().setEnabled(true);
             view.getBtnDeleteInstru().setBackground(Color.RED);
             if (instruSelectionListener != null) {
-                instruSelectionListener.onInstruSelected(serie, tole, descri, mini, maxi, true);
+                instruSelectionListener.onInstruSelected(serie, tole, descri, mini, maxi, simbol,true);
             }
 
         }

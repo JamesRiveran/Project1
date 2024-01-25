@@ -538,9 +538,11 @@
                               <Component id="txtMini" min="-2" pref="146" max="-2" attributes="0"/>
                               <Component id="txtTole" min="-2" pref="146" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                                  <Component id="lbSimbol1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -548,7 +550,6 @@
                                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                               </Group>
@@ -558,7 +559,9 @@
                               <Component id="txtMaxi" pref="146" max="32767" attributes="0"/>
                               <Component id="cmbType" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lbSimbol" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="btnSaveInstru" pref="100" max="32767" attributes="0"/>
                               <Component id="btnDeleteInstru" max="32767" attributes="0"/>
@@ -581,15 +584,17 @@
                               <Component id="btnCleanInstru" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnSaveInstru" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="21" max="32767" attributes="0"/>
+                          <EmptySpace type="separate" pref="27" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel13" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
                               <Component id="txtMini" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtMaxi" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnDeleteInstru" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbSimbol1" alignment="3" max="32767" attributes="0"/>
+                              <Component id="lbSimbol" alignment="3" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel12" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
@@ -719,6 +724,10 @@
                       <Color id="Hand Cursor"/>
                     </Property>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lbSimbol1">
+                </Component>
+                <Component class="javax.swing.JLabel" name="lbSimbol">
                 </Component>
               </SubComponents>
             </Container>
