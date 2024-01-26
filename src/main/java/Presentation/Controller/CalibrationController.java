@@ -166,10 +166,12 @@ public class CalibrationController extends Controller implements InstruSelection
     public void reportPdf() {
         try {
             ArrayList<Calibration> calibrationList = new ArrayList<>();
+            ArrayList<Measurement> measurementList = new ArrayList<>();
+            measurementList = data_logic.getAllMeasurement();
             calibrationList.clear();
             calibrationList = loadCalibration(view.getTblCalibrations());
             String pdfFilePath = "Reporte_Calibraciones.pdf";
-            GeneratorPDF.generatePDFReport(calibrationList, pdfFilePath, "modulo_3");
+            GeneratorPDF.generatePDFReportForMeasurementsAndCalibration(calibrationList, measurementList, pdfFilePath, "modulo_3");
             viewController.showMessage(view, "Generado con exito", "success");
         } catch (IOException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);

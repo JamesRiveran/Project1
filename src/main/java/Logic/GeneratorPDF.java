@@ -5,9 +5,7 @@
 package Logic;
 
 import Logic.Calibration;
-import Presentation.Controller.ViewController;
-import static Presentation.Controller.ViewController.showMessage;
-import Presentation.View.Modulo;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -18,6 +16,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,18 +28,18 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-
 
 /**
  *
  * @author 50686
  */
 public class GeneratorPDF {
-    
-     public static ArrayList<InstrumentType> loadTypeOfInstrument(JTable jTable) {
-         ArrayList<InstrumentType> instrumentList = new ArrayList<>();
+
+    public static ArrayList<InstrumentType> loadTypeOfInstrument(JTable jTable) {
+        ArrayList<InstrumentType> instrumentList = new ArrayList<>();
         instrumentList.clear();
         int rowCount = jTable.getRowCount();
 
@@ -72,16 +71,16 @@ public class GeneratorPDF {
 
         return instrumentList;
     }
-    
+
     public static ArrayList<Calibration> loadCalibration(JTable jTable) {
         ArrayList<Calibration> instrumentList = new ArrayList<>();
 
         int rowCount = jTable.getRowCount();
 
         for (int i = 0; i < rowCount; i++) {
-            int id = (int)jTable.getValueAt(i, 0);
+            int id = (int) jTable.getValueAt(i, 0);
             String date = (String) jTable.getValueAt(i, 1);
-            int measurement = (int)jTable.getValueAt(i, 2);
+            int measurement = (int) jTable.getValueAt(i, 2);
             Calibration calibration = new Calibration(date, measurement, id);
             instrumentList.add(calibration);
         }
@@ -89,30 +88,60 @@ public class GeneratorPDF {
         return instrumentList;
     }
 
+    public static <T> void generatePDFReportForMeasurementsAndCalibration(List<T> itemList, ArrayList<Measurement> measurement, String filePath, String modulo)
+            throws DocumentException, FileNotFoundException {
+        try {
+            Document document = new Document();
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
+
+            // Agrega el evento de página para manejar el pie de página
+            writer.setPageEvent(new FooterEvent());
+
+            // Abre el documento para escritura
+            document.open();
+            // Agrega el encabezado con la fecha, hora y título
+            addHeader(document, modulo);
+
+            // Agrega la lista de elementos al documento
+            switch (modulo) {
+                case "modulo_3" ->
+                    addForCalibration(document, (ArrayList<Calibration>) itemList, measurement);
+                default -> {
+                }
+            }
+            // Cierra el documento
+            document.close();
+        } catch (DocumentException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public static <T> void generatePDFReport(List<T> itemList, String filePath, String modulo)
             throws DocumentException, FileNotFoundException {
         try {
             Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(filePath));
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
 
-        // Abre el documento para escritura
-        document.open();
+            // Agrega el evento de página para manejar el pie de página
+            writer.setPageEvent(new FooterEvent());
 
-        // Agrega el encabezado con la fecha, hora y título
-        addHeader(document,modulo);
+            // Abre el documento para escritura
+            document.open();
+            // Agrega el encabezado con la fecha, hora y título
+            addHeader(document, modulo);
 
-        // Agrega la lista de elementos al documento
-        switch (modulo) {
-            case "modulo_1" -> addInstrumentList(document, (ArrayList<InstrumentType>) itemList);
-            case "modulo_2" -> addInstrumentListForInstrument(document, (ArrayList<InstrumentModulo2>) itemList);
-            case "modulo_3" -> addForCalibration(document, (ArrayList<Calibration>) itemList);
-            default -> {
+            // Agrega la lista de elementos al documento
+            switch (modulo) {
+                case "modulo_1" ->
+                    addInstrumentList(document, (ArrayList<InstrumentType>) itemList);
+                case "modulo_2" ->
+                    addInstrumentListForInstrument(document, (ArrayList<InstrumentModulo2>) itemList);
+                default -> {
+                }
             }
-        }
-
-        // Cierra el documento
-        document.close();
-        }catch(DocumentException ex){
+            // Cierra el documento
+            document.close();
+        } catch (DocumentException ex) {
             ex.printStackTrace();
         }
     }
@@ -234,15 +263,12 @@ public class GeneratorPDF {
         PdfPCell headerCell5 = new PdfPCell(new Phrase("Tolerancia", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
         headerCell5.setBackgroundColor(new BaseColor(145, 20, 20));
 
-        
-
         // Alineación de los encabezados de columna
         headerCell1.setHorizontalAlignment(Element.ALIGN_CENTER);
         headerCell2.setHorizontalAlignment(Element.ALIGN_CENTER);
         headerCell3.setHorizontalAlignment(Element.ALIGN_CENTER);
         headerCell4.setHorizontalAlignment(Element.ALIGN_CENTER);
         headerCell5.setHorizontalAlignment(Element.ALIGN_CENTER);
-        
 
         // Agrega los encabezados a la tabla
         table.addCell(headerCell1);
@@ -250,7 +276,6 @@ public class GeneratorPDF {
         table.addCell(headerCell3);
         table.addCell(headerCell4);
         table.addCell(headerCell5);
-       
 
         // Agrega la lista de instrumentos a la tabla con fondo de color #c88989
         for (InstrumentModulo2 instrument : instrumentList) {
@@ -269,8 +294,6 @@ public class GeneratorPDF {
             PdfPCell maxCell = new PdfPCell(new Phrase(instrument.getTole(), FontFactory.getFont(FontFactory.HELVETICA, 12)));
             maxCell.setBackgroundColor(new BaseColor(200, 137, 137));
 
-            
-
             // Añade celdas con la información de cada instrumento
             table.addCell(seriCell);
             table.addCell(minCell);
@@ -282,12 +305,12 @@ public class GeneratorPDF {
         // Agrega la tabla al documento
         document.add(table);
     }
-        private static void addForCalibration(Document document, ArrayList<Calibration> calibrationList)
-            throws DocumentException {
-        // Crea una tabla con tres columnas
 
-        PdfPTable table = new PdfPTable(3);
-        table.setWidthPercentage(100); // La tabla ocupa el 100% del ancho disponible
+    private static void addForCalibration(Document document, ArrayList<Calibration> calibrationList, ArrayList<Measurement> measurementList)
+            throws DocumentException {
+        // Crea una tabla principal con tres columnas
+        PdfPTable mainTable = new PdfPTable(3);
+        mainTable.setWidthPercentage(100); // La tabla ocupa el 100% del ancho disponible
 
         // Encabezados de columna con fondo de color #911414
         PdfPCell headerCell1 = new PdfPCell(new Phrase("Número", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE)));
@@ -304,29 +327,92 @@ public class GeneratorPDF {
         headerCell2.setHorizontalAlignment(Element.ALIGN_CENTER);
         headerCell3.setHorizontalAlignment(Element.ALIGN_CENTER);
 
-        // Agrega los encabezados a la tabla
-        table.addCell(headerCell1);
-        table.addCell(headerCell2);
-        table.addCell(headerCell3);
+        // Agrega los encabezados a la tabla principal
+        mainTable.addCell(headerCell1);
+        mainTable.addCell(headerCell2);
+        mainTable.addCell(headerCell3);
 
-        // Agrega la lista de instrumentos a la tabla con fondo de color #c88989
+        // Agrega la lista de calibraciones a la tabla principal con fondo de color #c88989
         for (Calibration calibration : calibrationList) {
-            PdfPCell NumberCell = new PdfPCell(new Phrase(String.valueOf(calibration.getNumberId()), FontFactory.getFont(FontFactory.HELVETICA, 12)));
-            NumberCell.setBackgroundColor(new BaseColor(200, 137, 137));
+            PdfPCell numberCell = new PdfPCell(new Phrase(String.valueOf(calibration.getNumberId()), FontFactory.getFont(FontFactory.HELVETICA, 12)));
+            numberCell.setBackgroundColor(new BaseColor(200, 137, 137));
 
             PdfPCell dateCell = new PdfPCell(new Phrase(calibration.getDate(), FontFactory.getFont(FontFactory.HELVETICA, 12)));
             dateCell.setBackgroundColor(new BaseColor(200, 137, 137));
 
-            PdfPCell measurementCell = new PdfPCell(new Phrase(String.valueOf(calibration.getMeasurement()), FontFactory.getFont(FontFactory.HELVETICA, 12)));
-            measurementCell.setBackgroundColor(new BaseColor(200, 137, 137));
+            numberCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            dateCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 
-            // Añade celdas con la información de cada instrumento
-            table.addCell(NumberCell);
-            table.addCell(dateCell);
-            table.addCell(measurementCell);
+            numberCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            dateCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+
+            // Filtra las mediciones correspondientes a la calibración actual
+            List<Measurement> correspondingMeasurements = measurementList.stream().filter(measurement -> measurement.getCode().equals(String.valueOf(calibration.getNumberId()))).collect(Collectors.toList());
+            // Crea una subtabla para las mediciones
+            PdfPTable measurementTable = new PdfPTable(3);
+            measurementTable.setWidthPercentage(100);
+
+            PdfPCell headerId = new PdfPCell(new Phrase("Id", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8, BaseColor.WHITE)));
+            headerId.setBackgroundColor(new BaseColor(145, 20, 20));
+
+            PdfPCell headerRefer = new PdfPCell(new Phrase("Referencia", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8, BaseColor.WHITE)));
+            headerRefer.setBackgroundColor(new BaseColor(145, 20, 20));
+
+            PdfPCell headerLectur = new PdfPCell(new Phrase("Lectura", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 8, BaseColor.WHITE)));
+            headerLectur.setBackgroundColor(new BaseColor(145, 20, 20));
+
+            headerId.setHorizontalAlignment(Element.ALIGN_CENTER);
+            headerRefer.setHorizontalAlignment(Element.ALIGN_CENTER);
+            headerLectur.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+            measurementTable.addCell(headerId);
+            measurementTable.addCell(headerRefer);
+            measurementTable.addCell(headerLectur);
+
+            for (Measurement measurement : correspondingMeasurements) {
+
+                PdfPCell measurementCell = new PdfPCell(new Phrase(String.valueOf(measurement.getId()), FontFactory.getFont(FontFactory.HELVETICA, 12)));
+                measurementCell.setBackgroundColor(new BaseColor(200, 137, 137));
+                PdfPCell referCell = new PdfPCell(new Phrase(String.valueOf(measurement.getReference()), FontFactory.getFont(FontFactory.HELVETICA, 12)));
+                referCell.setBackgroundColor(new BaseColor(200, 137, 137));
+
+                // Verifica si la lectura está vacía y establece el texto correspondiente
+                String readingText = (measurement.getReading() != null && !measurement.getReading().isEmpty())
+                        ? String.valueOf(measurement.getReading()) : "-n-";
+
+                PdfPCell lectureCell = new PdfPCell(new Phrase(readingText, FontFactory.getFont(FontFactory.HELVETICA, 12)));
+                lectureCell.setBackgroundColor(new BaseColor(200, 137, 137));
+
+                measurementTable.addCell(measurementCell);
+                measurementTable.addCell(referCell);
+                measurementTable.addCell(lectureCell);
+            }
+
+            // Añade celdas con la información de cada calibración
+            mainTable.addCell(numberCell);
+            mainTable.addCell(dateCell);
+            mainTable.addCell(measurementTable); // Agrega la subtabla de mediciones
         }
 
-        // Agrega la tabla al documento
-        document.add(table);
+        // Agrega la tabla principal al documento
+        document.add(mainTable);
+    }
+
+    // Clase interna para manejar el evento de página y agregar el pie de página
+    private static class FooterEvent extends PdfPageEventHelper {
+
+        @Override
+        public void onEndPage(PdfWriter writer, Document document) {
+            PdfPTable table = new PdfPTable(1);
+            table.setWidthPercentage(100);
+
+            PdfPCell footerCell = new PdfPCell(new Phrase("@Derechos Reservados SILAB - Número de página " + writer.getPageNumber(),
+                    FontFactory.getFont(FontFactory.HELVETICA, 10)));
+            footerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+            table.addCell(footerCell);
+            table.setTotalWidth(document.getPageSize().getWidth() - document.leftMargin() - document.rightMargin());
+            table.writeSelectedRows(0, -1, document.leftMargin(), document.bottomMargin(), writer.getDirectContent());
+        }
     }
 }
