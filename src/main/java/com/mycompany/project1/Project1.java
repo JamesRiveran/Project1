@@ -20,13 +20,9 @@ import org.xml.sax.SAXException;
 public class Project1 {
     private static ControllerSocket controllerSocket;
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
-        Modulo view = new Modulo();
-        SocketModel model = new SocketModel();
+       
         ViewController viewController = new ViewController();
         
-        
-       
-       viewController.startSocket();
        viewController.start();
        
        //ViewController.SendMessage("ADIOS");

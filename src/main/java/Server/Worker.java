@@ -83,16 +83,31 @@ public class Worker {
                         break;
 
                     case ProtocolData.getUnit:
-                        Message messagess = null;
+                        Message getUnit = null;
                         try {
-                            messagess = (Message) in.readObject();
-                            System.out.println(messagess);
-                            messagess.setUnits(type.getAllRecordsOfUnits());
-                            messagess.setSender(user);
+                            getUnit = (Message) in.readObject();
+                            System.out.println(getUnit);
+                            getUnit.setUnits(type.getAllRecordsOfUnits());
+                            getUnit.setSender(user);
                             
                             // Envía la lista de unidades al cliente a través del método deliver
-                            srv.deliver(messagess);
-                            System.out.println(user.getNombre() + ": " + messagess.getUnits());
+                            srv.deliver(getUnit);
+                            System.out.println(user.getNombre() + ": " + getUnit.getUnits());
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
+                    case ProtocolData.GETTYPEINSTRUMENT:
+                        Message getTypeInstrument = null;
+                        try {
+                            getTypeInstrument = (Message) in.readObject();
+                            System.out.println(getTypeInstrument);
+                            getTypeInstrument.setListOfIModu1o1(type.getTypeInstrument());
+                            getTypeInstrument.setSender(user);
+                            
+                            // Envía la lista de unidades al cliente a través del método deliver
+                            srv.deliver(getTypeInstrument);
+                            System.out.println(user.getNombre() + ": " + getTypeInstrument.getListOfIModu1o1());
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }

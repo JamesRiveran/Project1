@@ -1,5 +1,6 @@
 package Protocol;
 
+import Presentation.Model.InstrumentType;
 import Presentation.Model.UnidsType;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,15 +12,17 @@ public class Message implements Serializable {
     private String message;
     private String[] data;
     private ArrayList<UnidsType> units;
+    private ArrayList<InstrumentType> ListOfIModu1o1;
 
     public Message() {
     }
 
-    public Message(User sender, String message, String[] data, ArrayList<UnidsType> units) {
+    public Message(User sender, String message, String[] data, ArrayList<UnidsType> units,ArrayList<InstrumentType> ListOfIModu1o1) {
         this.sender = sender;
         this.message = message;
         this.data = data;
         this.units = units;
+        this.ListOfIModu1o1 = ListOfIModu1o1;
     }
 
  
@@ -52,13 +55,24 @@ public class Message implements Serializable {
         return units;
     }
 
+    public ArrayList<InstrumentType> getListOfIModu1o1() {
+        return ListOfIModu1o1;
+    }
+
+    public void setListOfIModu1o1(ArrayList<InstrumentType> ListOfIModu1o1) {
+        this.ListOfIModu1o1 = ListOfIModu1o1;
+    }
+    
+    
+
     public void setUnits(ArrayList<UnidsType> units) {
         this.units = units;
     }
 
     @Override
     public String toString() {
-        return "Message{" + "sender=" + sender + ", message=" + message + ", data=" + data + ", units=" + units + '}';
+        return "Message{" + "sender=" + sender + ", message=" + message + ", data=" + data + ", units=" + units + ", ListOfIModu1o1=" + ListOfIModu1o1 + '}';
     }
+    
 
 }

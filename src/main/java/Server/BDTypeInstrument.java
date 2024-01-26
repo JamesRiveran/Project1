@@ -42,6 +42,28 @@ public class BDTypeInstrument {
         }
         return unids;
     }
+    
+     public ArrayList<InstrumentType> getTypeInstrument() {
+        ArrayList<InstrumentType> instrumentList = new ArrayList<InstrumentType>();
+        try {
+            conexion.setConexion();
+            conexion.setConsulta("SELECT * FROM instrumenttype");
+            resultado = conexion.getResultado();
+
+            while (resultado.next()) {
+                InstrumentType instrumentType = new InstrumentType();
+                instrumentType.setCode(String.valueOf(resultado.getString(1)));
+                instrumentType.setUnit(resultado.getString(2));
+                instrumentType.setName(resultado.getString(3));
+                instrumentList.add(instrumentType);
+            }
+
+            conexion.cerrarConexion();
+        } catch (SQLException error) {
+            error.printStackTrace();
+        }
+        return instrumentList;
+    }
 
     public ArrayList<InstrumentType> getAllRecords() {
         ArrayList<InstrumentType> instrumentList = new ArrayList<>();

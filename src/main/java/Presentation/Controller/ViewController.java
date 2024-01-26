@@ -42,7 +42,7 @@ import org.xml.sax.SAXException;
 public class ViewController extends Controller implements ActionListener {
 
     InstrumentsList listInstrument;
-    private ArrayList<InstrumentType> ListOfIModu1o1;
+    private static ArrayList<InstrumentType> ListOfIModu1o1;
     private static ArrayList<UnidsType> ListOfUnids;
     CalibrationController calibrationController;
     IntrumentsController intrumentsController;
@@ -70,7 +70,6 @@ public class ViewController extends Controller implements ActionListener {
         intrumentsController.setInstruSelectionListener(calibrationController);
         this.data_logic = new Data_logic();
         clickTable();
-        updateTable();
         this.view.setViewController(this);
         ControllerSocket controller = new ControllerSocket(view, socketModel);
     }
@@ -108,7 +107,10 @@ public class ViewController extends Controller implements ActionListener {
         view.getCalibrationTxtNumber().setText(String.valueOf(data_logic.getId()));
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
-        SendMessage();
+        startSocket();
+        getUnit();
+        getTypeInstrument();
+        
    
 
     }
@@ -116,7 +118,6 @@ public class ViewController extends Controller implements ActionListener {
     public void startSocket() {
         ControllerSocket controllerSocket = new ControllerSocket(view, socketModel);
         User user = new User("5555", "1234", "");
-        String instrumentType = "GuardarTipoInstrumento";
         //ServiceProxy proxy = new ServiceProxy();
         proxy = new ServiceProxy();
         try {
@@ -127,18 +128,18 @@ public class ViewController extends Controller implements ActionListener {
         }
     }
 
-    public static void SendMessage() {
+    public static void getUnit() {
         Message msg = new Message();
         msg.setUnits(ListOfUnids);
         msg.setSender(user);
         proxy.getUnit(msg);
     }
 
-    public static void SendMessages(String message) {
+    public static void getTypeInstrument() {
         Message msg = new Message();
-        msg.setMessage(message);
+        msg.setListOfIModu1o1(ListOfIModu1o1);
         msg.setSender(user);
-        proxy.post(msg);
+        proxy.getTypeInstrument(msg);
     }
 
     public void updateComboBoxModelUnids() throws ParserConfigurationException, SAXException {
@@ -336,7 +337,6 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {
-        ListOfIModu1o1 = data_logic.getAllRecordsTypeInstruments();
         DefaultTableModel tableModule1 = (DefaultTableModel) view.getTblListInstruments().getModel();
         tableModule1.setRowCount(0);
         for (int i = ListOfIModu1o1.size() - 1; i >= 0; i--) {
@@ -368,6 +368,7 @@ public class ViewController extends Controller implements ActionListener {
             view.getTxtCode().setText("");
             view.getTxtName().setText("");
             updateComboBoxModelUnids();
+            updateTable();
 //            SendMessages("Hola");
 
         } catch (ParserConfigurationException ex) {
@@ -392,6 +393,18 @@ public class ViewController extends Controller implements ActionListener {
         ListOfUnids = message.getUnits();
         try {
             updateComboBoxModelUnids();
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void getTypeInstrument(Message message) {
+        System.out.println("Esto ya esta en el controller " + message.getListOfIModu1o1());
+        ListOfIModu1o1 = message.getListOfIModu1o1();
+        try {
+            updateTable();
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {

@@ -19,7 +19,11 @@ public class ProtocolData {
 
     public static final int DELIVER=10;
 
-    public static final int DoECHO=100;
+    public static final int SAVETYPEINSTRUMENT=100;
+    public static final int UPDATETYPEINSTRUMENT=110;
+    public static final int DELETETYPEINSTRUMENT=150;
+    public static final int GETTYPEINSTRUMENT=170;
+    
     
     public static final int getUnit=200;
     

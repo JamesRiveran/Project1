@@ -123,6 +123,17 @@ public class ServiceProxy implements Protocol.IService {
 
         }
     }
+    
+    public void getTypeInstrument(Message message) {
+        try {
+            out.writeInt(ProtocolData.GETTYPEINSTRUMENT);
+            out.writeObject(message);
+            System.out.println("Esto es " + message);
+            out.flush();
+        } catch (IOException ex) {
+
+        }
+    }
 
     // LISTENING FUNCTIONS
     boolean continuar = true;
@@ -172,10 +183,10 @@ public class ServiceProxy implements Protocol.IService {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 System.out.println("Respuesta recibida:");
-                System.out.println("Mensaje " + message.getMessage());
-                System.out.println("Mensaje " + message.getUnits());
                 System.out.println("Mensaje " + message.getSender());
-                viewController.deliver(message);
+                System.out.println("Mensaje " + message.getListOfIModu1o1());
+//                viewController.getUnit(message);
+                viewController.getTypeInstrument(message);
             }
         }
         );
