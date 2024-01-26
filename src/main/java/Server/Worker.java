@@ -1,5 +1,7 @@
 package Server;
 
+import Data.BDTypeInstrument;
+import Presentation.Model.UnidsType;
 import Protocol.IService;
 import Protocol.Message;
 import Protocol.ProtocolData;
@@ -7,88 +9,95 @@ import Protocol.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 public class Worker {
+
     Server srv;
     ObjectInputStream in;
     ObjectOutputStream out;
     IService service;
     User user;
+    BDTypeInstrument type;
 
     public Worker(Server srv, ObjectInputStream in, ObjectOutputStream out, User user, IService service) {
-        this.srv=srv;
-        this.in=in;
-        this.out=out;
-        this.user=user;
-        this.service=service;
+        this.srv = srv;
+        this.in = in;
+        this.out = out;
+        this.user = user;
+        this.service = service;
     }
 
-    boolean continuar;    
-    public void start(){
+    boolean continuar;
+
+    public void start() {
         try {
             System.out.println("Worker atendiendo peticiones...");
-            Thread t = new Thread(new Runnable(){
-                public void run(){
+            Thread t = new Thread(new Runnable() {
+                public void run() {
                     listen();
                 }
             });
             continuar = true;
             t.start();
-        } catch (Exception ex) {  
+        } catch (Exception ex) {
         }
     }
-    
-    public void stop(){
-        continuar=false;
+
+    public void stop() {
+        continuar = false;
         System.out.println("Conexion cerrada...");
     }
-    
-    public void listen(){
+
+    public void listen() {
         int method;
         while (continuar) {
             try {
-                
+
                 method = in.readInt();
-                System.out.println("Operacion: "+method);
-                switch(method){
-                //case Protocol.LOGIN: done on accept
-                case ProtocolData.LOGOUT:
+                System.out.println("Operacion: " + method);
+                switch (method) {
+                    //case Protocol.LOGIN: done on accept
+                    case ProtocolData.LOGOUT:
                     try {
                         srv.remove(user);
                         //service.logout(user); //nothing to do
-                    } catch (Exception ex) {}
+                    } catch (Exception ex) {
+                    }
                     stop();
-                    break;                 
-                case ProtocolData.POST:
-                    Message message=null;
-                    try {
-                        message = (Message)in.readObject();
-                        message.setSender(user);
-                        //Toda la logica de implementacion de ir al crud hacer los cambios y retornar el mensaje que se necesita.
-                        srv.deliver(message);
-                        //service.post(message); // if wants to save messages, ex. recivier no logged on
-                        System.out.println(user.getNombre()+": "+message.getMessage());
-                    } catch (ClassNotFoundException ex) {}
                     break;
+                    case ProtocolData.POST:
+                        Message message = null;
+                        try {
+                            message = (Message) in.readObject();
+                            message.setSender(user);
+                            //Toda la logica de implementacion de ir al crud hacer los cambios y retornar el mensaje que se necesita.
+                            srv.deliver(message);
+                            //service.post(message); // if wants to save messages, ex. recivier no logged on
+                            System.out.println(user.getNombre() + ": " + message.getMessage());
+                        } catch (ClassNotFoundException ex) {
+                        }
+                        break;
 
                     case ProtocolData.getUnit:
-                        
-
-                            System.out.println("Entró a getUnit");
-
-
+                        ArrayList<UnidsType> units = type.getAllRecordsOfUnits();
+                        Message messages = new Message();
+                        messages.setSender(user);
+                        // Envía la lista de unidades al cliente a través del método deliver
+                        messages.setUnits(units);
+                        srv.deliver(messages);
                         break;
                 }
                 out.flush();
-            } catch (IOException  ex) {
+            } catch (IOException ex) {
                 System.out.println(ex);
                 continuar = false;
-            }                        
+            }
         }
     }
-    
+
     //Metodo para entregar solo a su propio cliente, el de arriba entrega a todos.
-    public void deliver(Message message){
+    public void deliver(Message message) {
         try {
             out.writeInt(ProtocolData.DELIVER);
             out.writeObject(message);

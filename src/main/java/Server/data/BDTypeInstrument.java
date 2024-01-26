@@ -4,14 +4,12 @@
  */
 package Server.data;
 
-import static Presentation.Controller.ViewController.showMessage;
 import Presentation.Model.InstrumentType;
 import Presentation.Model.UnidsType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 
 /**
  *

@@ -15,6 +15,7 @@ import Presentation.Model.SocketModel;
 import Presentation.Model.UnidsType;
 import Presentation.View.Modulo;
 import Protocol.Message;
+import Protocol.ProtocolData;
 import Protocol.User;
 import com.itextpdf.text.DocumentException;
 import java.awt.Color;
@@ -50,7 +51,7 @@ public class ViewController extends Controller implements ActionListener {
     boolean update = false;
     int confirmResult;
     Color colorOriginal;
-    
+    ProtocolData  protocolData;
     SocketModel socketModel;
 
     /*Global a la clase para poder consumirlo fuera del method*/
@@ -358,7 +359,7 @@ public class ViewController extends Controller implements ActionListener {
             view.getTxtCode().setText("");
             view.getTxtName().setText("");
             updateComboBoxModelUnids();
-            SendMessage("getUnidad");
+            SendMessage(String.valueOf(ProtocolData.getUnit));
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
