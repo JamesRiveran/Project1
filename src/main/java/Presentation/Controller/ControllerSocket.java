@@ -22,15 +22,15 @@ public class ControllerSocket {
     private ServiceProxy localService;
     
     public ControllerSocket(Modulo view, SocketModel model) {
-        this.view = new Modulo();
-        this.model = new SocketModel();
+        this.view = view;
+        this.model = model;
         localService = (ServiceProxy) ServiceProxy.instance();
         localService.setController(this);
         view.setControllerSocket(this);
         view.setSocketModel(model);
     }
 
-    public void login(User u) throws Exception{
+    public void logins(User u) throws Exception{
         User logged=ServiceProxy.instance().login(u);
         model.setCurrentUser(logged);
         model.commit(model.USER);

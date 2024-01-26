@@ -5,7 +5,7 @@
  */
 package Presentation.Controller;
 
-import Data.BDMeasurement;
+import Server.data.BDMeasurement;
 import Presentation_Model.Calibration;
 import Presentation_Model.CalibrationList;
 import Presentation_Model.ColorCelda;

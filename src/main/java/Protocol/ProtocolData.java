@@ -9,8 +9,8 @@ package Protocol;
  * @author james
  */
 public class ProtocolData {
-    public static final String SERVER = "127.0.0.1";//Cambiar por el que tenga el MySQL
-    public static final int PORT = 3306;//Cambiar por el que tenga el MySQL
+    public static final String SERVER = "localhost";//Cambiar por el que tenga el MySQL
+    public static final int PORT = 1234;//Cambiar por el que tenga el MySQL
 
     
     public static final int LOGIN=1;
@@ -18,6 +18,8 @@ public class ProtocolData {
     public static final int POST=3;
 
     public static final int DELIVER=10;
+
+    public static final int DoECHO=100;
     
     /*Si recibo un comando informar como parte del message cual mensaje se mando, insert, update delete,
     pasa por flujo de control y ver a quien tengo que notificar. solo no notifica con los read.*/

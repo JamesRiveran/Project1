@@ -47,6 +47,7 @@ public class Worker {
         int method;
         while (continuar) {
             try {
+                
                 method = in.readInt();
                 System.out.println("Operacion: "+method);
                 switch(method){
@@ -68,11 +69,18 @@ public class Worker {
                         //service.post(message); // if wants to save messages, ex. recivier no logged on
                         System.out.println(user.getNombre()+": "+message.getMessage());
                     } catch (ClassNotFoundException ex) {}
-                    break;                     
+                    break;
+
+                    case ProtocolData.DoECHO:
+
+
+
+
+                        break;
                 }
                 out.flush();
             } catch (IOException  ex) {
-                System.out.println(ex);
+                System.out.println("VSADV"+ex);
                 continuar = false;
             }                        
         }

@@ -42,10 +42,12 @@ public class ServiceProxy implements Protocol.IService {
 
     Socket skt;
     private void connect() throws Exception{
+        //skt = new Socket(ProtocolData.SERVER,ProtocolData.PORT+1);
         skt = new Socket(ProtocolData.SERVER,ProtocolData.PORT);
         out = new ObjectOutputStream(skt.getOutputStream() );
         out.flush();
-        in = new ObjectInputStream(skt.getInputStream());    
+        in = new ObjectInputStream(skt.getInputStream());
+
     }
 
     private void disconnect() throws Exception{
@@ -56,20 +58,29 @@ public class ServiceProxy implements Protocol.IService {
     public User login(User u) throws Exception{
         connect();
         try {
+            System.out.println("Enviando Protocol Login...");
             out.writeInt(ProtocolData.LOGIN);
+            System.out.println("Enviando User...");
             out.writeObject(u);
+            System.out.println("Flush...");
             out.flush();
             int response = in.readInt();
+            System.out.println("Respuesta del server: " + response);
             if (response==ProtocolData.ERROR_NO_ERROR){
+                System.out.println("Respuesta User...");
                 User u1=(User) in.readObject();
+                System.out.println("call start()...");
                 this.start();
+                System.out.println("end call start()...");
                 return u1;
             }
             else {
+                System.out.println("Error recibido:" + response);
                 disconnect();
                 throw new Exception("No remote user");
             }            
         } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("IOException..." + ex.getMessage());
             return null;
         }
     }
@@ -135,7 +146,10 @@ public class ServiceProxy implements Protocol.IService {
     private void deliver( final Message message ){
       SwingUtilities.invokeLater(new Runnable(){
             public void run(){
-               controller.deliver(message);
+                System.out.println("Respuesta recibida:");
+                System.out.println("Mensaje " + message.getMessage());
+                System.out.println("Mensaje " + message.getSender());
+               //controller.deliver(message);
             }
          }
       );

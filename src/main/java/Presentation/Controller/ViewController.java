@@ -5,7 +5,7 @@
  */
 package Presentation.Controller;
 
-import Data.BDCalibration;
+import Server.data.BDCalibration;
 import Logic.ServiceProxy;
 import Presentation_Model.Data_logic;
 import Presentation_Model.GeneratorPDF;
@@ -17,6 +17,7 @@ import Presentation_Model.SocketModel;
 import Protocol.Message;
 import Protocol.ProtocolData;
 import Protocol.User;
+import Server.Server;
 import com.itextpdf.text.DocumentException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,6 +51,11 @@ public class ViewController extends Controller implements ActionListener {
     boolean update = false;
     SocketModel socketModel;
 
+    /*Global a la clase para poder consumirlo fuera del method*/
+    static ServiceProxy proxy;
+    static User user;
+
+
     public ViewController() throws ParserConfigurationException, SAXException {
 
         this.listInstrument = new InstrumentsList();
@@ -58,7 +64,7 @@ public class ViewController extends Controller implements ActionListener {
         this.calibrationController = new CalibrationController(this.view);
         this.intrumentsController = new IntrumentsController(this.view);
         intrumentsController.setInstruSelectionListener(calibrationController);
-        this.data_logic = new Data_logic();
+        //this.data_logic = new Data_logic();
         clickTable();
         updateTable();
         this.view.setViewController(this);
@@ -97,6 +103,33 @@ public class ViewController extends Controller implements ActionListener {
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
 
     }
+    
+    
+    public void startSocket() {
+            
+            ControllerSocket controllerSocket = new ControllerSocket(view, socketModel);
+            User user = new User("5555", "1234","");
+            String instrumentType = "GuardarTipoInstrumento";
+            //ServiceProxy proxy = new ServiceProxy();
+            proxy = new ServiceProxy();
+        try {
+            // Inicio de sesión
+            proxy.login(user);
+        } catch (Exception ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+    /*Creado para probar la comunicación sin la interfaz*/
+    public static void SendMessage(String message)
+    {
+        Message msg = new Message();
+        msg.setMessage(message);
+        msg.setSender(user);
+        proxy.post(msg);
+    }
+
 
     public static void showMessage(JFrame parent, String message, String info) {
         if (info == "error") {
@@ -240,13 +273,15 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {
-        ListOfIModu1o1 = data_logic.getAllRecordsTypeInstruments();
+       /* ListOfIModu1o1 = data_logic.getAllRecordsTypeInstruments();
         DefaultTableModel tableModule1 = (DefaultTableModel) view.getTblListInstruments().getModel();
         tableModule1.setRowCount(0);
         for (int i = ListOfIModu1o1.size() - 1; i >= 0; i--) {
             InstrumentType module1 = ListOfIModu1o1.get(i);
             tableModule1.insertRow(0, new Object[]{module1.getCode(), module1.getName(), module1.getUnit()});
         }
+
+        */
     }
 
     public boolean clickTable() {

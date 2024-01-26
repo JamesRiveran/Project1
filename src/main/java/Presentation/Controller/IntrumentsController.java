@@ -6,8 +6,8 @@ package Presentation.Controller;
 
 import Presentation.Controller.ViewController;
 import static Presentation.Controller.ViewController.showMessage;
-import Data.BDCalibration;
-import Data.BDInstrument;
+import Server.data.BDCalibration;
+import Server.data.BDInstrument;
 import Presentation_Model.Data_logic;
 import Presentation_Model.GeneratorPDF;
 import static Presentation_Model.GeneratorPDF.loadInstrument;
@@ -46,10 +46,10 @@ public final class IntrumentsController extends Controller {
     public IntrumentsController(Modulo view) throws ParserConfigurationException, SAXException {
         this.listModulo2 = new IntrumentListModulo2();
         this.view = view;
-        this.data_logic = new Data_logic();
-        updateComboBoxModel();
-        clickTable();
-        updateTable();
+        //this.data_logic = new Data_logic();
+        //updateComboBoxModel();
+        //clickTable();
+        //updateTable();
         this.view.setIntrumentsController(this);
 
     }

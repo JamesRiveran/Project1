@@ -4,9 +4,9 @@
  */
 package Presentation_Model;
 
-import Data.BDCalibration;
-import Data.BDInstrument;
-import Data.BDTypeInstrument;
+import Server.data.BDCalibration;
+import Server.data.BDInstrument;
+import Server.data.BDTypeInstrument;
 import static Presentation.Controller.ViewController.showMessage;
 import Protocol.Message;
 import Protocol.User;
