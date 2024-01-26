@@ -16,6 +16,6 @@ import org.xml.sax.SAXException;
 public class ClienteA {
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
         ViewController viewController = new ViewController();
-       viewController.startA();
+        viewController.start();
     }
 }

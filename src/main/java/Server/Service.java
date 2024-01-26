@@ -31,4 +31,7 @@ public class Service implements IService{
 
     public void getUnit(Message m) {
     }
+    
+    public void getTypeInstrument(Message m) {
+    }
 }

@@ -78,7 +78,7 @@ public class ViewController extends Controller implements ActionListener {
 
     }
 
-    public void startA() throws IOException, SAXException, ParserConfigurationException {
+    public void start() throws IOException, SAXException, ParserConfigurationException {
 
         view.getBtnClean().addActionListener(e -> clean());
         view.getBtnDelete().addActionListener(e -> delete());
@@ -107,62 +107,17 @@ public class ViewController extends Controller implements ActionListener {
         view.getCalibrationTxtNumber().setText(String.valueOf(data_logic.getId()));
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
-        startSocketClienteA();
-        //getUnit();
-        getTypeInstrument();
-    }
-    
-        public void startB() throws IOException, SAXException, ParserConfigurationException {
-
-        view.getBtnClean().addActionListener(e -> clean());
-        view.getBtnDelete().addActionListener(e -> delete());
-        view.getBtnPDF().addActionListener(e -> reportPdf());
-        view.getBtnSave().addActionListener(e -> save());
-        view.getBtnSearch().addActionListener(e -> search());
-        view.setLocationRelativeTo(null);
-        view.setVisible(true);
-
-        /*Los del modulo 2*/
-        view.getBtnSaveInstru().addActionListener(e -> intrumentsController.save());
-        view.getBtnReport().addActionListener(e -> intrumentsController.reportPdf());
-        view.getBtnCleanInstru().addActionListener(e -> intrumentsController.clean());
-        view.getBtnDeleteInstru().addActionListener(e -> intrumentsController.delete());
-        view.getBtnSearchInstru().addActionListener(e -> intrumentsController.search());
-
-        /*modulo 3*/
-        view.getCalibrationBtnDelete().addActionListener(this);
-        view.getCalibrationBtnSave().addActionListener(e -> calibrationController.save());
-        view.getCalibrationBtnClean().addActionListener(e -> calibrationController.clean());
-        view.getBtnPDFCalibration().addActionListener(e -> calibrationController.reportPdf());
-        view.getBtnSearchCalibration().addActionListener(e -> calibrationController.search());
-        view.getBtnSaveMeasurement().addActionListener(e -> calibrationController.saveMeasurement());
-        view.getBtnCleanMeasurement().addActionListener(e -> calibrationController.cleanMeasurement());
-
-        view.getCalibrationTxtNumber().setText(String.valueOf(data_logic.getId()));
-        view.getCalibrationTxtNumber().setEnabled(false);
-        view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
-        startSocketClienteB();
+        startSocketCliente();
         //getUnit();
         getTypeInstrument();
     }
     
     
-    public void startSocketClienteA() {
+
+    public void startSocketCliente() {
         ControllerSocket controllerSocket = new ControllerSocket(view, socketModel);
         User user = new User("5555", "1234", "ClienteA");
-        //ServiceProxy proxy = new ServiceProxy();
-        proxy = new ServiceProxy();
-        try {
-            // Inicio de sesión
-            proxy.login(user);
-        } catch (Exception ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void startSocketClienteB() {
-        ControllerSocket controllerSocket = new ControllerSocket(view, socketModel);
-        User user = new User("6666", "1234", "ClienteB");
+        
         //ServiceProxy proxy = new ServiceProxy();
         proxy = new ServiceProxy();
         try {
