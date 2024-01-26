@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logic;
+package Presentation.Model;
 
-import Logic.Calibration;
+import Presentation.Model.Calibration;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;

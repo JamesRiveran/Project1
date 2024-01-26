@@ -1,4 +1,4 @@
-package Logic;
+package Presentation.Model;
 
 import java.awt.Color;
 import java.awt.Graphics;

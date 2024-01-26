@@ -2,31 +2,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logic;
+package Presentation.Model;
 
+import Presentation.Model.InstrumentModulo2;
 import java.util.ArrayList;
 
 /**
  *
  * @author 50686
  */
-public class UnidList {
-        private ArrayList<UnidsType> list;
+public class IntrumentListModulo2 {
+         private ArrayList<InstrumentModulo2> list;
 
-    public UnidList(ArrayList<UnidsType> list) {
+    public IntrumentListModulo2(ArrayList<InstrumentModulo2> list) {
         this.list = list;
     }
-    
-    public UnidList() {
-        this.list = new ArrayList<UnidsType> ();
+    public IntrumentListModulo2(){  
+        this.list=new ArrayList<InstrumentModulo2> ();
     }
 
-    public ArrayList<UnidsType> getList() {
+    public void setList(ArrayList<InstrumentModulo2> list) {
+        this.list = list;
+    }
+
+    public ArrayList<InstrumentModulo2> getList() {
         return list;
-    }
-
-    public void setList(ArrayList<UnidsType> list) {
-        this.list = list;
     }
 
     @Override
@@ -37,4 +37,6 @@ public class UnidList {
         }
         return "Instrumentos" + list ;
     }
+    
+  
 }

@@ -57,7 +57,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="Logic.MaterialTabbed" name="pTipoDeInstrumento">
+    <Container class="Presentation.Model.MaterialTabbed" name="pTipoDeInstrumento">
       <AccessibilityProperties>
         <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="pTipoDeInstrumento"/>
       </AccessibilityProperties>

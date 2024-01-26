@@ -4,12 +4,12 @@
  */
 package Presentation.Controller;
 
-import Logic.Data_logic;
-import Logic.GeneratorPDF;
-import static Logic.GeneratorPDF.loadInstrument;
-import Logic.InstrumentModulo2;
-import Logic.InstrumentType;
-import Logic.IntrumentListModulo2;
+import Presentation.Model.Data_logic;
+import Presentation.Model.GeneratorPDF;
+import static Presentation.Model.GeneratorPDF.loadInstrument;
+import Presentation.Model.InstrumentModulo2;
+import Presentation.Model.InstrumentType;
+import Presentation.Model.IntrumentListModulo2;
 import Presentation.View.Modulo;
 import com.itextpdf.text.DocumentException;
 import java.awt.Color;

@@ -2,31 +2,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logic;
+package Presentation.Model;
 
-import Logic.InstrumentModulo2;
+import Presentation.Model.InstrumentType;
 import java.util.ArrayList;
 
 /**
  *
- * @author 50686
+ * @author james
  */
-public class IntrumentListModulo2 {
-         private ArrayList<InstrumentModulo2> list;
+public class InstrumentsList {
+    private ArrayList<InstrumentType> list;
 
-    public IntrumentListModulo2(ArrayList<InstrumentModulo2> list) {
+    public InstrumentsList(ArrayList<InstrumentType> list) {
         this.list = list;
     }
-    public IntrumentListModulo2(){  
-        this.list=new ArrayList<InstrumentModulo2> ();
+    
+    public InstrumentsList() {
+        this.list = new ArrayList<InstrumentType> ();
     }
 
-    public void setList(ArrayList<InstrumentModulo2> list) {
-        this.list = list;
-    }
-
-    public ArrayList<InstrumentModulo2> getList() {
+    public ArrayList<InstrumentType> getList() {
         return list;
+    }
+
+    public void setList(ArrayList<InstrumentType> list) {
+        this.list = list;
     }
 
     @Override
@@ -37,6 +38,4 @@ public class IntrumentListModulo2 {
         }
         return "Instrumentos" + list ;
     }
-    
-  
 }

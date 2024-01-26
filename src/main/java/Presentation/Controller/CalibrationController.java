@@ -5,13 +5,13 @@
  */
 package Presentation.Controller;
 
-import Logic.Calibration;
-import Logic.CalibrationList;
-import Logic.ColorCelda;
-import Logic.Data_logic;
-import Logic.GeneratorPDF;
-import static Logic.GeneratorPDF.loadCalibration;
-import Logic.Measurement;
+import Presentation.Model.Calibration;
+import Presentation.Model.CalibrationList;
+import Presentation.Model.ColorCelda;
+import Presentation.Model.Data_logic;
+import Presentation.Model.GeneratorPDF;
+import static Presentation.Model.GeneratorPDF.loadCalibration;
+import Presentation.Model.Measurement;
 import Presentation.View.Modulo;
 import com.itextpdf.text.DocumentException;
 import com.toedter.calendar.JDateChooser;
