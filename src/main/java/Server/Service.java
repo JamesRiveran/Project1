@@ -28,4 +28,7 @@ public class Service implements IService{
     public void logout(User p) throws Exception{
         //nothing to do
     }    
+
+    public void getUnit(Message m) {
+    }
 }

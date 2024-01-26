@@ -75,6 +75,7 @@ public class Server {
     
     public void deliver(Message message){
         for(Worker wk:workers){
+            System.out.println("Esto esta en el server "+message);
             wk.deliver(message);
         }        
     } 

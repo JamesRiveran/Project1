@@ -1,6 +1,5 @@
 package Server;
 
-import Data.BDTypeInstrument;
 import Presentation.Model.UnidsType;
 import Protocol.IService;
 import Protocol.Message;
@@ -10,6 +9,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Worker {
 
@@ -26,6 +27,7 @@ public class Worker {
         this.out = out;
         this.user = user;
         this.service = service;
+        this.type = new BDTypeInstrument();
     }
 
     boolean continuar;
@@ -70,6 +72,7 @@ public class Worker {
                         Message message = null;
                         try {
                             message = (Message) in.readObject();
+                            System.out.println(message);
                             message.setSender(user);
                             //Toda la logica de implementacion de ir al crud hacer los cambios y retornar el mensaje que se necesita.
                             srv.deliver(message);
@@ -80,13 +83,21 @@ public class Worker {
                         break;
 
                     case ProtocolData.getUnit:
-                        ArrayList<UnidsType> units = type.getAllRecordsOfUnits();
-                        Message messages = new Message();
-                        messages.setSender(user);
-                        // Envía la lista de unidades al cliente a través del método deliver
-                        messages.setUnits(units);
-                        srv.deliver(messages);
+                        Message messagess = null;
+                        try {
+                            messagess = (Message) in.readObject();
+                            System.out.println(messagess);
+                            messagess.setUnits(type.getAllRecordsOfUnits());
+                            messagess.setSender(user);
+                            
+                            // Envía la lista de unidades al cliente a través del método deliver
+                            srv.deliver(messagess);
+                            System.out.println(user.getNombre() + ": " + messagess.getUnits());
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         break;
+
                 }
                 out.flush();
             } catch (IOException ex) {
@@ -99,6 +110,7 @@ public class Worker {
     //Metodo para entregar solo a su propio cliente, el de arriba entrega a todos.
     public void deliver(Message message) {
         try {
+            System.out.println("Esto es en el worker deliver " + message);
             out.writeInt(ProtocolData.DELIVER);
             out.writeObject(message);
             out.flush();

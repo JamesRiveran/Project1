@@ -15,11 +15,14 @@ public class Message implements Serializable {
     public Message() {
     }
 
-    public Message(User sender, String message, String[] data) {
+    public Message(User sender, String message, String[] data, ArrayList<UnidsType> units) {
         this.sender = sender;
         this.message = message;
         this.data = data;
+        this.units = units;
     }
+
+ 
 
     public User getSender() {
         return sender;
@@ -55,10 +58,7 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{"
-                + "sender=" + sender
-                + ", message='" + message + '\''
-                + ", data=" + Arrays.toString(data)
-                + '}';
+        return "Message{" + "sender=" + sender + ", message=" + message + ", data=" + data + ", units=" + units + '}';
     }
+
 }
