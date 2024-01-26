@@ -34,13 +34,20 @@ public class ServiceProxy implements Protocol.IService {
     ObjectInputStream in;
     ObjectOutputStream out;
     ControllerSocket controller;
+    ViewController viewController;
 
     public ServiceProxy() {
+        viewController=new ViewController(true);
     }
 
     public void setController(ControllerSocket controller) {
         this.controller = controller;
     }
+
+    public void setViewController(ViewController viewController) {
+        this.viewController = viewController;
+    }
+    
 
     Socket skt;
 
@@ -50,7 +57,7 @@ public class ServiceProxy implements Protocol.IService {
         out = new ObjectOutputStream(skt.getOutputStream());
         out.flush();
         in = new ObjectInputStream(skt.getInputStream());
-
+        
     }
 
     private void disconnect() throws Exception {
@@ -99,7 +106,7 @@ public class ServiceProxy implements Protocol.IService {
         try {
             out.writeInt(ProtocolData.POST);
             out.writeObject(message);
-            System.out.println("Esto esta en el proxy post"+message);
+            System.out.println("Esto esta en el proxy post" + message);
             out.flush();
         } catch (IOException ex) {
 
@@ -168,7 +175,7 @@ public class ServiceProxy implements Protocol.IService {
                 System.out.println("Mensaje " + message.getMessage());
                 System.out.println("Mensaje " + message.getUnits());
                 System.out.println("Mensaje " + message.getSender());
-                //controller.deliver(message);
+                viewController.deliver(message);
             }
         }
         );

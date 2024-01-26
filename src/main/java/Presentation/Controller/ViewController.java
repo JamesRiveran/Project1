@@ -65,16 +65,18 @@ public class ViewController extends Controller implements ActionListener {
         this.socketModel = new SocketModel();
         colorOriginal = view.getBtnDelete().getBackground();
         view.getBtnDelete().setEnabled(false);
-
         this.calibrationController = new CalibrationController(this.view);
         this.intrumentsController = new IntrumentsController(this.view);
         intrumentsController.setInstruSelectionListener(calibrationController);
         this.data_logic = new Data_logic();
-        updateComboBoxModelUnids();
         clickTable();
         updateTable();
         this.view.setViewController(this);
         ControllerSocket controller = new ControllerSocket(view, socketModel);
+    }
+
+    public ViewController(boolean enter) {
+
     }
 
     public void start() throws IOException, SAXException, ParserConfigurationException {
@@ -106,6 +108,8 @@ public class ViewController extends Controller implements ActionListener {
         view.getCalibrationTxtNumber().setText(String.valueOf(data_logic.getId()));
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
+        SendMessage();
+   
 
     }
 
@@ -138,7 +142,7 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     public void updateComboBoxModelUnids() throws ParserConfigurationException, SAXException {
-        ListOfUnids = data_logic.getAllRecordsTypeUnids();
+        System.out.println("Esto es del combox " + ListOfUnids);
         if (view != null) {
             JComboBox<String> cmbUnid = view.getCmbUnit();
 
@@ -365,8 +369,7 @@ public class ViewController extends Controller implements ActionListener {
             view.getTxtName().setText("");
             updateComboBoxModelUnids();
 //            SendMessages("Hola");
-          
-            SendMessage();
+
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
@@ -383,5 +386,16 @@ public class ViewController extends Controller implements ActionListener {
 
         }
     }
-    
+
+    public void deliver(Message message) {
+        System.out.println("Esto ya esta en el controller " + message.getUnits());
+        ListOfUnids = message.getUnits();
+        try {
+            updateComboBoxModelUnids();
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
