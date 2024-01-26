@@ -185,8 +185,8 @@ public class ServiceProxy implements Protocol.IService {
                 System.out.println("Respuesta recibida:");
                 System.out.println("Mensaje " + message.getSender());
                 System.out.println("Mensaje " + message.getListOfIModu1o1());
-//                viewController.getUnit(message);
-                viewController.getTypeInstrument(message);
+                //viewController.deliverGetUnits(message);
+                viewController.deliverGetTypeInstrument(message);
             }
         }
         );

@@ -1,14 +1,10 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.project1;
 
-import Presentation.Controller.ControllerSocket;
 import Presentation.Controller.ViewController;
-import Presentation.Model.SocketModel;
-import Presentation.View.Modulo;
-import Server.data.BDCalibration;
-import Server.data.BDMeasurement;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
@@ -17,15 +13,9 @@ import org.xml.sax.SAXException;
  *
  * @author james
  */
-public class Project1 {
-    private static ControllerSocket controllerSocket;
+public class ClienteB {
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
-       
         ViewController viewController = new ViewController();
-        
-       viewController.start();
-       
-       //ViewController.SendMessage("ADIOS");
-       
+       viewController.startB();
     }
 }
