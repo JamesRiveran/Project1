@@ -30,6 +30,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
@@ -42,7 +43,7 @@ public class ViewController extends Controller implements ActionListener {
 
     InstrumentsList listInstrument;
     private ArrayList<InstrumentType> ListOfIModu1o1;
-    private ArrayList<UnidsType> ListOfUnids;
+    private static ArrayList<UnidsType> ListOfUnids;
     CalibrationController calibrationController;
     IntrumentsController intrumentsController;
     static Modulo view;
@@ -124,6 +125,7 @@ public class ViewController extends Controller implements ActionListener {
 
     public static void SendMessage() {
         Message msg = new Message();
+        msg.setUnits(ListOfUnids);
         msg.setSender(user);
         proxy.getUnit(msg);
     }
@@ -365,7 +367,6 @@ public class ViewController extends Controller implements ActionListener {
 //            SendMessages("Hola");
           
             SendMessage();
-
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {
@@ -382,4 +383,5 @@ public class ViewController extends Controller implements ActionListener {
 
         }
     }
+    
 }

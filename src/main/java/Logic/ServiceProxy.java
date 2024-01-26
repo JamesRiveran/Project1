@@ -167,7 +167,6 @@ public class ServiceProxy implements Protocol.IService {
                 System.out.println("Respuesta recibida:");
                 System.out.println("Mensaje " + message.getMessage());
                 System.out.println("Mensaje " + message.getUnits());
-
                 System.out.println("Mensaje " + message.getSender());
                 //controller.deliver(message);
             }

@@ -4,11 +4,13 @@
  */
 package Presentation.Model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author 50686
  */
-public class UnidsType {
+public class UnidsType  implements Serializable{
 
     private int idUnid;
     private String name, simbol;
