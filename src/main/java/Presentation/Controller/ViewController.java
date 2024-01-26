@@ -5,13 +5,17 @@
  */
 package Presentation.Controller;
 
+import Logic.ServiceProxy;
 import Presentation.Model.Data_logic;
 import Presentation.Model.GeneratorPDF;
 import static Presentation.Model.GeneratorPDF.loadTypeOfInstrument;
 import Presentation.Model.InstrumentType;
 import Presentation.Model.InstrumentsList;
+import Presentation.Model.SocketModel;
 import Presentation.Model.UnidsType;
 import Presentation.View.Modulo;
+import Protocol.Message;
+import Protocol.User;
 import com.itextpdf.text.DocumentException;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -46,10 +50,18 @@ public class ViewController extends Controller implements ActionListener {
     boolean update = false;
     int confirmResult;
     Color colorOriginal;
+    
+    SocketModel socketModel;
+
+    /*Global a la clase para poder consumirlo fuera del method*/
+    static ServiceProxy proxy;
+    static User user;
+
 
     public ViewController() throws ParserConfigurationException, SAXException {
         this.listInstrument = new InstrumentsList();
         this.view = new Modulo();
+         this.socketModel = new SocketModel();
         colorOriginal = view.getBtnDelete().getBackground();
         view.getBtnDelete().setEnabled(false);
 
@@ -61,6 +73,7 @@ public class ViewController extends Controller implements ActionListener {
         clickTable();
         updateTable();
         this.view.setViewController(this);
+        ControllerSocket controller =new ControllerSocket(view, socketModel);
     }
 
     public void start() throws IOException, SAXException, ParserConfigurationException {
@@ -93,6 +106,29 @@ public class ViewController extends Controller implements ActionListener {
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
 
+    }
+    
+    public void startSocket() {
+            
+            ControllerSocket controllerSocket = new ControllerSocket(view, socketModel);
+            User user = new User("5555", "1234","");
+            String instrumentType = "GuardarTipoInstrumento";
+            //ServiceProxy proxy = new ServiceProxy();
+            proxy = new ServiceProxy();
+        try {
+            // Inicio de sesión
+            proxy.login(user);
+        } catch (Exception ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void SendMessage(String message)
+    {
+        Message msg = new Message();
+        msg.setMessage(message);
+        msg.setSender(user);
+        proxy.post(msg);
     }
 
     public void updateComboBoxModelUnids() throws ParserConfigurationException, SAXException {

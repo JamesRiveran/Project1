@@ -3,9 +3,12 @@
  */
 package com.mycompany.project1;
 
+import Presentation.Controller.ControllerSocket;
 import Presentation.Controller.ViewController;
-import Data.BDCalibration;
-import Data.BDMeasurement;
+import Presentation.Model.SocketModel;
+import Presentation.View.Modulo;
+import Server.data.BDCalibration;
+import Server.data.BDMeasurement;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
@@ -15,11 +18,18 @@ import org.xml.sax.SAXException;
  * @author james
  */
 public class Project1 {
-
+    private static ControllerSocket controllerSocket;
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
-        Presentation.Controller.ViewController view = new ViewController();
-        view.start();
+        Modulo view = new Modulo();
+        SocketModel model = new SocketModel();
+        ViewController viewController = new ViewController();
         
+       // view.start();
+       
+       viewController.startSocket();
 
+       ViewController.SendMessage("HOLA");
+       //ViewController.SendMessage("ADIOS");
+       
     }
 }

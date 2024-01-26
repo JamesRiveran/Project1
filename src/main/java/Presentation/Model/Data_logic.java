@@ -4,10 +4,10 @@
  */
 package Presentation.Model;
 
-import Data.BDCalibration;
-import Data.BDInstrument;
-import Data.BDMeasurement;
-import Data.BDTypeInstrument;
+import Server.data.BDCalibration;
+import Server.data.BDInstrument;
+import Server.data.BDMeasurement;
+import Server.data.BDTypeInstrument;
 import static Presentation.Controller.ViewController.showMessage;
 import java.util.ArrayList;
 import java.util.List;
