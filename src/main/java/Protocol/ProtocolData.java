@@ -21,6 +21,8 @@ public class ProtocolData {
 
     public static final int DoECHO=100;
     
+    public static final int getUnit=200;
+    
     /*Si recibo un comando informar como parte del message cual mensaje se mando, insert, update delete,
     pasa por flujo de control y ver a quien tengo que notificar. solo no notifica con los read.*/
     
@@ -32,5 +34,6 @@ public class ProtocolData {
     public static final int ERROR_NO_ERROR=0;
     public static final int ERROR_LOGIN=1;
     public static final int ERROR_LOGOUT=2;    
-    public static final int ERROR_POST=3;  
+    public static final int ERROR_POST=3;
+    public static final int ERROR_getUnit=200;
 }

@@ -71,16 +71,17 @@ public class Worker {
                     } catch (ClassNotFoundException ex) {}
                     break;
 
-                    case ProtocolData.DoECHO:
+                    case ProtocolData.getUnit:
+                        
 
-
+                            System.out.println("Entró a getUnit");
 
 
                         break;
                 }
                 out.flush();
             } catch (IOException  ex) {
-                System.out.println("VSADV"+ex);
+                System.out.println(ex);
                 continuar = false;
             }                        
         }

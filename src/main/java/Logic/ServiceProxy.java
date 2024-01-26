@@ -102,6 +102,16 @@ public class ServiceProxy implements Protocol.IService {
             
         }   
     }  
+    
+    public void getUnit(Message message){
+        try {
+            out.writeInt(ProtocolData.getUnit);
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+            
+        }   
+    }  
 
     // LISTENING FUNCTIONS
    boolean continuar = true;    

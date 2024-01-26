@@ -105,11 +105,11 @@ public class ViewController extends Controller implements ActionListener {
         view.getCalibrationTxtNumber().setText(String.valueOf(data_logic.getId()));
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
-
+        
+        
     }
     
     public void startSocket() {
-            
             ControllerSocket controllerSocket = new ControllerSocket(view, socketModel);
             User user = new User("5555", "1234","");
             String instrumentType = "GuardarTipoInstrumento";
@@ -128,7 +128,7 @@ public class ViewController extends Controller implements ActionListener {
         Message msg = new Message();
         msg.setMessage(message);
         msg.setSender(user);
-        proxy.post(msg);
+        proxy.getUnit(msg);
     }
 
     public void updateComboBoxModelUnids() throws ParserConfigurationException, SAXException {
@@ -358,6 +358,7 @@ public class ViewController extends Controller implements ActionListener {
             view.getTxtCode().setText("");
             view.getTxtName().setText("");
             updateComboBoxModelUnids();
+            SendMessage("getUnidad");
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {

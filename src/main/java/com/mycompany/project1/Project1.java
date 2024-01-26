@@ -24,11 +24,11 @@ public class Project1 {
         SocketModel model = new SocketModel();
         ViewController viewController = new ViewController();
         
-       // view.start();
+        
        
        viewController.startSocket();
-
-       ViewController.SendMessage("HOLA");
+       viewController.start();
+       
        //ViewController.SendMessage("ADIOS");
        
     }
