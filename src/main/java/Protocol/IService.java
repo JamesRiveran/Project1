@@ -8,6 +8,5 @@ public interface IService {
 
     public void post(Message m);
 
-    public void getUnit(Message m);
 
 }

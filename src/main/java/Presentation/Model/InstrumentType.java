@@ -4,12 +4,14 @@
  */
 package Presentation.Model;
 
+import java.io.Serializable;
+
 
 /**
  *
  * @author james
  */
-public class InstrumentType {
+public class InstrumentType implements Serializable{
 
 
     private String code, unit, name;

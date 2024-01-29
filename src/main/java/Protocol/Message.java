@@ -1,28 +1,61 @@
 package Protocol;
 
+import Presentation.Model.InstrumentModulo2;
+import Presentation.Model.InstrumentType;
+import Presentation.Model.IntrumentListModulo2;
 import Presentation.Model.UnidsType;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class Message implements Serializable {
 
     private User sender;
     private String message;
+    private boolean update;
     private String[] data;
     private ArrayList<UnidsType> units;
+    private ArrayList<InstrumentType> typeIntruments;
+    private List<InstrumentType> saveTypeIntruments;
+    private ArrayList<InstrumentModulo2> instruments;
 
     public Message() {
     }
 
-    public Message(User sender, String message, String[] data, ArrayList<UnidsType> units) {
+    public Message(User sender, String message, boolean update, String[] data, ArrayList<UnidsType> units, ArrayList<InstrumentType> typeIntruments, List<InstrumentType> saveTypeIntruments, ArrayList<InstrumentModulo2> instruments) {
         this.sender = sender;
         this.message = message;
+        this.update = update;
         this.data = data;
         this.units = units;
+        this.typeIntruments = typeIntruments;
+        this.saveTypeIntruments = saveTypeIntruments;
+        this.instruments = instruments;
     }
 
- 
+    public void setInstruments(ArrayList<InstrumentModulo2> instruments) {
+        this.instruments = instruments;
+    }
+
+    public ArrayList<InstrumentModulo2> getInstruments() {
+        return instruments;
+    }
+
+    public boolean isUpdate() {
+        return update;
+    }
+
+    public void setUpdate(boolean update) {
+        this.update = update;
+    }
+
+    public void setSaveTypeIntruments(List<InstrumentType> saveTypeIntruments) {
+        this.saveTypeIntruments = saveTypeIntruments;
+    }
+
+    public List<InstrumentType> getSaveTypeIntruments() {
+        return saveTypeIntruments;
+    }
 
     public User getSender() {
         return sender;
@@ -56,9 +89,17 @@ public class Message implements Serializable {
         this.units = units;
     }
 
+    public ArrayList<InstrumentType> getTypeIntruments() {
+        return typeIntruments;
+    }
+
+    public void setTypeIntruments(ArrayList<InstrumentType> typeIntruments) {
+        this.typeIntruments = typeIntruments;
+    }
+
     @Override
     public String toString() {
-        return "Message{" + "sender=" + sender + ", message=" + message + ", data=" + data + ", units=" + units + '}';
+        return "Message{" + "sender=" + sender + ", message=" + message + ", update=" + update + ", data=" + data + ", units=" + units + ", typeIntruments=" + typeIntruments + ", saveTypeIntruments=" + saveTypeIntruments + '}';
     }
 
 }

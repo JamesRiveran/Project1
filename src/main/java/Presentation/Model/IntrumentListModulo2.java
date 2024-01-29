@@ -5,13 +5,14 @@
 package Presentation.Model;
 
 import Presentation.Model.InstrumentModulo2;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author 50686
  */
-public class IntrumentListModulo2 {
+public class IntrumentListModulo2 implements Serializable {
          private ArrayList<InstrumentModulo2> list;
 
     public IntrumentListModulo2(ArrayList<InstrumentModulo2> list) {

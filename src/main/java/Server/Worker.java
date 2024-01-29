@@ -1,6 +1,8 @@
 package Server;
 
-import Presentation.Model.UnidsType;
+import Server.data.BDInstrument;
+import Server.data.BDTypeInstrument;
+import Presentation.Model.InstrumentType;
 import Protocol.IService;
 import Protocol.Message;
 import Protocol.ProtocolData;
@@ -8,7 +10,8 @@ import Protocol.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,6 +23,7 @@ public class Worker {
     IService service;
     User user;
     BDTypeInstrument type;
+    BDInstrument instruments;
 
     public Worker(Server srv, ObjectInputStream in, ObjectOutputStream out, User user, IService service) {
         this.srv = srv;
@@ -28,6 +32,8 @@ public class Worker {
         this.user = user;
         this.service = service;
         this.type = new BDTypeInstrument();
+        this.instruments = new BDInstrument();
+
     }
 
     boolean continuar;
@@ -82,22 +88,80 @@ public class Worker {
                         }
                         break;
 
-                    case ProtocolData.getUnit:
+                    case ProtocolData.GET_INFROMATION_MODULO_1:
                         Message messagess = null;
                         try {
                             messagess = (Message) in.readObject();
-                            System.out.println(messagess);
                             messagess.setUnits(type.getAllRecordsOfUnits());
+                            messagess.setTypeIntruments(type.getAllRecords());
+
                             messagess.setSender(user);
-                            
+
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(messagess);
-                            System.out.println(user.getNombre() + ": " + messagess.getUnits());
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
+                    case ProtocolData.SAVE_TYPEINSTRUMENTS:
+                        Message save = null;
+                        try {
+                            save = (Message) in.readObject();
+                            boolean up = save.isUpdate();
+                            List<InstrumentType> sa = save.getSaveTypeIntruments();
+                            System.out.println("Porque se almacena " + save);
+                            System.out.println("esto es sa en serio SA " + sa);
+
+                            for (InstrumentType saves : sa) {
+                                try {
+                                    if (!type.instrumentTypeExists(saves.getCode()) || up) {
+                                        String response = type.saveOrUpdateInstrument(saves.getCode(), saves.getUnit(), saves.getName());
+                                        save.setMessage(response);
+                                    } else {
+                                        save.setMessage("Ya existe ese codigo");
+                                    }
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            save.setSender(user);
+                            // Envía la lista de unidades al cliente a través del método deliver
+                            srv.deliver(save);
+                            System.out.println(user.getNombre() + ": " + save.getSaveTypeIntruments());
+
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
+                    case ProtocolData.DELETE_TYPEINSTRUMENTS:
+                        Message delete = null;
+                        try {
+                            delete = (Message) in.readObject();
+                            String response = type.deleteRecord(delete.getMessage());
+                            delete.setMessage(response);
+                            delete.setSender(user);
+                            // Envía la lista de unidades al cliente a través del método deliver
+                            srv.deliver(delete);
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
 
+                    case ProtocolData.GET_INFROMATION_MODULO_2:
+                        Message get_Informaion_modulo2 = null;
+                        try {
+                            get_Informaion_modulo2 = (Message) in.readObject();
+                            get_Informaion_modulo2.setUnits(type.getAllRecordsOfUnits());
+                            get_Informaion_modulo2.setTypeIntruments(type.getAllRecords());
+
+                            get_Informaion_modulo2.setSender(user);
+
+                            // Envía la lista de unidades al cliente a través del método deliver
+                            srv.deliver(get_Informaion_modulo2);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
                 }
                 out.flush();
             } catch (IOException ex) {

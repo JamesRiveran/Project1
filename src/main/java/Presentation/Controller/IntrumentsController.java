@@ -4,6 +4,8 @@
  */
 package Presentation.Controller;
 
+import static Presentation.Controller.ViewController.proxy;
+import static Presentation.Controller.ViewController.user;
 import Presentation.Model.Data_logic;
 import Presentation.Model.GeneratorPDF;
 import static Presentation.Model.GeneratorPDF.loadInstrument;
@@ -11,6 +13,7 @@ import Presentation.Model.InstrumentModulo2;
 import Presentation.Model.InstrumentType;
 import Presentation.Model.IntrumentListModulo2;
 import Presentation.View.Modulo;
+import Protocol.Message;
 import com.itextpdf.text.DocumentException;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
@@ -35,8 +38,8 @@ public final class IntrumentsController extends Controller {
 
     ViewController viewController;
     IntrumentListModulo2 listModulo2;
-    private ArrayList<InstrumentModulo2> ListOfXml;
-    private ArrayList<InstrumentType> listName;
+    private static ArrayList<InstrumentModulo2> ListOfXml;
+    private static ArrayList<InstrumentType> listName;
     private InstruSelectionListener instruSelectionListener;
     static Modulo view;
     Data_logic data_logic;
@@ -57,6 +60,14 @@ public final class IntrumentsController extends Controller {
         updateTable();
         this.view.setIntrumentsController(this);
 
+    }
+    
+       public static void getInformation() {
+        Message msg = new Message();
+        msg.setInstruments(ListOfXml);
+        msg.setTypeIntruments(listName);
+        msg.setSender(user);
+        proxy.getInformationModulo2(msg);
     }
 
     public void setInstruSelectionListener(InstruSelectionListener listener) {

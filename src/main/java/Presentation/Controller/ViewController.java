@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -42,7 +43,7 @@ import org.xml.sax.SAXException;
 public class ViewController extends Controller implements ActionListener {
 
     InstrumentsList listInstrument;
-    private ArrayList<InstrumentType> ListOfIModu1o1;
+    private static ArrayList<InstrumentType> ListOfIModu1o1;
     private static ArrayList<UnidsType> ListOfUnids;
     CalibrationController calibrationController;
     IntrumentsController intrumentsController;
@@ -70,7 +71,6 @@ public class ViewController extends Controller implements ActionListener {
         intrumentsController.setInstruSelectionListener(calibrationController);
         this.data_logic = new Data_logic();
         clickTable();
-        updateTable();
         this.view.setViewController(this);
         ControllerSocket controller = new ControllerSocket(view, socketModel);
     }
@@ -108,15 +108,12 @@ public class ViewController extends Controller implements ActionListener {
         view.getCalibrationTxtNumber().setText(String.valueOf(data_logic.getId()));
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
-        SendMessage();
-   
-
+        getInformation();
     }
 
     public void startSocket() {
         ControllerSocket controllerSocket = new ControllerSocket(view, socketModel);
         User user = new User("5555", "1234", "");
-        String instrumentType = "GuardarTipoInstrumento";
         //ServiceProxy proxy = new ServiceProxy();
         proxy = new ServiceProxy();
         try {
@@ -127,11 +124,27 @@ public class ViewController extends Controller implements ActionListener {
         }
     }
 
-    public static void SendMessage() {
+    public static void saveInformation(List<InstrumentType> instrumentList, boolean update) {
         Message msg = new Message();
+        msg.setSaveTypeIntruments(instrumentList);
+        msg.setUpdate(update);
+        msg.setSender(user);
+        proxy.saveIntruments(msg);
+    }
+
+    public static void getInformation() {
+        Message msg = new Message();
+        msg.setTypeIntruments(ListOfIModu1o1);
         msg.setUnits(ListOfUnids);
         msg.setSender(user);
-        proxy.getUnit(msg);
+        proxy.getInformation(msg);
+    }
+
+    public static void deleteInformation(String code) {
+        Message msg = new Message();
+        msg.setMessage(code);
+        msg.setSender(user);
+        proxy.deleteInstruments(msg);
     }
 
     public static void SendMessages(String message) {
@@ -218,9 +231,9 @@ public class ViewController extends Controller implements ActionListener {
                         String newName = view.getTxtName().getText();
                         InstrumentType instrument = new InstrumentType(code, String.valueOf(unit + 1), newName);
                         listInstrument.getList().add(instrument);
-                        data_logic.saveOrUpdateInstruments(listInstrument.getList(), view, update);
+                        saveInformation(listInstrument.getList(), update);
+//                        data_logic.saveOrUpdateInstruments(listInstrument.getList(), view, update);
                         listInstrument.getList().clear();
-                        updateTable();
                         intrumentsController.updateComboBoxModel();
                         clean();
                     } catch (Exception ex) {
@@ -240,8 +253,7 @@ public class ViewController extends Controller implements ActionListener {
 
     @Override
     public void search() {
-        ArrayList<InstrumentType> loadedList = data_logic.getAllRecordsTypeInstruments();
-        if (loadedList.isEmpty()) {
+        if (ListOfIModu1o1.isEmpty()) {
             showMessage(viewError, "No hay tipos de instrumentos registrados", "error");
         }
         String letterSearch = view.getTxtNameForSearch().getText();
@@ -259,8 +271,7 @@ public class ViewController extends Controller implements ActionListener {
     @Override
     public void delete() {
         try {
-            data_logic.deletedTypeInstrument(view.getTxtCode().getText(), view);
-            updateTable();
+            deleteInformation(view.getTxtCode().getText());
             intrumentsController.updateComboBoxModel();
             clean();
         } catch (SAXException | ParserConfigurationException ex) {
@@ -318,15 +329,14 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     private void filterByName(String letterSearch) throws IOException, ParserConfigurationException, SAXException {
-        ArrayList<InstrumentType> loadedList = data_logic.getAllRecordsTypeInstruments();
         DefaultTableModel template = (DefaultTableModel) view.getTblListInstruments().getModel();
         template.setRowCount(0);
         if (letterSearch.isEmpty()) {
-            for (InstrumentType instrument : loadedList) {
+            for (InstrumentType instrument : ListOfIModu1o1) {
                 template.addRow(new Object[]{instrument.getCode(), instrument.getName(), instrument.getUnit()});
             }
         } else {
-            for (InstrumentType instrument : loadedList) {
+            for (InstrumentType instrument : ListOfIModu1o1) {
                 String nameInstrumentForSearch = instrument.getName().toLowerCase();
                 if (nameInstrumentForSearch.contains(letterSearch.toLowerCase())) {
                     template.addRow(new Object[]{instrument.getCode(), instrument.getName(), instrument.getUnit()});
@@ -336,7 +346,6 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {
-        ListOfIModu1o1 = data_logic.getAllRecordsTypeInstruments();
         DefaultTableModel tableModule1 = (DefaultTableModel) view.getTblListInstruments().getModel();
         tableModule1.setRowCount(0);
         for (int i = ListOfIModu1o1.size() - 1; i >= 0; i--) {
@@ -360,21 +369,13 @@ public class ViewController extends Controller implements ActionListener {
 
     @Override
     public void clean() {
-        try {
-            update = false;
-            view.getBtnDelete().setEnabled(false);
-            view.getBtnDelete().setBackground(colorOriginal);
-            view.getTxtCode().setEnabled(true);
-            view.getTxtCode().setText("");
-            view.getTxtName().setText("");
-            updateComboBoxModelUnids();
-//            SendMessages("Hola");
-
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        update = false;
+        view.getBtnDelete().setEnabled(false);
+        view.getBtnDelete().setBackground(colorOriginal);
+        view.getTxtCode().setEnabled(true);
+        view.getTxtCode().setText("");
+        view.getTxtName().setText("");
+        getInformation();
     }
 
     public void close() {
@@ -388,10 +389,19 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     public void deliver(Message message) {
-        System.out.println("Esto ya esta en el controller " + message.getUnits());
+        System.out.println("Esto ya esta en el controller se guardo " + message.getMessage());
+
         ListOfUnids = message.getUnits();
+        ListOfIModu1o1 = message.getTypeIntruments();
+
         try {
-            updateComboBoxModelUnids();
+            if (ListOfUnids == null || ListOfIModu1o1 == null) {
+                System.err.println("estan null");
+            } else {
+                updateComboBoxModelUnids();
+                updateTable();
+            }
+
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SAXException ex) {

@@ -37,7 +37,7 @@ public class ServiceProxy implements Protocol.IService {
     ViewController viewController;
 
     public ServiceProxy() {
-        viewController=new ViewController(true);
+        viewController = new ViewController(true);
     }
 
     public void setController(ControllerSocket controller) {
@@ -47,7 +47,6 @@ public class ServiceProxy implements Protocol.IService {
     public void setViewController(ViewController viewController) {
         this.viewController = viewController;
     }
-    
 
     Socket skt;
 
@@ -57,7 +56,7 @@ public class ServiceProxy implements Protocol.IService {
         out = new ObjectOutputStream(skt.getOutputStream());
         out.flush();
         in = new ObjectInputStream(skt.getInputStream());
-        
+
     }
 
     private void disconnect() throws Exception {
@@ -68,20 +67,20 @@ public class ServiceProxy implements Protocol.IService {
     public User login(User u) throws Exception {
         connect();
         try {
-            System.out.println("Enviando Protocol Login...");
+//            System.out.println("Enviando Protocol Login...");
             out.writeInt(ProtocolData.LOGIN);
-            System.out.println("Enviando User...");
+//            System.out.println("Enviando User...");
             out.writeObject(u);
-            System.out.println("Flush...");
+//            System.out.println("Flush...");
             out.flush();
             int response = in.readInt();
             System.out.println("Respuesta del server: " + response);
             if (response == ProtocolData.ERROR_NO_ERROR) {
-                System.out.println("Respuesta User...");
+//                System.out.println("Respuesta User...");
                 User u1 = (User) in.readObject();
-                System.out.println("call start()...");
+//                System.out.println("call start()...");
                 this.start();
-                System.out.println("end call start()...");
+//                System.out.println("end call start()...");
                 return u1;
             } else {
                 System.out.println("Error recibido:" + response);
@@ -113,17 +112,45 @@ public class ServiceProxy implements Protocol.IService {
         }
     }
 
-    public void getUnit(Message message) {
+    public void getInformation(Message message) {
         try {
-            out.writeInt(ProtocolData.getUnit);
+            out.writeInt(ProtocolData.GET_INFROMATION_MODULO_1);
             out.writeObject(message);
-            System.out.println("Esto es " + message);
             out.flush();
         } catch (IOException ex) {
 
         }
     }
 
+    public void saveIntruments(Message message) {
+        try {
+            out.writeInt(ProtocolData.SAVE_TYPEINSTRUMENTS);
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+
+        }
+    }
+
+    public void deleteInstruments(Message message) {
+        try {
+            out.writeInt(ProtocolData.DELETE_TYPEINSTRUMENTS);
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+
+        }
+    }
+
+    public void getInformationModulo2(Message message) {
+        try {
+            out.writeInt(ProtocolData.GET_INFROMATION_MODULO_2);
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+
+        }
+    }
     // LISTENING FUNCTIONS
     boolean continuar = true;
 
@@ -173,8 +200,9 @@ public class ServiceProxy implements Protocol.IService {
             public void run() {
                 System.out.println("Respuesta recibida:");
                 System.out.println("Mensaje " + message.getMessage());
-                System.out.println("Mensaje " + message.getUnits());
-                System.out.println("Mensaje " + message.getSender());
+//                System.out.println("Mensaje " + message.getUnits());
+//                System.out.println("Mensaje " + message.getSender());
+//                System.out.println("Mensaje " + message.getTypeIntruments());
                 viewController.deliver(message);
             }
         }
