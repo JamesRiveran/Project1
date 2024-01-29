@@ -8,6 +8,7 @@ import Protocol.IService;
 import Protocol.Message;
 import Protocol.ProtocolData;
 import Protocol.User;
+import Server.data.BDCalibration;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,6 +26,7 @@ public class Worker {
     User user;
     BDTypeInstrument type;
     BDInstrument instruments;
+    BDCalibration calibration;
 
     public Worker(Server srv, ObjectInputStream in, ObjectOutputStream out, User user, IService service) {
         this.srv = srv;
@@ -34,6 +36,7 @@ public class Worker {
         this.service = service;
         this.type = new BDTypeInstrument();
         this.instruments = new BDInstrument();
+        this.calibration = new BDCalibration();
 
     }
 
@@ -95,6 +98,8 @@ public class Worker {
                             messagess = (Message) in.readObject();
                             messagess.setUnits(type.getAllRecordsOfUnits());
                             messagess.setTypeIntruments(type.getAllRecords());
+                            messagess.setId(String.valueOf(calibration.getId()));
+
                             messagess.setSender(user);
 
                             // Envía la lista de unidades al cliente a través del método deliver

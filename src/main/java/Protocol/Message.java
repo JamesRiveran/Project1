@@ -12,6 +12,7 @@ public class Message implements Serializable {
 
     private User sender;
     private String message;
+    private String Id;
     private boolean update;
     private String[] data;
     private ArrayList<UnidsType> units;
@@ -23,9 +24,10 @@ public class Message implements Serializable {
     public Message() {
     }
 
-    public Message(User sender, String message, boolean update, String[] data, ArrayList<UnidsType> units, ArrayList<InstrumentType> typeIntruments, List<InstrumentType> saveTypeIntruments, ArrayList<InstrumentModulo2> instruments, List<InstrumentModulo2> saveInstru) {
+    public Message(User sender, String message, String Id, boolean update, String[] data, ArrayList<UnidsType> units, ArrayList<InstrumentType> typeIntruments, List<InstrumentType> saveTypeIntruments, ArrayList<InstrumentModulo2> instruments, List<InstrumentModulo2> saveInstru) {
         this.sender = sender;
         this.message = message;
+        this.Id = Id;
         this.update = update;
         this.data = data;
         this.units = units;
@@ -33,6 +35,14 @@ public class Message implements Serializable {
         this.saveTypeIntruments = saveTypeIntruments;
         this.instruments = instruments;
         this.saveInstru = saveInstru;
+    }
+
+    public void setId(String Id) {
+        this.Id = Id;
+    }
+
+    public String getId() {
+        return Id;
     }
 
     public void setSaveInstru(List<InstrumentModulo2> saveInstru) {
@@ -109,7 +119,9 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{" + "sender=" + sender + ", message=" + message + ", update=" + update + ", data=" + data + ", units=" + units + ", typeIntruments=" + typeIntruments + ", saveTypeIntruments=" + saveTypeIntruments + ", instruments=" + instruments + ", saveInstru=" + saveInstru + '}';
+        return "Message{" + "sender=" + sender + ", message=" + message + ", Id=" + Id + ", update=" + update + ", data=" + data + ", units=" + units + ", typeIntruments=" + typeIntruments + ", saveTypeIntruments=" + saveTypeIntruments + ", instruments=" + instruments + ", saveInstru=" + saveInstru + '}';
     }
+
+
 
 }

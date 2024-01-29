@@ -5,8 +5,9 @@
 package Presentation.Controller;
 
 import static Presentation.Controller.ViewController.proxy;
+import static Presentation.Controller.ViewController.showMessage;
 import static Presentation.Controller.ViewController.user;
-import Presentation.Model.Data_logic;
+import static Presentation.Controller.ViewController.view;
 import Presentation.Model.GeneratorPDF;
 import static Presentation.Model.GeneratorPDF.loadInstrument;
 import Presentation.Model.InstrumentModulo2;
@@ -341,7 +342,7 @@ public final class IntrumentsController extends Controller {
     }
 
     public void deliver(Message message) {
-        System.out.println("Esto ya esta en el controller se guardo Intruments " + message.getInstruments());
+        System.out.println("Esto ya esta en el controller se guardo Intruments " + message.getMessage());
 
         ListOfXml = message.getInstruments();
         listName = message.getTypeIntruments();
@@ -352,6 +353,10 @@ public final class IntrumentsController extends Controller {
             } else {
                 updateComboBoxModel();
                 updateTable();
+            }
+            if (message.getMessage() == null) {
+            } else {
+                showMessage(view, message.getMessage(), "success");
             }
 
         } catch (ParserConfigurationException ex) {

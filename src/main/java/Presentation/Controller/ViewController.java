@@ -9,14 +9,12 @@ import Logic.ServiceProxy;
 import Presentation.Model.Data_logic;
 import Presentation.Model.GeneratorPDF;
 import static Presentation.Model.GeneratorPDF.loadTypeOfInstrument;
-import Presentation.Model.InstrumentModulo2;
 import Presentation.Model.InstrumentType;
 import Presentation.Model.InstrumentsList;
 import Presentation.Model.SocketModel;
 import Presentation.Model.UnidsType;
 import Presentation.View.Modulo;
 import Protocol.Message;
-import Protocol.ProtocolData;
 import Protocol.User;
 import com.itextpdf.text.DocumentException;
 import java.awt.Color;
@@ -32,7 +30,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
@@ -46,16 +43,14 @@ public class ViewController extends Controller implements ActionListener {
     InstrumentsList listInstrument;
     private static ArrayList<InstrumentType> ListOfIModu1o1;
     private static ArrayList<UnidsType> ListOfUnids;
-
     CalibrationController calibrationController;
     IntrumentsController intrumentsController;
     static Modulo view;
+    private static String get_Id = "";
     protected Modulo viewError;
-    Data_logic data_logic;
     boolean update = false;
     int confirmResult;
     Color colorOriginal;
-    ProtocolData protocolData;
     SocketModel socketModel;
 
     /*Global a la clase para poder consumirlo fuera del method*/
@@ -71,7 +66,6 @@ public class ViewController extends Controller implements ActionListener {
         this.calibrationController = new CalibrationController(this.view);
         this.intrumentsController = new IntrumentsController(this.view);
         intrumentsController.setInstruSelectionListener(calibrationController);
-        this.data_logic = new Data_logic();
         clickTable();
         this.view.setViewController(this);
         ControllerSocket controller = new ControllerSocket(view, socketModel);
@@ -82,7 +76,6 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     public void start() throws IOException, SAXException, ParserConfigurationException {
-
         view.getBtnClean().addActionListener(e -> clean());
         view.getBtnDelete().addActionListener(e -> delete());
         view.getBtnPDF().addActionListener(e -> reportPdf());
@@ -107,11 +100,12 @@ public class ViewController extends Controller implements ActionListener {
         view.getBtnSaveMeasurement().addActionListener(e -> calibrationController.saveMeasurement());
         view.getBtnCleanMeasurement().addActionListener(e -> calibrationController.cleanMeasurement());
 
-        view.getCalibrationTxtNumber().setText(String.valueOf(data_logic.getId()));
+        intrumentsController.tab();
+        getInformation();
+
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
-        getInformation();
-        intrumentsController.tab();
+
     }
 
     public void startSocket() {
@@ -139,6 +133,7 @@ public class ViewController extends Controller implements ActionListener {
         Message msg = new Message();
         msg.setTypeIntruments(ListOfIModu1o1);
         msg.setUnits(ListOfUnids);
+        msg.setId(get_Id);
         msg.setSender(user);
         proxy.getInformation(msg);
     }
@@ -158,7 +153,6 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     public void updateComboBoxModelUnids() throws ParserConfigurationException, SAXException {
-        System.out.println("Esto es del combox " + ListOfUnids);
         if (view != null) {
             JComboBox<String> cmbUnid = view.getCmbUnit();
 
@@ -185,13 +179,6 @@ public class ViewController extends Controller implements ActionListener {
         }
     }
 
-    public static void conection(boolean m) {
-        if (m) {
-            modalForRelations("Posee una relacion no se puede borrar", "error");
-        } else {
-            modalForRelations("Borrado exitosamente", "success");
-        }
-    }
 
     public static void modalForRelations(String errorMessage, String info) {
         if (info == "error") {
@@ -392,17 +379,22 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     public void deliver(Message message) {
-        System.out.println("Esto ya esta en el controller se guardo " + message.getInstruments());
-
+        System.out.println("Esto ya esta en el controller se guardo " + message.getMessage());
         ListOfUnids = message.getUnits();
         ListOfIModu1o1 = message.getTypeIntruments();
-
+        get_Id = message.getId();
         try {
             if (ListOfUnids == null || ListOfIModu1o1 == null) {
                 System.err.println("estan null");
             } else {
                 updateComboBoxModelUnids();
                 updateTable();
+                view.getCalibrationTxtNumber().setText(get_Id);
+
+            }
+            if (message.getMessage() == null) {
+            } else {
+                showMessage(view, message.getMessage(), "success");
             }
 
         } catch (ParserConfigurationException ex) {
@@ -411,4 +403,5 @@ public class ViewController extends Controller implements ActionListener {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }

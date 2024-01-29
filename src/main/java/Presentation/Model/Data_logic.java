@@ -23,7 +23,6 @@ public class Data_logic {
     BDInstrument InstrumentsModulo2 = new BDInstrument();
     BDCalibration calibration = new BDCalibration();
     BDMeasurement measurement = new BDMeasurement();
-
     public Data_logic() {
         this.dbConnection = new BDTypeInstrument();
         this.InstrumentsModulo2 = new BDInstrument();

@@ -174,6 +174,7 @@ public class ServiceProxy implements Protocol.IService {
 
         }
     }
+
     // LISTENING FUNCTIONS
     boolean continuar = true;
 
@@ -226,8 +227,8 @@ public class ServiceProxy implements Protocol.IService {
 //                System.out.println("Mensaje " + message.getUnits());
 //                System.out.println("Mensaje " + message.getSender());
 //                System.out.println("Mensaje " + message.getTypeIntruments());
-                viewController.deliver(message);
                 inst.deliver(message);
+                viewController.deliver(message);
 
             }
         }
