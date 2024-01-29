@@ -99,7 +99,7 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{" + "sender=" + sender + ", message=" + message + ", update=" + update + ", data=" + data + ", units=" + units + ", typeIntruments=" + typeIntruments + ", saveTypeIntruments=" + saveTypeIntruments + '}';
+        return "Message{" + "sender=" + sender + ", message=" + message + ", update=" + update + ", data=" + data + ", units=" + units + ", typeIntruments=" + typeIntruments + ", saveTypeIntruments=" + saveTypeIntruments + ", instruments=" + instruments + '}';
     }
 
 }

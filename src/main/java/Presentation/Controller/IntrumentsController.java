@@ -46,7 +46,7 @@ public final class IntrumentsController extends Controller {
     boolean update = false;
     int confirmResult;
     Color colorOriginal;
-    String simbol="";
+    String simbol = "";
 
     public IntrumentsController(Modulo views) throws ParserConfigurationException, SAXException {
         this.listModulo2 = new IntrumentListModulo2();
@@ -54,15 +54,19 @@ public final class IntrumentsController extends Controller {
         this.data_logic = new Data_logic();
         colorOriginal = view.getBtnDeleteInstru().getBackground();
         view.getBtnDeleteInstru().setEnabled(false);
-
-        updateComboBoxModel();
         clickTable();
-        updateTable();
         this.view.setIntrumentsController(this);
 
     }
-    
-       public static void getInformation() {
+
+    public void tab() {
+        getInformation();
+    }
+
+    public IntrumentsController(boolean enter) {
+    }
+
+    public static void getInformation() {
         Message msg = new Message();
         msg.setInstruments(ListOfXml);
         msg.setTypeIntruments(listName);
@@ -96,7 +100,7 @@ public final class IntrumentsController extends Controller {
 
                 if (confirmResult == JOptionPane.YES_OPTION) {
                     informationForXml();
-                    updateTable();
+                    getInformation();
                     clean();
                 }
             }
@@ -122,29 +126,21 @@ public final class IntrumentsController extends Controller {
 
     @Override
     public void clean() {
-        try {
-            update = false;
-            view.getBtnDelete().setEnabled(false);
-            view.getTxtSerie().setEnabled(true);
-            view.getBtnDeleteInstru().setEnabled(false);
-            view.getBtnDeleteInstru().setBackground(colorOriginal);
-            view.getTxtSerie().setText("");
-            view.getTxtMini().setText("");
-            view.getTxtTole().setText("");
-            view.getTxtMaxi().setText("");
-            view.getTxtDescri().setText("");
-            updateComboBoxModel();
-            updateTable();
-            view.getCmbType().setSelectedIndex(0);
+        update = false;
+        view.getBtnDelete().setEnabled(false);
+        view.getTxtSerie().setEnabled(true);
+        view.getBtnDeleteInstru().setEnabled(false);
+        view.getBtnDeleteInstru().setBackground(colorOriginal);
+        view.getTxtSerie().setText("");
+        view.getTxtMini().setText("");
+        view.getTxtTole().setText("");
+        view.getTxtMaxi().setText("");
+        view.getTxtDescri().setText("");
+        getInformation();
+        view.getCmbType().setSelectedIndex(0);
+        if (instruSelectionListener != null) {
+            instruSelectionListener.onInstruSelected("", "", "", "", "", "", false);
 
-            if (instruSelectionListener != null) {
-                instruSelectionListener.onInstruSelected("", "", "", "", "", "",false);
-
-            }
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SAXException ex) {
-            Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -178,7 +174,6 @@ public final class IntrumentsController extends Controller {
 
     public void informationForXml() {
         listModulo2.getList().clear();
-        listName = data_logic.getAllRecordsTypeInstruments();
         String code = "";
         for (InstrumentType name : listName) {
             if (view.getCmbType().getSelectedItem().toString().equals(name.getName())) {
@@ -196,7 +191,6 @@ public final class IntrumentsController extends Controller {
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {
-        ListOfXml = data_logic.getAllRecordsInstruments();
         DefaultTableModel tableModel = (DefaultTableModel) view.getTbInstru().getModel();
         tableModel.setRowCount(0);
         for (int i = ListOfXml.size() - 1; i >= 0; i--) {
@@ -206,7 +200,6 @@ public final class IntrumentsController extends Controller {
     }
 
     public void updateComboBoxModel() throws ParserConfigurationException, SAXException {
-        listName = data_logic.getAllRecordsTypeInstruments();
 
         if (view != null) {
             JComboBox<String> cmbType = view.getCmbType();
@@ -237,7 +230,7 @@ public final class IntrumentsController extends Controller {
                                 String symbol = extractSymbol(selectedInstrument.getUnit());
                                 view.getLbSimbol().setText(symbol);
                                 view.getLbSimbol1().setText(symbol);
-                                simbol=symbol;
+                                simbol = symbol;
                             } else {
                                 view.getLbSimbol().setText("");
                                 view.getLbSimbol1().setText("");
@@ -293,7 +286,7 @@ public final class IntrumentsController extends Controller {
             view.getBtnDeleteInstru().setEnabled(true);
             view.getBtnDeleteInstru().setBackground(Color.RED);
             if (instruSelectionListener != null) {
-                instruSelectionListener.onInstruSelected(serie, tole, descri, mini, maxi, simbol,true);
+                instruSelectionListener.onInstruSelected(serie, tole, descri, mini, maxi, simbol, true);
             }
 
         }
@@ -334,6 +327,27 @@ public final class IntrumentsController extends Controller {
                     tableModel.addRow(new Object[]{instrument.getSerie(), instrument.getDescri(), instrument.getMini(), instrument.getMaxi(), instrument.getTole(), instrument.getType()});
                 }
             }
+        }
+    }
+
+    public void deliver(Message message) {
+        System.out.println("Esto ya esta en el controller se guardo Intruments " + message.getInstruments());
+
+        ListOfXml = message.getInstruments();
+        listName = message.getTypeIntruments();
+
+        try {
+            if (ListOfXml == null || listName == null) {
+                System.err.println("estan null");
+            } else {
+                updateComboBoxModel();
+                updateTable();
+            }
+
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

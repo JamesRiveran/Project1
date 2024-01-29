@@ -5,6 +5,7 @@
 package Logic;
 
 import Presentation.Controller.ControllerSocket;
+import Presentation.Controller.IntrumentsController;
 import Presentation.Controller.ViewController;
 import Protocol.IService;
 import Protocol.Message;
@@ -35,9 +36,11 @@ public class ServiceProxy implements Protocol.IService {
     ObjectOutputStream out;
     ControllerSocket controller;
     ViewController viewController;
+    IntrumentsController inst;
 
     public ServiceProxy() {
         viewController = new ViewController(true);
+        inst=new IntrumentsController(true);
     }
 
     public void setController(ControllerSocket controller) {
@@ -204,6 +207,8 @@ public class ServiceProxy implements Protocol.IService {
 //                System.out.println("Mensaje " + message.getSender());
 //                System.out.println("Mensaje " + message.getTypeIntruments());
                 viewController.deliver(message);
+                inst.deliver(message);
+
             }
         }
         );

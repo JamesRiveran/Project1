@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -1693,6 +1694,14 @@ public class Modulo extends javax.swing.JFrame {
 
     public void setLbSimbol1(JLabel lbSimbol1) {
         this.lbSimbol1 = lbSimbol1;
+    }
+
+    public void setpInstrumento(JPanel pInstrumento) {
+        this.pInstrumento = pInstrumento;
+    }
+
+    public JPanel getpInstrumento() {
+        return pInstrumento;
     }
 
 

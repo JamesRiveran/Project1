@@ -4,11 +4,13 @@
  */
 package Presentation.Model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author 50686
  */
-public class InstrumentModulo2 {
+public class InstrumentModulo2 implements Serializable {
 
     private String serie, mini, tole, descri, maxi, type;
 

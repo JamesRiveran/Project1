@@ -9,6 +9,7 @@ import Logic.ServiceProxy;
 import Presentation.Model.Data_logic;
 import Presentation.Model.GeneratorPDF;
 import static Presentation.Model.GeneratorPDF.loadTypeOfInstrument;
+import Presentation.Model.InstrumentModulo2;
 import Presentation.Model.InstrumentType;
 import Presentation.Model.InstrumentsList;
 import Presentation.Model.SocketModel;
@@ -45,6 +46,7 @@ public class ViewController extends Controller implements ActionListener {
     InstrumentsList listInstrument;
     private static ArrayList<InstrumentType> ListOfIModu1o1;
     private static ArrayList<UnidsType> ListOfUnids;
+
     CalibrationController calibrationController;
     IntrumentsController intrumentsController;
     static Modulo view;
@@ -109,6 +111,7 @@ public class ViewController extends Controller implements ActionListener {
         view.getCalibrationTxtNumber().setEnabled(false);
         view.getCalibrationBtnDelete().addActionListener(e -> calibrationController.delete());
         getInformation();
+        intrumentsController.tab();
     }
 
     public void startSocket() {
@@ -389,7 +392,7 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     public void deliver(Message message) {
-        System.out.println("Esto ya esta en el controller se guardo " + message.getMessage());
+        System.out.println("Esto ya esta en el controller se guardo " + message.getInstruments());
 
         ListOfUnids = message.getUnits();
         ListOfIModu1o1 = message.getTypeIntruments();
