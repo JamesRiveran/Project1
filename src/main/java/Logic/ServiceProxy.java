@@ -40,7 +40,7 @@ public class ServiceProxy implements Protocol.IService {
 
     public ServiceProxy() {
         viewController = new ViewController(true);
-        inst=new IntrumentsController(true);
+        inst = new IntrumentsController(true);
     }
 
     public void setController(ControllerSocket controller) {
@@ -135,9 +135,29 @@ public class ServiceProxy implements Protocol.IService {
         }
     }
 
+    public void saveModulo2(Message message) {
+        try {
+            out.writeInt(ProtocolData.SAVE_INSTRUMENTS);
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+
+        }
+    }
+
     public void deleteInstruments(Message message) {
         try {
             out.writeInt(ProtocolData.DELETE_TYPEINSTRUMENTS);
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+
+        }
+    }
+
+    public void deleteModulo2(Message message) {
+        try {
+            out.writeInt(ProtocolData.DELETE_INSTRUMENTS);
             out.writeObject(message);
             out.flush();
         } catch (IOException ex) {

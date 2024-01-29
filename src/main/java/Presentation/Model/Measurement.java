@@ -4,11 +4,13 @@
  */
 package Presentation.Model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author james
  */
-public class Measurement {
+public class Measurement implements Serializable{
 
     private int id;
     private String code,reading;

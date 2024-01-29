@@ -5,13 +5,14 @@
 package Presentation.Model;
 
 import Presentation.Model.Measurement;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author james
  */
-public class MeasurementList {
+public class MeasurementList implements Serializable{
     private ArrayList<Measurement> list;
 
     public MeasurementList(ArrayList<Measurement> list) {

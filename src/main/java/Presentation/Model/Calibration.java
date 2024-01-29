@@ -4,11 +4,13 @@
  */
 package Presentation.Model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author james
  */
-public class Calibration {
+public class Calibration implements Serializable{
 
     private String date;
     private String number;

@@ -18,11 +18,12 @@ public class Message implements Serializable {
     private ArrayList<InstrumentType> typeIntruments;
     private List<InstrumentType> saveTypeIntruments;
     private ArrayList<InstrumentModulo2> instruments;
+    private List<InstrumentModulo2> saveInstru;
 
     public Message() {
     }
 
-    public Message(User sender, String message, boolean update, String[] data, ArrayList<UnidsType> units, ArrayList<InstrumentType> typeIntruments, List<InstrumentType> saveTypeIntruments, ArrayList<InstrumentModulo2> instruments) {
+    public Message(User sender, String message, boolean update, String[] data, ArrayList<UnidsType> units, ArrayList<InstrumentType> typeIntruments, List<InstrumentType> saveTypeIntruments, ArrayList<InstrumentModulo2> instruments, List<InstrumentModulo2> saveInstru) {
         this.sender = sender;
         this.message = message;
         this.update = update;
@@ -31,6 +32,15 @@ public class Message implements Serializable {
         this.typeIntruments = typeIntruments;
         this.saveTypeIntruments = saveTypeIntruments;
         this.instruments = instruments;
+        this.saveInstru = saveInstru;
+    }
+
+    public void setSaveInstru(List<InstrumentModulo2> saveInstru) {
+        this.saveInstru = saveInstru;
+    }
+
+    public List<InstrumentModulo2> getSaveInstru() {
+        return saveInstru;
     }
 
     public void setInstruments(ArrayList<InstrumentModulo2> instruments) {
@@ -99,7 +109,7 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{" + "sender=" + sender + ", message=" + message + ", update=" + update + ", data=" + data + ", units=" + units + ", typeIntruments=" + typeIntruments + ", saveTypeIntruments=" + saveTypeIntruments + ", instruments=" + instruments + '}';
+        return "Message{" + "sender=" + sender + ", message=" + message + ", update=" + update + ", data=" + data + ", units=" + units + ", typeIntruments=" + typeIntruments + ", saveTypeIntruments=" + saveTypeIntruments + ", instruments=" + instruments + ", saveInstru=" + saveInstru + '}';
     }
 
 }

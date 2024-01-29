@@ -5,13 +5,14 @@
 package Presentation.Model;
 
 import Presentation.Model.Calibration;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author james
  */
-public class CalibrationList {
+public class CalibrationList implements Serializable{
     private ArrayList<Calibration> list;
     
 

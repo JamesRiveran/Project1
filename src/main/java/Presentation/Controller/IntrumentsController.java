@@ -21,6 +21,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -42,7 +43,6 @@ public final class IntrumentsController extends Controller {
     private static ArrayList<InstrumentType> listName;
     private InstruSelectionListener instruSelectionListener;
     static Modulo view;
-    Data_logic data_logic;
     boolean update = false;
     int confirmResult;
     Color colorOriginal;
@@ -51,7 +51,6 @@ public final class IntrumentsController extends Controller {
     public IntrumentsController(Modulo views) throws ParserConfigurationException, SAXException {
         this.listModulo2 = new IntrumentListModulo2();
         this.view = views;
-        this.data_logic = new Data_logic();
         colorOriginal = view.getBtnDeleteInstru().getBackground();
         view.getBtnDeleteInstru().setEnabled(false);
         clickTable();
@@ -72,6 +71,22 @@ public final class IntrumentsController extends Controller {
         msg.setTypeIntruments(listName);
         msg.setSender(user);
         proxy.getInformationModulo2(msg);
+    }
+
+    public static void deleteInformation(String code) {
+        Message msg = new Message();
+        msg.setMessage(code);
+        msg.setSender(user);
+        proxy.deleteModulo2(msg);
+    }
+
+    public static void saveInformation(List<InstrumentModulo2> instrumen, String code, boolean update) {
+        Message msg = new Message();
+        msg.setSaveInstru(instrumen);
+        msg.setMessage(code);
+        msg.setUpdate(update);
+        msg.setSender(user);
+        proxy.saveModulo2(msg);
     }
 
     public void setInstruSelectionListener(InstruSelectionListener listener) {
@@ -163,13 +178,8 @@ public final class IntrumentsController extends Controller {
 
     @Override
     public void delete() {
-        try {
-            data_logic.deletedInstrument(view.getTxtSerie().getText(), view);
-            updateTable();
-            clean();
-        } catch (ParserConfigurationException | SAXException ex) {
-            Logger.getLogger(IntrumentsController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        deleteInformation(view.getTxtSerie().getText());
+        clean();
     }
 
     public void informationForXml() {
@@ -187,7 +197,7 @@ public final class IntrumentsController extends Controller {
                 view.getTxtMaxi().getText(),
                 view.getCmbType().getSelectedItem().toString());
         listModulo2.getList().add(instru);
-        data_logic.saverOrUpadateInstruModulo2(listModulo2.getList(), code, view, update);
+        saveInformation(listModulo2.getList(), code, update);
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {
