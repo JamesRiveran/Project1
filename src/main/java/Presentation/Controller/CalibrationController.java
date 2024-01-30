@@ -84,7 +84,6 @@ public class CalibrationController extends Controller implements InstruSelection
         this.calibrationList = new CalibrationList();
         this.serie = serie; // Asigna la serie recibida
         this.max = max;
-        getInformation();
         clickTable();
 
     }
@@ -393,6 +392,7 @@ public class CalibrationController extends Controller implements InstruSelection
     public void updateTable() {
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
+        System.out.println("Esto es calibration list "+listCalibrations);
         for (int i = listCalibrations.size() - 1; i >= 0; i--) {
             Calibration newCalibration = listCalibrations.get(i);
             if (newCalibration.getNumber().equals(serie)) {
@@ -446,45 +446,45 @@ public class CalibrationController extends Controller implements InstruSelection
 
     @Override
     public void onInstruSelected(String serie, String tolerancia, String descri, String mini, String max, String simbol, boolean pass) {
-        this.pass = pass;
-        if (pass == false) {
-            view.getLbNombreInstru().setText(default_label);
-            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
-            tableModel.setRowCount(0);
-        } else {
-            view.getLbNombreInstru().setText(serie + " - " + descri + " (" + mini + " " + simbol + " a " + max + " " + simbol + "),  " + "Tolerancia: " + tolerancia);
-            this.serie = serie;
-            this.tolerancia = tolerancia;
-            this.max = max;
-            this.min = mini;
-
-            setSerieInstrument(serie);
-
-            CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
-            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
-            tableModel.setRowCount(0);
-
-            for (Calibration calibracion : listCalibrations) {
-                if (String.valueOf(calibracion.getNumber()).equals(serie)) {
-                    System.out.println(calibracion.toString());
-                    Object[] rowData = {calibracion.getId(), calibracion.getDate(), calibracion.getMeasuring()};
-                    tableModel.addRow(rowData);
-                }
-            }
-            DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
-            clearTable(tableModels);
-        }
+//        this.pass = pass;
+//        if (pass == false) {
+//            view.getLbNombreInstru().setText(default_label);
+//            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+//            tableModel.setRowCount(0);
+//        } else {
+//            view.getLbNombreInstru().setText(serie + " - " + descri + " (" + mini + " " + simbol + " a " + max + " " + simbol + "),  " + "Tolerancia: " + tolerancia);
+//            this.serie = serie;
+//            this.tolerancia = tolerancia;
+//            this.max = max;
+//            this.min = mini;
+//
+//            setSerieInstrument(serie);
+//
+//            CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
+//            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+//            tableModel.setRowCount(0);
+//
+//            for (Calibration calibracion : listCalibrations) {
+//                if (String.valueOf(calibracion.getNumber()).equals(serie)) {
+//                    System.out.println(calibracion.toString());
+//                    Object[] rowData = {calibracion.getId(), calibracion.getDate(), calibracion.getMeasuring()};
+//                    tableModel.addRow(rowData);
+//                }
+//            }
+//            DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
+//            clearTable(tableModels);
+//        }
 
     }
 
     public void deliver(Message message) {
-        System.out.println("Esto ya esta en el controller se guardo " + message.getMessage());
+        System.out.println("Esto ya esta en el controller se guardo clibration " + message.getCalibration());
         listCalibrations = message.getCalibration();
         loadedMeasurements = message.getMeasure();
         if (listCalibrations == null || loadedMeasurements == null) {
             System.err.println("estan null");
         } else {
-            updateTable();
+//            updateTable();
 
         }
 //    

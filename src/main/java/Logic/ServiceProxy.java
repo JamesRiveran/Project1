@@ -20,6 +20,8 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -67,8 +69,9 @@ public class ServiceProxy implements Protocol.IService {
         try {
             skt = new Socket(ProtocolData.SERVER, ProtocolData.PORT);
             out = new ObjectOutputStream(skt.getOutputStream());
-            out.flush();
             in = new ObjectInputStream(skt.getInputStream());
+            out.flush();
+
         } catch (IOException ex) {
             // Manejar la excepción de E/S, por ejemplo, mostrar un mensaje de error
             showMessage(ViewController.view, "Error de conexión, revisar conexión con el servidor", "error");
@@ -257,7 +260,6 @@ public class ServiceProxy implements Protocol.IService {
 //                System.out.println("Mensaje " + message.getMessage());
 //                System.out.println("Mensaje " + message.getUnits());
 //                System.out.println("Mensaje " + message.getSender());
-//                System.out.println("Mensaje " + message.getTypeIntruments());
                 cali.deliver(message);
                 inst.deliver(message);
                 viewController.deliver(message);

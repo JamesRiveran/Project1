@@ -83,9 +83,10 @@ public final class IntrumentsController extends Controller {
         proxy.deleteModulo2(msg);
     }
 
-    public static void saveInformation(List<InstrumentModulo2> instrumen, String code, boolean update) {
+    public static void saveInformation(String serie, String descrip, String min, String max, String tole, String cmbTye, String code, boolean update) {
         Message msg = new Message();
-        msg.setSaveInstru(instrumen);
+        String[] datos = {serie, descrip, min, max, tole, cmbTye};
+        msg.setData(datos);
         msg.setMessage(code);
         msg.setUpdate(update);
         msg.setSender(user);
@@ -186,21 +187,14 @@ public final class IntrumentsController extends Controller {
     }
 
     public void informationForXml() {
-        listModulo2.getList().clear();
         String code = "";
         for (InstrumentType name : listName) {
             if (view.getCmbType().getSelectedItem().toString().equals(name.getName())) {
                 code = name.getCode();
             }
         }
-        InstrumentModulo2 instru = new InstrumentModulo2(view.getTxtSerie().getText(),
-                view.getTxtMini().getText(),
-                view.getTxtTole().getText(),
-                view.getTxtDescri().getText(),
-                view.getTxtMaxi().getText(),
-                view.getCmbType().getSelectedItem().toString());
-        listModulo2.getList().add(instru);
-        saveInformation(listModulo2.getList(), code, update);
+
+        saveInformation(view.getTxtSerie().getText(), view.getTxtDescri().getText(), view.getTxtMini().getText(), view.getTxtMaxi().getText(), view.getTxtTole().getText(), view.getCmbType().getSelectedItem().toString(), code, update);
     }
 
     public void updateTable() throws ParserConfigurationException, SAXException {
@@ -298,9 +292,7 @@ public final class IntrumentsController extends Controller {
 
             view.getBtnDeleteInstru().setEnabled(true);
             view.getBtnDeleteInstru().setBackground(Color.RED);
-
             if (instruSelectionListener != null) {
-                CalibrationController.getInformation();
                 instruSelectionListener.onInstruSelected(serie, tole, descri, mini, maxi, simbol, true);
             }
 
@@ -346,7 +338,7 @@ public final class IntrumentsController extends Controller {
     }
 
     public void deliver(Message message) {
-        System.out.println("Esto ya esta en el controller se guardo Intruments " + message.getMessage());
+        System.out.println("Esto ya esta en el controller se guardo Intruments " + message.getTypeIntruments());
 
         ListOfXml = message.getInstruments();
         listName = message.getTypeIntruments();
