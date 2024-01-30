@@ -6,6 +6,7 @@
 package Presentation.Controller;
 
 import Logic.ServiceProxy;
+import Presentation.Model.Data;
 import Presentation.Model.GeneratorPDF;
 import static Presentation.Model.GeneratorPDF.loadTypeOfInstrument;
 import Presentation.Model.InstrumentType;
@@ -109,7 +110,18 @@ public class ViewController extends Controller implements ActionListener {
 
     public void startSocket() {
         ControllerSocket controllerSocket = new ControllerSocket(view, socketModel);
-        User user = new User("6", "1234", "");
+
+        Data selector = new Data();
+        selector.cargarNombres();
+        String nameUser = selector.seleccionarUsuarioAlAzar();
+        String idLocal= Data.generarIdLocal();
+        String claveSegura = Data.generarClaveSegura();
+        System.out.println("ID: "+idLocal+"    Nombre: "+nameUser+"        Clave: "+claveSegura);
+        
+       
+        
+        User user = new User(idLocal, claveSegura, nameUser);
+
         //ServiceProxy proxy = new ServiceProxy();
         proxy = new ServiceProxy();
         try {
@@ -372,7 +384,7 @@ public class ViewController extends Controller implements ActionListener {
     public void deliver(Message message) {
         ListOfUnids = message.getUnits();
         ListOfIModu1o1 = message.getTypeIntruments();
-        get_Id = message.getId();
+        get_Id = message.getId();  
         try {
             if (ListOfUnids == null || ListOfIModu1o1 == null) {
                 System.err.println("estan null");

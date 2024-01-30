@@ -8,10 +8,10 @@ import Protocol.User;
 
 public class Service implements IService{
 
-    private Data data;
+    
     
     public Service() {
-        data =  new Data();
+       
     }
     
     public void post(Message m){
