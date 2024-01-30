@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -112,29 +113,26 @@ public class Worker {
                         }
                         break;
                     case ProtocolData.SAVE_TYPEINSTRUMENTS:
-
                         //Esto se tine que arreglar toddavia
                         Message save = null;
                         try {
                             save = (Message) in.readObject();
                             boolean up = save.isUpdate();
-                            List<InstrumentType> sa = save.getSaveTypeIntruments();
-
-                            for (InstrumentType saves : sa) {
-                                try {
-                                    if (!type.instrumentTypeExists(saves.getCode()) || up) {
-                                        String response = type.saveOrUpdateInstrument(saves.getCode(), saves.getUnit(), saves.getName());
-                                        save.setMessage(response);
-                                    } else {
-                                        save.setMessage("Ya existe ese codigo");
-                                    }
-                                } catch (SQLException ex) {
-                                    Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                            String[] data = save.getData();
+                            try {
+                                if (!type.instrumentTypeExists(data[0]) || up) {
+                                    String response = type.saveOrUpdateInstrument(data[0], data[1], data[2]);
+                                    save.setMessage(response);
+                                } else {
+                                    save.setMessage("Ya existe ese codigo");
                                 }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             save.setSender(user);
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(save);
+
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -190,19 +188,17 @@ public class Worker {
                         try {
                             save_instruments = (Message) in.readObject();
                             boolean up = save_instruments.isUpdate();
-                            List<InstrumentModulo2> sa = save_instruments.getSaveInstru();
+                            String[] data = save_instruments.getData();
                             String idIntrymentType = save_instruments.getMessage();
-                            for (InstrumentModulo2 saves : sa) {
-                                try {
-                                    if (!instruments.instrumentTypeExists(saves.getSerie()) || up) {
-                                        String response = instruments.saveOrUpdateInstrument(saves.getSerie(), saves.getMini(), saves.getTole(), saves.getDescri(), saves.getMaxi(), idIntrymentType);
-                                        save_instruments.setMessage(response);
-                                    } else {
-                                        save_instruments.setMessage("Ya existe ese codigo");
-                                    }
-                                } catch (SQLException ex) {
-                                    Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                            try {
+                                if (!instruments.instrumentTypeExists(data[0]) || up) {
+                                    String response = instruments.saveOrUpdateInstrument(data[0], data[2], data[4], data[1], data[3], idIntrymentType);
+                                    save_instruments.setMessage(response);
+                                } else {
+                                    save_instruments.setMessage("Ya existe ese codigo");
                                 }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             save_instruments.setSender(user);
                             // Envía la lista de unidades al cliente a través del método deliver
@@ -225,8 +221,8 @@ public class Worker {
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(get_Informaion_modulo3);
 
-                            System.out.println(user.getNombre() + ": " + get_Informaion_modulo3.getInstruments());
-                            System.out.println(get_Informaion_modulo3.getTypeIntruments());
+                            System.out.println(user.getNombre() + ": " + get_Informaion_modulo3.getCalibration());
+                            System.out.println(get_Informaion_modulo3.getMeasure());
 
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);

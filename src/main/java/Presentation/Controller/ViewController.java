@@ -109,7 +109,7 @@ public class ViewController extends Controller implements ActionListener {
 
     public void startSocket() {
         ControllerSocket controllerSocket = new ControllerSocket(view, socketModel);
-        User user = new User("5555", "1234", "");
+        User user = new User("6", "1234", "");
         //ServiceProxy proxy = new ServiceProxy();
         proxy = new ServiceProxy();
         try {
@@ -120,9 +120,10 @@ public class ViewController extends Controller implements ActionListener {
         }
     }
 
-    public static void saveInformation(List<InstrumentType> instrumentList, boolean update) {
+    public static void saveInformation(String code, String unit, String name, boolean update) {
         Message msg = new Message();
-        msg.setSaveTypeIntruments(instrumentList);
+        String[] datos = {code, unit, name};
+        msg.setData(datos);
         msg.setUpdate(update);
         msg.setSender(user);
         proxy.saveIntruments(msg);
@@ -211,11 +212,10 @@ public class ViewController extends Controller implements ActionListener {
                         int unit = view.getCmbUnit().getSelectedIndex();
                         String newName = view.getTxtName().getText();
                         InstrumentType instrument = new InstrumentType(code, String.valueOf(unit + 1), newName);
-                        listInstrument.getList().add(instrument);
-                        saveInformation(listInstrument.getList(), update);
-                        listInstrument.getList().clear();
-                        intrumentsController.updateComboBoxModel();
+                        saveInformation(code, String.valueOf(unit + 1), newName, update);
                         clean();
+                        intrumentsController.tab();
+                        intrumentsController.updateComboBoxModel();
                     } catch (Exception ex) {
                         showMessage(viewError, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
                     }
@@ -252,8 +252,9 @@ public class ViewController extends Controller implements ActionListener {
     public void delete() {
         try {
             deleteInformation(view.getTxtCode().getText());
-            intrumentsController.updateComboBoxModel();
             clean();
+            intrumentsController.tab();
+            intrumentsController.updateComboBoxModel();
         } catch (SAXException | ParserConfigurationException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);
         }

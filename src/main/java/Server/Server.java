@@ -49,6 +49,7 @@ public class Server {
                 workers.add(worker);
                 worker.start();
                 System.out.println("Worker iniciado...");
+                
             } catch (IOException | ClassNotFoundException ex) {
             } catch (Exception ex) {
                 try {
