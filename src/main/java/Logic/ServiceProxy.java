@@ -4,9 +4,11 @@
  */
 package Logic;
 
+import Presentation.Controller.CalibrationController;
 import Presentation.Controller.ControllerSocket;
 import Presentation.Controller.IntrumentsController;
 import Presentation.Controller.ViewController;
+import static Presentation.Controller.ViewController.showMessage;
 import Protocol.IService;
 import Protocol.Message;
 import Protocol.ProtocolData;
@@ -15,6 +17,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
 /**
@@ -37,10 +41,12 @@ public class ServiceProxy implements Protocol.IService {
     ControllerSocket controller;
     ViewController viewController;
     IntrumentsController inst;
+    CalibrationController cali;
 
     public ServiceProxy() {
         viewController = new ViewController(true);
         inst = new IntrumentsController(true);
+        cali = new CalibrationController(true);
     }
 
     public void setController(ControllerSocket controller) {
@@ -51,15 +57,25 @@ public class ServiceProxy implements Protocol.IService {
         this.viewController = viewController;
     }
 
+    public void setCali(CalibrationController cali) {
+        this.cali = cali;
+    }
+
     Socket skt;
 
-    private void connect() throws Exception {
-        //skt = new Socket(ProtocolData.SERVER,ProtocolData.PORT+1);
-        skt = new Socket(ProtocolData.SERVER, ProtocolData.PORT);
-        out = new ObjectOutputStream(skt.getOutputStream());
-        out.flush();
-        in = new ObjectInputStream(skt.getInputStream());
-
+    private void connect() {
+        try {
+            skt = new Socket(ProtocolData.SERVER, ProtocolData.PORT);
+            out = new ObjectOutputStream(skt.getOutputStream());
+            out.flush();
+            in = new ObjectInputStream(skt.getInputStream());
+        } catch (IOException ex) {
+            // Manejar la excepción de E/S, por ejemplo, mostrar un mensaje de error
+            showMessage(ViewController.view, "Error de conexión, revisar conexión con el servidor", "error");
+        } catch (Exception ex) {
+            // Manejar otras excepciones de manera general
+            showMessage(ViewController.view, "Error al conectar", "error");
+        }
     }
 
     private void disconnect() throws Exception {
@@ -108,10 +124,9 @@ public class ServiceProxy implements Protocol.IService {
         try {
             out.writeInt(ProtocolData.POST);
             out.writeObject(message);
-            System.out.println("Esto esta en el proxy post" + message);
             out.flush();
         } catch (IOException ex) {
-
+            System.out.print("Error");
         }
     }
 
@@ -121,6 +136,7 @@ public class ServiceProxy implements Protocol.IService {
             out.writeObject(message);
             out.flush();
         } catch (IOException ex) {
+            System.out.print("Error");
 
         }
     }
@@ -141,6 +157,7 @@ public class ServiceProxy implements Protocol.IService {
             out.writeObject(message);
             out.flush();
         } catch (IOException ex) {
+            System.out.print("Error");
 
         }
     }
@@ -151,6 +168,7 @@ public class ServiceProxy implements Protocol.IService {
             out.writeObject(message);
             out.flush();
         } catch (IOException ex) {
+            System.out.print("Error");
 
         }
     }
@@ -161,6 +179,7 @@ public class ServiceProxy implements Protocol.IService {
             out.writeObject(message);
             out.flush();
         } catch (IOException ex) {
+            System.out.print("Error");
 
         }
     }
@@ -171,6 +190,18 @@ public class ServiceProxy implements Protocol.IService {
             out.writeObject(message);
             out.flush();
         } catch (IOException ex) {
+            System.out.print("Error");
+
+        }
+    }
+
+    public void getInformationModulo3(Message message) {
+        try {
+            out.writeInt(ProtocolData.GET_INFORMATION_MODULO_3);
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+            System.out.print("Error");
 
         }
     }
@@ -223,10 +254,11 @@ public class ServiceProxy implements Protocol.IService {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 System.out.println("Respuesta recibida:");
-                System.out.println("Mensaje " + message.getMessage());
+//                System.out.println("Mensaje " + message.getMessage());
 //                System.out.println("Mensaje " + message.getUnits());
 //                System.out.println("Mensaje " + message.getSender());
 //                System.out.println("Mensaje " + message.getTypeIntruments());
+                cali.deliver(message);
                 inst.deliver(message);
                 viewController.deliver(message);
 

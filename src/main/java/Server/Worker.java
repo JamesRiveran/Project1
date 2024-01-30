@@ -1,5 +1,6 @@
 package Server;
 
+import Server.data.BDMeasurement;
 import Presentation.Model.InstrumentModulo2;
 import Server.data.BDInstrument;
 import Server.data.BDTypeInstrument;
@@ -27,6 +28,7 @@ public class Worker {
     BDTypeInstrument type;
     BDInstrument instruments;
     BDCalibration calibration;
+    BDMeasurement measu;
 
     public Worker(Server srv, ObjectInputStream in, ObjectOutputStream out, User user, IService service) {
         this.srv = srv;
@@ -37,6 +39,7 @@ public class Worker {
         this.type = new BDTypeInstrument();
         this.instruments = new BDInstrument();
         this.calibration = new BDCalibration();
+        this.measu = new BDMeasurement();
 
     }
 
@@ -132,7 +135,6 @@ public class Worker {
                             save.setSender(user);
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(save);
-
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -205,6 +207,26 @@ public class Worker {
                             save_instruments.setSender(user);
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(save_instruments);
+
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
+
+                    case ProtocolData.GET_INFORMATION_MODULO_3:
+                        Message get_Informaion_modulo3 = null;
+                        try {
+                            get_Informaion_modulo3 = (Message) in.readObject();
+                            get_Informaion_modulo3.setCalibration(calibration.getAllCalibration());
+                            get_Informaion_modulo3.setMeasure(measu.getAllMeasurement());
+
+                            get_Informaion_modulo3.setSender(user);
+
+                            // Envía la lista de unidades al cliente a través del método deliver
+                            srv.deliver(get_Informaion_modulo3);
+
+                            System.out.println(user.getNombre() + ": " + get_Informaion_modulo3.getInstruments());
+                            System.out.println(get_Informaion_modulo3.getTypeIntruments());
 
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);

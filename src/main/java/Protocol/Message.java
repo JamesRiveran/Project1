@@ -1,8 +1,10 @@
 package Protocol;
 
+import Presentation.Model.Calibration;
 import Presentation.Model.InstrumentModulo2;
 import Presentation.Model.InstrumentType;
 import Presentation.Model.IntrumentListModulo2;
+import Presentation.Model.Measurement;
 import Presentation.Model.UnidsType;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,11 +22,14 @@ public class Message implements Serializable {
     private List<InstrumentType> saveTypeIntruments;
     private ArrayList<InstrumentModulo2> instruments;
     private List<InstrumentModulo2> saveInstru;
-
+    private ArrayList<Calibration> calibration;
+    private List<Calibration> saveCalibration;
+      private ArrayList<Measurement> measure;
+    private List<Measurement> saveMeasure;
     public Message() {
     }
 
-    public Message(User sender, String message, String Id, boolean update, String[] data, ArrayList<UnidsType> units, ArrayList<InstrumentType> typeIntruments, List<InstrumentType> saveTypeIntruments, ArrayList<InstrumentModulo2> instruments, List<InstrumentModulo2> saveInstru) {
+    public Message(User sender, String message, String Id, boolean update, String[] data, ArrayList<UnidsType> units, ArrayList<InstrumentType> typeIntruments, List<InstrumentType> saveTypeIntruments, ArrayList<InstrumentModulo2> instruments, List<InstrumentModulo2> saveInstru, ArrayList<Calibration> calibration, List<Calibration> saveCalibration, ArrayList<Measurement> measure, List<Measurement> saveMeasure) {
         this.sender = sender;
         this.message = message;
         this.Id = Id;
@@ -35,7 +40,45 @@ public class Message implements Serializable {
         this.saveTypeIntruments = saveTypeIntruments;
         this.instruments = instruments;
         this.saveInstru = saveInstru;
+        this.calibration = calibration;
+        this.saveCalibration = saveCalibration;
+        this.measure = measure;
+        this.saveMeasure = saveMeasure;
     }
+
+    public void setCalibration(ArrayList<Calibration> calibration) {
+        this.calibration = calibration;
+    }
+
+    public void setSaveCalibration(List<Calibration> saveCalibration) {
+        this.saveCalibration = saveCalibration;
+    }
+
+    public void setMeasure(ArrayList<Measurement> measure) {
+        this.measure = measure;
+    }
+
+    public void setSaveMeasure(List<Measurement> saveMeasure) {
+        this.saveMeasure = saveMeasure;
+    }
+
+    public ArrayList<Calibration> getCalibration() {
+        return calibration;
+    }
+
+    public List<Calibration> getSaveCalibration() {
+        return saveCalibration;
+    }
+
+    public ArrayList<Measurement> getMeasure() {
+        return measure;
+    }
+
+    public List<Measurement> getSaveMeasure() {
+        return saveMeasure;
+    }
+    
+    
 
     public void setId(String Id) {
         this.Id = Id;
@@ -119,9 +162,7 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{" + "sender=" + sender + ", message=" + message + ", Id=" + Id + ", update=" + update + ", data=" + data + ", units=" + units + ", typeIntruments=" + typeIntruments + ", saveTypeIntruments=" + saveTypeIntruments + ", instruments=" + instruments + ", saveInstru=" + saveInstru + '}';
+        return "Message{" + "sender=" + sender + ", message=" + message + ", Id=" + Id + ", update=" + update + ", data=" + data + ", units=" + units + ", typeIntruments=" + typeIntruments + ", saveTypeIntruments=" + saveTypeIntruments + ", instruments=" + instruments + ", saveInstru=" + saveInstru + ", calibration=" + calibration + ", saveCalibration=" + saveCalibration + ", measure=" + measure + ", saveMeasure=" + saveMeasure + '}';
     }
-
-
 
 }

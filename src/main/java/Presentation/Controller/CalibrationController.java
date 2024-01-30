@@ -5,6 +5,8 @@
  */
 package Presentation.Controller;
 
+import static Presentation.Controller.ViewController.proxy;
+import static Presentation.Controller.ViewController.user;
 import Presentation.Model.Calibration;
 import Presentation.Model.CalibrationList;
 import Presentation.Model.ColorCelda;
@@ -13,6 +15,7 @@ import Presentation.Model.GeneratorPDF;
 import static Presentation.Model.GeneratorPDF.loadCalibration;
 import Presentation.Model.Measurement;
 import Presentation.View.Modulo;
+import Protocol.Message;
 import com.itextpdf.text.DocumentException;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
@@ -49,7 +52,8 @@ public class CalibrationController extends Controller implements InstruSelection
     CalibrationList calibrationList;
     ViewController viewController;
     Modulo view;
-    private ArrayList<Calibration> listCalibrations;
+    private static ArrayList<Calibration> listCalibrations;
+    private static ArrayList<Measurement> loadedMeasurements;
     private String number;
     public String serieInstrument = "";
     Data_logic data_logic;
@@ -80,9 +84,12 @@ public class CalibrationController extends Controller implements InstruSelection
         this.calibrationList = new CalibrationList();
         this.serie = serie; // Asigna la serie recibida
         this.max = max;
-        updateTable();
+        getInformation();
         clickTable();
 
+    }
+
+    public CalibrationController(boolean enter) {
     }
 
     public String getNumber() {
@@ -91,6 +98,14 @@ public class CalibrationController extends Controller implements InstruSelection
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public static void getInformation() {
+        Message msg = new Message();
+        msg.setCalibration(listCalibrations);
+        msg.setMeasure(loadedMeasurements);
+        msg.setSender(user);
+        proxy.getInformationModulo3(msg);
     }
 
     @Override
@@ -165,7 +180,7 @@ public class CalibrationController extends Controller implements InstruSelection
         try {
             ArrayList<Calibration> calibrationList = new ArrayList<>();
             ArrayList<Measurement> measurementList = new ArrayList<>();
-            measurementList = data_logic.getAllMeasurement();
+            measurementList = loadedMeasurements;
             calibrationList.clear();
             calibrationList = loadCalibration(view.getTblCalibrations());
             String pdfFilePath = "Reporte_Calibraciones.pdf";
@@ -356,7 +371,7 @@ public class CalibrationController extends Controller implements InstruSelection
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
         tableModel.setRowCount(0);
         int id = Integer.parseInt(view.getCalibrationTxtNumber().getText());
-        ArrayList<Measurement> loadedMeasurements = data_logic.getAllMeasurement();
+      
 
         for (Measurement measurements : loadedMeasurements) {
             if (Integer.parseInt(measurements.getCode()) == Integer.parseInt(getNumber())) {
@@ -376,7 +391,6 @@ public class CalibrationController extends Controller implements InstruSelection
     }
 
     public void updateTable() {
-        listCalibrations = data_logic.getAllRecordsCalibration();
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
         for (int i = listCalibrations.size() - 1; i >= 0; i--) {
@@ -397,7 +411,6 @@ public class CalibrationController extends Controller implements InstruSelection
     }
 
     private void filterByNumber(String searchNumber) {
-        listCalibrations = data_logic.getAllRecordsCalibration();
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
         // Si la cadena de búsqueda está vacía, muestra todos los elementos
@@ -429,7 +442,6 @@ public class CalibrationController extends Controller implements InstruSelection
             updateTable();
             clearTable(tableModel);
         }
-
     }
 
     @Override
@@ -451,7 +463,6 @@ public class CalibrationController extends Controller implements InstruSelection
             CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
             DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
             tableModel.setRowCount(0);
-            listCalibrations = data_logic.getAllRecordsCalibration();
 
             for (Calibration calibracion : listCalibrations) {
                 if (String.valueOf(calibracion.getNumber()).equals(serie)) {
@@ -464,6 +475,19 @@ public class CalibrationController extends Controller implements InstruSelection
             clearTable(tableModels);
         }
 
+    }
+
+    public void deliver(Message message) {
+        System.out.println("Esto ya esta en el controller se guardo " + message.getMessage());
+        listCalibrations = message.getCalibration();
+        loadedMeasurements = message.getMeasure();
+        if (listCalibrations == null || loadedMeasurements == null) {
+            System.err.println("estan null");
+        } else {
+            updateTable();
+
+        }
+//    
     }
 
 }

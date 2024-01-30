@@ -39,6 +39,8 @@ import org.xml.sax.SAXException;
 public final class IntrumentsController extends Controller {
 
     ViewController viewController;
+    CalibrationController cali;
+
     IntrumentListModulo2 listModulo2;
     private static ArrayList<InstrumentModulo2> ListOfXml;
     private static ArrayList<InstrumentType> listName;
@@ -296,7 +298,9 @@ public final class IntrumentsController extends Controller {
 
             view.getBtnDeleteInstru().setEnabled(true);
             view.getBtnDeleteInstru().setBackground(Color.RED);
+
             if (instruSelectionListener != null) {
+                CalibrationController.getInformation();
                 instruSelectionListener.onInstruSelected(serie, tole, descri, mini, maxi, simbol, true);
             }
 
@@ -354,10 +358,7 @@ public final class IntrumentsController extends Controller {
                 updateComboBoxModel();
                 updateTable();
             }
-            if (message.getMessage() == null) {
-            } else {
-                showMessage(view, message.getMessage(), "success");
-            }
+//       
 
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, null, ex);

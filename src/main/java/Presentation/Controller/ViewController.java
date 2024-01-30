@@ -6,7 +6,6 @@
 package Presentation.Controller;
 
 import Logic.ServiceProxy;
-import Presentation.Model.Data_logic;
 import Presentation.Model.GeneratorPDF;
 import static Presentation.Model.GeneratorPDF.loadTypeOfInstrument;
 import Presentation.Model.InstrumentType;
@@ -45,7 +44,7 @@ public class ViewController extends Controller implements ActionListener {
     private static ArrayList<UnidsType> ListOfUnids;
     CalibrationController calibrationController;
     IntrumentsController intrumentsController;
-    static Modulo view;
+    public static Modulo view;
     private static String get_Id = "";
     protected Modulo viewError;
     boolean update = false;
@@ -145,13 +144,6 @@ public class ViewController extends Controller implements ActionListener {
         proxy.deleteInstruments(msg);
     }
 
-    public static void SendMessages(String message) {
-        Message msg = new Message();
-        msg.setMessage(message);
-        msg.setSender(user);
-        proxy.post(msg);
-    }
-
     public void updateComboBoxModelUnids() throws ParserConfigurationException, SAXException {
         if (view != null) {
             JComboBox<String> cmbUnid = view.getCmbUnit();
@@ -178,7 +170,6 @@ public class ViewController extends Controller implements ActionListener {
 
         }
     }
-
 
     public static void modalForRelations(String errorMessage, String info) {
         if (info == "error") {
@@ -222,7 +213,6 @@ public class ViewController extends Controller implements ActionListener {
                         InstrumentType instrument = new InstrumentType(code, String.valueOf(unit + 1), newName);
                         listInstrument.getList().add(instrument);
                         saveInformation(listInstrument.getList(), update);
-//                        data_logic.saveOrUpdateInstruments(listInstrument.getList(), view, update);
                         listInstrument.getList().clear();
                         intrumentsController.updateComboBoxModel();
                         clean();
@@ -379,7 +369,6 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     public void deliver(Message message) {
-        System.out.println("Esto ya esta en el controller se guardo " + message.getMessage());
         ListOfUnids = message.getUnits();
         ListOfIModu1o1 = message.getTypeIntruments();
         get_Id = message.getId();
