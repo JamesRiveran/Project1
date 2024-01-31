@@ -28,13 +28,14 @@ public class ProtocolData {
 
     public static final int SAVE_TYPEINSTRUMENTS = 300;
     public static final int SAVE_INSTRUMENTS = 310;
-
     public static final int SAVE_CALIBRATION = 320;
     public static final int SAVE_MEASUREMENT = 330;
 
 
     public static final int DELETE_TYPEINSTRUMENTS = 400;
     public static final int DELETE_INSTRUMENTS = 410;
+    public static final int DELETE_CALIBRATIONS = 420;
+    public static final int DELETE_MEASUREMENT = 430;
 
     /*Si recibo un comando informar como parte del message cual mensaje se mando, insert, update delete,
     pasa por flujo de control y ver a quien tengo que notificar. solo no notifica con los read.*/
@@ -57,5 +58,7 @@ public class ProtocolData {
 
     public static final int ERROT_DELETE_TYPEINSTRUMENTS = 400;
     public static final int ERROT_DELETE_INSTRUMENTS = 410;
+    public static final int ERROT_DELETE_CALIBRATIONS = 420;
+    public static final int ERROT_DELETE_MEASUREMENT = 430;
 
 }

@@ -99,7 +99,7 @@ public class ViewController extends Controller implements ActionListener {
         view.getBtnSaveMeasurement().addActionListener(e -> calibrationController.saveMeasurement());
         view.getBtnCleanMeasurement().addActionListener(e -> calibrationController.cleanMeasurement());
         
-      
+        calibrationController.tab();
         intrumentsController.tab();
         getInformation();
 

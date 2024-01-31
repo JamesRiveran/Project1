@@ -99,6 +99,10 @@ public class CalibrationController extends Controller implements InstruSelection
     public void setNumber(String number) {
         this.number = number;
     }
+    
+    public void tab() {
+        getInformation();
+    }
 
     public static void getInformation() {
         Message msg = new Message();
@@ -203,7 +207,6 @@ public class CalibrationController extends Controller implements InstruSelection
         id = String.valueOf(data_logic.getId());
         view.getCalibrationTxtNumber().setText(id);
         clearTable(tableModel);
-        getInformation();
     }
 
     @Override
@@ -477,11 +480,27 @@ public class CalibrationController extends Controller implements InstruSelection
             DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
             String serie = getSerieInstrument();
             int number = Integer.parseInt(view.getCalibrationTxtNumber().getText());
-            data_logic.deleted(String.valueOf(number));
-            data_logic.deletedCali(number, view);
+            
+            deleteMeasurement(number);
+            deleteCalibration(number);
+            getInformation();
             updateTable();
             clearTable(tableModel);
         }
+    }
+    
+    public static void deleteMeasurement(int number) {
+        Message msg = new Message();
+        msg.setMessage(String.valueOf(number));
+        msg.setSender(user);
+        proxy.deleteMeasurement(msg);
+    }
+    
+    public static void deleteCalibration(int number) {
+        Message msg = new Message();
+        msg.setMessage(String.valueOf(number));
+        msg.setSender(user);
+        proxy.deleteCalibration(msg);
     }
 
     @Override
@@ -521,6 +540,7 @@ public class CalibrationController extends Controller implements InstruSelection
     public void tableCalibrations() {
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
+        getInformation();
         for (Calibration calibracion : listCalibrations) {
             if (String.valueOf(calibracion.getNumber()).equals(serie)) {
                 System.out.println(calibracion.toString());

@@ -195,7 +195,7 @@ public class ServiceProxy implements Protocol.IService {
 
     public void saveMeasure(Message message) {
         try {
-            out.writeInt(ProtocolData.SAVE_MEASUREMENTS);
+            out.writeInt(ProtocolData.SAVE_MEASUREMENT);
             out.writeObject(message);
             out.flush();
         } catch (IOException ex) {
@@ -250,6 +250,28 @@ public class ServiceProxy implements Protocol.IService {
     public void deleteModulo2(Message message) {
         try {
             out.writeInt(ProtocolData.DELETE_INSTRUMENTS);
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+            System.out.print("Error");
+
+        }
+    }
+    
+    public void deleteMeasurement(Message message) {
+        try {
+            out.writeInt(ProtocolData.DELETE_MEASUREMENT);
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+            System.out.print("Error");
+
+        }
+    }
+    
+    public void deleteCalibration(Message message) {
+        try {
+            out.writeInt(ProtocolData.DELETE_CALIBRATIONS);
             out.writeObject(message);
             out.flush();
         } catch (IOException ex) {

@@ -184,6 +184,32 @@ public class Worker {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
+                        case ProtocolData.DELETE_MEASUREMENT:
+                        Message deleteMeasurement = null;
+                        try {
+                            deleteMeasurement = (Message) in.readObject();
+                            String response = measu.deleteMeasurement(deleteMeasurement.getMessage());
+                            deleteMeasurement.setMessage(response);
+                            deleteMeasurement.setSender(user);
+                            // Envía la lista de unidades al cliente a través del método deliver
+                            srv.deliver(deleteMeasurement);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
+                        case ProtocolData.DELETE_CALIBRATIONS:
+                        Message deleteCalibration = null;
+                        try {
+                            deleteCalibration = (Message) in.readObject();
+                            String response = calibration.deleteCalibration(Integer.parseInt(deleteCalibration.getMessage()));
+                            deleteCalibration.setMessage(response);
+                            deleteCalibration.setSender(user);
+                            // Envía la lista de unidades al cliente a través del método deliver
+                            srv.deliver(deleteCalibration);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
                     case ProtocolData.SAVE_INSTRUMENTS:
                         Message save_instruments = null;
                         try {

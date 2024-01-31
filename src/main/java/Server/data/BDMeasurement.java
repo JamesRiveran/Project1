@@ -10,6 +10,7 @@ import Presentation.Model.Measurement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,7 +119,7 @@ public class BDMeasurement {
         }
     }
 
-    public void deleteMeasurement(String idCalibration) {//Borrar todos los registros de esas calibración
+    public String deleteMeasurement(String idCalibration) {
         try {
             conexion.setConexion();
             conexion.setConsulta("DELETE FROM measurement WHERE idCalibration=? ");
@@ -127,11 +128,20 @@ public class BDMeasurement {
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva
                 System.out.println("Se eliminó la medición!");
+                return "Mediciones registradas eliminadas exitosamente";
             } else {
                 System.out.println("Error en la inserción de la medición!");
+                return "Error al eliminar: Medición no encontrado";
             }
         } catch (SQLException error) {
-            error.printStackTrace();
+            if (error instanceof SQLIntegrityConstraintViolationException) {
+                // Manejo de la excepción específica para clave foránea
+                return "Error al eliminar: Este instrumento está siendo referenciado por otros registros.";
+            } else {
+                // Manejo de otras excepciones
+                error.printStackTrace();
+                return "Error al procesar la operación: " + error.getMessage();
+            }
         }
     }
 }

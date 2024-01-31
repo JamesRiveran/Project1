@@ -78,7 +78,7 @@ public class BDCalibration {
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva
                 System.out.println("Se eliminó la calibración!");
-                return "Eliminado exitosamente";
+                return "Calibración eliminada exitosamente";
             } else {
                 System.out.println("Error en la inserción de la calibración!");
                 return "Error al eliminar: Registro no encontrado";
