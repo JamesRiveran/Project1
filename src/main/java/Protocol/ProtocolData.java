@@ -28,8 +28,10 @@ public class ProtocolData {
 
     public static final int SAVE_TYPEINSTRUMENTS = 300;
     public static final int SAVE_INSTRUMENTS = 310;
+
     public static final int SAVE_CALIBRATION = 320;
     public static final int SAVE_MEASUREMENT = 330;
+
 
     public static final int DELETE_TYPEINSTRUMENTS = 400;
     public static final int DELETE_INSTRUMENTS = 410;
@@ -52,6 +54,7 @@ public class ProtocolData {
     public static final int ERROT_SAVE_INSTRUMENTS = 310;
     public static final int ERROT_SAVE_CALIBRATION = 320;
     public static final int ERROT_SAVE_MEASUREMENT = 330;
+
     public static final int ERROT_DELETE_TYPEINSTRUMENTS = 400;
     public static final int ERROT_DELETE_INSTRUMENTS = 410;
 

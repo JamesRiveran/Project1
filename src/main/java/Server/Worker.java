@@ -123,7 +123,7 @@ public class Worker {
                             try {
                                 if (!type.instrumentTypeExists(data[0]) || up) {
                                     String response = type.saveOrUpdateInstrument(data[0], data[1], data[2]);
-                                    save.setMessage(response);
+                                    save.setMessage(response + " ID User: " + user.getId());
                                 } else {
                                     save.setMessage("Ya existe ese codigo");
                                 }
@@ -249,6 +249,7 @@ public class Worker {
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(saveCalibration);
 
+
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -268,6 +269,7 @@ public class Worker {
                         }
                         break;
                         
+
                 }
                 out.flush();
             } catch (IOException ex) {

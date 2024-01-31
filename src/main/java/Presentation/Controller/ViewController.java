@@ -23,7 +23,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -99,7 +98,8 @@ public class ViewController extends Controller implements ActionListener {
         view.getBtnSearchCalibration().addActionListener(e -> calibrationController.search());
         view.getBtnSaveMeasurement().addActionListener(e -> calibrationController.saveMeasurement());
         view.getBtnCleanMeasurement().addActionListener(e -> calibrationController.cleanMeasurement());
-
+        
+      
         intrumentsController.tab();
         getInformation();
 
@@ -114,13 +114,14 @@ public class ViewController extends Controller implements ActionListener {
         Data selector = new Data();
         selector.cargarNombres();
         String nameUser = selector.seleccionarUsuarioAlAzar();
-        String idLocal= Data.generarIdLocal();
+        String idLocal = Data.generarIdLocal();
         String claveSegura = Data.generarClaveSegura();
-        System.out.println("ID: "+idLocal+"    Nombre: "+nameUser+"        Clave: "+claveSegura);
-        
-       
-        
-        User user = new User(idLocal, claveSegura, nameUser);
+        System.out.println("ID: " + idLocal + "    Nombre: " + nameUser + "        Clave: " + claveSegura);
+
+        view.setIconImage(new javax.swing.ImageIcon("src/main/resources/images/Logo.png").getImage());
+        view.setTitle("SILAB: Sistema de Laboratorio Industrial, User: " + nameUser + " ID: " + idLocal);
+
+        user = new User(idLocal, claveSegura, nameUser);
 
         //ServiceProxy proxy = new ServiceProxy();
         proxy = new ServiceProxy();
@@ -384,7 +385,7 @@ public class ViewController extends Controller implements ActionListener {
     public void deliver(Message message) {
         ListOfUnids = message.getUnits();
         ListOfIModu1o1 = message.getTypeIntruments();
-        get_Id = message.getId();  
+        get_Id = message.getId();
         try {
             if (ListOfUnids == null || ListOfIModu1o1 == null) {
                 System.err.println("estan null");

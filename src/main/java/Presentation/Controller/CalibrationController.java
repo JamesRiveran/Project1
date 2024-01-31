@@ -108,6 +108,14 @@ public class CalibrationController extends Controller implements InstruSelection
         proxy.getInformationModulo3(msg);
     }
 
+    public static void saveMeasure(String id_measure, String reference, String reading, String idCalibration) {
+        Message msg = new Message();
+        String[] datos = {id_measure, reference, reading, idCalibration};
+        msg.setData(datos);
+        msg.setSender(user);
+        proxy.saveMeasure(msg);
+    }
+
     @Override
     public void save() {
         try {
@@ -142,6 +150,7 @@ public class CalibrationController extends Controller implements InstruSelection
                         getInformation();
                         clean();
                     
+
                 } catch (Exception ex) {
                     viewController.showMessage(view, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
                 }
@@ -194,7 +203,7 @@ public class CalibrationController extends Controller implements InstruSelection
         id = String.valueOf(data_logic.getId());
         view.getCalibrationTxtNumber().setText(id);
         clearTable(tableModel);
-
+        getInformation();
     }
 
     @Override
@@ -403,7 +412,6 @@ public class CalibrationController extends Controller implements InstruSelection
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
         tableModel.setRowCount(0);
         int id = Integer.parseInt(view.getCalibrationTxtNumber().getText());
-      
 
         for (Measurement measurements : loadedMeasurements) {
             if (Integer.parseInt(measurements.getCode()) == Integer.parseInt(getNumber())) {
@@ -425,7 +433,7 @@ public class CalibrationController extends Controller implements InstruSelection
     public void updateTable() {
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
-        System.out.println("Esto es calibration list "+listCalibrations);
+        System.out.println("Esto es calibration list " + listCalibrations);
         for (int i = listCalibrations.size() - 1; i >= 0; i--) {
             Calibration newCalibration = listCalibrations.get(i);
             if (newCalibration.getNumber().equals(serie)) {
@@ -493,9 +501,19 @@ public class CalibrationController extends Controller implements InstruSelection
             setSerieInstrument(serie);
 
             CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
-            
-            getInformation();
-            updateTable();
+
+            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+            tableModel.setRowCount(0);
+
+            for (Calibration calibracion : listCalibrations) {
+                if (String.valueOf(calibracion.getNumber()).equals(serie)) {
+                    System.out.println(calibracion.toString());
+                    Object[] rowData = {calibracion.getId(), calibracion.getDate(), calibracion.getMeasuring()};
+                    tableModel.addRow(rowData);
+                }
+            }
+            DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
+            clearTable(tableModels);
         }
 
     }

@@ -49,6 +49,7 @@ public class BDMeasurement {
 
     public void saveMeasurement(String id_measurement, String reference, String reading, String idCalibration) {
         String[] data = {id_measurement,reference,reading,idCalibration};
+
         try {
             conexion.setConexion();
             conexion.setConsulta("INSERT INTO measurement (id_measurement, referenceData, reading, idCalibration) VALUES (?, ?, ?, ?)");
@@ -65,6 +66,7 @@ public class BDMeasurement {
                     
                 }
             
+
 
             // Si llegamos a este punto, todas las inserciones fueron exitosas
             System.out.println("Todas las mediciones fueron insertadas correctamente");

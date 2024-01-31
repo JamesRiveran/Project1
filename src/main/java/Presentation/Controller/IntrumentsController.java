@@ -5,9 +5,7 @@
 package Presentation.Controller;
 
 import static Presentation.Controller.ViewController.proxy;
-import static Presentation.Controller.ViewController.showMessage;
 import static Presentation.Controller.ViewController.user;
-import static Presentation.Controller.ViewController.view;
 import Presentation.Model.GeneratorPDF;
 import static Presentation.Model.GeneratorPDF.loadInstrument;
 import Presentation.Model.InstrumentModulo2;
@@ -271,6 +269,7 @@ public final class IntrumentsController extends Controller {
     }
 
     public void tbInstruMouseClicked(MouseEvent evt) {
+        CalibrationController.getInformation();
         int selectedRow = view.getTbInstru().getSelectedRow();
 
         // Verifica si se hizo clic en una fila válida
