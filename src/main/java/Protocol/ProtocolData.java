@@ -30,7 +30,7 @@ public class ProtocolData {
     public static final int SAVE_INSTRUMENTS = 310;
     public static final int SAVE_CALIBRATION = 320;
     public static final int SAVE_MEASUREMENT = 330;
-
+    public static final int SAVE_READING = 340;
 
     public static final int DELETE_TYPEINSTRUMENTS = 400;
     public static final int DELETE_INSTRUMENTS = 410;

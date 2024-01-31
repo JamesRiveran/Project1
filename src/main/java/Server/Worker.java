@@ -113,6 +113,20 @@ public class Worker {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
+                        case ProtocolData.SAVE_READING:
+                        Message reading = null;
+                        try {
+                            reading = (Message) in.readObject();
+                            String response = measu.updateReading(reading.getReading(), reading.getNewId(), reading.getIdToUpdate());
+                            reading.setMessage(response);
+                            reading.setSender(user);
+
+                            // Envía la lista de unidades al cliente a través del método deliver
+                            srv.deliver(reading);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
                     case ProtocolData.SAVE_TYPEINSTRUMENTS:
                         //Esto se tine que arreglar toddavia
                         Message save = null;
@@ -206,6 +220,19 @@ public class Worker {
                             deleteCalibration.setSender(user);
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(deleteCalibration);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
+                        case ProtocolData.GET_ID_CALIBRATION:
+                        Message idCalibration = null;
+                        try {
+                            idCalibration = (Message) in.readObject();
+                            String response = String.valueOf(calibration.getId());
+                            idCalibration.setMessage(response);
+                            idCalibration.setSender(user);
+                            // Envía la lista de unidades al cliente a través del método deliver
+                            srv.deliver(idCalibration);
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }

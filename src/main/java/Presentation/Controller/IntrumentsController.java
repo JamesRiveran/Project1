@@ -195,7 +195,7 @@ public final class IntrumentsController extends Controller {
         saveInformation(view.getTxtSerie().getText(), view.getTxtDescri().getText(), view.getTxtMini().getText(), view.getTxtMaxi().getText(), view.getTxtTole().getText(), view.getCmbType().getSelectedItem().toString(), code, update);
     }
 
-    public void updateTable() throws ParserConfigurationException, SAXException {
+    public void updateTable() {
         DefaultTableModel tableModel = (DefaultTableModel) view.getTbInstru().getModel();
         tableModel.setRowCount(0);
         for (int i = ListOfXml.size() - 1; i >= 0; i--) {

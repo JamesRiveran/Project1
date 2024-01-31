@@ -225,6 +225,17 @@ public class ServiceProxy implements Protocol.IService {
         }
     }
     
+    public void saveReading(Message message) {
+        try {
+            out.writeInt(ProtocolData.SAVE_READING);
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+            System.out.print("Error");
+
+        }
+    }
+    
     public void saveMeasurement(Message message) {
         try {
             out.writeInt(ProtocolData.SAVE_MEASUREMENT);
@@ -294,6 +305,18 @@ public class ServiceProxy implements Protocol.IService {
     public void getInformationModulo3(Message message) {
         try {
             out.writeInt(ProtocolData.GET_INFORMATION_MODULO_3);
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+            System.out.print("Error");
+
+        }
+    }
+    
+    
+    public void getNumberCalibration(Message message) {
+        try {
+            out.writeInt(ProtocolData.GET_ID_CALIBRATION);
             out.writeObject(message);
             out.flush();
         } catch (IOException ex) {

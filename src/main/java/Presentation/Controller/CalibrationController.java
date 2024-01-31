@@ -23,12 +23,12 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -36,9 +36,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import org.xml.sax.SAXException;
 
 /**
  *
@@ -146,7 +143,6 @@ public class CalibrationController extends Controller implements InstruSelection
                     
                         informationCalibration(calibrationList.getList(), serie, update);
                         getInformation();
-                        tableCalibrations();
                         List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max), Integer.parseInt(min));
                         informationMeasurement(measurements);
                         ViewController.showMessage(view,"Todas las mediciones fueron insertadas correctamente", "success");
@@ -163,6 +159,8 @@ public class CalibrationController extends Controller implements InstruSelection
             viewController.showMessage(view, ex.getMessage(), "error");
         }
     }
+    
+    
 
     public void informationCalibration(ArrayList<Calibration> calibrationList, String serie, boolean update) {
         for (Calibration cali : calibrationList) {
@@ -207,6 +205,7 @@ public class CalibrationController extends Controller implements InstruSelection
         id = String.valueOf(data_logic.getId());
         view.getCalibrationTxtNumber().setText(id);
         clearTable(tableModel);
+        updateTable();
     }
 
     @Override
@@ -306,6 +305,7 @@ public class CalibrationController extends Controller implements InstruSelection
                 DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
                 datosColumna.add(textoCelda);
                 datosColumnaId.add(textoCelda0);
+                
                 data_logic.updateReading(datosColumna, datosColumnaId, textoCelda3, view);
                 view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
 
@@ -324,6 +324,21 @@ public class CalibrationController extends Controller implements InstruSelection
         }
 
     }
+    
+
+    public void updateReading(List<String> readings, List<String> id, String idToUpdate) {
+        Message msg = new Message();
+
+       
+        msg.setReading(readings);
+        msg.setNewId(id);
+        msg.setIdToUpdate(idToUpdate);
+        
+        msg.setSender(user);
+
+        proxy.saveReading(msg);
+    }
+
 
     public void cleanMeasurement() {
 
@@ -478,14 +493,13 @@ public class CalibrationController extends Controller implements InstruSelection
 
         if (confirmResult == JOptionPane.YES_OPTION) {
             DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
-            String serie = getSerieInstrument();
             int number = Integer.parseInt(view.getCalibrationTxtNumber().getText());
             
             deleteMeasurement(number);
             deleteCalibration(number);
-            getInformation();
-            updateTable();
+            
             clearTable(tableModel);
+            clean();
         }
     }
     
@@ -560,7 +574,6 @@ public class CalibrationController extends Controller implements InstruSelection
             System.err.println("estan null");
         } else {
 //            updateTable();
-
         }
 //    
     }

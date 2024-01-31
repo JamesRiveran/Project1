@@ -24,11 +24,14 @@ public class Message implements Serializable {
     private ArrayList<Measurement> measure;
     private String[] dataCalibration;
     private List<Measurement> dataMeasurement;
-
+    private int numberOfCalibration;
+    private List<String> reading;
+    private List<String> newId;
+    String idToUpdate;
     public Message() {
     }
 
-    public Message(User sender, String message, String Id, boolean update, String[] data, List<Measurement> dataMeasurement, String[] dataCalibration, ArrayList<UnidsType> units, ArrayList<InstrumentType> typeIntruments, ArrayList<InstrumentModulo2> instruments, ArrayList<Calibration> calibration, ArrayList<Measurement> measure) {
+    public Message(User sender, String message,List<String> reading,String idToUpdate, List<String> actualId,List<String> newId, int numberOfCalibration, String Id, boolean update, String[] data, List<Measurement> dataMeasurement, String[] dataCalibration, ArrayList<UnidsType> units, ArrayList<InstrumentType> typeIntruments, ArrayList<InstrumentModulo2> instruments, ArrayList<Calibration> calibration, ArrayList<Measurement> measure) {
         this.sender = sender;
         this.message = message;
         this.Id = Id;
@@ -41,7 +44,49 @@ public class Message implements Serializable {
         this.measure = measure;
         this.dataCalibration = dataCalibration;
         this.dataMeasurement = dataMeasurement;
+        this.numberOfCalibration = numberOfCalibration;
+        this.reading = reading;
+        this.newId = newId;
+        this.idToUpdate=idToUpdate;
     }
+
+    public String getIdToUpdate() {
+        return idToUpdate;
+    }
+
+    public void setIdToUpdate(String idToUpdate) {
+        this.idToUpdate = idToUpdate;
+    }
+    
+    
+
+    public List<String> getNewId() {
+        return newId;
+    }
+
+    public void setNewId(List<String> newId) {
+        this.newId = newId;
+    }
+    
+    
+
+    public int getNumberOfCalibration() {
+        return numberOfCalibration;
+    }
+
+    public void setNumberOfCalibration(int numberOfCalibration) {
+        this.numberOfCalibration = numberOfCalibration;
+    }
+
+    public List<String> getReading() {
+        return reading;
+    }
+
+    public void setReading(List<String> reading) {
+        this.reading = reading;
+    }
+    
+    
 
     public String[] getDataCalibration() {
         return dataCalibration;
