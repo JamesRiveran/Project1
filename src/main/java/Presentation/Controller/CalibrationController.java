@@ -28,6 +28,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
@@ -72,7 +74,6 @@ public class CalibrationController extends Controller implements InstruSelection
         this.number = "0";
         default_label = view.getLbNombreInstru().getText();
         clickTable();
-
     }
 
     // Constructor con argumentos, incluyendo la serie
@@ -130,15 +131,17 @@ public class CalibrationController extends Controller implements InstruSelection
                             date,
                             Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                     calibrationList.getList().add(newCalibration);
-                    data_logic.saveCali(calibrationList.getList(), serie, view, update);
-                    updateTable();
-                    List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max), Integer.parseInt(min));
-
-                    data_logic.saveMeasure(measurements, view);
-
-                    view.getCalibrationTxtNumber().setText(String.valueOf(data_logic.getId()));
-
-                    clean();
+                    
+                        informationCalibration(calibrationList.getList(), serie, update);
+                        getInformation();
+                        tableCalibrations();
+                        List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max), Integer.parseInt(min));
+                        informationMeasurement(measurements);
+                        ViewController.showMessage(view,"Todas las mediciones fueron insertadas correctamente", "success");
+                        view.getCalibrationTxtNumber().setText(String.valueOf(data_logic.getId()));
+                        getInformation();
+                        clean();
+                    
                 } catch (Exception ex) {
                     viewController.showMessage(view, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
                 }
@@ -146,6 +149,35 @@ public class CalibrationController extends Controller implements InstruSelection
         } catch (Exception ex) {
             viewController.showMessage(view, ex.getMessage(), "error");
         }
+    }
+
+    public void informationCalibration(ArrayList<Calibration> calibrationList, String serie, boolean update) {
+        for (Calibration cali : calibrationList) {
+            saveCalibration(cali.getId(), cali.getDate(), cali.getMeasuring(), serie, update);
+        }
+    }
+
+    public void informationMeasurement(List<Measurement> measurementList) {
+        for (Measurement measurement : measurementList) {
+            saveMeasurement(measurement.getId(), measurement.getReference(), measurement.getReading(), Integer.parseInt(measurement.getCode()));
+        }
+    }
+
+    public void saveCalibration(int number, String date, int measurement, String serie, boolean update) {
+        Message msg = new Message();
+        String[] dataCalibration = {String.valueOf(number), date, String.valueOf(measurement), serie};
+        msg.setDataCalibration(dataCalibration);
+        msg.setUpdate(update);
+        msg.setSender(user);
+        proxy.saveCalibration(msg);
+    }
+    
+    public void saveMeasurement(int medida, int reference, String reading, int numberSerie) {
+        Message msg = new Message();
+        String[] dataMeasurement = {String.valueOf(medida), String.valueOf(reference), reading,String.valueOf(numberSerie)};
+        msg.setData(dataMeasurement);
+        msg.setSender(user);
+        proxy.saveMeasurement(msg);
     }
 
     @Override
@@ -298,7 +330,8 @@ public class CalibrationController extends Controller implements InstruSelection
         return formatoFecha.format(fechaSeleccionada);
     }
 
-    public List<Measurement> generateMeasurements(int numMeasurements, int maxValue, int minValue) throws IOException, SAXException, ParserConfigurationException, TransformerException {
+    public List<Measurement> generateMeasurements(int numMeasurements, int maxValue, int minValue) {
+       
         if (numMeasurements <= 0 || maxValue <= 0) {
             throw new IllegalArgumentException("La cantidad de mediciones y el valor máximo deben ser mayores que cero.");
         }
@@ -401,7 +434,6 @@ public class CalibrationController extends Controller implements InstruSelection
         }
         clickTable();
     }
-
     public String getSerieInstrument() {
         return serieInstrument;
     }
@@ -446,35 +478,40 @@ public class CalibrationController extends Controller implements InstruSelection
 
     @Override
     public void onInstruSelected(String serie, String tolerancia, String descri, String mini, String max, String simbol, boolean pass) {
-//        this.pass = pass;
-//        if (pass == false) {
-//            view.getLbNombreInstru().setText(default_label);
-//            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
-//            tableModel.setRowCount(0);
-//        } else {
-//            view.getLbNombreInstru().setText(serie + " - " + descri + " (" + mini + " " + simbol + " a " + max + " " + simbol + "),  " + "Tolerancia: " + tolerancia);
-//            this.serie = serie;
-//            this.tolerancia = tolerancia;
-//            this.max = max;
-//            this.min = mini;
-//
-//            setSerieInstrument(serie);
-//
-//            CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
-//            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
-//            tableModel.setRowCount(0);
-//
-//            for (Calibration calibracion : listCalibrations) {
-//                if (String.valueOf(calibracion.getNumber()).equals(serie)) {
-//                    System.out.println(calibracion.toString());
-//                    Object[] rowData = {calibracion.getId(), calibracion.getDate(), calibracion.getMeasuring()};
-//                    tableModel.addRow(rowData);
-//                }
-//            }
-//            DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
-//            clearTable(tableModels);
-//        }
+        this.pass = pass;
+        if (pass == false) {
+            view.getLbNombreInstru().setText(default_label);
+            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+            tableModel.setRowCount(0);
+        } else {
+            view.getLbNombreInstru().setText(serie + " - " + descri + " (" + mini + " " + simbol + " a " + max + " " + simbol + "),  " + "Tolerancia: " + tolerancia);
+            this.serie = serie;
+            this.tolerancia = tolerancia;
+            this.max = max;
+            this.min = mini;
 
+            setSerieInstrument(serie);
+
+            CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
+            
+            getInformation();
+            updateTable();
+        }
+
+    }
+    
+    public void tableCalibrations() {
+        DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+        tableModel.setRowCount(0);
+        for (Calibration calibracion : listCalibrations) {
+            if (String.valueOf(calibracion.getNumber()).equals(serie)) {
+                System.out.println(calibracion.toString());
+                Object[] rowData = {calibracion.getId(), calibracion.getDate(), calibracion.getMeasuring()};
+                tableModel.addRow(rowData);
+            }
+        }
+        DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
+        clearTable(tableModels);
     }
 
     public void deliver(Message message) {

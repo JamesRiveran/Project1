@@ -111,15 +111,17 @@ public class BDCalibration {
         return nextID;
     }
 
-//    public boolean instrumentTypeExists(String id) throws SQLException {
-//        conexion.setConexion();
-//        conexion.setConsulta("SELECT COUNT(*) AS count FROM instrument WHERE serie = ?");
-//        conexion.getConsulta().setString(1, id);
-//
-//        ResultSet resultSet = conexion.getConsulta().executeQuery();
-//        resultSet.next();
-//        int count = resultSet.getInt("count");
-//
-//        return count > 0;
-//    }
+    public boolean instrumentTypeExists(String id) throws SQLException {
+        conexion.setConexion();
+        conexion.setConsulta("SELECT COUNT(*) AS count FROM calibration WHERE id = ?");
+        conexion.getConsulta().setString(1, id);
+
+        ResultSet resultSet = conexion.getConsulta().executeQuery();
+        resultSet.next();
+        int count = resultSet.getInt("count");
+
+        return count > 0;
+    }
+    
+    
 }

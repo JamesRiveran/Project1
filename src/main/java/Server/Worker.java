@@ -5,6 +5,7 @@ import Presentation.Model.InstrumentModulo2;
 import Server.data.BDInstrument;
 import Server.data.BDTypeInstrument;
 import Presentation.Model.InstrumentType;
+import Presentation.Model.Measurement;
 import Protocol.IService;
 import Protocol.Message;
 import Protocol.ProtocolData;
@@ -228,6 +229,45 @@ public class Worker {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
+                    case ProtocolData.SAVE_CALIBRATION:
+                        Message saveCalibration = null;
+                        try {
+                            saveCalibration = (Message) in.readObject();
+                            boolean up = saveCalibration.isUpdate();
+                            String[] data = saveCalibration.getDataCalibration();
+                            try {
+                                if (!calibration.instrumentTypeExists(data[0]) || up) {
+                                    String response = calibration.saveCalibration(Integer.valueOf(data[0]),data[1],Integer.valueOf(data[2]),data[3]);
+                                    saveCalibration.setMessage(response);
+                                } else {
+                                    saveCalibration.setMessage("Ya existe ese codigo");
+                                }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            saveCalibration.setSender(user);
+                            // Envía la lista de unidades al cliente a través del método deliver
+                            srv.deliver(saveCalibration);
+
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
+                        case ProtocolData.SAVE_MEASUREMENT:
+                            Message saveMeasurement = null;
+                        try {
+                            saveMeasurement = (Message) in.readObject();
+                            String[] data = saveMeasurement.getData();
+                            measu.saveMeasurement(data[0],data[1],data[2],data[3]);
+                            saveMeasurement.setSender(user);
+                            // Envía la lista de unidades al cliente a través del método deliver
+                            srv.deliver(saveMeasurement);
+
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
+                        
                 }
                 out.flush();
             } catch (IOException ex) {
