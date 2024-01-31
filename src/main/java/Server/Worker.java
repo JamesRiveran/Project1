@@ -285,6 +285,7 @@ public class Worker {
             System.out.println("Esto es en el worker deliver " + message);
             out.writeInt(ProtocolData.DELIVER);
             out.writeObject(message);
+//            out.writeObject(message);
             out.flush();
         } catch (IOException ex) {
         }

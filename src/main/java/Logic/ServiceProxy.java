@@ -195,7 +195,7 @@ public class ServiceProxy implements Protocol.IService {
 
     public void saveMeasure(Message message) {
         try {
-            out.writeInt(ProtocolData.SAVE_MEASUREMENTS);
+            out.writeInt(ProtocolData.SAVE_MEASUREMENT);
             out.writeObject(message);
             out.flush();
         } catch (IOException ex) {
