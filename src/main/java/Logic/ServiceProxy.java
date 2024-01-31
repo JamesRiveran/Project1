@@ -66,18 +66,57 @@ public class ServiceProxy implements Protocol.IService {
     Socket skt;
 
     private void connect() {
-        try {
-            skt = new Socket(ProtocolData.SERVER, ProtocolData.PORT);
-            out = new ObjectOutputStream(skt.getOutputStream());
-            in = new ObjectInputStream(skt.getInputStream());
-            out.flush();
+        int intentos = 0;
+        boolean conexionExitosa = false;
 
-        } catch (IOException ex) {
-            // Manejar la excepción de E/S, por ejemplo, mostrar un mensaje de error
-            showMessage(ViewController.view, "Error de conexión, revisar conexión con el servidor", "error");
-        } catch (Exception ex) {
-            // Manejar otras excepciones de manera general
-            showMessage(ViewController.view, "Error al conectar", "error");
+        while (intentos < 3 && !conexionExitosa) {
+            try {
+                // Crear un nuevo Socket con la dirección del servidor y el puerto
+                skt = new Socket(ProtocolData.SERVER, ProtocolData.PORT);
+
+                // Crear flujos de salida y entrada de objetos para comunicarse con el servidor
+                out = new ObjectOutputStream(skt.getOutputStream());
+                in = new ObjectInputStream(skt.getInputStream());
+
+                // Limpiar el flujo de salida
+                out.flush();
+
+                // Si llegamos aquí sin lanzar excepciones, la conexión fue exitosa
+                conexionExitosa = true;
+
+            } catch (IOException ex) {
+                // Manejar la excepción de E/S (Input/Output), por ejemplo, mostrar un mensaje de error
+                showMessage(ViewController.view, "Error de conexión, intento " + (intentos + 1) + "/3. Revisar conexión con el servidor", "error");
+
+                // Incrementar el contador de intentos
+                intentos++;
+
+                // Esperar un momento antes de intentar nuevamente (puedes ajustar el tiempo de espera)
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            } catch (Exception ex) {
+                // Manejar otras excepciones de manera general
+                showMessage(ViewController.view, "Error al conectar", "error");
+                // Incrementar el contador de intentos
+                intentos++;
+
+                // Esperar un momento antes de intentar nuevamente (puedes ajustar el tiempo de espera)
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // Si después de 3 intentos no se logra la conexión, cerrar el programa
+        if (!conexionExitosa) {
+            showMessage(ViewController.view, "No se pudo establecer la conexión después de 3 intentos. Cerrando el programa.", "error");
+            System.exit(0);
         }
     }
 

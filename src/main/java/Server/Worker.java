@@ -122,7 +122,7 @@ public class Worker {
                             try {
                                 if (!type.instrumentTypeExists(data[0]) || up) {
                                     String response = type.saveOrUpdateInstrument(data[0], data[1], data[2]);
-                                    save.setMessage(response);
+                                    save.setMessage(response + " ID User: " + user.getId());
                                 } else {
                                     save.setMessage("Ya existe ese codigo");
                                 }
@@ -138,7 +138,7 @@ public class Worker {
                         }
                         break;
                     case ProtocolData.DELETE_TYPEINSTRUMENTS:
-                        Message delete = null;
+                        Message delete = null;      
                         try {
                             delete = (Message) in.readObject();
                             String response = type.deleteRecord(delete.getMessage());
