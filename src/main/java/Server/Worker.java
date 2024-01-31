@@ -138,7 +138,7 @@ public class Worker {
                         }
                         break;
                     case ProtocolData.DELETE_TYPEINSTRUMENTS:
-                        Message delete = null;      
+                        Message delete = null;
                         try {
                             delete = (Message) in.readObject();
                             String response = type.deleteRecord(delete.getMessage());
@@ -228,6 +228,21 @@ public class Worker {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
+                    case ProtocolData.SAVE_MEASUREMENTS:
+                        Message save_measurements = null;
+                        try {
+                            save_measurements = (Message) in.readObject();
+                            String[] data = save_measurements.getData();
+                            String response = measu.saveMeasurement(data[0], data[1], data[2], data[3]);
+                            save_measurements.setMessage(response);
+                            save_measurements.setSender(user);
+                            // Envía la lista de unidades al cliente a través del método deliver
+                            srv.deliver(save_measurements);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
+
                 }
                 out.flush();
             } catch (IOException ex) {

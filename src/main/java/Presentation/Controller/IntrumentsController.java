@@ -269,6 +269,7 @@ public final class IntrumentsController extends Controller {
     }
 
     public void tbInstruMouseClicked(MouseEvent evt) {
+        CalibrationController.getInformation();
         int selectedRow = view.getTbInstru().getSelectedRow();
 
         // Verifica si se hizo clic en una fila válida

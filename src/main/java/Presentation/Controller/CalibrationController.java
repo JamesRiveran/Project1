@@ -107,6 +107,14 @@ public class CalibrationController extends Controller implements InstruSelection
         proxy.getInformationModulo3(msg);
     }
 
+    public static void saveMeasure(String id_measure, String reference, String reading, String idCalibration) {
+        Message msg = new Message();
+        String[] datos = {id_measure, reference, reading, idCalibration};
+        msg.setData(datos);
+        msg.setSender(user);
+        proxy.saveMeasure(msg);
+    }
+
     @Override
     public void save() {
         try {
@@ -131,13 +139,14 @@ public class CalibrationController extends Controller implements InstruSelection
                             Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                     calibrationList.getList().add(newCalibration);
                     data_logic.saveCali(calibrationList.getList(), serie, view, update);
+                    getInformation();
                     updateTable();
                     List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max), Integer.parseInt(min));
-
-                    data_logic.saveMeasure(measurements, view);
-
+                    for (Measurement mea : measurements) {
+                        saveMeasure(String.valueOf(mea.getId()), String.valueOf(mea.getReference()), mea.getReading(), mea.getCode());
+                    }
                     view.getCalibrationTxtNumber().setText(String.valueOf(data_logic.getId()));
-
+                    getInformation();
                     clean();
                 } catch (Exception ex) {
                     viewController.showMessage(view, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
@@ -162,7 +171,7 @@ public class CalibrationController extends Controller implements InstruSelection
         id = String.valueOf(data_logic.getId());
         view.getCalibrationTxtNumber().setText(id);
         clearTable(tableModel);
-
+        getInformation();
     }
 
     @Override
@@ -370,7 +379,6 @@ public class CalibrationController extends Controller implements InstruSelection
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
         tableModel.setRowCount(0);
         int id = Integer.parseInt(view.getCalibrationTxtNumber().getText());
-      
 
         for (Measurement measurements : loadedMeasurements) {
             if (Integer.parseInt(measurements.getCode()) == Integer.parseInt(getNumber())) {
@@ -392,7 +400,7 @@ public class CalibrationController extends Controller implements InstruSelection
     public void updateTable() {
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
-        System.out.println("Esto es calibration list "+listCalibrations);
+        System.out.println("Esto es calibration list " + listCalibrations);
         for (int i = listCalibrations.size() - 1; i >= 0; i--) {
             Calibration newCalibration = listCalibrations.get(i);
             if (newCalibration.getNumber().equals(serie)) {
@@ -446,34 +454,34 @@ public class CalibrationController extends Controller implements InstruSelection
 
     @Override
     public void onInstruSelected(String serie, String tolerancia, String descri, String mini, String max, String simbol, boolean pass) {
-//        this.pass = pass;
-//        if (pass == false) {
-//            view.getLbNombreInstru().setText(default_label);
-//            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
-//            tableModel.setRowCount(0);
-//        } else {
-//            view.getLbNombreInstru().setText(serie + " - " + descri + " (" + mini + " " + simbol + " a " + max + " " + simbol + "),  " + "Tolerancia: " + tolerancia);
-//            this.serie = serie;
-//            this.tolerancia = tolerancia;
-//            this.max = max;
-//            this.min = mini;
-//
-//            setSerieInstrument(serie);
-//
-//            CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
-//            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
-//            tableModel.setRowCount(0);
-//
-//            for (Calibration calibracion : listCalibrations) {
-//                if (String.valueOf(calibracion.getNumber()).equals(serie)) {
-//                    System.out.println(calibracion.toString());
-//                    Object[] rowData = {calibracion.getId(), calibracion.getDate(), calibracion.getMeasuring()};
-//                    tableModel.addRow(rowData);
-//                }
-//            }
-//            DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
-//            clearTable(tableModels);
-//        }
+        this.pass = pass;
+        if (pass == false) {
+            view.getLbNombreInstru().setText(default_label);
+            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+            tableModel.setRowCount(0);
+        } else {
+            view.getLbNombreInstru().setText(serie + " - " + descri + " (" + mini + " " + simbol + " a " + max + " " + simbol + "),  " + "Tolerancia: " + tolerancia);
+            this.serie = serie;
+            this.tolerancia = tolerancia;
+            this.max = max;
+            this.min = mini;
+
+            setSerieInstrument(serie);
+
+            CalibrationController cali = new CalibrationController(this.view, serie, max, pass);
+            DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
+            tableModel.setRowCount(0);
+
+            for (Calibration calibracion : listCalibrations) {
+                if (String.valueOf(calibracion.getNumber()).equals(serie)) {
+                    System.out.println(calibracion.toString());
+                    Object[] rowData = {calibracion.getId(), calibracion.getDate(), calibracion.getMeasuring()};
+                    tableModel.addRow(rowData);
+                }
+            }
+            DefaultTableModel tableModels = (DefaultTableModel) view.getTblMeasurement().getModel();
+            clearTable(tableModels);
+        }
 
     }
 

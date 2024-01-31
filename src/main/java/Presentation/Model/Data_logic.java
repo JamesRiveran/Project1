@@ -125,13 +125,13 @@ public class Data_logic {
         return calibration.getAllCalibration();
     }
 
-    public void saveMeasure(List<Measurement> measurements, JFrame parent) {
-        try {
-            String response = measurement.saveMeasurement(measurements);
-        } catch (Exception ex) {
-            throw new BusinessException("Error en la lógica de negocio: " + ex.getMessage());
-        }
-    }
+//    public void saveMeasure(List<Measurement> measurements, JFrame parent) {
+//        try {
+//            String response = measurement.saveMeasurement(measurements);
+//        } catch (Exception ex) {
+//            throw new BusinessException("Error en la lógica de negocio: " + ex.getMessage());
+//        }
+//    }
 
     public void updateReading(List<String> readings, List<String> id, String idToUpdate, JFrame parent) {
         try {
