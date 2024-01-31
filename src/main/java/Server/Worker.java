@@ -113,6 +113,20 @@ public class Worker {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
+                        
+                        case ProtocolData.GET_INFORMATION_ID:
+                        Message messages = null;
+                        try {
+                            messages = (Message) in.readObject();
+                            messages.setId(String.valueOf(calibration.getId()));
+                            messages.setSender(user);
+
+                            // Envía la lista de unidades al cliente a través del método deliver
+                            srv.deliver(messages);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
                         case ProtocolData.SAVE_READING:
                         Message reading = null;
                         try {
@@ -269,7 +283,7 @@ public class Worker {
                             get_Informaion_modulo3 = (Message) in.readObject();
                             get_Informaion_modulo3.setCalibration(calibration.getAllCalibration());
                             get_Informaion_modulo3.setMeasure(measu.getAllMeasurement());
-
+                            get_Informaion_modulo3.setId(String.valueOf(calibration.getId()));
                             get_Informaion_modulo3.setSender(user);
 
                             // Envía la lista de unidades al cliente a través del método deliver

@@ -182,6 +182,17 @@ public class ServiceProxy implements Protocol.IService {
 
         }
     }
+    
+    public void getInformationID(Message message) {
+        try {
+            out.writeInt(ProtocolData.GET_INFORMATION_ID);
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+            System.out.print("Error");
+
+        }
+    }
 
     public void saveIntruments(Message message) {
         try {

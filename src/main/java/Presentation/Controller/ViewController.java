@@ -45,7 +45,7 @@ public class ViewController extends Controller implements ActionListener {
     CalibrationController calibrationController;
     IntrumentsController intrumentsController;
     public static Modulo view;
-    private static String get_Id = "";
+    public static String get_Id = "";
     protected Modulo viewError;
     boolean update = false;
     int confirmResult;
@@ -358,7 +358,6 @@ public class ViewController extends Controller implements ActionListener {
             }
         });
         return true;
-
     }
 
     @Override

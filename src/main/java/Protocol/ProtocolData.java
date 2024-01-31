@@ -25,6 +25,7 @@ public class ProtocolData {
     public static final int GET_INFROMATION_MODULO_2 = 210;
     public static final int GET_ID_CALIBRATION = 220;
     public static final int GET_INFORMATION_MODULO_3 = 230;
+    public static final int GET_INFORMATION_ID = 240;
 
     public static final int SAVE_TYPEINSTRUMENTS = 300;
     public static final int SAVE_INSTRUMENTS = 310;
