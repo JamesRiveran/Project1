@@ -47,8 +47,8 @@ public class BDMeasurement {
         return measurementList;
     }
 
-    public String saveMeasurement(String id_measure, String reference, String reading, String idCalibration) {
-           String[] data={id_measure,reference,reading,idCalibration};
+    public void saveMeasurement(String id_measurement, String reference, String reading, String idCalibration) {
+        String[] data = {id_measurement,reference,reading,idCalibration};
 
         try {
             conexion.setConexion();
@@ -56,23 +56,23 @@ public class BDMeasurement {
 
                 conexion.getConsulta().setString(1, data[0]);
                 conexion.getConsulta().setString(2, data[1]);
-                conexion.getConsulta().setString(3, data[2]);
-                conexion.getConsulta().setString(4, data[3]);
+                conexion.getConsulta().setString(3,  data[2]);
+                conexion.getConsulta().setString(4,  data[3]);
 
                 if (conexion.getConsulta().executeUpdate() <= 0) {
                     // Respuesta negativa
-                    System.out.println("Error en la inserción de la medición con id " + data[0]);
+                    System.out.println("Error en la inserción de la medición con id " +  data[0]);
                     // Puedes agregar el ID de la medición a la cadena de retorno
-                    return "Error en la inserción de la medición con id " + data[0];
+                    
                 }
+            
+
 
             // Si llegamos a este punto, todas las inserciones fueron exitosas
             System.out.println("Todas las mediciones fueron insertadas correctamente");
-            return "Todas las mediciones fueron insertadas correctamente";
 
         } catch (SQLException error) {
             error.printStackTrace();
-            return "Error en sistema: " + error.getMessage();
         }
     }
 

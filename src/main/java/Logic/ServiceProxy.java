@@ -213,6 +213,28 @@ public class ServiceProxy implements Protocol.IService {
 
         }
     }
+    
+    public void saveCalibration(Message message) {
+        try {
+            out.writeInt(ProtocolData.SAVE_CALIBRATION);
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+            System.out.print("Error");
+
+        }
+    }
+    
+    public void saveMeasurement(Message message) {
+        try {
+            out.writeInt(ProtocolData.SAVE_MEASUREMENT);
+            out.writeObject(message);
+            out.flush();
+        } catch (IOException ex) {
+            System.out.print("Error");
+
+        }
+    }
 
     public void deleteInstruments(Message message) {
         try {

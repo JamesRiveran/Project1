@@ -21,11 +21,14 @@ public class Message implements Serializable {
     private ArrayList<InstrumentType> typeIntruments;
     private ArrayList<InstrumentModulo2> instruments;
     private ArrayList<Calibration> calibration;
-      private ArrayList<Measurement> measure;
+    private ArrayList<Measurement> measure;
+    private String[] dataCalibration;
+    private List<Measurement> dataMeasurement;
+
     public Message() {
     }
 
-    public Message(User sender, String message, String Id, boolean update, String[] data, ArrayList<UnidsType> units, ArrayList<InstrumentType> typeIntruments, ArrayList<InstrumentModulo2> instruments, ArrayList<Calibration> calibration, ArrayList<Measurement> measure) {
+    public Message(User sender, String message, String Id, boolean update, String[] data, List<Measurement> dataMeasurement, String[] dataCalibration, ArrayList<UnidsType> units, ArrayList<InstrumentType> typeIntruments, ArrayList<InstrumentModulo2> instruments, ArrayList<Calibration> calibration, ArrayList<Measurement> measure) {
         this.sender = sender;
         this.message = message;
         this.Id = Id;
@@ -36,32 +39,46 @@ public class Message implements Serializable {
         this.instruments = instruments;
         this.calibration = calibration;
         this.measure = measure;
+        this.dataCalibration = dataCalibration;
+        this.dataMeasurement = dataMeasurement;
     }
 
+    public String[] getDataCalibration() {
+        return dataCalibration;
+    }
 
+    public void setDataCalibration(String[] dataCalibration) {
+        this.dataCalibration = dataCalibration;
+    }
+
+    public List<Measurement> getDataMeasurement() {
+        return dataMeasurement;
+    }
+
+    public void setDataMeasurement(List<Measurement> dataMeasurement) {
+        this.dataMeasurement = dataMeasurement;
+    }
+
+    
+    
+    
+    
 
     public void setCalibration(ArrayList<Calibration> calibration) {
         this.calibration = calibration;
     }
 
-
-
     public void setMeasure(ArrayList<Measurement> measure) {
         this.measure = measure;
     }
 
-  
     public ArrayList<Calibration> getCalibration() {
         return calibration;
     }
 
- 
-
     public ArrayList<Measurement> getMeasure() {
         return measure;
     }
-
-    
 
     public void setId(String Id) {
         this.Id = Id;
@@ -70,10 +87,6 @@ public class Message implements Serializable {
     public String getId() {
         return Id;
     }
-
- 
-
-
 
     public void setInstruments(ArrayList<InstrumentModulo2> instruments) {
         this.instruments = instruments;
@@ -91,8 +104,6 @@ public class Message implements Serializable {
         this.update = update;
     }
 
- 
-   
     public User getSender() {
         return sender;
     }
@@ -137,8 +148,5 @@ public class Message implements Serializable {
     public String toString() {
         return "Message{" + "sender=" + sender + ", message=" + message + ", Id=" + Id + ", update=" + update + ", data=" + data + ", units=" + units + ", typeIntruments=" + typeIntruments + ", instruments=" + instruments + ", calibration=" + calibration + ", measure=" + measure + '}';
     }
-
-
-  
 
 }
