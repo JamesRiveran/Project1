@@ -136,7 +136,7 @@ public class CalibrationController extends Controller implements InstruSelection
                 viewController.showMessage(view, "La cantidad de mediciones es mayor a la cantidad de enteros que hay en el rango del instrumento", "error");
             } else {
                 try {
-                    calibrationList.getList().clear();
+                     calibrationList.getList().clear();
                     JDateChooser dateChooser = view.getCalibrationDateChooser();
                     String date = dateToString(dateChooser);
                     Calibration newCalibration = new Calibration(
@@ -145,17 +145,16 @@ public class CalibrationController extends Controller implements InstruSelection
                             date,
                             Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                     calibrationList.getList().add(newCalibration);
-
                     
                         informationCalibration(calibrationList.getList(), serie);
                         getInformation();
+                        tableCalibrations();
                         List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max), Integer.parseInt(min));
                         informationMeasurement(measurements);
                         ViewController.showMessage(view,"Todas las mediciones fueron insertadas correctamente", "success");
-                        getInformation();
                         
+                        getInformation();
                         clean();
-
 
                 } catch (Exception ex) {
                     viewController.showMessage(view, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
@@ -252,8 +251,7 @@ public class CalibrationController extends Controller implements InstruSelection
             return false;
         }
     }
-
-    public void saveMeasurement() {
+public void saveMeasurement() {
 
         int columna0 = 0;
         int columna2 = 2;  // Columna 2
@@ -310,13 +308,13 @@ public class CalibrationController extends Controller implements InstruSelection
                 DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
                 datosColumna.add(textoCelda);
                 datosColumnaId.add(textoCelda0);
-
+                
                 updateReading(datosColumna, datosColumnaId, textoCelda3);
                 view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
 
                 if ((rowCount - 1) == fila) {
                     viewController.showMessage(view, "Guardados con exito", "success");
-                    viewController.showMessage(view, "Se guardaron lecturas fuera de rango inexactas, las celdas están en rojo", "error");
+                    viewController.showMessage(view, "Lectura fuera de rango, ingrese otra lectura", "error");
                 }
 
             } else {
@@ -328,7 +326,6 @@ public class CalibrationController extends Controller implements InstruSelection
         }
 
     }
-
     public void updateReading(List<String> readings, List<String> id, String idToUpdate) {
         Message msg = new Message();
 
