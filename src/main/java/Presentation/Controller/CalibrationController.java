@@ -303,6 +303,7 @@ public void saveMeasurement() {
                     public void run() {
                         view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(colorCelda);
                         modelo.fireTableCellUpdated(finalFila, columna2);
+                        viewController.showMessage(view, "Lectura fuera de rango marcada de rojo", "error");
                     }
                 });
             }
@@ -315,7 +316,6 @@ public void saveMeasurement() {
 
             if ((rowCount - 1) == fila) {
                 viewController.showMessage(view, "Guardados con exito", "success");
-                viewController.showMessage(view, "Lectura fuera de rango, ingrese otra lectura", "error");
             }
         } else {
             if (fila >= (rowCount - contadorFilasEnColumna) && fila < rowCount) {
