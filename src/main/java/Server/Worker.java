@@ -328,7 +328,6 @@ public class Worker {
                             String[] data = saveMeasurement.getData();
                             measu.saveMeasurement(data[0], data[1], data[2], data[3]);
                             saveMeasurement.setSender(user);
-                            saveMeasurement.setMessage("Se se guardaron nuevas mediciones");
                             srv.deliver(saveMeasurement);
 
                         } catch (ClassNotFoundException ex) {

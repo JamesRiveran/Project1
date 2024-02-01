@@ -111,7 +111,7 @@ public class BDMeasurement {
             }
 
             // Return fuera del bucle
-            return "Se actualizaron todas las mediciones correctamente para la Calibración: " + idToUpdate;
+            return "Se actualizaron las mediciones para la Calibración: " + idToUpdate;
 
         } catch (SQLException error) {
             error.printStackTrace();
