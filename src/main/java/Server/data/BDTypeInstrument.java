@@ -56,7 +56,7 @@ public class BDTypeInstrument {
                 instrumentType.setCode(String.valueOf(resultado.getString(1)));
                 String unitName = resultado.getString("unidadmedida.name");
                 String unitSymbol = resultado.getString("simbol");
-                instrumentType.setUnit(unitName + " " + "("+unitSymbol+")");
+                instrumentType.setUnit(unitName + " " + "(" + unitSymbol + ")");
                 instrumentType.setName(resultado.getString(3));
                 instrumentList.add(instrumentType);
             }
@@ -95,16 +95,14 @@ public class BDTypeInstrument {
 
             if (conexion.getConsulta().executeUpdate() > 0) {
                 // Respuesta positiva
-                System.out.println("Se eliminó el tipo de instrumento!");
-                return "Eliminado exitosamente";
+                return "Se eliminó el tipo de instrumento: "+ code;
             } else {
-                System.out.println("Error en la eliminación de tipo de instrumento!");
                 return "Error al eliminar: Registro no encontrado";
             }
         } catch (SQLException error) {
             if (error instanceof SQLIntegrityConstraintViolationException) {
                 // Manejo de la excepción específica para clave foránea
-                return "Error al eliminar: Este tipo de instrumento está siendo referenciado por otros registros.";
+                return "Error al eliminar: Este tipo de instrumento: " + code + " está siendo referenciado por otros registros.";
             } else {
                 // Manejo de otras excepciones
                 error.printStackTrace();
@@ -122,11 +120,11 @@ public class BDTypeInstrument {
             if (resultSet.next()) {
                 // El registro existe, entonces actualiza los valores
                 updateRecord(code, unit, name);
-                return "Actualizado exitosamente";
+                return "Actualizado exitosamente el Tipo de Instrumento: " + code;
             } else {
                 // El registro no existe, entonces crea un nuevo registro
                 saveTypeOfInstrument(code, unit, name);
-                return "Guardado exitosamente";
+                return "Guardado exitosamente en Tipo de Instrumento: " + code;
             }
         } catch (SQLException error) {
             error.printStackTrace();

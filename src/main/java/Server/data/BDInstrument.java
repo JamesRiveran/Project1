@@ -77,15 +77,15 @@ public class BDInstrument {
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva
                 System.out.println("Se eliminó el tipo de instrumento!");
-                return "Eliminado exitosamente";
+                return "Eliminado exitosamente el instrumento: "+ serie;
             } else {
                 System.out.println("Error en la inserción de tipo de instrumento!");
-                return "Error al eliminar: Registro no encontrado";
+                return "Error al eliminar: Registro no encontrado: "+ serie;
             }
         } catch (SQLException error) {
             if (error instanceof SQLIntegrityConstraintViolationException) {
                 // Manejo de la excepción específica para clave foránea
-                return "Error al eliminar: Este instrumento está siendo referenciado por otros registros.";
+                return "Error al eliminar: Este tipo de instrumento: " + serie + " está siendo referenciado por otros registros.";
             } else {
                 // Manejo de otras excepciones
                 error.printStackTrace();
@@ -104,12 +104,12 @@ public class BDInstrument {
             if (resultSet.next()) {
                 // El registro existe, entonces actualiza los valores
                 updateInstrument(serie, mini, tole, descri, maxi,idIntrymentType);
-                return "Actualizado exitosamente";
+                return "Actualizado exitosamente el Instrumento: " + serie;
             } else {
 
                 // El registro no existe, entonces crea un nuevo registro
                 saveInstrument(serie, mini, tole, descri, maxi, idIntrymentType);
-                return "Guardado exitosamente";
+                return "Guardado exitosamente el Instrumento: " + serie;
 
             }
         } catch (SQLException error) {

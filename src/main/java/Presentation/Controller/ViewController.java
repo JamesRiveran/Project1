@@ -98,7 +98,7 @@ public class ViewController extends Controller implements ActionListener {
         view.getBtnSearchCalibration().addActionListener(e -> calibrationController.search());
         view.getBtnSaveMeasurement().addActionListener(e -> calibrationController.saveMeasurement());
         view.getBtnCleanMeasurement().addActionListener(e -> calibrationController.cleanMeasurement());
-        
+
         calibrationController.tab();
         intrumentsController.tab();
         getInformation();
@@ -386,6 +386,7 @@ public class ViewController extends Controller implements ActionListener {
         ListOfUnids = message.getUnits();
         ListOfIModu1o1 = message.getTypeIntruments();
         get_Id = message.getId();
+        User messageUser = message.getSender();
         try {
             if (ListOfUnids == null || ListOfIModu1o1 == null) {
                 System.err.println("estan null");
@@ -395,9 +396,17 @@ public class ViewController extends Controller implements ActionListener {
                 view.getCalibrationTxtNumber().setText(get_Id);
 
             }
-            if (message.getMessage() == null) {
+            if (message.getMessage() == null || messageUser.getId().equals(user.getId())) {
             } else {
-                showMessage(view, message.getMessage(), "success");
+
+                DefaultTableModel model = (DefaultTableModel) view.getTableMessage().getModel();
+                String messageContent = message.getMessage();
+                model.insertRow(0, new Object[]{messageUser.getNombre(), messageContent});
+                model.fireTableDataChanged();
+            }
+            if (message.getPersonalMessage() != null && messageUser.getId().equals(user.getId())) {
+                showMessage(view, message.getPersonalMessage(), "success");
+            } else {
             }
 
         } catch (ParserConfigurationException ex) {

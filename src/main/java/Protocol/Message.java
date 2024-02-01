@@ -3,7 +3,6 @@ package Protocol;
 import Presentation.Model.Calibration;
 import Presentation.Model.InstrumentModulo2;
 import Presentation.Model.InstrumentType;
-import Presentation.Model.IntrumentListModulo2;
 import Presentation.Model.Measurement;
 import Presentation.Model.UnidsType;
 import java.io.Serializable;
@@ -14,6 +13,7 @@ public class Message implements Serializable {
 
     private User sender;
     private String message;
+    private String personalMessage;
     private String Id;
     private boolean update;
     private String[] data;
@@ -28,12 +28,14 @@ public class Message implements Serializable {
     private List<String> reading;
     private List<String> newId;
     String idToUpdate;
+
     public Message() {
     }
 
-    public Message(User sender, String message,List<String> reading,String idToUpdate, List<String> actualId,List<String> newId, int numberOfCalibration, String Id, boolean update, String[] data, List<Measurement> dataMeasurement, String[] dataCalibration, ArrayList<UnidsType> units, ArrayList<InstrumentType> typeIntruments, ArrayList<InstrumentModulo2> instruments, ArrayList<Calibration> calibration, ArrayList<Measurement> measure) {
+    public Message(User sender, String message, String personalMessage, List<String> reading, String idToUpdate, List<String> actualId, List<String> newId, int numberOfCalibration, String Id, boolean update, String[] data, List<Measurement> dataMeasurement, String[] dataCalibration, ArrayList<UnidsType> units, ArrayList<InstrumentType> typeIntruments, ArrayList<InstrumentModulo2> instruments, ArrayList<Calibration> calibration, ArrayList<Measurement> measure) {
         this.sender = sender;
         this.message = message;
+        this.personalMessage = personalMessage;
         this.Id = Id;
         this.update = update;
         this.data = data;
@@ -47,7 +49,7 @@ public class Message implements Serializable {
         this.numberOfCalibration = numberOfCalibration;
         this.reading = reading;
         this.newId = newId;
-        this.idToUpdate=idToUpdate;
+        this.idToUpdate = idToUpdate;
     }
 
     public String getIdToUpdate() {
@@ -57,8 +59,6 @@ public class Message implements Serializable {
     public void setIdToUpdate(String idToUpdate) {
         this.idToUpdate = idToUpdate;
     }
-    
-    
 
     public List<String> getNewId() {
         return newId;
@@ -67,8 +67,6 @@ public class Message implements Serializable {
     public void setNewId(List<String> newId) {
         this.newId = newId;
     }
-    
-    
 
     public int getNumberOfCalibration() {
         return numberOfCalibration;
@@ -85,8 +83,6 @@ public class Message implements Serializable {
     public void setReading(List<String> reading) {
         this.reading = reading;
     }
-    
-    
 
     public String[] getDataCalibration() {
         return dataCalibration;
@@ -103,11 +99,6 @@ public class Message implements Serializable {
     public void setDataMeasurement(List<Measurement> dataMeasurement) {
         this.dataMeasurement = dataMeasurement;
     }
-
-    
-    
-    
-    
 
     public void setCalibration(ArrayList<Calibration> calibration) {
         this.calibration = calibration;
@@ -165,6 +156,14 @@ public class Message implements Serializable {
         this.message = message;
     }
 
+    public String getPersonalMessage() {
+        return personalMessage;
+    }
+
+    public void setPersonalMessage(String personalMessage) {
+        this.personalMessage = personalMessage;
+    }
+
     public String[] getData() {
         return data;
     }
@@ -191,7 +190,6 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{" + "sender=" + sender + ", message=" + message + ", Id=" + Id + ", update=" + update + ", data=" + data + ", units=" + units + ", typeIntruments=" + typeIntruments + ", instruments=" + instruments + ", calibration=" + calibration + ", measure=" + measure + '}';
+        return "Message{" + "sender=" + sender + ", message=" + message + ", personalMessage=" + personalMessage + ", Id=" + Id + ", update=" + update + ", data=" + data + ", units=" + units + ", typeIntruments=" + typeIntruments + ", instruments=" + instruments + ", calibration=" + calibration + ", measure=" + measure + ", dataCalibration=" + dataCalibration + ", dataMeasurement=" + dataMeasurement + ", numberOfCalibration=" + numberOfCalibration + ", reading=" + reading + ", newId=" + newId + ", idToUpdate=" + idToUpdate + '}';
     }
-
 }

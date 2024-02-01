@@ -1,11 +1,8 @@
 package Server;
 
 import Server.data.BDMeasurement;
-import Presentation.Model.InstrumentModulo2;
 import Server.data.BDInstrument;
 import Server.data.BDTypeInstrument;
-import Presentation.Model.InstrumentType;
-import Presentation.Model.Measurement;
 import Protocol.IService;
 import Protocol.Message;
 import Protocol.ProtocolData;
@@ -15,8 +12,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -113,7 +108,7 @@ public class Worker {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
-                        case ProtocolData.SAVE_READING:
+                    case ProtocolData.SAVE_READING:
                         Message reading = null;
                         try {
                             reading = (Message) in.readObject();
@@ -137,9 +132,11 @@ public class Worker {
                             try {
                                 if (!type.instrumentTypeExists(data[0]) || up) {
                                     String response = type.saveOrUpdateInstrument(data[0], data[1], data[2]);
-                                    save.setMessage(response + " ID User: " + user.getId());
+                                    save.setMessage(response);
+                                    save.setPersonalMessage(response);
                                 } else {
-                                    save.setMessage("Ya existe ese codigo");
+                                    save.setMessage("Intento insertar un tipo de instrumento ya existente");
+                                    save.setPersonalMessage("Ya existe ese codigo");
                                 }
                             } catch (SQLException ex) {
                                 Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
@@ -147,6 +144,7 @@ public class Worker {
                             save.setSender(user);
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(save);
+                            deliver(save);
 
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
@@ -158,9 +156,11 @@ public class Worker {
                             delete = (Message) in.readObject();
                             String response = type.deleteRecord(delete.getMessage());
                             delete.setMessage(response);
+                            delete.setPersonalMessage(response);
                             delete.setSender(user);
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(delete);
+                            deliver(delete);
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -178,9 +178,6 @@ public class Worker {
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(get_Informaion_modulo2);
 
-                            System.out.println(user.getNombre() + ": " + get_Informaion_modulo2.getInstruments());
-                            System.out.println(get_Informaion_modulo2.getTypeIntruments());
-
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -191,40 +188,51 @@ public class Worker {
                             deleteInstruments = (Message) in.readObject();
                             String response = instruments.deleteInstrument(deleteInstruments.getMessage());
                             deleteInstruments.setMessage(response);
+                            deleteInstruments.setPersonalMessage(response);
                             deleteInstruments.setSender(user);
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(deleteInstruments);
+                            deliver(deleteInstruments);
+
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
-                        case ProtocolData.DELETE_MEASUREMENT:
+                    case ProtocolData.DELETE_MEASUREMENT:
                         Message deleteMeasurement = null;
                         try {
                             deleteMeasurement = (Message) in.readObject();
                             String response = measu.deleteMeasurement(deleteMeasurement.getMessage());
                             deleteMeasurement.setMessage(response);
+                            deleteMeasurement.setPersonalMessage(response);
+
                             deleteMeasurement.setSender(user);
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(deleteMeasurement);
+                            deliver(deleteMeasurement);
+
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
-                        case ProtocolData.DELETE_CALIBRATIONS:
+                    case ProtocolData.DELETE_CALIBRATIONS:
                         Message deleteCalibration = null;
                         try {
                             deleteCalibration = (Message) in.readObject();
                             String response = calibration.deleteCalibration(Integer.parseInt(deleteCalibration.getMessage()));
                             deleteCalibration.setMessage(response);
+                            deleteCalibration.setPersonalMessage(response);
+
                             deleteCalibration.setSender(user);
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(deleteCalibration);
+                            deliver(deleteCalibration);
+
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
-                        case ProtocolData.GET_ID_CALIBRATION:
+                    case ProtocolData.GET_ID_CALIBRATION:
                         Message idCalibration = null;
                         try {
                             idCalibration = (Message) in.readObject();
@@ -248,8 +256,10 @@ public class Worker {
                                 if (!instruments.instrumentTypeExists(data[0]) || up) {
                                     String response = instruments.saveOrUpdateInstrument(data[0], data[2], data[4], data[1], data[3], idIntrymentType);
                                     save_instruments.setMessage(response);
+                                    save_instruments.setPersonalMessage(response);
                                 } else {
-                                    save_instruments.setMessage("Ya existe ese codigo");
+                                    save_instruments.setMessage("Intento insertar un instrumento ya existente");
+                                    save_instruments.setPersonalMessage("Ya existe ese codigo");
                                 }
                             } catch (SQLException ex) {
                                 Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
@@ -257,6 +267,7 @@ public class Worker {
                             save_instruments.setSender(user);
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(save_instruments);
+                            deliver(save_instruments);
 
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
@@ -290,10 +301,13 @@ public class Worker {
                             String[] data = saveCalibration.getDataCalibration();
                             try {
                                 if (!calibration.instrumentTypeExists(data[0])) {
-                                    String response = calibration.saveCalibration(Integer.valueOf(data[0]),data[1],Integer.valueOf(data[2]),data[3]);
+                                    String response = calibration.saveCalibration(Integer.valueOf(data[0]), data[1], Integer.valueOf(data[2]), data[3]);
                                     saveCalibration.setMessage(response);
+                                    saveCalibration.setPersonalMessage(response);
+
                                 } else {
-                                    saveCalibration.setMessage("Ya existe ese codigo");
+                                    saveCalibration.setMessage("Intento insertar una calibracion ya existente");
+                                    saveCalibration.setPersonalMessage("Ya existe ese codigo");
                                 }
                             } catch (SQLException ex) {
                                 Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
@@ -301,27 +315,26 @@ public class Worker {
                             saveCalibration.setSender(user);
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(saveCalibration);
-
+                            deliver(saveCalibration);
 
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
-                        case ProtocolData.SAVE_MEASUREMENT:
-                            Message saveMeasurement = null;
+                    case ProtocolData.SAVE_MEASUREMENT:
+                        Message saveMeasurement = null;
                         try {
                             saveMeasurement = (Message) in.readObject();
                             String[] data = saveMeasurement.getData();
-                            measu.saveMeasurement(data[0],data[1],data[2],data[3]);
+                            measu.saveMeasurement(data[0], data[1], data[2], data[3]);
                             saveMeasurement.setSender(user);
-                            // Envía la lista de unidades al cliente a través del método deliver
+                            saveMeasurement.setMessage("Se guardo nuevas lecturas en mediciones");
                             srv.deliver(saveMeasurement);
 
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
-                        
 
                 }
                 out.flush();

@@ -128,10 +128,10 @@ public class BDMeasurement {
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva
                 System.out.println("Se eliminó la medición!");
-                return "Mediciones registradas eliminadas exitosamente";
+                return "Mediciones registradas eliminadas exitosamente, Calibracion ID: "+ idCalibration;
             } else {
                 System.out.println("Error en la inserción de la medición!");
-                return "Error al eliminar: Medición no encontrado";
+                return "Error al eliminar: Medición no encontrado, Calibracion ID" + idCalibration;
             }
         } catch (SQLException error) {
             if (error instanceof SQLIntegrityConstraintViolationException) {

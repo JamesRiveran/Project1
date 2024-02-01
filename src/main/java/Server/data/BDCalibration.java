@@ -57,7 +57,7 @@ public class BDCalibration {
             conexion.getConsulta().setString(4, serieForeing);
 
             if (conexion.getConsulta().executeUpdate() > 0) {
-                return "Se insertó la calibración!";
+                return "Insertó la calibración: " + id;
             } else {
                 return "Error en la inserción de la calibración!";
             }
@@ -78,10 +78,10 @@ public class BDCalibration {
             if (conexion.getConsulta().executeUpdate() > 0) {
                 //Respuesta positiva
                 System.out.println("Se eliminó la calibración!");
-                return "Calibración eliminada exitosamente";
+                return "Calibración eliminada exitosamente, ID: " + id;
             } else {
                 System.out.println("Error en la inserción de la calibración!");
-                return "Error al eliminar: Registro no encontrado";
+                return "Error al eliminar: Registro no encontrado, ID: " + id;
             }
         } catch (SQLException error) {
             if (error instanceof SQLIntegrityConstraintViolationException) {
@@ -122,6 +122,5 @@ public class BDCalibration {
 
         return count > 0;
     }
-    
-    
+
 }

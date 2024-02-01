@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -29,9 +30,8 @@ public class Modulo extends javax.swing.JFrame {
      * Creates new form Modulo
      */
     public Modulo() {
-        initComponents  ();
+        initComponents();
         btnDeleteInstru.setEnabled(false);
-
 
         tblMeasurement.getColumnModel().getColumn(3).setMinWidth(0);
         tblMeasurement.getColumnModel().getColumn(3).setMaxWidth(0);
@@ -40,6 +40,14 @@ public class Modulo extends javax.swing.JFrame {
         tbInstru.getColumnModel().getColumn(5).setMinWidth(0);
         tbInstru.getColumnModel().getColumn(5).setMaxWidth(0);
         tbInstru.getColumnModel().getColumn(5).setWidth(0);
+
+        TableColumnModel columnModel = tableMessage.getColumnModel();
+
+        int widthFirstColumn = (int) (tableMessage.getWidth() * 0.2);  
+        columnModel.getColumn(0).setPreferredWidth(widthFirstColumn);
+
+        int widthSecondColumn = (int) (tableMessage.getWidth() * 0.8); 
+        columnModel.getColumn(1).setPreferredWidth(widthSecondColumn);
 
     }
 
@@ -154,10 +162,8 @@ public class Modulo extends javax.swing.JFrame {
         unaImageIcon = new javax.swing.JLabel();
         miscTxtInstitution1 = new javax.swing.JLabel();
         miscTxtVersion = new javax.swing.JLabel();
-        pDataCall = new javax.swing.JPanel();
-        jPanel11 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableMessage = new javax.swing.JTable();
         jLabel28 = new javax.swing.JLabel();
 
         jRadioButton1.setText("jRadioButton1");
@@ -258,7 +264,7 @@ public class Modulo extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtNameForSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 660, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 553, Short.MAX_VALUE)
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(btnPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -324,7 +330,7 @@ public class Modulo extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1214,33 +1220,8 @@ public class Modulo extends javax.swing.JFrame {
 
         pTipoDeInstrumento.addTab("Acerca de", pAcercaDe);
 
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 364, Short.MAX_VALUE)
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 602, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout pDataCallLayout = new javax.swing.GroupLayout(pDataCall);
-        pDataCall.setLayout(pDataCallLayout);
-        pDataCallLayout.setHorizontalGroup(
-            pDataCallLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        pDataCallLayout.setVerticalGroup(
-            pDataCallLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pDataCallLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableMessage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tableMessage.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -1295,12 +1276,15 @@ public class Modulo extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setColumnSelectionAllowed(true);
-        jScrollPane4.setViewportView(jTable1);
+        tableMessage.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        tableMessage.setColumnSelectionAllowed(true);
+        tableMessage.setShowHorizontalLines(true);
+        tableMessage.setShowVerticalLines(true);
+        jScrollPane4.setViewportView(tableMessage);
 
         jLabel28.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel28.setText("Acciones de Usuario");
+        jLabel28.setText("Acciones de Usuarios");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1310,34 +1294,21 @@ public class Modulo extends javax.swing.JFrame {
                 .addComponent(pTipoDeInstrumento, javax.swing.GroupLayout.PREFERRED_SIZE, 1139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 23, Short.MAX_VALUE))
+                        .addGap(192, 192, 192))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addContainerGap())))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(1152, Short.MAX_VALUE)
-                    .addComponent(pDataCall, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel28)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4))
-                    .addComponent(pTipoDeInstrumento, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 6, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(9, Short.MAX_VALUE)
-                    .addComponent(pDataCall, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
+                .addComponent(jLabel28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(pTipoDeInstrumento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pTipoDeInstrumento.getAccessibleContext().setAccessibleName("pTipoDeInstrumento");
@@ -1534,8 +1505,6 @@ public class Modulo extends javax.swing.JFrame {
     public void setBtnSave(JButton btnSave) {
         this.btnSave = btnSave;
     }
-    
-     
 
     public JButton getBtnSaveMeasurement() {
         return btnSaveMeasurement;
@@ -1818,6 +1787,14 @@ public class Modulo extends javax.swing.JFrame {
         return pInstrumento;
     }
 
+    public void setTableMessage(JTable tableMessage) {
+        this.tableMessage = tableMessage;
+    }
+
+    public JTable getTableMessage() {
+        return tableMessage;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClean;
@@ -1872,7 +1849,6 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1889,7 +1865,6 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbNombreInstru;
     private javax.swing.JLabel lbSimbol;
     private javax.swing.JLabel lbSimbol1;
@@ -1907,11 +1882,11 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JPanel pAcercaDe;
     private javax.swing.JPanel pCaliMedidas;
     private javax.swing.JPanel pCalibraciones;
-    private javax.swing.JPanel pDataCall;
     private javax.swing.JPanel pInstrumento;
     private javax.swing.JPanel pMediciones;
     private Presentation.Model.MaterialTabbed pTipoDeInstrumento;
     private javax.swing.JPanel pTipoInstrumento;
+    private javax.swing.JTable tableMessage;
     private javax.swing.JTable tbInstru;
     private javax.swing.JTable tblCalibrations;
     private javax.swing.JTable tblListInstruments;
