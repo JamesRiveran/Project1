@@ -271,6 +271,8 @@ public void saveMeasurement() {
                 contadorFilasEnColumna++;
             }
         }
+        
+        String value ="";
 
         for (int fila = 0; fila < rowCount; fila++) {
 
@@ -290,6 +292,8 @@ public void saveMeasurement() {
                 int intTextoCelda = Integer.parseInt(textoCelda);
                 Object valorCelda3 = modelo.getValueAt(fila, columna3);
                 String textoCelda3 = (valorCelda3 != null) ? valorCelda3.toString() : "";
+                value=textoCelda3;
+                
 
                 if (intTextoCelda > validation || intTextoCelda < validationFew) {
 
@@ -308,7 +312,7 @@ public void saveMeasurement() {
                 DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
                 datosColumna.add(textoCelda);
                 datosColumnaId.add(textoCelda0);
-                updateReading(datosColumna, datosColumnaId, textoCelda3);
+                
                 view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
 
                 if ((rowCount - 1) == fila) {
@@ -324,6 +328,7 @@ public void saveMeasurement() {
                 break;
             }
         }
+        updateReading(datosColumna, datosColumnaId, value);
     }
 
 public void updateReading(List<String> readings, List<String> id, String idToUpdate) {
