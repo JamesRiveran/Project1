@@ -308,13 +308,13 @@ public void saveMeasurement() {
                 DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
                 datosColumna.add(textoCelda);
                 datosColumnaId.add(textoCelda0);
-                
                 updateReading(datosColumna, datosColumnaId, textoCelda3);
                 view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
 
                 if ((rowCount - 1) == fila) {
                     viewController.showMessage(view, "Guardados con exito", "success");
                     viewController.showMessage(view, "Lectura fuera de rango, ingrese otra lectura", "error");
+
                 }
 
             } else {
@@ -324,20 +324,16 @@ public void saveMeasurement() {
                 break;
             }
         }
-
-    }
-    public void updateReading(List<String> readings, List<String> id, String idToUpdate) {
-        Message msg = new Message();
-
-        msg.setReading(readings);
-        msg.setNewId(id);
-        msg.setIdToUpdate(idToUpdate);
-
-        msg.setSender(user);
-
-        proxy.saveReading(msg);
     }
 
+public void updateReading(List<String> readings, List<String> id, String idToUpdate) {
+    Message msg = new Message();
+    msg.setReading(readings);
+    msg.setNewId(id);
+    msg.setIdToUpdate(idToUpdate);
+    msg.setSender(user);
+    proxy.saveReading(msg);
+}
     public void cleanMeasurement() {
 
         int columna = 2;  // El número de la columna que deseas limpiar
