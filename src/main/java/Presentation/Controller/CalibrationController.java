@@ -10,7 +10,6 @@ import static Presentation.Controller.ViewController.user;
 import Presentation.Model.Calibration;
 import Presentation.Model.CalibrationList;
 import Presentation.Model.ColorCelda;
-import Presentation.Model.Data_logic;
 import Presentation.Model.GeneratorPDF;
 import static Presentation.Model.GeneratorPDF.loadCalibration;
 import Presentation.Model.Measurement;
@@ -55,7 +54,6 @@ public class CalibrationController extends Controller implements InstruSelection
     private static ArrayList<Measurement> loadedMeasurements;
     private String number;
     public String serieInstrument = "";
-    Data_logic data_logic;
     boolean update = false;
     Color colorOriginal;
     String default_label;
@@ -64,7 +62,6 @@ public class CalibrationController extends Controller implements InstruSelection
 
     public CalibrationController(Modulo views) {
         this.view = views;
-        this.data_logic = new Data_logic();
         view.getCalibrationBtnDelete().setEnabled(false);
         colorOriginal = view.getCalibrationBtnDelete().getBackground();
         this.view.setCalibrationController(this);
@@ -77,7 +74,6 @@ public class CalibrationController extends Controller implements InstruSelection
     // Constructor con argumentos, incluyendo la serie
     public CalibrationController(Modulo view, String serie, String max, boolean pass) {
 
-        this.data_logic = new Data_logic();
         this.view = view;
         this.view.setCalibrationController(this);
         this.calibrationList = new CalibrationList();
@@ -143,7 +139,7 @@ public class CalibrationController extends Controller implements InstruSelection
                             Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                     calibrationList.getList().add(newCalibration);
                     
-                        informationCalibration(calibrationList.getList(), serie, update);
+                        informationCalibration(calibrationList.getList(), serie);
                         getInformation();
                         List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max), Integer.parseInt(min));
                         informationMeasurement(measurements);
@@ -164,9 +160,9 @@ public class CalibrationController extends Controller implements InstruSelection
     
     
 
-    public void informationCalibration(ArrayList<Calibration> calibrationList, String serie, boolean update) {
+    public void informationCalibration(ArrayList<Calibration> calibrationList, String serie) {
         for (Calibration cali : calibrationList) {
-            saveCalibration(cali.getId(), cali.getDate(), cali.getMeasuring(), serie, update);
+            saveCalibration(cali.getId(), cali.getDate(), cali.getMeasuring(), serie);
         }
     }
 
@@ -176,11 +172,10 @@ public class CalibrationController extends Controller implements InstruSelection
         }
     }
 
-    public void saveCalibration(int number, String date, int measurement, String serie, boolean update) {
+    public void saveCalibration(int number, String date, int measurement, String serie) {
         Message msg = new Message();
         String[] dataCalibration = {String.valueOf(number), date, String.valueOf(measurement), serie};
         msg.setDataCalibration(dataCalibration);
-        msg.setUpdate(update);
         msg.setSender(user);
         proxy.saveCalibration(msg);
     }
@@ -310,13 +305,11 @@ public class CalibrationController extends Controller implements InstruSelection
                 datosColumna.add(textoCelda);
                 datosColumnaId.add(textoCelda0);
                 updateReading(datosColumna, datosColumnaId, textoCelda3);
-                //data_logic.updateReading(datosColumna, datosColumnaId, textoCelda3, view);
                 view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
 
                 if ((rowCount - 1) == fila) {
                     viewController.showMessage(view, "Guardados con exito", "success");
-                    viewController.showMessage(view, "Lectura fuera de rango, ingrese otra lectura", "error");
-
+                    viewController.showMessage(view, "Se guardaron lecturas fuera de rango inexactas, las celdas están en rojo", "error");
                 }
 
             } else {

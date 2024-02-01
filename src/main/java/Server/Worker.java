@@ -287,10 +287,9 @@ public class Worker {
                         Message saveCalibration = null;
                         try {
                             saveCalibration = (Message) in.readObject();
-                            boolean up = saveCalibration.isUpdate();
                             String[] data = saveCalibration.getDataCalibration();
                             try {
-                                if (!calibration.instrumentTypeExists(data[0]) || up) {
+                                if (!calibration.instrumentTypeExists(data[0])) {
                                     String response = calibration.saveCalibration(Integer.valueOf(data[0]),data[1],Integer.valueOf(data[2]),data[3]);
                                     saveCalibration.setMessage(response);
                                 } else {
