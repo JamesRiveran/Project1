@@ -250,84 +250,84 @@ public class CalibrationController extends Controller implements InstruSelection
         }
     }
 public void saveMeasurement() {
+    int columna0 = 0;
+    int columna2 = 2;  // Columna 2
+    int columna3 = 3;  // Columna 3
+    int columnaReference = 1;
+    int contadorFilasEnColumna = 0;
+    int tolerance = Integer.parseInt(tolerancia);
 
-        int columna0 = 0;
-        int columna2 = 2;  // Columna 2
-        int columna3 = 3;  // Columna 3
-        int columnaReference = 1;
-        int contadorFilasEnColumna = 0;
-        int tolerance = Integer.parseInt(tolerancia);
+    DefaultTableModel modelo = (DefaultTableModel) view.getTblMeasurement().getModel();
+    int rowCount = modelo.getRowCount();
+    List<String> datosColumna = new ArrayList<>();
+    List<String> datosColumnaId = new ArrayList<>();
 
-        DefaultTableModel modelo = (DefaultTableModel) view.getTblMeasurement().getModel();
-        int rowCount = modelo.getRowCount();
-        List<String> datosColumna = new ArrayList<>();
-        List<String> datosColumnaId = new ArrayList<>();
+    int reference = 0; // Asegúrate de asignar el valor correcto aquí
 
-        for (int i = 0; i < rowCount; i++) {
-            Object valorCelda = modelo.getValueAt(i, columna2);
-            if (valorCelda != null) {
-                contadorFilasEnColumna++;
-            }
+    ColorCelda colorCelda = new ColorCelda(columna2, tolerance, reference);
+
+    for (int i = 0; i < rowCount; i++) {
+        Object valorCelda = modelo.getValueAt(i, columna2);
+        if (valorCelda != null) {
+            contadorFilasEnColumna++;
         }
-        
-        String value ="";
-
-        for (int fila = 0; fila < rowCount; fila++) {
-
-            Object valorCelda0 = modelo.getValueAt(fila, columna0);
-            String textoCelda0 = (valorCelda0 != null) ? valorCelda0.toString() : "";
-
-            Object valorCelda = modelo.getValueAt(fila, columna2);
-            Object valueReference = modelo.getValueAt(fila, columnaReference);
-            String textoCelda = (valorCelda != null) ? valorCelda.toString() : "";
-
-            if (!textoCelda.trim().isEmpty() && isNumeric(textoCelda)) {
-                int reference = (int) valueReference;
-
-                int validation = (int) reference + tolerance;
-                int validationFew = (int) reference - tolerance;
-
-                int intTextoCelda = Integer.parseInt(textoCelda);
-                Object valorCelda3 = modelo.getValueAt(fila, columna3);
-                String textoCelda3 = (valorCelda3 != null) ? valorCelda3.toString() : "";
-                value=textoCelda3;
-                
-
-                if (intTextoCelda > validation || intTextoCelda < validationFew) {
-
-                    final int finalFila = fila;
-
-                    final ColorCelda colorCelda = new ColorCelda(columna2, finalFila, tolerance, reference);
-
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(colorCelda);
-                            modelo.fireTableCellUpdated(finalFila, columna2);
-                        }
-                    });
-                }
-                DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
-                datosColumna.add(textoCelda);
-                datosColumnaId.add(textoCelda0);
-                
-                view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
-
-                if ((rowCount - 1) == fila) {
-                    viewController.showMessage(view, "Guardados con exito", "success");
-                    viewController.showMessage(view, "Lectura fuera de rango, ingrese otra lectura", "error");
-
-                }
-
-            } else {
-                if (fila >= (rowCount - contadorFilasEnColumna) && fila < rowCount) {
-                    viewController.showMessage(view, "Sin lecturas registradas", "error");
-                }
-                break;
-            }
-        }
-        updateReading(datosColumna, datosColumnaId, value);
     }
+
+    String value = "";
+
+    for (int fila = 0; fila < rowCount; fila++) {
+        Object valorCelda0 = modelo.getValueAt(fila, columna0);
+        String textoCelda0 = (valorCelda0 != null) ? valorCelda0.toString() : "";
+
+        Object valorCelda = modelo.getValueAt(fila, columna2);
+        Object valueReference = modelo.getValueAt(fila, columnaReference);
+        String textoCelda = (valorCelda != null) ? valorCelda.toString() : "";
+
+        if (!textoCelda.trim().isEmpty() && isNumeric(textoCelda)) {
+            reference = (int) valueReference; // Asigna el valor de referencia dentro del bucle
+
+            int validation = reference + tolerance;
+            int validationFew = reference - tolerance;
+
+            int intTextoCelda = Integer.parseInt(textoCelda);
+            Object valorCelda3 = modelo.getValueAt(fila, columna3);
+            String textoCelda3 = (valorCelda3 != null) ? valorCelda3.toString() : "";
+            value = textoCelda3;
+
+            if (intTextoCelda > validation || intTextoCelda < validationFew) {
+                colorCelda.addRowToColor(fila);
+
+                final int finalFila = fila;
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(colorCelda);
+                        modelo.fireTableCellUpdated(finalFila, columna2);
+                    }
+                });
+            }
+
+            DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
+            datosColumna.add(textoCelda);
+            datosColumnaId.add(textoCelda0);
+
+            view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
+
+            if ((rowCount - 1) == fila) {
+                viewController.showMessage(view, "Guardados con exito", "success");
+                viewController.showMessage(view, "Lectura fuera de rango, ingrese otra lectura", "error");
+            }
+        } else {
+            if (fila >= (rowCount - contadorFilasEnColumna) && fila < rowCount) {
+                viewController.showMessage(view, "Sin lecturas registradas", "error");
+            }
+            break;
+        }
+    }
+
+    updateReading(datosColumna, datosColumnaId, value);
+}
+
 
 public void updateReading(List<String> readings, List<String> id, String idToUpdate) {
     Message msg = new Message();
