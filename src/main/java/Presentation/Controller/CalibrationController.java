@@ -27,6 +27,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -47,7 +49,7 @@ public class CalibrationController extends Controller implements InstruSelection
     String min;
     String max;
     String tolerancia;
-    Boolean pass;
+    Boolean pass = false;
     CalibrationList calibrationList;
     ViewController viewController;
     Modulo view;
@@ -60,7 +62,11 @@ public class CalibrationController extends Controller implements InstruSelection
     Color colorOriginal;
     String default_label;
     int confirmResult;
+
+    Timer timer;
+
     public static String get_Id = "";
+
 
     public CalibrationController(Modulo views) {
         this.view = views;
@@ -71,6 +77,7 @@ public class CalibrationController extends Controller implements InstruSelection
         this.calibrationList = new CalibrationList();
         this.number = "0";
         default_label = view.getLbNombreInstru().getText();
+        timer = new Timer();
         clickTable();
     }
 
@@ -97,7 +104,7 @@ public class CalibrationController extends Controller implements InstruSelection
     public void setNumber(String number) {
         this.number = number;
     }
-    
+
     public void tab() {
         getInformation();
     }
@@ -142,6 +149,7 @@ public class CalibrationController extends Controller implements InstruSelection
                             date,
                             Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                     calibrationList.getList().add(newCalibration);
+
                     
                         informationCalibration(calibrationList.getList(), serie, update);
                         getInformation();
@@ -151,7 +159,7 @@ public class CalibrationController extends Controller implements InstruSelection
                         getInformation();
                         
                         clean();
-                    
+
 
                 } catch (Exception ex) {
                     viewController.showMessage(view, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
@@ -161,8 +169,6 @@ public class CalibrationController extends Controller implements InstruSelection
             viewController.showMessage(view, ex.getMessage(), "error");
         }
     }
-    
-    
 
     public void informationCalibration(ArrayList<Calibration> calibrationList, String serie, boolean update) {
         for (Calibration cali : calibrationList) {
@@ -184,10 +190,10 @@ public class CalibrationController extends Controller implements InstruSelection
         msg.setSender(user);
         proxy.saveCalibration(msg);
     }
-    
+
     public void saveMeasurement(int medida, int reference, String reading, int numberSerie) {
         Message msg = new Message();
-        String[] dataMeasurement = {String.valueOf(medida), String.valueOf(reference), reading,String.valueOf(numberSerie)};
+        String[] dataMeasurement = {String.valueOf(medida), String.valueOf(reference), reading, String.valueOf(numberSerie)};
         msg.setData(dataMeasurement);
         msg.setSender(user);
         proxy.saveMeasurement(msg);
@@ -309,8 +315,9 @@ public class CalibrationController extends Controller implements InstruSelection
                 DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
                 datosColumna.add(textoCelda);
                 datosColumnaId.add(textoCelda0);
+
                 updateReading(datosColumna, datosColumnaId, textoCelda3);
-                //data_logic.updateReading(datosColumna, datosColumnaId, textoCelda3, view);
+
                 view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
 
                 if ((rowCount - 1) == fila) {
@@ -328,21 +335,18 @@ public class CalibrationController extends Controller implements InstruSelection
         }
 
     }
-    
 
     public void updateReading(List<String> readings, List<String> id, String idToUpdate) {
         Message msg = new Message();
 
-       
         msg.setReading(readings);
         msg.setNewId(id);
         msg.setIdToUpdate(idToUpdate);
-        
+
         msg.setSender(user);
 
         proxy.saveReading(msg);
     }
-
 
     public void cleanMeasurement() {
 
@@ -362,7 +366,7 @@ public class CalibrationController extends Controller implements InstruSelection
     }
 
     public List<Measurement> generateMeasurements(int numMeasurements, int maxValue, int minValue) {
-       
+
         if (numMeasurements <= 0 || maxValue <= 0) {
             throw new IllegalArgumentException("La cantidad de mediciones y el valor máximo deben ser mayores que cero.");
         }
@@ -465,6 +469,7 @@ public class CalibrationController extends Controller implements InstruSelection
         }
         clickTable();
     }
+
     public String getSerieInstrument() {
         return serieInstrument;
     }
@@ -499,22 +504,29 @@ public class CalibrationController extends Controller implements InstruSelection
         if (confirmResult == JOptionPane.YES_OPTION) {
             DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
             int number = Integer.parseInt(view.getCalibrationTxtNumber().getText());
-            
+
             deleteMeasurement(number);
             deleteCalibration(number);
-            
+            getInformation();
+            pass = true;
+
             clearTable(tableModel);
-            clean();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    clean();
+                }
+            }, 1000);
         }
     }
-    
+
     public static void deleteMeasurement(int number) {
         Message msg = new Message();
         msg.setMessage(String.valueOf(number));
         msg.setSender(user);
         proxy.deleteMeasurement(msg);
     }
-    
+
     public static void deleteCalibration(int number) {
         Message msg = new Message();
         msg.setMessage(String.valueOf(number));
@@ -555,7 +567,7 @@ public class CalibrationController extends Controller implements InstruSelection
         }
 
     }
-    
+
     public void tableCalibrations() {
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblCalibrations().getModel();
         tableModel.setRowCount(0);
@@ -579,7 +591,9 @@ public class CalibrationController extends Controller implements InstruSelection
         if (listCalibrations == null || loadedMeasurements == null) {
             System.err.println("estan null");
         } else {
-//            updateTable();
+            if (pass) {
+                updateTable();
+            }
         }
 //    
     }

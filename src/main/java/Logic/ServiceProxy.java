@@ -215,7 +215,7 @@ public class ServiceProxy implements Protocol.IService {
 
         }
     }
-    
+
     public void saveCalibration(Message message) {
         try {
             out.writeInt(ProtocolData.SAVE_CALIBRATION);
@@ -226,7 +226,7 @@ public class ServiceProxy implements Protocol.IService {
 
         }
     }
-    
+
     public void saveReading(Message message) {
         try {
             out.writeInt(ProtocolData.SAVE_READING);
@@ -237,7 +237,7 @@ public class ServiceProxy implements Protocol.IService {
 
         }
     }
-    
+
     public void saveMeasurement(Message message) {
         try {
             out.writeInt(ProtocolData.SAVE_MEASUREMENT);
@@ -270,7 +270,7 @@ public class ServiceProxy implements Protocol.IService {
 
         }
     }
-    
+
     public void deleteMeasurement(Message message) {
         try {
             out.writeInt(ProtocolData.DELETE_MEASUREMENT);
@@ -281,7 +281,7 @@ public class ServiceProxy implements Protocol.IService {
 
         }
     }
-    
+
     public void deleteCalibration(Message message) {
         try {
             out.writeInt(ProtocolData.DELETE_CALIBRATIONS);
@@ -314,8 +314,7 @@ public class ServiceProxy implements Protocol.IService {
 
         }
     }
-    
-    
+
     public void getNumberCalibration(Message message) {
         try {
             out.writeInt(ProtocolData.GET_ID_CALIBRATION);
@@ -377,10 +376,14 @@ public class ServiceProxy implements Protocol.IService {
                 System.out.println("Respuesta recibida:");
 //                System.out.println("Mensaje " + message.getMessage());
 //                System.out.println("Mensaje " + message.getUnits());
-//                System.out.println("Mensaje " + message.getSender());
-                cali.deliver(message);
-                inst.deliver(message);
-                viewController.deliver(message);
+//                System.out.println("Mensaje   " + message.getSender());
+                if (message.getCalibration() != null || message.getMeasure()!=null) {
+                    cali.deliver(message);
+                } else if (message.getInstruments() != null) {
+                    inst.deliver(message);
+                } else {
+                    viewController.deliver(message);
+                }
 
             }
         }
