@@ -269,6 +269,7 @@ public class Worker {
                             get_Informaion_modulo3 = (Message) in.readObject();
                             get_Informaion_modulo3.setCalibration(calibration.getAllCalibration());
                             get_Informaion_modulo3.setMeasure(measu.getAllMeasurement());
+                            get_Informaion_modulo3.setId(String.valueOf(calibration.getId()));
 
                             get_Informaion_modulo3.setSender(user);
 

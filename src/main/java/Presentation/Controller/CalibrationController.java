@@ -62,7 +62,11 @@ public class CalibrationController extends Controller implements InstruSelection
     Color colorOriginal;
     String default_label;
     int confirmResult;
+
     Timer timer;
+
+    public static String get_Id = "";
+
 
     public CalibrationController(Modulo views) {
         this.view = views;
@@ -109,6 +113,7 @@ public class CalibrationController extends Controller implements InstruSelection
         Message msg = new Message();
         msg.setCalibration(listCalibrations);
         msg.setMeasure(loadedMeasurements);
+        msg.setId(get_Id);
         msg.setSender(user);
         proxy.getInformationModulo3(msg);
     }
@@ -145,14 +150,16 @@ public class CalibrationController extends Controller implements InstruSelection
                             Integer.parseInt(view.getCalibrationTxtMeasurement().getText()));
                     calibrationList.getList().add(newCalibration);
 
-                    informationCalibration(calibrationList.getList(), serie, update);
-                    getInformation();
-                    List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max), Integer.parseInt(min));
-                    informationMeasurement(measurements);
-                    ViewController.showMessage(view, "Todas las mediciones fueron insertadas correctamente", "success");
-                    view.getCalibrationTxtNumber().setText(String.valueOf(data_logic.getId()));
-                    getInformation();
-                    clean();
+                    
+                        informationCalibration(calibrationList.getList(), serie, update);
+                        getInformation();
+                        List<Measurement> measurements = generateMeasurements(Integer.parseInt(view.getCalibrationTxtMeasurement().getText()), Integer.parseInt(max), Integer.parseInt(min));
+                        informationMeasurement(measurements);
+                        ViewController.showMessage(view,"Todas las mediciones fueron insertadas correctamente", "success");
+                        getInformation();
+                        
+                        clean();
+
 
                 } catch (Exception ex) {
                     viewController.showMessage(view, "Error al guardar en el archivo XML: " + ex.getMessage(), "error");
@@ -202,9 +209,11 @@ public class CalibrationController extends Controller implements InstruSelection
         view.getCalibrationTxtMeasurement().setText("");
         view.getCalibrationDateChooser().setEnabled(true);
         view.getCalibrationTxtMeasurement().setEnabled(true);
-        String id = "";
-        id = String.valueOf(data_logic.getId());
-        view.getCalibrationTxtNumber().setText(id);
+//        String id = "";
+//        id = String.valueOf(data_logic.getId());
+//        view.getCalibrationTxtNumber().setText(id);
+        getInformation();
+        view.getCalibrationTxtNumber().setText(get_Id);
         clearTable(tableModel);
         updateTable();
     }
@@ -307,7 +316,8 @@ public class CalibrationController extends Controller implements InstruSelection
                 datosColumna.add(textoCelda);
                 datosColumnaId.add(textoCelda0);
 
-                data_logic.updateReading(datosColumna, datosColumnaId, textoCelda3, view);
+                updateReading(datosColumna, datosColumnaId, textoCelda3);
+
                 view.getTblMeasurement().getColumnModel().getColumn(columna2).setCellRenderer(defaultRenderer);
 
                 if ((rowCount - 1) == fila) {
@@ -425,6 +435,7 @@ public class CalibrationController extends Controller implements InstruSelection
     }
 
     public void updateTableMeasurement() {
+        getInformation();
         DefaultTableModel tableModel = (DefaultTableModel) view.getTblMeasurement().getModel();
         tableModel.setRowCount(0);
         int id = Integer.parseInt(view.getCalibrationTxtNumber().getText());
@@ -576,6 +587,7 @@ public class CalibrationController extends Controller implements InstruSelection
         System.out.println("Esto ya esta en el controller se guardo clibration " + message.getCalibration());
         listCalibrations = message.getCalibration();
         loadedMeasurements = message.getMeasure();
+        get_Id = message.getId();
         if (listCalibrations == null || loadedMeasurements == null) {
             System.err.println("estan null");
         } else {
