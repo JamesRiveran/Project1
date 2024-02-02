@@ -151,6 +151,7 @@ public class Modulo extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         miscTxtSubtitle = new javax.swing.JLabel();
         miscTxtTitle = new javax.swing.JLabel();
+        miscTxtSubtitle1 = new javax.swing.JLabel();
         miscTxtTeam = new javax.swing.JLabel();
         miscTxtNameJ = new javax.swing.JLabel();
         miscTxtNameG = new javax.swing.JLabel();
@@ -1077,24 +1078,32 @@ public class Modulo extends javax.swing.JFrame {
         );
 
         miscTxtSubtitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        miscTxtSubtitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         miscTxtSubtitle.setText("Sistema de Instrumentos para Laboratorio");
 
         miscTxtTitle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        miscTxtTitle.setText("Proyecto 1");
+        miscTxtTitle.setText("Proyecto 2");
+
+        miscTxtSubtitle1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        miscTxtSubtitle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        miscTxtSubtitle1.setText("Versión 2.0");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(miscTxtSubtitle)
-                        .addGap(15, 15, 15))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(miscTxtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(107, 107, 107))))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(miscTxtSubtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(miscTxtSubtitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(143, 143, 143)
+                        .addComponent(miscTxtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1102,8 +1111,10 @@ public class Modulo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(miscTxtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(miscTxtSubtitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(miscTxtSubtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
 
         miscTxtTeam.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -1133,7 +1144,7 @@ public class Modulo extends javax.swing.JFrame {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addContainerGap(115, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(logoImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -1170,21 +1181,18 @@ public class Modulo extends javax.swing.JFrame {
                             .addComponent(miscTxtNameK)
                             .addComponent(miscTxtNameG)
                             .addComponent(miscTxtNameJ)
-                            .addComponent(miscTxtTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(37, 37, 37)
-                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(miscTxtTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pAcercaDeLayout.createSequentialGroup()
-                        .addGroup(pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pAcercaDeLayout.createSequentialGroup()
-                                .addGap(39, 39, 39)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pAcercaDeLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(unaImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(171, 171, 171)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap()
+                        .addComponent(unaImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(171, 171, 171)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pAcercaDeLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(109, 109, 109))
         );
         pAcercaDeLayout.setVerticalGroup(
             pAcercaDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1198,8 +1206,8 @@ public class Modulo extends javax.swing.JFrame {
                         .addComponent(unaImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(miscTxtTeam)
                 .addGap(18, 18, 18)
                 .addComponent(miscTxtNameJ)
@@ -1278,8 +1286,6 @@ public class Modulo extends javax.swing.JFrame {
         });
         tableMessage.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
         tableMessage.setColumnSelectionAllowed(true);
-        tableMessage.setShowHorizontalLines(true);
-        tableMessage.setShowVerticalLines(true);
         jScrollPane4.setViewportView(tableMessage);
 
         jLabel28.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
@@ -1876,6 +1882,7 @@ public class Modulo extends javax.swing.JFrame {
     private javax.swing.JLabel miscTxtNameJ;
     private javax.swing.JLabel miscTxtNameK;
     private javax.swing.JLabel miscTxtSubtitle;
+    private javax.swing.JLabel miscTxtSubtitle1;
     private javax.swing.JLabel miscTxtTeam;
     private javax.swing.JLabel miscTxtTitle;
     private javax.swing.JLabel miscTxtVersion;
