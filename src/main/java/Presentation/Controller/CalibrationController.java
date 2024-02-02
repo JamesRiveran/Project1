@@ -359,30 +359,29 @@ public class CalibrationController extends Controller implements InstruSelection
         return formatoFecha.format(fechaSeleccionada);
     }
 
-    public List<Measurement> generateMeasurements(int numMeasurements, int maxValue, int minValue) {
+   public List<Measurement> generateMeasurements(int numMeasurements, int maxValue, int minValue) {
 
-        if (numMeasurements <= 0 || maxValue <= 0) {
-            throw new IllegalArgumentException("La cantidad de mediciones y el valor máximo deben ser mayores que cero.");
-        }
-        List<Measurement> measurements = new ArrayList<>();
-        int step = maxValue / numMeasurements;
-        int currentReference = minValue;
-        int newIdMedicion = 0;
-        for (int i = 1; i <= numMeasurements; i++) {
-            int medida = i;
-            int referencia = currentReference;
-            String lectura = ""; // Inicializar lectura como 0
-            newIdMedicion += 1;
-
-            Measurement measurement = new Measurement(view.getCalibrationTxtNumber().getText(), medida, referencia, lectura, newIdMedicion);
-            measurements.add(measurement);
-
-            // Actualizar la referencia para la siguiente medición
-            currentReference += step;
-        }
-
-        return measurements;
+    if (numMeasurements <= 0 || maxValue <= minValue) {
+        throw new IllegalArgumentException("La cantidad de mediciones y el valor máximo deben ser mayores que cero.");
     }
+
+    List<Measurement> measurements = new ArrayList<>();
+    int range = maxValue - minValue;
+    double step = (double) range / (numMeasurements - 1); // Adjusted the step calculation
+    int newIdMedicion = 0;
+
+    for (int i = 0; i < numMeasurements; i++) {
+        int medida = i + 1;
+        int referencia = (int) Math.round(minValue + i * step);
+        String lectura = "";
+        newIdMedicion += 1;
+
+        Measurement measurement = new Measurement(view.getCalibrationTxtNumber().getText(), medida, referencia, lectura, newIdMedicion);
+        measurements.add(measurement);
+    }
+
+    return measurements;
+}
 
     public boolean clickTable() {
         update = true;
