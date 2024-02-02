@@ -383,6 +383,7 @@ public class ViewController extends Controller implements ActionListener {
     }
 
     public void deliver(Message message) {
+        int suma=1;
         ListOfUnids = message.getUnits();
         ListOfIModu1o1 = message.getTypeIntruments();
         get_Id = message.getId();
@@ -405,6 +406,7 @@ public class ViewController extends Controller implements ActionListener {
                 model.fireTableDataChanged();
             }
             if (message.getPersonalMessage() != null && messageUser.getId().equals(user.getId())) {
+                System.out.println("Entre muchas veces");
                 showMessage(view, message.getPersonalMessage(), "success");
             } else {
             }

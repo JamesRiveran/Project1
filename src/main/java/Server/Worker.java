@@ -142,9 +142,9 @@ public class Worker {
                                 Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             save.setSender(user);
+                            deliver(save);
                             // Envía la lista de unidades al cliente a través del método deliver
                             srv.deliver(save);
-                            deliver(save);
 
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
