@@ -378,7 +378,7 @@ public class GeneratorPDF {
 
                 // Verifica si la lectura está vacía y establece el texto correspondiente
                 String readingText = (measurement.getReading() != null && !measurement.getReading().isEmpty())
-                        ? String.valueOf(measurement.getReading()) : "-n-";
+                        ? String.valueOf(measurement.getReading()) : "Sin registro";
 
                 PdfPCell lectureCell = new PdfPCell(new Phrase(readingText, FontFactory.getFont(FontFactory.HELVETICA, 12)));
                 lectureCell.setBackgroundColor(new BaseColor(200, 137, 137));
